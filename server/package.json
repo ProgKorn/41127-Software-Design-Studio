@@ -1,0 +1,30 @@
+{
+  "name": "41127-software-design-studio",
+  "version": "1.0.0",
+  "description": "anti-cheat system",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProgKorn/41127-Software-Design-Studio.git"
+  },
+  "keywords": [
+    "proctoring"
+  ],
+  "author": "group 3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProgKorn/41127-Software-Design-Studio/issues"
+  },
+  "homepage": "https://github.com/ProgKorn/41127-Software-Design-Studio#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "mongoose": "^7.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
