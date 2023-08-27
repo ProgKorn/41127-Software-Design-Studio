@@ -18,6 +18,8 @@ function App() {
   );
 }
 
+//component rendered in routes component when root path '/' is matched
+//this prevents buttons persisting between windows
 function HomePage() {
   return (
     <div>
