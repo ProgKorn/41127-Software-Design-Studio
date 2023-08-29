@@ -4,6 +4,12 @@ import Login from './Login';
 import Header from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
+import AdminDashboard from './AdminDashboard';
+import Exam from './Exam';
+import ExamHistory from './ExamHistory';
+import FlagLog from './FlagLog';
+import Flag from './Flag';
+import Schedule from './Schedule';
 
 function App() {
   return (
@@ -15,6 +21,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/exam" element={<Exam />} />
+          <Route path="/examhistory" element={<ExamHistory />} />
+          <Route path="/flaglog" element={<FlagLog />} />
+          <Route path="/flag" element={<Flag />} />
+          <Route path="/schedule" element={<Schedule />} />
         </Routes>
       </div>
     </Router>
