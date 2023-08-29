@@ -4,6 +4,7 @@ import Login from './Login';
 import Header from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
+import StudentHomepage from './StudentHomepage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
+          <Route path="/StudentHomepage" element = {<StudentHomepage />} />
         </Routes>
       </div>
     </Router>
