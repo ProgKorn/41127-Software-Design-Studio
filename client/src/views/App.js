@@ -3,15 +3,18 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './Login';
 import Header from './Header';
 import HelpCentre from './HelpCentre';
+import ExamStart from './ExamStart';
 
 function App() {
   return (
+    // Routing setup for individual pages
     <Router>
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
+          <Route path="/examstart" element={<ExamStart />} />
         </Routes>
       </div>
     </Router>

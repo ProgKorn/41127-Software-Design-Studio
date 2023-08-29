@@ -1,0 +1,27 @@
+/* CSS classes for exam related things */
+
+.main {
+    display: flex;
+    max-width: 1170px;
+    margin: auto;
+    flex-direction: column;
+}
+
+.title {
+    padding: 10px;
+}
+
+.details {
+    padding: 10px;
+}
+
+h1 {
+    color: slategray;
+}
+
+
+
+h2 {
+    font-weight: 700;
+    text-align: left;
+}
