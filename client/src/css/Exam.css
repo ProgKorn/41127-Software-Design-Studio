@@ -1,5 +1,4 @@
 /* CSS classes for exam related things */
-
 .main {
     display: flex;
     max-width: 1170px;
@@ -11,15 +10,35 @@
     padding: 10px;
 }
 
-.details {
+.detailsTable {
+    max-width: 700px;
+    align-self: center;
+    border-collapse: separate;
+    text-align-last: center;
+}
+
+.terms {
+    background-color: #109cfc;
+    border-radius: 6px;
+    color: white;
+    padding: 20px;
+}
+
+.formBox {
+    align-items: center;
+}
+
+.checkBoxStyle {
+    color: white !important;
+}
+
+.subtitle {
     padding: 10px;
 }
 
 h1 {
     color: slategray;
 }
-
-
 
 h2 {
     font-weight: 700;
