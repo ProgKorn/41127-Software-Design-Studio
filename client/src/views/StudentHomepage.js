@@ -65,34 +65,47 @@ function StudentHomepage() {
     <div className="title">
         <h2>Upcoming Exam Scheduled</h2>
         <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">Exam Name</TableCell>
-            <TableCell align="center">Exam Start</TableCell>
-            <TableCell align="center">Details</TableCell>
-            <TableCell align="center">Seat No.</TableCell>
-            <TableCell align="center">Access Exam</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows2.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.examName}
-              </TableCell>
-              <TableCell align="center">{row.examStart}</TableCell>
-              <TableCell align="center">{row.details}</TableCell>
-              <TableCell align="center">{row.seatNo}</TableCell>
-              <TableCell align="center">{row.accessExam}</TableCell>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Exam Name</TableCell>
+              <TableCell align="center">Exam Start</TableCell>
+              <TableCell align="center">Details</TableCell>
+              <TableCell align="center">Seat No.</TableCell>
+              <TableCell align="center">Access Exam</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows2.map((row) => (
+              <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.examName}
+                </TableCell>
+                <TableCell align="center">{row.examStart}</TableCell>
+                <TableCell align="center">{row.details}</TableCell>
+                <TableCell align="center">{row.seatNo}</TableCell>
+                <TableCell align="center">{row.accessExam}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        </TableContainer>
+    </div>
+    <div className="title">
+        <h2>Test Your Equipment</h2>
+        <TableContainer component={Paper}>
+        <h4>It is highly advised that you check your computer system you are using
+          beforehand to ensure a smooth online testing experience.
+        </h4>
+      <div className="button-container">
+        <Link to="/testEquipment" className="button" style={{ fontSize: '20px', width:'15', height:'10', margin: '0 auto' }}>
+          Test Your Equipment
+        </Link>
+      </div>
+      </TableContainer>
     </div>
     </div>
   );
