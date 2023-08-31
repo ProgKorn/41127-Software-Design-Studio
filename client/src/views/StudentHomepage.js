@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import '../css/Exam.css';
+import '../css/StudentView.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 
@@ -37,8 +38,9 @@ function StudentHomepage() {
       <h1>Student Homepage</h1>
       <div className="title">
         <h2>Student Details</h2>
+        <div style={{ width: '40%', marginLeft: '0%' }}>
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 100 }} aria-label="simple table">
 
           <TableBody>
               {rows.map((row) => (
@@ -56,14 +58,16 @@ function StudentHomepage() {
       </Table>
     </TableContainer>  
     </div>
-      <div className="button-container">
-        <Link to="/editDetails" className="button">
+    </div>
+      <div className="button-container" style={{ marginTop: '20px', textAlign:'left', marginLeft:'0px'}}>
+        <Link to="/editDetails" className="button" style={{ fontSize: '12px', padding: '5px 10px'}}>
           Edit Details
         </Link>
       </div>
 
     <div className="title">
         <h2>Upcoming Exam Scheduled</h2>
+        <div style={{ width: '50%', marginLeft: '0%' }}>
         <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -93,19 +97,19 @@ function StudentHomepage() {
           </TableBody>
         </Table>
         </TableContainer>
+        </div>
     </div>
     <div className="title">
         <h2>Test Your Equipment</h2>
-        <TableContainer component={Paper}>
-        <h4>It is highly advised that you check your computer system you are using
-          beforehand to ensure a smooth online testing experience.
-        </h4>
-      <div className="button-container">
-        <Link to="/testEquipment" className="button" style={{ fontSize: '20px', width:'15', height:'10', margin: '0 auto' }}>
+        <div className='testEquipment' style={{width:'100%'}}>
+        <text style={{width:'100%', marginTop:'10px'}}>It is highly advised that you check your computer system you are using beforehand to ensure a smooth online testing experience.
+        </text>
+      <div className="button-container" style={{width:'100%', height:'10vh', marginLeft:'0px', marginTop:'30px'}}>
+        <Link to="/testEquipment" className="button" style={{fontSize: '12px', padding: '5px 10px', marginLeft:'0px'}}>
           Test Your Equipment
         </Link>
       </div>
-      </TableContainer>
+      </div>
     </div>
     </div>
   );
