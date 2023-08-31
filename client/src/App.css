@@ -29,6 +29,23 @@
   color: #61dafb;
 }
 
+.form {
+  background-color: #FFFFFF;
+  width: 30%;
+  border: 1px solid rgb(0, 0, 0);
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 3rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
 .button-container {
   display: flex;
   flex-direction: column;
