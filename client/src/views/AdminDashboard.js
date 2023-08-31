@@ -17,19 +17,19 @@ function AdminDashboard() {
 				<div className="dashboardMenu">
 					<Grid container rowSpacing={4} columnSpacing={{ xs: 1 }}>
 						<Grid item xs={6}>
-							<Button component={Link} to="" className="dashboardButton" variant="contained">
+							<Button component={Link} to="/launchExam" className="dashboardButton" variant="contained">
 								<div className="dashboardIcons"><LaunchRoundedIcon /></div>
 								Launch Exam
 							</Button>
 						</Grid>
 						<Grid item xs={6}>
-							<Button component={Link} to="" className="dashboardButton" variant="contained">
+							<Button component={Link} to="/createSession" className="dashboardButton" variant="contained">
 							<div className="dashboardIcons"><AddBoxOutlinedIcon /></div>
 								Create Session
 							</Button>
 						</Grid>
 						<Grid item xs={6}>
-							<Button component={Link} to="" className="dashboardButton" variant="contained">
+							<Button component={Link} to="/manageClasses" className="dashboardButton" variant="contained">
 								<div className="dashboardIcons"><GroupsOutlinedIcon /></div>
 								Manage Classes
 							</Button>

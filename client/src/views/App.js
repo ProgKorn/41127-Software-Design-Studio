@@ -10,6 +10,9 @@ import ExamHistory from './ExamHistory';
 import FlagLog from './FlagLog';
 import Flag from './Flag';
 import Schedule from './Schedule';
+import LaunchExam from './LaunchExam';
+import CreateSession from './CreateSession';
+import ManageClasses from './ManageClasses';
 
 function App() {
   return (
@@ -19,14 +22,19 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
+
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
-          <Route path="/admindashboard" element={<AdminDashboard />} />
           <Route path="/exam" element={<Exam />} />
+
           <Route path="/examhistory" element={<ExamHistory />} />
           <Route path="/flaglog" element={<FlagLog />} />
           <Route path="/flag" element={<Flag />} />
           <Route path="/schedule" element={<Schedule />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/launchExam" element={<LaunchExam />} />
+          <Route path="/createSession" element={<CreateSession />} />
+          <Route path="/manageClasses" element={<ManageClasses />} />
         </Routes>
       </div>
     </Router>
