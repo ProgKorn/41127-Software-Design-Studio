@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "anti-cheat system",
   "main": "index.js",
-  "proxy": "http://localhost:3000",
   "scripts": {
     "start": "nodemon"
   },
