@@ -1,0 +1,36 @@
+/* CSS classes for admin dashboard related things */
+
+.adminDashboard {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboardButton {
+    display: block;
+    color: #ffffff;
+    width: 100%;
+    max-width: 12rem;
+    height: 12rem;
+    margin: auto;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.dashboardMenu {
+    width: 450px;
+    margin: auto;
+    padding: 20px;
+}
+
+.MuiButton-contained {
+    border-radius: 40px !important;
+}
+
+.dashboardIcons {
+    transform: scale(2.5);
+    padding: 20px;
+}
+
+h1 {
+    color: slategray;
+}
