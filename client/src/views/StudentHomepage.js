@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import '../css/Exam.css';
 import '../css/StudentView.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import StudentHeader from '../components/StudentHeader';
 
 
 function createData(name, value) {
@@ -34,8 +35,10 @@ const rows2 = [
 
 function StudentHomepage() {
   return (
-    <div className="main">
-      <h1>Student Homepage</h1>
+    <div>
+      <StudentHeader/>
+      <div className="main">
+        <h1>Student Homepage</h1>
       <div class = 'parent' style = {{display: 'flex'}}>
         <div class = 'child'>
         <div className="title">
@@ -61,8 +64,8 @@ function StudentHomepage() {
       </TableContainer>  
       </div>
       </div>
-      <div className="button-container" style={{ marginTop: '20px', textAlign:'left', marginLeft:'0px', width: '300px'}}>
-        <Link to="/editDetails" className="button" style={{ fontSize: '12px', padding: '5px 10px'}}>
+      <div className="button-container" style={{ marginTop: '20px', textAlign:'left', width: '400px', marginRight: '30px'}}>
+        <Link to="/editDetails" className="button" style={{ fontSize: '14px', padding: '5px 10px'}}>
           Edit Details
         </Link>
       </div>
@@ -125,6 +128,7 @@ function StudentHomepage() {
         </Table>
         </TableContainer>
       </div>
+    </div>
     </div>
     </div>
   );
