@@ -4,7 +4,15 @@ import Login from './Login';
 import Header from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
-import StudentHomepage from './StudentHomepage';
+import AdminDashboard from './AdminDashboard';
+import Exam from './Exam';
+import ExamHistory from './ExamHistory';
+import FlagLog from './FlagLog';
+import Flag from './Flag';
+import Schedule from './Schedule';
+import LaunchExam from './LaunchExam';
+import CreateSession from './CreateSession';
+import ManageClasses from './ManageClasses';
 
 function App() {
   return (
@@ -16,7 +24,15 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
-          <Route path="/StudentHomepage" element = {<StudentHomepage />} />
+          <Route path="/exam" element={<Exam />} />
+          <Route path="/examhistory" element={<ExamHistory />} />
+          <Route path="/flaglog" element={<FlagLog />} />
+          <Route path="/flag" element={<Flag />} />
+          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/launchexam" element={<LaunchExam />} />
+          <Route path="/createsession" element={<CreateSession />} />
+          <Route path="/manageclasses" element={<ManageClasses />} />
         </Routes>
       </div>
     </Router>
