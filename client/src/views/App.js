@@ -22,19 +22,17 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
-
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
           <Route path="/exam" element={<Exam />} />
-
           <Route path="/examhistory" element={<ExamHistory />} />
           <Route path="/flaglog" element={<FlagLog />} />
           <Route path="/flag" element={<Flag />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/admindashboard" element={<AdminDashboard />} />
-          <Route path="/launchExam" element={<LaunchExam />} />
-          <Route path="/createSession" element={<CreateSession />} />
-          <Route path="/manageClasses" element={<ManageClasses />} />
+          <Route path="/launchexam" element={<LaunchExam />} />
+          <Route path="/createsession" element={<CreateSession />} />
+          <Route path="/manageclasses" element={<ManageClasses />} />
         </Routes>
       </div>
     </Router>
