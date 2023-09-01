@@ -1,3 +1,6 @@
+import '../App.css';
+import Header from './Header';
+import '../css/Login.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -25,10 +28,8 @@ function Login() {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Sign In</h1>
-      </div>
+    <div className='App'>
+      <Header />
       <div>
       <input
         className="form"
@@ -48,14 +49,14 @@ function Login() {
       />
       </div>
       <div>
-        <button onClick={handleLogin} className='button'>Login</button>
+        <button onClick={handleLogin} className='button-grey-out'>Login</button>
       </div>
       <div>
         <input type="checkbox" id="keepSignedIn"></input>
-        <label htmlFor="keepSignedIn">Stay signed in?</label>
+        <label className='login-checkbox' htmlFor="keepSignedIn">Keep me signed in</label>
       </div>
       <div>
-        <button onClick={handleBack} className='button'>Back</button>
+      <a class="back-link" href="javascript:history.back()"> &lt; Back</a>
       </div>
     </div>
   );
