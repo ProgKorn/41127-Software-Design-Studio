@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,12 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import FormGroup from "@mui/material/FormGroup";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, Button, FormControlLabel } from "@mui/material";
 import "../css/Exam.css";
 
 function createData(name, value) {
   return { name, value };
 }
+
 
 const rows = [
   createData("Type", "Live"),
@@ -24,6 +26,17 @@ const rows = [
 ];
 
 function ExamStart() {
+  const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+  };
+
+  const handleButtonClick = () => { 
+    navigate("/exam");
+  };
+
   return (
     <Box className="main">
       {/* Title */}
@@ -129,13 +142,26 @@ function ExamStart() {
         {/* Checkbox form that activates the continue button */}
         <FormGroup className="formBox">
           <FormControlLabel
+            
             required
-            control={<Checkbox className="checkBoxStyle"/>}
+            control={<Checkbox className="checkBoxStyle"
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}/>}
             label={<strong>I agree to the terms and conditions</strong>}
           />
         </FormGroup>
       </Box>
+      <Box className="continueButtonBox">
+        <Button disabled={!isChecked}
+        onClick={handleButtonClick} 
+        variant="contained" 
+        className="continueButton"
+        style={{
+          backgroundColor: isChecked ? "#109cfc" : "grey" // Change colors based on isChecked
+        }}><strong>Continue</strong></Button>
+      </Box>
     </Box>
+    
   );
 }
 

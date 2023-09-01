@@ -36,6 +36,18 @@
     padding: 10px;
 }
 
+.continueButtonBox {
+    margin-top: "20px";
+    margin-bottom: "20px";
+    padding: 20px;  
+}
+
+.continueButton {
+    color: "white";
+    margin-top: "20px";
+    margin-bottom: "20px";
+}
+
 h1 {
     color: slategray;
 }
