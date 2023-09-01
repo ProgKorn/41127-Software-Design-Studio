@@ -6,3 +6,36 @@
     height: 80%;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   }
+  .parent {
+    /*border: 1px solid black;
+    margin: 1rem;
+    padding: 2rem 2rem; */
+    text-align: center;
+  }
+  .child {
+    display: inline-block;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+    
+  }
+
+  .studentButton {
+    background-color: #FFFFFF;
+    width: 30%;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 1rem;
+    box-sizing: border-box;
+    color: #111827;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 3rem;
+    text-align: center;
+    text-decoration: none #D1D5DB solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
