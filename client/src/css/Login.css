@@ -3,7 +3,7 @@
 .form {
     width: 35vw;
     margin: 12px 10px;
-    height: 2vw;
+    height: 4vw;
     border-radius: 20px;
     font-size: 25px;
     color: black;
@@ -34,7 +34,7 @@
     background-color: #e0e4e4;
     color: rgb(74, 72, 72);
     border-radius: 20px;
-    width: 37vw;
+    width: 35vw;
     height: 4vw;
     font-size: 25px;
     margin: 10px, 12px;

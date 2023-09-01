@@ -23,10 +23,6 @@ function Login() {
     })
   };
 
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   return (
     <div className='App'>
       <Header />
