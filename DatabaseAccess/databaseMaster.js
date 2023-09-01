@@ -5,30 +5,30 @@ const client = new MongoClient(uri);
 // for inserting new students
 async function insertStudent(docs) {
   const db = client.db("SoftwareDesignStudio");
-  const coll = db.collection("StudentDetails");
+  const coll = db.collection("UserDetails");
   return await coll.insertMany(docs);
 }
 
 // for deleting students
-async function deleteStudent(studentId) {
+async function deleteStudent(email) {
   const db = client.db("SoftwareDesignStudio");
-  const coll = db.collection("StudentDetails");
-  return await coll.deleteMany({ studentId });
+  const coll = db.collection("UserDetails");
+  return await coll.deleteMany({ email });
 }
 
-async function findStudent(studentId) {
+async function findStudent(email, password) {
   const db = client.db("SoftwareDesignStudio");
-  const coll = db.collection("StudentDetails");
-  const cursor = coll.find({ studentId });
+  const coll = db.collection("UserDetails");
+  const cursor = coll.find({ email, password });
   const results = [];
   await cursor.forEach(doc => results.push(doc));
   return results;
 }
 
-async function updateStudent(studentId, updateDoc) {
+async function updateStudent(email, updateDoc) {
   const db = client.db("SoftwareDesignStudio");
-  const coll = db.collection("StudentDetails");
-  return await coll.updateMany({ studentId }, { $set: updateDoc });
+  const coll = db.collection("UserDetails");
+  return await coll.updateMany({ email }, { $set: updateDoc });
 }
 
 module.exports = {
@@ -66,14 +66,14 @@ module.exports = {
         // Example usage:
         // // dbOp('find', 12345678)
         case 'find':
-          result = await findStudent(entry);
+          result = await findStudent(entry.email, entry.password);
           console.log("Found documents:", result);
-          break;
+          return result;
 
         // Example usage:
         // dbOp('update', { studentId : 12345678, updateDoc: { seatNumber : 200 }})
         case 'update':
-          result = await updateStudent(entry.studentId, entry.updateDoc);
+          result = await updateStudent(entry.email, entry.updateDoc);
           console.log("Updated count:", result.modifiedCount);
           break;
         default:

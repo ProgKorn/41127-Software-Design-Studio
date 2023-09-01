@@ -7,46 +7,18 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  // await axios.post('http://localhost:4000/login', { username, password }, config).then(response => {
-  //       if (response.data.role === 'admin') {
-  //         navigate('/admin');
-  //       } else {
-  //         navigate('/student');
-  //       } 
-  // const handleLogin = async () => {
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     };
-  //     await axios({
-  //       method: 'post',
-  //       url: `http://localhost:4000/login`,
-  //       withCredentials: false,
-  //       params:  {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //       }
-  //     }).catch(error => {
-  //       console.error("POST failed: ", error);
-  //     });
-  //   } catch (error) {
-  //     console.error("Login failed: ", error);
-  //   }
-  // };
   const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://localhost:4000/login', { username, password });
-      console.log(response.data);
-      // Handle success, e.g., redirect to a dashboard
-    } catch (error) {
-      console.error('Login failed:', error);
-      // Handle error, e.g., show an error message to the user
-    }
+    await axios.post('http://localhost:4000/login', { username, password }).then(
+      response => {
+      if (response.data.isAdmin === true) {
+        navigate('/admin');
+      } else {
+        navigate ('/student');
+      }}).catch(
+      error => {
+        console.error('Login failed:', error);
+    })
   };
-
 
   const handleBack = () => {
     navigate(-1);
