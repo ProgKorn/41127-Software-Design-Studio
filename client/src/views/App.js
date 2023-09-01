@@ -13,6 +13,7 @@ import Schedule from './Schedule';
 import LaunchExam from './LaunchExam';
 import CreateSession from './CreateSession';
 import ManageClasses from './ManageClasses';
+import StudentHomepage from './StudentHomepage';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/launchexam" element={<LaunchExam />} />
           <Route path="/createsession" element={<CreateSession />} />
           <Route path="/manageclasses" element={<ManageClasses />} />
+          <Route path="/studenthomepage" element={<StudentHomepage />} />
         </Routes>
       </div>
     </Router>
