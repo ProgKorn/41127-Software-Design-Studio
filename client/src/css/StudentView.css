@@ -1,11 +1,4 @@
 /*CSS classes for student view related things */
-
-.testEquipment {
-    display: flex;
-    width: 100%;
-    height: 80%;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  }
   .parent {
     /*border: 1px solid black;
     margin: 1rem;
@@ -19,13 +12,13 @@
     
   }
 
-  .studentButton {
-    background-color: #FFFFFF;
+  .student-button {
+    background-color: #EF233C;
     width: 30%;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 1rem;
     box-sizing: border-box;
-    color: #111827;
+    color: #FFFFFF;
     font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     font-size: 1rem;
     font-weight: 600;
@@ -38,11 +31,16 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-  }
-
-  .button-accessExam {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  .button-container-student {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vw;
   }
