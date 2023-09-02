@@ -64,7 +64,7 @@ function StudentHomepage() {
       </TableContainer>  
       </div>
       </div>
-      <div className="button-container" style={{ marginTop: '20px', textAlign:'left', width: '400px', marginRight: '30px'}}>
+      <div className="button-container" style={{ marginTop: '10px', textAlign:'left', width: '400px', marginRight: '30px', marginLeft:'100px'}}>
         <Link to="/editDetails" className="button" style={{ fontSize: '14px', padding: '5px 10px'}}>
           Edit Details
         </Link>
@@ -73,6 +73,7 @@ function StudentHomepage() {
     <div class = 'child' style = {{marginLeft: '10%'}} >
     <div className="title">
         <h2>Upcoming Exams Scheduled</h2>
+   
         <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -97,7 +98,7 @@ function StudentHomepage() {
                 <TableCell align="center">{row.details}</TableCell>
                 <TableCell align="center">{row.seatNo}</TableCell>
                 <TableCell align="center">
-                    <Link to="/examStart" className="button" style={{ fontSize: '12px', width:'120px', display:'inline-flex', textAlign:'center'}}>
+                    <Link to="/examStart" className="button" style={{ fontSize: '12px', width:'115px', display:'inline-flex', textAlign:'center'}}>
                       Access Exam
                     </Link>
                 </TableCell>
@@ -122,11 +123,13 @@ function StudentHomepage() {
           </TableHead>
           <TableBody>
               <TableRow>
-                <TableCell align="center"> <div className="button-container" style={{width:'100%', height:'10vh', marginLeft:'0px', marginTop:'0px'}}>
-        <Link to="/testEquipment" className="studentButton" align = 'left'>
-          Test Your Equipment
-        </Link>
-      </div></TableCell>
+                <TableCell align="center">
+                  <div className="button-container" style={{width:'100%', height:'10vh', marginLeft:'0px', marginTop:'0px'}}>
+                    <Link to="/testEquipment" className="studentButton" align = 'left'>
+                      Test Your Equipment
+                    </Link>
+                  </div>
+                </TableCell>
               </TableRow>
           </TableBody>
         </Table>
