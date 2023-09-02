@@ -43,7 +43,7 @@ function StudentHomepage() {
         <div class = 'child'>
         <div className="title">
           <h2>Student Details</h2>
-          <div style={{ width: '130%'}}>
+          <div style={{ width: '120%'}}>
           <TableContainer component={Paper}>
           <Table sx={{ minWidth: 100 }} aria-label="simple table">
 
@@ -70,7 +70,7 @@ function StudentHomepage() {
         </Link>
       </div>
       </div>
-    <div class = 'child' style = {{marginLeft: '15%'}} >
+    <div class = 'child' style = {{marginLeft: '10%'}} >
     <div className="title">
         <h2>Upcoming Exams Scheduled</h2>
         <TableContainer component={Paper}>
@@ -96,7 +96,11 @@ function StudentHomepage() {
                 <TableCell align="center">{row.examStart}</TableCell>
                 <TableCell align="center">{row.details}</TableCell>
                 <TableCell align="center">{row.seatNo}</TableCell>
-                <TableCell align="center">{row.accessExam}</TableCell>
+                <TableCell align="center">
+                    <Link to="/examStart" className="button" style={{ fontSize: '12px', width:'120px', display:'inline-flex', textAlign:'center'}}>
+                      Access Exam
+                    </Link>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
