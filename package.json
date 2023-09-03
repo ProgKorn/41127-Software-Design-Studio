@@ -1,0 +1,14 @@
+{
+  "name": "41127-software-design-studio",
+  "version": "1.0.0",
+  "description": "* This web system enables students to sit a proctored exam and examiners to maintain academic integrity.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.0.0"
+  }
+}
