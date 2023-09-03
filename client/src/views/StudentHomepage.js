@@ -62,7 +62,13 @@ function StudentHomepage() {
                             <TableHead>
                                 <TableRow>
                                     <StyledTableCell>Student Details</StyledTableCell>
-                                    <StyledTableCell></StyledTableCell>
+                                    <StyledTableCell  align = 'right'>
+                                <div className=".button-container-student">
+                                <Link to="/editdetails" className="student-button" style= {{ width:'200px', display:'inline-flex', textAlign:'center'}}>
+                                    Edit Details
+                                </Link>
+                                </div>
+                            </StyledTableCell>
                                 </TableRow> 
                             </TableHead>
                             <TableBody>
@@ -80,11 +86,6 @@ function StudentHomepage() {
                             </TableBody>
                         </Table>
                     </TableContainer>  
-                </div>
-                <div className="button-container" style={{ marginTop: '10px', textAlign:'left', width: '400px', marginRight: '30px', marginLeft:'100px'}}>
-                    <Link to="/editDetails" className="student-button" style={{ fontSize: '15px', padding: '5px 10px'}}>
-                        Edit Details
-                    </Link>
                 </div>
             </div>
             <div class = 'child' style = {{marginLeft: '10%'}} >
@@ -133,7 +134,7 @@ function StudentHomepage() {
                 </TableContainer>
             </div>
         </div>
-        <TableContainer component={Paper} style = {{width: '80%', marginLeft: '2%'}}>
+        <TableContainer component={Paper} style = {{width: '80%', marginLeft: '2%' , marginTop: '50px'}}>
           <Table sx={{ minWidth: 500 }} aria-label="customized table">
             <TableHead>
                 <TableRow>
