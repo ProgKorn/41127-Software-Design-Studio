@@ -4,6 +4,7 @@ import Login from './Login';
 import Header from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
+import FacialLandmarkRecognition from './FacialLandmarkRecognition';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
+          <Route path="/faciallandmarkrecognition" element={<FacialLandmarkRecognition />} />
         </Routes>
       </div>
     </Router>
