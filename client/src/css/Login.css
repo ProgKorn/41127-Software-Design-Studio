@@ -1,0 +1,55 @@
+/*login related css classes*/
+
+.form {
+    width: 35vw;
+    margin: 12px 10px;
+    height: 4vw;
+    border-radius: 20px;
+    font-size: 25px;
+    color: black;
+    padding: 1%;
+    justify-content: center;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.back-link {
+    text-decoration: none; /* Remove underline */
+    color: #363737; /* Change text color */
+    font-weight: bold; /* Make the text bold */
+    font-size: 22px; /* Adjust font size */
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+/* Change link color when hovered */
+.back-link:hover {
+    color: #0056b3; /* Change color on hover */
+}
+
+.button-grey-out {
+    background-color: #e0e4e4;
+    color: rgb(74, 72, 72);
+    border-radius: 20px;
+    width: 35vw;
+    height: 4vw;
+    font-size: 25px;
+    margin: 10px, 12px;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.button-grey-out:hover {
+    background-color: #ced1d1;
+}
+
+.login-checkbox {
+    font-size: 20px;
+    margin-top: 15px;
+}
