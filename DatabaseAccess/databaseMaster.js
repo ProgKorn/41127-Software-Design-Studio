@@ -2,27 +2,6 @@ const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://Amy:amy@proctordb.ifkuafa.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
-async function connectToDatabase() {
-  try {
-    await client.connect();
-    console.log('Connected to MongoDB');
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-  }
-}
-
-// Close the MongoDB connection when the application exits
-process.on('SIGINT', async () => {
-  try {
-    await client.close();
-    console.log('MongoDB connection closed');
-    process.exit(0);
-  } catch (error) {
-    console.error('Error closing MongoDB connection:', error);
-    process.exit(1);
-  }
-});
-
 // for inserting new students
 async function insertStudent(docs) {
   const db = client.db("SoftwareDesignStudio");
@@ -89,6 +68,7 @@ module.exports = {
         case 'find':
           result = await findStudent(entry);
           console.log("Found documents:", result);
+          return result;
           break;
 
         // Example usage:
@@ -107,5 +87,3 @@ module.exports = {
   }
 
 };
-
-module.exports = {connectToDatabase}
