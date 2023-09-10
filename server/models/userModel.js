@@ -7,7 +7,7 @@ userSchema = new schema({
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
   },
-  studentId: {type: String, required: true},
+  studentId: {type: Number, required: true},
   seatNumber: {type: Number, required: true},
   faceImageUrl: {type: String, required: true} 
   
