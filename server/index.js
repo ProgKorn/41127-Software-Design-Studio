@@ -9,6 +9,8 @@ const databaseMaster = require('../DatabaseAccess/databaseMaster');
 const app = express();
 const port = process.env.PORT || 3000;
 const User = require('../server/models/userModel');
+const Exam = require('../server/models/examModel');
+
 
 
 app.use(bodyParser.json());
@@ -30,3 +32,10 @@ app.get('/getStudentDetails', (req,res) => {
 
   });
 });
+
+app.get('/getExamDetails', (req,res) => {
+  databaseMaster.dbOp('find', 1).then(data => {console.log(data);
+  const result = new Exam(data[0]);
+  res.json(result);
+  })
+})
