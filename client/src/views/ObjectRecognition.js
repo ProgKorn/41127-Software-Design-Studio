@@ -1,7 +1,7 @@
 // Import dependencies
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
-import * as cocossd from "@tensorflow-models/coco-ssd"; // Importing required model (COCO SSD) -- basically this is allowing us to download the pre-trained model
+import * as cocossd from "@tensorflow-models/coco-ssd"; // Importing required model (COCO SSD) -- this is allowing us to download the pre-trained model
 import Webcam from "react-webcam";
 import { drawRect } from "./utilities";
 
