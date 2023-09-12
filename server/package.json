@@ -20,8 +20,11 @@
   },
   "homepage": "https://github.com/ProgKorn/41127-Software-Design-Studio#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "mongodb": "^6.0.0",
     "mongoose": "^7.4.3"
   },
   "devDependencies": {

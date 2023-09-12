@@ -1,13 +1,13 @@
 import React from 'react';
 import AdminHeader from '../components/AdminHeader';
 
-function Exam() {
+function Flag() {
   return (
-    <div className="Exam">
+    <div className="Flag">
       <AdminHeader/>
-      <h1>Exam Details</h1>
+      <h1>Flag Details</h1>
     </div>
   );
 }
 
-export default Exam;
+export default Flag;

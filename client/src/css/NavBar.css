@@ -1,0 +1,15 @@
+/* CSS classes for navigation bar related things */
+
+.main {
+    display: flex;
+    max-width: 1170px;
+    margin: auto;
+    flex-direction: column;
+}
+
+.logo {
+    display: flex;
+    max-width: 1170px;
+    margin: auto;
+    flex-direction: column;
+}

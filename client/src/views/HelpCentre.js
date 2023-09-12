@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import '../css/Login.css';
 
 function HelpCentre() {
   return (
@@ -34,6 +35,9 @@ function HelpCentre() {
         <p>
             dont cheat bozo
         </p>
+      </div>
+      <div>
+      <a class="back-link" href="javascript:history.back()"> &lt; Back</a>
       </div>
     </div>
   );
