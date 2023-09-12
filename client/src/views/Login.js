@@ -1,5 +1,5 @@
 import '../App.css';
-import Header from './Header';
+import {Header} from './Header';
 import '../css/Login.css';
 import React, { useState } from 'react';
 import axios from 'axios';

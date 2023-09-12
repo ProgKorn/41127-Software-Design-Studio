@@ -3,15 +3,21 @@
 }
 
 .App-logo {
-  height: 200px;
+  height: 13vw;
   pointer-events: none;
+  margin-bottom: 2vw;
 }
 
+.Title-logo {
+  height: 20vw;
+  pointer-events: none;
+}
+/* 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
 .App-header {
   background-color: #ffffff;
@@ -51,7 +57,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 10vw;
+  margin-top: 3vw;
 }
 
 .button {

@@ -1,7 +1,7 @@
 import '../App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './Login';
-import Header from './Header';
+import { Title } from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
 import AdminDashboard from './AdminDashboard';
@@ -48,7 +48,7 @@ function App() {
 function HomePage() {
   return (
     <div>
-      <Header />
+      <Title />
       <div className="button-container">
         <Link to="/login" className="button">
           Sign In
