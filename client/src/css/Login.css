@@ -15,22 +15,6 @@
     text-align: left;
 }
 
-.back-link {
-    text-decoration: none; /* Remove underline */
-    color: #363737; /* Change text color */
-    font-weight: bold; /* Make the text bold */
-    font-size: 22px; /* Adjust font size */
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-}
-
-/* Change link color when hovered */
-.back-link:hover {
-    color: #0056b3; /* Change color on hover */
-}
-
 .button-grey-out {
     background-color: #e0e4e4;
     color: rgb(74, 72, 72);
@@ -53,4 +37,20 @@
 .login-checkbox {
     font-size: 20px;
     margin-top: 15px;
+    color: rgb(74, 72, 72);
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.sign-in-header {
+    margin-bottom: 3vw;
+    background-color: #dfdfe4;
+    min-height: 6vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    padding: 2px;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }

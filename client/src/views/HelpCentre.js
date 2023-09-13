@@ -1,21 +1,74 @@
 import React from 'react';
-import {Header} from './Header';
+import HelpCentreHeader from '../components/HelpCentreHeader';
+import '../css/HelpCentre.css'
 import '../css/Login.css';
+import SearchIcon from '@mui/icons-material/Search';
+import { InputAdornment, TextField } from '@mui/material';
+import {IconButton, Grid, Button} from '@mui/material';
+import { Link } from 'react-router-dom';
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
+import BuildIcon from '@mui/icons-material/Build';
+import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
+function Search() {
+  //search documentation logic
+}
 
 function HelpCentre() {
   return (
-    <div className="HelpCentre">
-        <Header />
-      {/* <h1 className="help-centre-title">Sentinel Help Centre</h1> */}
+    <div>
+      <HelpCentreHeader/>
       <header className="help-centre-header">
-        <h1>Sentinel Help Centre</h1>
-        <h4>How may we help?</h4>
+        <h1 className="text">Sentinel Help Centre</h1>
         <div>
-            <input type="text" placeholder="Search the documentation" />
-            <button>Search</button>
+            <TextField
+             variant="filled"
+             label="Search..."
+             className="searchBox"
+            //  helperText="Your search returned 0 items"
+             InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => {
+                    Search()
+                  }}>
+                    <SearchIcon/>
+                  </IconButton>
+                </InputAdornment>
+              ),
+             }}
+            />
+
         </div>
       </header>
-      <div className="qna-section">
+      <Grid container rowSpacing={4} columnSpacing={{ xs: 1 }}>
+						<Grid item xs={3}>
+							<Button component={Link} to="" className="helpDashboardButton" variant="contained">
+								<div className="helpDashboardIcons"><AssignmentIcon/></div>
+								User Manual
+							</Button>
+						</Grid>
+						<Grid item xs={3}>
+							<Button component={Link} to="" className="helpDashboardButton" variant="contained">
+							<div className="helpDashboardIcons"><FaceRetouchingOffIcon/></div>
+								Face Auth Troubleshoot?
+							</Button>
+						</Grid>
+						<Grid item xs={3}>
+							<Button component={Link} to="" className="helpDashboardButton" variant="contained">
+								<div className="helpDashboardIcons"><BuildIcon/></div>
+								PC Min Specs?
+							</Button>
+						</Grid>
+						<Grid item xs={3}>
+							<Button component={Link} to="" className="helpDashboardButton" variant="contained">
+								<div className="helpDashboardIcons"><AssignmentLateIcon/></div>
+								Terms and Conditions
+              </Button>
+						</Grid>
+					</Grid>
+      {/* <div className="qna-section">
         <h3>Question: Where do i find my login credentials?</h3>
         <p>
             This is an explainer that is very revealing and definitely helped you a lot. Now you can log in!
@@ -35,10 +88,7 @@ function HelpCentre() {
         <p>
             dont cheat bozo
         </p>
-      </div>
-      <div>
-      <a class="back-link" href="javascript:history.back()"> &lt; Back</a>
-      </div>
+      </div> */}
     </div>
   );
 }

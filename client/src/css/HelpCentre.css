@@ -1,0 +1,40 @@
+.help-centre-header {
+  margin-bottom: 3vw;
+  background-color: #dfdfe4;
+  min-height: 8.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  padding: 2px;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.searchBox {
+    background-color: white;
+    width: 19vw;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.text {
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 40px;
+}
+
+.helpDashboardButton {
+    display: block;
+    color: #ffffff;
+    width: 100%;
+    max-width: 12rem;
+    height: 12rem;
+    margin: auto;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.helpDashboardIcons {
+    transform: scale(2.5);
+    padding: 10px;
+}
