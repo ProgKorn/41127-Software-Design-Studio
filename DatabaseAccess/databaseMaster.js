@@ -4,65 +4,80 @@ const client = new MongoClient(uri);
 
 async function generalAction(collection, actionType, field) {
   const db = client.db("SoftwareDesignStudio");
-  let result;
-    //dbMaster('insert', 'SomeCollection', [{ /* your document here */ }]);
-    //dbMaster('delete', 'SomeCollection', { field: 'value' });
-    //dbMaster('find', 'SomeCollection', { field: 'value' });
-    //dbMaster('update', 'SomeCollection', { query: { field: 'value' }, updateDoc: { field: 'newValue' } });
-    //dbMaster('display');
-  switch (actionType) {
-    case 'insert':
-      const collInsert = db.collection(collection);
-      result = await collInsert.insertMany(field);
-      console.log("Inserted IDs:", result.insertedIds);
-      return result.insertedIds;
-      
-    case 'delete':
-      const collDelete = db.collection(collection);
-      result = await collDelete.deleteMany(field);
-      console.log("Deleted count:", result.deletedCount);
-      return result.deletedCount;
-      
-    case 'find':
-      const collFind = db.collection(collection);
-      const cursor = collFind.find(field);
-      const results = [];
-      await cursor.forEach(doc => results.push(doc));
-      console.log("Found documents:", results);
-      return results;
-      
-    case 'update':
-      const collUpdate = db.collection(collection);
-      result = await collUpdate.updateMany(field.query, { $set: field.updateDoc });
-      console.log("Updated count:", result.modifiedCount);
-      return result.modifiedCount;
-      
-    case 'display':
-      const collections = await db.listCollections().toArray();
-      console.log(`Database: SoftwareDesignStudio`);
-      for (const collectionObj of collections) {
-        console.log(` Collection: ${collectionObj.name}`);
-        const doc = await db.collection(collectionObj.name).findOne({}, { projection: {_id: 0} });
-        if (doc) {
-          console.log('  Fields:', Object.keys(doc).join(', '));
-        } else {
-          console.log('  Nothing to display.');
-        }
-      }
-      break;
-      
-    default:
-      console.log("Invalid operation type.");
-      return null;
-  }
+  const coll = db.collection("UserDetails");
+  return await coll.insertMany(docs);
 }
 
+// for deleting students
+async function deleteStudent(email) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("UserDetails");
+  return await coll.deleteMany({ email });
+}
+
+async function findStudent(email, password) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("UserDetails");
+  const cursor = coll.find({ email, password });
+  const results = [];
+  await cursor.forEach(doc => results.push(doc));
+  return results;
+}
+
+async function updateStudent(email, updateDoc) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("UserDetails");
+  return await coll.updateMany({ email }, { $set: updateDoc });
+}
 
 module.exports = {
   dbMaster: async function (operationType, collection, field) {
     await client.connect();
     try {
-      return await generalAction(collection, operationType, field);
+      let result;
+      switch (operationType) {
+        // Example usage:
+        /*
+        {
+          "name": {
+            "firstName": "Example",
+            "lastName": "User"
+          },
+          "studentId": 12345678,
+          "seatNumber": 1,
+          "faceImageUrl": "URL"
+        }
+        */
+        // dbOp('insert', [{ /* your document here */ }]
+        case 'insert':
+          result = await insertStudent(entry);
+          console.log("Inserted IDs:", result.insertedIds);
+          break;
+
+        // Example usage:
+        // dbOp('delete', 12345678)
+        case 'delete':
+          result = await deleteStudent(entry);
+          console.log("Deleted count:", result.deletedCount);
+          break;
+
+        // Example usage:
+        // // dbOp('find', 12345678)
+        case 'find':
+          result = await findStudent(entry.email, entry.password);
+          console.log("Found documents:", result);
+          return result;
+
+        // Example usage:
+        // dbOp('update', { studentId : 12345678, updateDoc: { seatNumber : 200 }})
+        case 'update':
+          result = await updateStudent(entry.email, entry.updateDoc);
+          console.log("Updated count:", result.modifiedCount);
+          break;
+        default:
+          console.log("Invalid operation type.");
+      }
+
     } finally {
       await client.close();
     }

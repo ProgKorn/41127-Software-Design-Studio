@@ -4,6 +4,7 @@ import Login from './Login';
 import Header from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
+import ObjectRecognition from './ObjectRecognition';
 import AdminDashboard from './AdminDashboard';
 import Exam from './Exam';
 import ExamHistory from './ExamHistory';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
+          <Route path="/objectrecognition" element={<ObjectRecognition />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/examhistory" element={<ExamHistory />} />
           <Route path="/flaglog" element={<FlagLog />} />
