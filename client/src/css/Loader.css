@@ -1,0 +1,24 @@
+/* CSS loader overlay when waiting for data to process */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 1);
+    z-index: 1000;
+  }
+  
+  .overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .overlay-content p {
+    margin-top: 10px;
+    color: slategray;
+    font-size: 22px;
+    font-weight: 600;
+  }

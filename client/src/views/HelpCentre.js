@@ -1,33 +1,28 @@
-import React, { useState } from 'react';
-import HelpCentreHeader from '../components/HelpCentreHeader';
-import '../css/HelpCentre.css';
+import React, { useState, useEffect } from 'react';
+import Header from './Header';
 import '../css/Login.css';
-import { InputAdornment, TextField, IconButton, Grid, Button } from '@mui/material';
-import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
-import FlagIcon from '@mui/icons-material/Flag';
-import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import {UserManual, FaceAuthenticationTroubleshoot, ComputerSpecs, TermsAndConditions} from '../components/HelpCentrePages';
-import SearchBar from '../components/SearchBar';
+import Loader from '../components/Loader';
 
 function HelpCentre() {
-  const [selectedButton, setSelectedButton] = useState(null);
+  // Initialise loading state to true to make loader visible
+  const [loading, setLoading] = useState(true);
 
-  const handleButtonClick = (buttonName) => {
-    setSelectedButton(buttonName);
-  };
-
-  const handleBackButtonClick = () => {
-    setSelectedButton(null);
-  };
-
+  // Simulate an API call or other asynchronous operation
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false); // Set loading to false after 3 seconds
+    }, 3000);
+  }, []);
+  
   return (
-    <div>
-      <HelpCentreHeader/>
+    <div className="HelpCentre">
+        <Loader loading={loading} /> {/* Loader overlay */}
+      <Header />
       <header className="help-centre-header">
         <h1 className="text">Sentinel Help Centre</h1>
         <div>
-            <SearchBar />
+          <input type="text" placeholder="Search the documentation" />
+          <button>Search</button>
         </div>
       </header>
       {!selectedButton && (
