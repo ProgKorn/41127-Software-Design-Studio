@@ -1,8 +1,10 @@
 /* CSS classes for admin dashboard related things */
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 .adminDashboard {
     display: flex;
     flex-direction: column;
+    padding-top: 1rem;
 }
 
 .dashboardButton {
@@ -32,5 +34,7 @@
 }
 
 h1 {
-    color: slategray;
+    font-family: Montserrat, sans-serif;
+    color: rgb(104, 99, 124);
+    font-weight: 600;
 }
