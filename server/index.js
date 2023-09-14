@@ -1,13 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { dbOp } = require('../DatabaseAccess/databaseMaster');
+const flagRoutes = require('./routes/flag');
+const { dbOp } = require('../DatabaseAccess/databaseMaster'); // Database Operations from master file
 
 const app = express();
 const PORT = 4000;
+const Flag = require('../server/models/flagModel');
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use('/flag', flagRoutes);
 
 app.post('/login', async(req, res) => {
   const { username, password } = req.body;
