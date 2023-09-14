@@ -12,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "../css/AdminViews.css";
-import axios from 'axios';
+import axios from "axios";
 
 function createData(session, examinee, flag, status, flag_no, session_no) {
   return { session, examinee, flag, status, flag_no, session_no };
@@ -30,11 +30,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
-	fontSize: 16,
-	fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: "bold",
   },
   [`&.${tableCellClasses.body}`]: {
-	fontSize: 1148,
+    fontSize: 1148,
   },
 }));
 
@@ -49,53 +49,51 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function FlagLog() {
-
-	const [flags, setFlags] = React.useState([])
-	useEffect(()=> {
-		axios.get('http://localhost:4000/getFlagLog')
-    .then(flags => setFlags(flags.data))
-    .catch(err => console.log(err))
-	}, [])
+  const [flags, setFlags] = React.useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getFlagLog")
+      .then((flags) => setFlags(flags.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="FlagLog">
       <AdminHeader />
-      <h1>Flag Log</h1>
-      <Button
-        component={Link}
-        to="/flag"
-        variant="contained"
-        startIcon={<FlagRoundedIcon />}
-      >
-        Flag Page
-      </Button>
-      <div className="flagLogTable">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="left">Session</StyledTableCell>
-				<StyledTableCell align="left">Examinee</StyledTableCell>
-                <StyledTableCell align="left">Flag</StyledTableCell>
-                <StyledTableCell align="left">Status</StyledTableCell>
-                <StyledTableCell align="left">Flag No.</StyledTableCell>
-				<StyledTableCell align="left">Session No.</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((flag) => (
+      <div className="flagLogPage">
+
+		<div className="flagLogPageHeader">
+			<p style={{paddingLeft: '20px', paddingTop: '15px'}}>Flagged Incidents</p>
+		</div>
+
+        <div className="flagLogTable">
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
                 <TableRow>
-                  <TableCell align="left">{flag.session}</TableCell>
-				  <TableCell align="left">{flag.examinee}</TableCell>
-                  <TableCell align="left">{flag.flag}</TableCell>
-                  <TableCell align="left">{flag.status}</TableCell>
-                  <TableCell align="left">{flag.flag_no}</TableCell>
-				  <TableCell align="left">{flag.session_no}</TableCell>
+                  <StyledTableCell align="center">Session</StyledTableCell>
+                  <StyledTableCell align="center">Examinee</StyledTableCell>
+                  <StyledTableCell align="center">Flag</StyledTableCell>
+                  <StyledTableCell align="center">Status</StyledTableCell>
+                  <StyledTableCell align="center">Flag No.</StyledTableCell>
+                  <StyledTableCell align="center">Session No.</StyledTableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {rows.map((flag) => (
+                  <TableRow>
+                    <TableCell align="center">{flag.session}</TableCell>
+                    <TableCell align="center">{flag.examinee}</TableCell>
+                    <TableCell align="center">{flag.flag}</TableCell>
+                    <TableCell align="center">{flag.status}</TableCell>
+                    <TableCell align="center">{flag.flag_no}</TableCell>
+                    <TableCell align="center">{flag.session_no}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       </div>
     </div>
   );
