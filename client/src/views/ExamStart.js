@@ -34,7 +34,7 @@ function ExamStart() {
   };
 
   const handleButtonClick = () => { 
-    navigate("/exam");
+    navigate("/examsession");
   };
 
   return (
