@@ -68,6 +68,11 @@ module.exports = {
           console.log("Found documents:", result);
           return result;
 
+          case 'findAllRecords':
+            result = await find();
+            console.log("Found documents:", result);
+            return result;
+
         // Example usage:
         // dbOp('update', { studentId : 12345678, updateDoc: { seatNumber : 200 }})
         case 'update':

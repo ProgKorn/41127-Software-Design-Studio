@@ -21,6 +21,14 @@ app.post('/login', async(req, res) => {
   }
 });
 
+//Very half-baked get request -> needs more work to be funcitonal
+app.get('/getFlagLog', async(req, res) => {
+  const [flags, setFlags] = useState('');
+  const flag = await dbOp('findAllRecords');
+});
+
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

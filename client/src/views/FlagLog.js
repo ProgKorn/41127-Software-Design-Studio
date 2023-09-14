@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "../css/AdminViews.css";
+import axios from 'axios';
 
 function createData(session, examinee, flag, status, flag_no, session_no) {
   return { session, examinee, flag, status, flag_no, session_no };
@@ -47,12 +48,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function FlagLog() {
 
-	// const [flags, setFlags] = React.useState([])
-	// useEffect(()=> {
-	// 	axios.get('http://localhost:3000/getFlagLog')
-  //   .then(flags => setFlags(flags.data))
-  //   .catch(err => console.log(err))
-	// }, [])
+	const [flags, setFlags] = React.useState([])
+	useEffect(()=> {
+		axios.get('http://localhost:4000/getFlagLog')
+    .then(flags => setFlags(flags.data))
+    .catch(err => console.log(err))
+	}, [])
 
   return (
     <div className="FlagLog">
@@ -80,7 +81,7 @@ function FlagLog() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((flag) => (
+              {flags.map((flag) => (
                 <TableRow>
                   <TableCell align="left">{flag.session}</TableCell>
 				  <TableCell align="left">{flag.examinee}</TableCell>
