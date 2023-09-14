@@ -14,6 +14,7 @@ import Schedule from './Schedule';
 import LaunchExam from './LaunchExam';
 import CreateSession from './CreateSession';
 import ManageClasses from './ManageClasses';
+import ExamSession from './ExamSession';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/launchexam" element={<LaunchExam />} />
           <Route path="/createsession" element={<CreateSession />} />
           <Route path="/manageclasses" element={<ManageClasses />} />
+          <Route path="/examsession" element={<ExamSession />} />
         </Routes>
       </div>
     </Router>
