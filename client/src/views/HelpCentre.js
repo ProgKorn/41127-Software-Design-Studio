@@ -1,21 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import HelpCentreHeader from '../components/HelpCentreHeader';
-import '../css/HelpCentre.css'
+import '../css/HelpCentre.css';
 import '../css/Login.css';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment, TextField } from '@mui/material';
 import {IconButton, Grid, Button} from '@mui/material';
-import { Link } from 'react-router-dom';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import BuildIcon from '@mui/icons-material/Build';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import {UserManual, FaceAuthenticationTroubleshoot, ComputerSpecs, TermsAndConditions} from '../components/HelpCentrePages';
 
 function Search() {
   //search documentation logic
 }
 
 function HelpCentre() {
+  const [selectedButton, setSelectedButton] = useState(null);
+
+  const handleButtonClick = (buttonName) => {
+    setSelectedButton(buttonName);
+  };
+
+  const handleBackButtonClick = () => {
+    setSelectedButton(null);
+  };
+
   return (
     <div>
       <HelpCentreHeader/>
@@ -39,56 +49,51 @@ function HelpCentre() {
               ),
              }}
             />
-
         </div>
       </header>
-      <Grid container rowSpacing={4} columnSpacing={{ xs: 1 }}>
-						<Grid item xs={3}>
-							<Button component={Link} to="" className="helpDashboardButton" variant="contained">
+      {!selectedButton && (
+        <div className='help-dashboard'>
+          <Grid container rowSpacing={10} columnSpacing={{ xs: 1 }}>
+						<Grid item xs={6}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('userManual')}>
 								<div className="helpDashboardIcons"><AssignmentIcon/></div>
 								User Manual
 							</Button>
 						</Grid>
-						<Grid item xs={3}>
-							<Button component={Link} to="" className="helpDashboardButton" variant="contained">
+						<Grid item xs={6}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('faceAuthTroubleshoot')}>
 							<div className="helpDashboardIcons"><FaceRetouchingOffIcon/></div>
 								Face Auth Troubleshoot?
 							</Button>
 						</Grid>
-						<Grid item xs={3}>
-							<Button component={Link} to="" className="helpDashboardButton" variant="contained">
+						<Grid item xs={6}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('pcMinSpecs')}>
 								<div className="helpDashboardIcons"><BuildIcon/></div>
 								PC Min Specs?
 							</Button>
 						</Grid>
-						<Grid item xs={3}>
-							<Button component={Link} to="" className="helpDashboardButton" variant="contained">
+						<Grid item xs={6}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('termsAndConditions')}>
 								<div className="helpDashboardIcons"><AssignmentLateIcon/></div>
 								Terms and Conditions
               </Button>
 						</Grid>
 					</Grid>
-      {/* <div className="qna-section">
-        <h3>Question: Where do i find my login credentials?</h3>
-        <p>
-            This is an explainer that is very revealing and definitely helped you a lot. Now you can log in!
-        </p>
-      </div>
-      <div className="qna-section">
-        <h3>Question: How do I enable browser permissions for camera and audio?</h3>
-        <p>
-            Probably a step by step here depending on browser? Could also just provide links to relevant explainers depending on browser also. {' '}
-            <a href="https://support.google.com/chrome/answer/114662?hl=en&co=GENIE.Platform%3DDesktop" target="_blank" rel="noopener noreferrer">
-                Chrome
-            </a>
-        </p>
-      </div>
-      <div className="qna-section">
-        <h3>Question: My session was terminated but thats bs how do i complain</h3>
-        <p>
-            dont cheat bozo
-        </p>
-      </div> */}
+        </div>
+      )}
+      
+      {selectedButton === 'userManual' && (
+      <UserManual onBackButtonClick={handleBackButtonClick} />
+      )}
+      {selectedButton === 'faceAuthTroubleshoot' && (
+      <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />
+      )}
+      {selectedButton === 'pcMinSpecs' && (
+      <ComputerSpecs onBackButtonClick={handleBackButtonClick} />
+      )}
+      {selectedButton === 'termsAndConditions' && (
+      <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
+      )}
     </div>
   );
 }

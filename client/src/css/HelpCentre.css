@@ -27,14 +27,48 @@
     display: block;
     color: #ffffff;
     width: 100%;
-    max-width: 12rem;
-    height: 12rem;
+    max-width: 22rem;
+    height: 14rem;
     margin: auto;
     flex-direction: column;
     border-radius: 20px;
+    justify-content: top;
 }
 
 .helpDashboardIcons {
-    transform: scale(2.5);
-    padding: 10px;
+    transform: scale(3);
+    padding: 30px;
+}
+
+.help-dashboard {
+    width: 1000px;
+    margin: auto;
+    padding: 40px;
+}
+
+.subtext {
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 20px;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #363737;
+    font-weight: bold;
+    font-size: 22px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.back-link:hover {
+    color: #0056b3;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
