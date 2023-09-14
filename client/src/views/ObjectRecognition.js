@@ -59,7 +59,7 @@ function ObjectRecognition() {
         <Webcam
           ref={webcamRef}
           muted={true} 
-          style={{
+          /* style={{
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
@@ -69,7 +69,7 @@ function ObjectRecognition() {
             zindex: 9,
             width: 640,
             height: 480,
-          }}
+          }} */
         />
 
         <canvas
