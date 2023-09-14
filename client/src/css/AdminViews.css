@@ -13,3 +13,19 @@
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 }
+
+.examLogPage {
+    padding: 5%;
+    padding-top: 1%;
+}
+
+.examLogPageHeader {
+    color: white;
+    background-color: #555A82;
+    height: 75px;
+    text-align: left;
+    font-size: 30px;
+    font-weight: bold;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}

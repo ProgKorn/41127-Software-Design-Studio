@@ -61,10 +61,11 @@ function FlagLog() {
     <div className="FlagLog">
       <AdminHeader />
       <div className="flagLogPage">
-
-		<div className="flagLogPageHeader">
-			<p style={{paddingLeft: '20px', paddingTop: '15px'}}>Flagged Incidents</p>
-		</div>
+        <div className="flagLogPageHeader">
+          <p style={{ paddingLeft: "20px", paddingTop: "15px" }}>
+            Flagged Incidents
+          </p>
+        </div>
 
         <div className="flagLogTable">
           <TableContainer component={Paper}>
