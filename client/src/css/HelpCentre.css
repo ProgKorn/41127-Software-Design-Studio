@@ -1,7 +1,7 @@
 .help-centre-header {
   margin-bottom: 3vw;
   background-color: #dfdfe4;
-  min-height: 8.5vw;
+  min-height: 12vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,8 +27,8 @@
     display: block;
     color: #ffffff;
     width: 100%;
-    max-width: 22rem;
-    height: 14rem;
+    max-width: 22vw;
+    height: 12vw;
     margin: auto;
     flex-direction: column;
     border-radius: 20px;
@@ -41,9 +41,9 @@
 }
 
 .help-dashboard {
-    width: 1000px;
+    width: 60vw;
     margin: auto;
-    padding: 40px;
+    padding: .5vw;
 }
 
 .subtext {
