@@ -10,8 +10,8 @@
     text-align: left;
     font-size: 30px;
     font-weight: bold;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .examLogPage {
@@ -26,6 +26,6 @@
     text-align: left;
     font-size: 30px;
     font-weight: bold;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
