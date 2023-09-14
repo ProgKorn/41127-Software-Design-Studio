@@ -11,10 +11,21 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import '../css/NavBar.css';
 
-function ResponsiveAppBar({routes}) {
+function ResponsiveAppBar({routes, icons}) {
   const pages = Object.keys(routes);
+
+  const buttonStyles = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.7rem",
+    fontWeight: 600,
+    textTransform: 'Capitalize',
+    color: 'white',
+    display: 'inline-block', 
+    padding: '1em 2em 1em 2em'
+  }
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "rgb(85, 90, 130)"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Replace below 'typography' component with the logo of image */}
@@ -39,10 +50,12 @@ function ResponsiveAppBar({routes}) {
             justifyContent="center"
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
-              <Button key={page} component={Link} to={routes[page]}
-                sx={{ my: 3, color: 'white', display: 'block' }}>
-                {page}
-              </Button>
+                <Button key={page} component={Link} to={routes[page]} sx={buttonStyles}>
+                  {icons[page]}
+                  <div style={{fontSize:"1.3em"}}>
+                    {page}
+                  </div>
+                </Button>
               ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>

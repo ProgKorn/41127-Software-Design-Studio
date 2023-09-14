@@ -1,0 +1,21 @@
+/* CSS classes for admin dashboard related things */
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.MuiTable-root {
+    border-radius: 40px;
+    font-family: Montserrat, sans-serif;
+}
+
+.MuiTableCell-root {
+    font-family: Montserrat, sans-serif;
+}
+
+
+.MuiTableHead-root {
+    
+    font-size: 0.6em;
+    font-family: Montserrat, sans-serif;
+    text-transform: uppercase;
+    background-color: rgb(245, 247, 253);
+    font-weight: 'bold' !important;
+}
