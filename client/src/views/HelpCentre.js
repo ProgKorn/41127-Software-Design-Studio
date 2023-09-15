@@ -6,8 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment, TextField } from '@mui/material';
 import {IconButton, Grid, Button} from '@mui/material';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
-import BuildIcon from '@mui/icons-material/Build';
-import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
+import FlagIcon from '@mui/icons-material/Flag';import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import {UserManual, FaceAuthenticationTroubleshoot, ComputerSpecs, TermsAndConditions} from '../components/HelpCentrePages';
 
@@ -68,8 +67,8 @@ function HelpCentre() {
 						</Grid>
 						<Grid item xs={6}>
 							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('pcMinSpecs')}>
-								<div className="helpDashboardIcons"><BuildIcon/></div>
-								PC Min Specs?
+								<div className="helpDashboardIcons"><FlagIcon/></div>
+								Flagging
 							</Button>
 						</Grid>
 						<Grid item xs={6}>

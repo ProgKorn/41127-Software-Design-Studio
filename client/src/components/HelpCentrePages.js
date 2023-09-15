@@ -29,7 +29,7 @@ function FaceAuthenticationTroubleshoot( {onBackButtonClick} ) {
 function ComputerSpecs( {onBackButtonClick} ) {
     return (
         <div className='content-container'>
-            <h2 className="text">PC Specifications</h2>
+            <h2 className="text">Flags</h2>
             <p className='subtext'>RTX4090 min obviously</p>
             <Button variant='contained' onClick={() => onBackButtonClick()}>
                 Back to Dashboard

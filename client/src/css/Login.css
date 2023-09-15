@@ -1,9 +1,9 @@
 /*login related css classes*/
 
 .form {
-    width: 35vw;
+    width: 35rem;
     margin: 12px 10px;
-    height: 4vw;
+    height: 4rem;
     border-radius: 20px;
     font-size: 25px;
     color: black;
@@ -19,8 +19,8 @@
     background-color: #e0e4e4;
     color: rgb(74, 72, 72);
     border-radius: 20px;
-    width: 35vw;
-    height: 4vw;
+    width: 35rem;
+    height: 4rem;
     font-size: 25px;
     margin: 10px, 12px;
     font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
