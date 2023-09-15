@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -11,8 +11,9 @@ import '../css/Exam.css';
 import '../css/StudentView.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentHeader from '../components/StudentHeader';
+import axios from 'axios';
 
-
+  
 function createData(name, value) {
   return { name, value };
 }
@@ -47,8 +48,30 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 
-function StudentHomepage() {
-  return (
+function StudentHomepage() 
+{
+   /* const [data, setData] = useState('');
+
+    const getStudentDetails = async () => {
+        await axios.get('http://localhost:4000/student/get').
+        then((response) => {
+            setData(response.data);
+            console.log(data);
+
+        }).catch(
+            error  => {
+            console.error('Error getting student details:', error);
+        });
+    };
+    */
+   const [student, getStudent] = useState('');
+   useEffect(() => {
+    axios.get('http://localhost:4000/student/get').then((response) => {
+        getStudent(response.data);
+    }); 
+   }, []);
+   //if (!data) return null;
+   return (
     <div>
         <StudentHeader/>
         <div className="main">
@@ -72,17 +95,23 @@ function StudentHomepage() {
                                 </TableRow> 
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => (
-                                <TableRow
-                                    key={row.name}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="left">{row.value}</TableCell>
-                                </TableRow>
-                                ))}
+                            <TableRow >
+                            <StyledTableCell>First Name: </StyledTableCell>  
+                            <StyledTableCell></StyledTableCell>
+                            </TableRow >
+                            <TableRow >
+                            <StyledTableCell>Last Name: </StyledTableCell>  
+                            <StyledTableCell></StyledTableCell>
+                            </TableRow>
+                            <TableRow >
+                            <StyledTableCell>Student ID: </StyledTableCell>  
+                            <StyledTableCell>{student.studentId}</StyledTableCell>
+                            </TableRow>
+                            <TableRow >
+                            <StyledTableCell>Seat Number: </StyledTableCell>  
+                            <StyledTableCell>{student.seatNumber}</StyledTableCell>
+                            </TableRow>
+
                             </TableBody>
                         </Table>
                     </TableContainer>  
