@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import AdminHeader from "../components/AdminHeader";
-import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
@@ -11,7 +10,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "../css/AdminViews.css";
+import "../css/AdminTables.css";
+import Card from "../components/Card";
 import axios from "axios";
 
 function createData(examName, term, examiner, attendance, examStart, examEnd, status, sessionNo) {
@@ -33,7 +33,22 @@ const exams = [
   createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
   createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
   createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 22", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
   createData("Exam 5", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 5", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
+  createData("Exam 22", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -70,14 +85,8 @@ function ExamHistory() {
   return (
     <div className="ExamHistory">
       <AdminHeader />
-      <div className="examLogPage">
-        <div className="examLogPageHeader">
-          <p style={{ paddingLeft: "20px", paddingTop: "15px" }}>
-            Exam History
-          </p>
-        </div>
-
-        <div className="examLogTable">
+      <div className="adminTable">
+        <Card title={"Exam History"}>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
@@ -108,7 +117,7 @@ function ExamHistory() {
               </TableBody>
             </Table>
           </TableContainer>
-        </div>
+        </Card>
       </div>
     </div>
   );

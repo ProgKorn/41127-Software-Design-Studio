@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import AdminHeader from "../components/AdminHeader";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
@@ -11,8 +11,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "../css/AdminViews.css";
+import "../css/AdminTables.css";
 import axios from "axios";
+import Card from "../components/Card";
 
 function createData(session, examinee, flag, status, flag_no, session_no) {
   return { session, examinee, flag, status, flag_no, session_no };
@@ -58,16 +59,10 @@ function FlagLog() {
   }, []);
 
   return (
-    <div className="FlagLog">
+    <div>
       <AdminHeader />
-      <div className="flagLogPage">
-        <div className="flagLogPageHeader">
-          <p style={{ paddingLeft: "20px", paddingTop: "15px" }}>
-            Flagged Incidents
-          </p>
-        </div>
-
-        <div className="flagLogTable">
+      <div class="adminTable">
+        <Card title={"Flagged Incidents"}>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
@@ -94,7 +89,7 @@ function FlagLog() {
               </TableBody>
             </Table>
           </TableContainer>
-        </div>
+        </Card>
       </div>
     </div>
   );
