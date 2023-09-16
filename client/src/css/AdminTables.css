@@ -3,3 +3,13 @@
     padding-top: 2%;
     margin-bottom: 500px;
 }
+
+.manageClassTableContainer {
+    width: 50%;
+}
+
+.resultComponent{
+    width: 50%;
+    align-self: right;
+    float: right;
+}
