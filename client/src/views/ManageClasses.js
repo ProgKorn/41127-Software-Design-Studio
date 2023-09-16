@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import AdminHeader from "../components/AdminHeader";
-import { Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Button, Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -11,20 +9,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "../css/AdminViews.css";
-import axios from "axios";
+import "../css/AdminTables.css";
+import Card from "../components/Card";
 
-
-function createData(session, examinee, flag, status, flag_no, session_no) {
-  return { session, examinee, flag, status, flag_no, session_no };
+function createData(name) {
+  return { name };
 }
 
-const exams = [
-  createData("Student 1", 159, 6.0, 24, 4.0, 1),
-  createData("Student 2", 237, 9.0, 37, 4.3, 1),
-  createData("Student 3", 262, 16.0, 24, 6.0, 1),
-  createData("Student 4", 305, 3.7, 67, 4.3, 1),
-  createData("Student 5", 356, 16.0, 49, 3.9, 1),
+const classes = [
+  createData("Class Code 1"),
+  createData("Class Code 2"),
+  createData("Class Code 3"),
+  createData("Class Code 4"),
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -50,29 +46,53 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function ManageClasses() {
-  return (
-    <div className="ManageClasses">
-      <AdminHeader />
-      <div className="manageClassesPage">
-        <div className="manageClassesPageHeader">
-          <p style={{ paddingLeft: "20px", paddingTop: "15px" }}>
-            Manage Classes
-          </p>
-        </div>
+  const [selectedRow, setSelectedRow] = React.useState(0);
+  const [selectionString, setSelectionString] = React.useState('Select a Class to Begin');
+  
+  useEffect(() => {
+    console.log({ selectedRow });
+    
+    if(selectedRow!=0){
+      setSelectionString(selectedRow + " has been selected")
+      //add .get function to retrieve class code
+      //add .get function to retrieve number of students
+      //add .get function to retrieve number of students
+    }
+  }, [selectedRow]);
+  
 
-        <div className="manageClassesTable">
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableBody>
-                {exams.map((exam) => (
-                  <TableRow>
-                    <TableCell align="center">{exams.examinee}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+  return (
+    <div>
+      <AdminHeader />
+      <div class="adminTable">
+        <Card title={"Manage Classes"}>
+          <Grid container columns={2}>
+            <Grid item xs={1}>
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableBody>
+                    {classes.map((thisClass) => (
+                      <TableRow
+                        hover
+                        onClick={() => setSelectedRow(thisClass.name)}
+                        key={thisClass.name}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell align="center">{thisClass.name}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+
+            <Grid item xs={1}>
+              <p>{selectionString}</p>
+            </Grid>
+          </Grid>
+        </Card>
       </div>
     </div>
   );
