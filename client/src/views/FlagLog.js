@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "../css/AdminTables.css";
+import StatusChip from "../components/StatusChip";
 import axios from "axios";
 import Card from "../components/Card";
 
@@ -20,11 +21,11 @@ function createData(session, examinee, flag, status, flag_no, session_no) {
 }
 
 const rows = [
-  createData("Student 1", 159, 6.0, "active", 4.0, 1),
-  createData("Student 2", 237, 9.0, "pending", 4.3, 1),
-  createData("Student 3", 262, 16.0, "inactive", 6.0, 1),
-  createData("Student 4", 305, 3.7, "active", 4.3, 1),
-  createData("Student 5", 356, 16.0, "inactive", 3.9, 1),
+  createData("Student 1", 159, 6.0, "Active", 4.0, 1),
+  createData("Student 2", 237, 9.0, "Pending", 4.3, 1),
+  createData("Student 3", 262, 16.0, "Inactive", 6.0, 1),
+  createData("Student 4", 305, 3.7, "Active", 4.3, 1),
+  createData("Student 5", 356, 16.0, "Inactive", 3.9, 1),
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -81,7 +82,15 @@ function FlagLog() {
                     <TableCell align="center">{flag.session}</TableCell>
                     <TableCell align="center">{flag.examinee}</TableCell>
                     <TableCell align="center">{flag.flag}</TableCell>
-                    <TableCell align="center" className={"label label-"+flag.status}>{flag.status}</TableCell>
+                    {/* <TableCell align="center" className={"label label-"+flag.status}>{flag.status}</TableCell> */}
+                    {/* <TableCell align="center">
+                      <Chip
+                        label={flag.status}
+                      />
+                    </TableCell> */}
+					<TableCell align="center">
+					<StatusChip status={flag.status} />
+                    </TableCell>
                     <TableCell align="center">{flag.flag_no}</TableCell>
                     <TableCell align="center">{flag.session_no}</TableCell>
                   </TableRow>
