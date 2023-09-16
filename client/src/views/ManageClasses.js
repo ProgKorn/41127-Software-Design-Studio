@@ -52,7 +52,7 @@ function ManageClasses() {
   useEffect(() => {
     console.log({ selectedRow });
     
-    if(selectedRow!=0){
+    if(selectedRow !== 0){
       setSelectionString(selectedRow + " has been selected")
       //add .get function to retrieve class code
       //add .get function to retrieve number of students

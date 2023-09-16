@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import AdminHeader from "../components/AdminHeader";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Chip  } from "@mui/material";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
@@ -20,11 +20,11 @@ function createData(session, examinee, flag, status, flag_no, session_no) {
 }
 
 const rows = [
-  createData("Student 1", 159, 6.0, 24, 4.0, 1),
-  createData("Student 2", 237, 9.0, 37, 4.3, 1),
-  createData("Student 3", 262, 16.0, 24, 6.0, 1),
-  createData("Student 4", 305, 3.7, 67, 4.3, 1),
-  createData("Student 5", 356, 16.0, 49, 3.9, 1),
+  createData("Student 1", 159, 6.0, "active", 4.0, 1),
+  createData("Student 2", 237, 9.0, "pending", 4.3, 1),
+  createData("Student 3", 262, 16.0, "inactive", 6.0, 1),
+  createData("Student 4", 305, 3.7, "active", 4.3, 1),
+  createData("Student 5", 356, 16.0, "inactive", 3.9, 1),
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -81,7 +81,7 @@ function FlagLog() {
                     <TableCell align="center">{flag.session}</TableCell>
                     <TableCell align="center">{flag.examinee}</TableCell>
                     <TableCell align="center">{flag.flag}</TableCell>
-                    <TableCell align="center">{flag.status}</TableCell>
+                    <TableCell align="center" className={"label label-"+flag.status}>{flag.status}</TableCell>
                     <TableCell align="center">{flag.flag_no}</TableCell>
                     <TableCell align="center">{flag.session_no}</TableCell>
                   </TableRow>
