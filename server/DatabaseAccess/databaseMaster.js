@@ -82,7 +82,7 @@ module.exports = {
       }
 
     } finally {
-      setTimeout(async ()  => await client.close(), 30000)
+      setTimeout(async ()  => await client.close(), 5000)
     }
   }
 

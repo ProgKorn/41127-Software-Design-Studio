@@ -11,9 +11,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/get', (req,res) => {
-    databaseMaster.dbOp('find', 42345678).then(data => {console.log(data);
-      const result = new User(data[0]);
-      res.json(result);
+    databaseMaster.dbOp('find', 42345678).then(data => {;
+      res.json(new User(data[0]));
   
     });
   });

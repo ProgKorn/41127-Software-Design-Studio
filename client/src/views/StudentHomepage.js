@@ -50,27 +50,25 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 function StudentHomepage() 
 {
-   /* const [data, setData] = useState('');
 
-    const getStudentDetails = async () => {
-        await axios.get('http://localhost:4000/student/get').
-        then((response) => {
-            setData(response.data);
-            console.log(data);
+   const [student, getStudent] = useState(''); // retrieve data returned by the api response
+   const [loading, setLoading] = useState(true); //loading state that prevents access to undefined data, while waiting to get a response from api call
 
-        }).catch(
-            error  => {
-            console.error('Error getting student details:', error);
-        });
-    };
-    */
-   const [student, getStudent] = useState('');
+   //send a get  api request to the server to retrieve and store the student details using axios 
    useEffect(() => {
     axios.get('http://localhost:4000/student/get').then((response) => {
         getStudent(response.data);
-    }); 
+        setLoading(false);
+    })
+    .catch(error => console.error(error)); 
    }, []);
-   //if (!data) return null;
+
+   //wait for all information to be retrieved before loading the student homepage
+   if (loading)
+   {
+      return <div> Retrieving Data </div>
+   }
+        const name = student.name;
    return (
     <div>
         <StudentHeader/>
@@ -97,11 +95,11 @@ function StudentHomepage()
                             <TableBody>
                             <TableRow >
                             <StyledTableCell>First Name: </StyledTableCell>  
-                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell>{name.firstName}</StyledTableCell>
                             </TableRow >
                             <TableRow >
                             <StyledTableCell>Last Name: </StyledTableCell>  
-                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell>{name.lastName}</StyledTableCell>
                             </TableRow>
                             <TableRow >
                             <StyledTableCell>Student ID: </StyledTableCell>  
