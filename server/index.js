@@ -1,12 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const studentRoutes = require('./routes/student');
+const adminRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
+const examRoutes = require('./routes/exam');
 const flagRoutes = require('./routes/flag');
 const { dbOp } = require('../DatabaseAccess/databaseMaster'); // Database Operations from master file
 
 const app = express();
-const PORT = 4000;
-const Flag = require('../server/models/flagModel');
+const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(bodyParser.json());

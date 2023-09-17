@@ -10,7 +10,7 @@ function AdminHeader() {
 
   return (
     <div>
-      <ResponsiveAppBar routes={adminRoutes}/>
+      <ResponsiveAppBar routes={adminRoutes} type='admin'/>
       <div className="AdminHeader"></div>
     </div>
   );
