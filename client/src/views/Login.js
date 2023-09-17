@@ -1,9 +1,10 @@
 import '../App.css';
-import Header from './Header';
 import '../css/Login.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import SignInHeader from '../components/SignInHeader'
+import { Checkbox } from '@mui/material';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -25,7 +26,10 @@ function Login() {
 
   return (
     <div className='App'>
-      <Header />
+      <SignInHeader />
+      <header className='sign-in-header'>
+        <h1 className="text">Sign In</h1>
+      </header>
       <div>
       <input
         className="form"
@@ -48,11 +52,9 @@ function Login() {
         <button onClick={handleLogin} className='button-grey-out'>Login</button>
       </div>
       <div>
-        <input type="checkbox" id="keepSignedIn"></input>
+        {/* <input type="checkbox" id="keepSignedIn"></input> */}
+        <Checkbox defaultChecked size='medium' color='default' />
         <label className='login-checkbox' htmlFor="keepSignedIn">Keep me signed in</label>
-      </div>
-      <div>
-      <a class="back-link" href="javascript:history.back()"> &lt; Back</a>
       </div>
     </div>
   );
