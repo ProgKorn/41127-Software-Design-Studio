@@ -1,7 +1,11 @@
+import '../App.css';
+import '../css/Login.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from './ErrorMessage'; 
+import SignInHeader from '../components/SignInHeader'
+import { Checkbox } from '@mui/material';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -11,10 +15,10 @@ function Login() {
 
   const handleLogin = async () => {
     await axios.post('http://localhost:4000/login', { username, password, keepLoggedIn: document.getElementById('keepSignedIn').checked }).then(response => {
-      if (response.data.isAdmin === true) {
-        navigate('/admin');
+    if (response.data.isAdmin === true) {
+        navigate('/admindashboard');
       } else {
-        navigate ('/student');
+        navigate ('/studenthomepage');
       }
       localStorage.setItem('token', response.data.token);}
     ).catch(error => {
@@ -27,10 +31,11 @@ function Login() {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Sign In</h1>
-      </div>
+    <div className='App'>
+      <SignInHeader />
+      <header className='sign-in-header'>
+        <h1 className="text">Sign In</h1>
+      </header>
       <div>
       <input
         className="form"
@@ -56,11 +61,9 @@ function Login() {
         <button onClick={handleLogin} className='button'>Login</button>
       </div>
       <div>
-        <input type="checkbox" id="keepSignedIn"></input>
-        <label htmlFor="keepSignedIn">Stay signed in?</label>
-      </div>
-      <div>
-        <button onClick={handleBack} className='button'>Back</button>
+        {/* <input type="checkbox" id="keepSignedIn"></input> */}
+        <Checkbox id="keepSignedIn" defaultChecked size='medium' color='default' />
+        <label className='login-checkbox' htmlFor="keepSignedIn">Keep me signed in</label>
       </div>
     </div>
   );

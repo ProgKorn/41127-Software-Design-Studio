@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
 
-  const user = await dbOp('find', { email : username});
+  const user = await dbOp('find-user', { email : username});
 
   if (!user || user.length === 0) {
     res.status(401).json({ success: false, message: 'User not found' });
@@ -25,7 +25,7 @@ app.post('/login', async(req, res) => {
       isAdmin: user[0].isAdmin,
     };
   
-    const expiresIn = keepSignedIn ? 'never' : '4h';
+    const expiresIn = keepSignedIn ? 'never' : '1h';
     const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn });
   
     res.json({
