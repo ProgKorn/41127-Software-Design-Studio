@@ -4,6 +4,7 @@ import Login from './Login';
 import Header from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
+import ObjectRecognition from './ObjectRecognition';
 import AdminDashboard from './AdminDashboard';
 import Exam from './Exam';
 import ExamHistory from './ExamHistory';
@@ -15,6 +16,7 @@ import CreateSession from './CreateSession';
 import ManageClasses from './ManageClasses';
 import StudentHomepage from './StudentHomepage';
 import PreviousExams from './PreviousExams';
+import ExamSession from './ExamSession';
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
+          <Route path="/objectrecognition" element={<ObjectRecognition />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/examhistory" element={<ExamHistory />} />
           <Route path="/flaglog" element={<FlagLog />} />
@@ -37,6 +40,7 @@ function App() {
           <Route path="/manageclasses" element={<ManageClasses />} />
           <Route path="/studenthomepage" element={<StudentHomepage />} />
           <Route path="/previousexams" element={<PreviousExams />} />
+          <Route path="/examsession" element={<ExamSession />} />
         </Routes>
       </div>
     </Router>

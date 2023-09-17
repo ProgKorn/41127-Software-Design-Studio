@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const studentRoutes = require('./routes/student');
@@ -11,13 +12,19 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/student', studentRoutes);
-app.use('/admin', adminRoutes);
-app.use('/auth', authRoutes);
-app.use('/exam', examRoutes);
 
-// MongoDB Connection (do not commit plaintext credentials)
+app.post('/login', async(req, res) => {
+  const { username, password } = req.body;
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  const user = await dbOp('find', { email : username, password: password});
+
+  if (user && user.length > 0) {
+    res.json({ success: true, message: 'Login successful', isAdmin: user[0].isAdmin });
+  } else {
+    res.status(401).json({ success: false, message: 'Invalid credentials' });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
