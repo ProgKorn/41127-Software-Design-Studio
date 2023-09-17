@@ -1,8 +1,16 @@
 const { Schema, model } = require('mongoose')
+
 var schema = Schema
 
-userShema = new schema({
-  userID: { type: String, require: true }
+userSchema = new schema({
+  name: {
+    firstName: {type: String, required: true},
+    lastName: {type: String, required: true},
+  },
+  studentId: {type: Number, required: true},
+  seatNumber: {type: Number, required: true},
+  faceImageUrl: {type: String, required: true} 
+  
 })
 
-module.exports = model("User", userShema)
+module.exports = model("User", userSchema)
