@@ -1,31 +1,36 @@
-import '../App.css';
-import Header from './Header';
-import '../css/Login.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ErrorMessage from './ErrorMessage'; 
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    await axios.post('http://localhost:4000/login', { username, password }).then(
-      response => {
+    await axios.post('http://localhost:4000/login', { username, password, keepLoggedIn: document.getElementById('keepSignedIn').checked }).then(response => {
       if (response.data.isAdmin === true) {
         navigate('/admin');
       } else {
         navigate ('/student');
-      }}).catch(
-      error => {
-        console.error('Login failed:', error);
+      }
+      localStorage.setItem('token', response.data.token);}
+    ).catch(error => {
+      setErrorMessage("Login failed: " + error.response.data.message);
     })
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <div className='App'>
-      <Header />
+    <div>
+      <div>
+        <h1>Sign In</h1>
+      </div>
       <div>
       <input
         className="form"
@@ -44,15 +49,18 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
       </div>
+      <div className="error-message-container">
+        {errorMessage && <ErrorMessage message={errorMessage}/>}
+      </div>
       <div>
-        <button onClick={handleLogin} className='button-grey-out'>Login</button>
+        <button onClick={handleLogin} className='button'>Login</button>
       </div>
       <div>
         <input type="checkbox" id="keepSignedIn"></input>
-        <label className='login-checkbox' htmlFor="keepSignedIn">Keep me signed in</label>
+        <label htmlFor="keepSignedIn">Stay signed in?</label>
       </div>
       <div>
-      <a class="back-link" href="javascript:history.back()"> &lt; Back</a>
+        <button onClick={handleBack} className='button'>Back</button>
       </div>
     </div>
   );

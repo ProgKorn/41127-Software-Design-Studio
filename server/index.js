@@ -1,7 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const { dbOp } = require('./DatabaseAccess/databaseMaster');
 const bodyParser = require('body-parser');
-const { dbOp } = require('../DatabaseAccess/databaseMaster');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = 4000;
@@ -10,12 +13,27 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/login', async(req, res) => {
-  const { username, password } = req.body;
+  const { username, password, keepSignedIn } = req.body;
 
-  const user = await dbOp('find', { email : username, password: password});
+  const user = await dbOp('find', { email : username});
 
-  if (user && user.length > 0) {
-    res.json({ success: true, message: 'Login successful', isAdmin: user[0].isAdmin });
+  if (!user || user.length === 0) {
+    res.status(401).json({ success: false, message: 'User not found' });
+  } else if (user[0].password && await bcrypt.compare(password, user[0].password)) {
+    const payload = {
+      userName: user[0].email,
+      isAdmin: user[0].isAdmin,
+    };
+  
+    const expiresIn = keepSignedIn ? 'never' : '4h';
+    const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn });
+  
+    res.json({
+      success: true,
+      message: 'Login successful',
+      isAdmin: user[0].isAdmin,
+      token,
+    });
   } else {
     res.status(401).json({ success: false, message: 'Invalid credentials' });
   }
