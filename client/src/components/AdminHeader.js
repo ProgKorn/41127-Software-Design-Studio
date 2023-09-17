@@ -19,7 +19,7 @@ function AdminHeader() {
 
   return (
     <div>
-      <ResponsiveAppBar routes={adminRoutes} icons={AdminIcons}/>
+      <ResponsiveAppBar routes={adminRoutes} type='admin' icons={AdminIcons}/>
       <div className="AdminHeader"></div>
     </div>
   );

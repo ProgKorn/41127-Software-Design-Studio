@@ -1,44 +1,78 @@
-import React from 'react';
-import Header from './Header';
+import React, { useState } from 'react';
+import HelpCentreHeader from '../components/HelpCentreHeader';
+import '../css/HelpCentre.css';
 import '../css/Login.css';
+import { InputAdornment, TextField, IconButton, Grid, Button } from '@mui/material';
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
+import FlagIcon from '@mui/icons-material/Flag';
+import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import {UserManual, FaceAuthenticationTroubleshoot, ComputerSpecs, TermsAndConditions} from '../components/HelpCentrePages';
+import SearchBar from '../components/SearchBar';
 
 function HelpCentre() {
+  const [selectedButton, setSelectedButton] = useState(null);
+
+  const handleButtonClick = (buttonName) => {
+    setSelectedButton(buttonName);
+  };
+
+  const handleBackButtonClick = () => {
+    setSelectedButton(null);
+  };
+
   return (
-    <div className="HelpCentre">
-        <Header />
-      {/* <h1 className="help-centre-title">Sentinel Help Centre</h1> */}
+    <div>
+      <HelpCentreHeader/>
       <header className="help-centre-header">
-        <h1>Sentinel Help Centre</h1>
-        <h4>How may we help?</h4>
+        <h1 className="text">Sentinel Help Centre</h1>
         <div>
-            <input type="text" placeholder="Search the documentation" />
-            <button>Search</button>
+            <SearchBar />
         </div>
       </header>
-      <div className="qna-section">
-        <h3>Question: Where do i find my login credentials?</h3>
-        <p>
-            This is an explainer that is very revealing and definitely helped you a lot. Now you can log in!
-        </p>
-      </div>
-      <div className="qna-section">
-        <h3>Question: How do I enable browser permissions for camera and audio?</h3>
-        <p>
-            Probably a step by step here depending on browser? Could also just provide links to relevant explainers depending on browser also. {' '}
-            <a href="https://support.google.com/chrome/answer/114662?hl=en&co=GENIE.Platform%3DDesktop" target="_blank" rel="noopener noreferrer">
-                Chrome
-            </a>
-        </p>
-      </div>
-      <div className="qna-section">
-        <h3>Question: My session was terminated but thats bs how do i complain</h3>
-        <p>
-            dont cheat bozo
-        </p>
-      </div>
-      <div>
-      <a class="back-link" href="javascript:history.back()"> &lt; Back</a>
-      </div>
+      {!selectedButton && (
+        <div className='help-dashboard'>
+          <Grid container rowSpacing={10} columnSpacing={{ xs: 1 }}>
+						<Grid item xs={6}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('userManual')}>
+								<div className="helpDashboardIcons"><AssignmentIcon/></div>
+								User Manual
+							</Button>
+						</Grid>
+						<Grid item xs={6}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('faceAuthTroubleshoot')}>
+							<div className="helpDashboardIcons"><FaceRetouchingOffIcon/></div>
+								Face Auth Troubleshoot?
+							</Button>
+						</Grid>
+						<Grid item xs={6}>
+							<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')}>
+								<div className="helpDashboardIcons"><FlagIcon/></div>
+								Flagging
+							</Button>
+						</Grid>
+						<Grid item xs={6}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('termsAndConditions')}>
+								<div className="helpDashboardIcons"><AssignmentLateIcon/></div>
+								Terms and Conditions
+              </Button>
+						</Grid>
+					</Grid>
+        </div>
+      )}
+      
+      {selectedButton === 'userManual' && (
+      <UserManual onBackButtonClick={handleBackButtonClick} />
+      )}
+      {selectedButton === 'faceAuthTroubleshoot' && (
+      <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />
+      )}
+      {selectedButton === 'flagging' && (
+      <ComputerSpecs onBackButtonClick={handleBackButtonClick} />
+      )}
+      {selectedButton === 'termsAndConditions' && (
+      <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
+      )}
     </div>
   );
 }
