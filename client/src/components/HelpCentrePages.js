@@ -30,7 +30,7 @@ function ComputerSpecs( {onBackButtonClick} ) {
     return (
         <div className='content-container'>
             <h2 className="text">Flags</h2>
-            <p className='subtext'>RTX4090 min obviously</p>
+            <p className='subtext'>Prob outline what are the key things being flagged, also define the circumstance under which an exam is terminated + the steps that follow</p>
             <Button variant='contained' onClick={() => onBackButtonClick()}>
                 Back to Dashboard
             </Button>

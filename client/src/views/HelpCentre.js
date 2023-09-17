@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 import HelpCentreHeader from '../components/HelpCentreHeader';
 import '../css/HelpCentre.css';
 import '../css/Login.css';
-import SearchIcon from '@mui/icons-material/Search';
-import { InputAdornment, TextField } from '@mui/material';
-import {IconButton, Grid, Button} from '@mui/material';
+import { InputAdornment, TextField, IconButton, Grid, Button } from '@mui/material';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
-import FlagIcon from '@mui/icons-material/Flag';import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
+import FlagIcon from '@mui/icons-material/Flag';
+import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import {UserManual, FaceAuthenticationTroubleshoot, ComputerSpecs, TermsAndConditions} from '../components/HelpCentrePages';
-
-function Search() {
-  //search documentation logic
-}
+import SearchBar from '../components/SearchBar';
 
 function HelpCentre() {
   const [selectedButton, setSelectedButton] = useState(null);
@@ -31,23 +27,7 @@ function HelpCentre() {
       <header className="help-centre-header">
         <h1 className="text">Sentinel Help Centre</h1>
         <div>
-            <TextField
-             variant="filled"
-             label="Search..."
-             className="searchBox"
-            //  helperText="Your search returned 0 items"
-             InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => {
-                    Search()
-                  }}>
-                    <SearchIcon/>
-                  </IconButton>
-                </InputAdornment>
-              ),
-             }}
-            />
+            <SearchBar />
         </div>
       </header>
       {!selectedButton && (
@@ -66,7 +46,7 @@ function HelpCentre() {
 							</Button>
 						</Grid>
 						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('pcMinSpecs')}>
+							<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')}>
 								<div className="helpDashboardIcons"><FlagIcon/></div>
 								Flagging
 							</Button>
@@ -87,7 +67,7 @@ function HelpCentre() {
       {selectedButton === 'faceAuthTroubleshoot' && (
       <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />
       )}
-      {selectedButton === 'pcMinSpecs' && (
+      {selectedButton === 'flagging' && (
       <ComputerSpecs onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedButton === 'termsAndConditions' && (

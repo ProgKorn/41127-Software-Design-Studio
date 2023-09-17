@@ -2,6 +2,7 @@
 
 .form {
     width: 35rem;
+    max-width: 80%;
     margin: 12px 10px;
     height: 4rem;
     border-radius: 20px;
@@ -20,6 +21,7 @@
     color: rgb(74, 72, 72);
     border-radius: 20px;
     width: 35rem;
+    max-width: 80%;
     height: 4rem;
     font-size: 25px;
     margin: 10px, 12px;
