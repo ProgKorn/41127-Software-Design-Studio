@@ -33,8 +33,8 @@ function ExamStart() {
     setIsChecked(event.target.checked);
   };
 
-  const handleButtonClick = () => {
-    navigate("/exam");
+  const handleButtonClick = () => { 
+    navigate("/examsession");
   };
 
   return (

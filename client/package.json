@@ -9,6 +9,8 @@
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.6",
     "@mui/styled-engine-sc": "^5.14.6",
+    "@tensorflow-models/coco-ssd": "^2.1.0",
+    "@tensorflow/tfjs": "^3.21.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

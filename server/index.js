@@ -1,10 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { dbOp } = require('../DatabaseAccess/databaseMaster');
-
+const mongoose = require('mongoose');
+const studentRoutes = require('./routes/student');
+const adminRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
+const examRoutes = require('./routes/exam');
 const app = express();
-const PORT = 4000;
+const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(bodyParser.json());

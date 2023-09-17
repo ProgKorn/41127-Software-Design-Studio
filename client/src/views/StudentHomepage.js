@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -11,8 +11,9 @@ import '../css/Exam.css';
 import '../css/StudentView.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentHeader from '../components/StudentHeader';
+import axios from 'axios';
 
-
+  
 function createData(name, value) {
   return { name, value };
 }
@@ -47,8 +48,28 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 
-function StudentHomepage() {
-  return (
+function StudentHomepage() 
+{
+
+   const [student, getStudent] = useState(''); // retrieve data returned by the api response
+   const [loading, setLoading] = useState(true); //loading state that prevents access to undefined data, while waiting to get a response from api call
+
+   //send a get  api request to the server to retrieve and store the student details using axios 
+   useEffect(() => {
+    axios.get('http://localhost:4000/student/get').then((response) => {
+        getStudent(response.data);
+        setLoading(false);
+    })
+    .catch(error => console.error(error)); 
+   }, []);
+
+   //wait for all information to be retrieved before loading the student homepage
+   if (loading)
+   {
+      return <div> Retrieving Data </div>
+   }
+        const name = student.name;
+   return (
     <div>
         <StudentHeader/>
         <div className="main">
@@ -72,17 +93,23 @@ function StudentHomepage() {
                                 </TableRow> 
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => (
-                                <TableRow
-                                    key={row.name}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="left">{row.value}</TableCell>
-                                </TableRow>
-                                ))}
+                            <TableRow >
+                            <StyledTableCell>First Name: </StyledTableCell>  
+                            <StyledTableCell>{name.firstName}</StyledTableCell>
+                            </TableRow >
+                            <TableRow >
+                            <StyledTableCell>Last Name: </StyledTableCell>  
+                            <StyledTableCell>{name.lastName}</StyledTableCell>
+                            </TableRow>
+                            <TableRow >
+                            <StyledTableCell>Student ID: </StyledTableCell>  
+                            <StyledTableCell>{student.studentId}</StyledTableCell>
+                            </TableRow>
+                            <TableRow >
+                            <StyledTableCell>Seat Number: </StyledTableCell>  
+                            <StyledTableCell>{student.seatNumber}</StyledTableCell>
+                            </TableRow>
+
                             </TableBody>
                         </Table>
                     </TableContainer>  
