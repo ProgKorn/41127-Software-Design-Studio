@@ -19,3 +19,16 @@
     background-color: rgb(245, 247, 253);
     font-weight: 'bold' !important;
 }
+
+.scheduleButton {
+    display: block;
+    color: #ffffff;
+    width: 10rem;
+    height: 10rem;
+    flex-direction: column;
+}
+
+.scheduleIcons {
+    transform: scale(2.2);
+    padding-top: 10px;
+}

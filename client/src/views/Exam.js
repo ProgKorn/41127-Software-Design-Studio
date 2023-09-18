@@ -31,7 +31,7 @@ function Exam() {
     <div className="Exam">
       <AdminHeader/>
       <h1>Exam Details</h1>
-      <Grid container spacing={2} columns={16} >
+      <Grid container spacing={2} columns={16} style={{ paddingLeft: 30, paddingRight: 30}} >
         <Grid item xs={8}>
           <Card title={"Examination Details"}>
             <div style={{width: '100%', display:'flex', fontFamily: 'Montserrat, sans-serif',  borderBottom: 'solid 1px rgb(223, 223, 223)',
@@ -64,13 +64,13 @@ function Exam() {
                       key={row.name}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 }, fontFamily: 'Montserrat, sans-serif' }}
                     >
-                      <TableCell component="th" scope="row">
+                      <TableCell component="th" scope="row" style={{fontFamily: 'Montserrat, sans-serif'}}>
                         {row.name}
                       </TableCell>
-                      <TableCell align="center">{row.calories}</TableCell>
-                      <TableCell align="center">{row.fat}</TableCell>
-                      <TableCell align="center">{row.carbs}</TableCell>
-                      <TableCell align="center">{row.protein}</TableCell>
+                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>{row.calories}</TableCell>
+                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>{row.fat}</TableCell>
+                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>{row.carbs}</TableCell>
+                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>{row.protein}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
