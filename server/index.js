@@ -11,7 +11,6 @@ const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
 const flagRoutes = require('./routes/flag');
 
-
 const app = express();
 const PORT = 4000;
 
