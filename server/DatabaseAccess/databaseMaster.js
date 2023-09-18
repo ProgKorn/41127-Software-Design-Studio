@@ -60,6 +60,36 @@ async function updateExam(examId, updateDoc) {
   return await coll.updateMany({ examId }, { $set: updateDoc });
 }
 
+/* Flag Functions */
+// for inserting a new flagged incident
+async function insertFlag(docs) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("FlaggedIncidents");
+  return await coll.insertOne(docs);
+}
+
+// for deleting an exam
+async function deleteFlag(flagId) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("FlaggedIncidents");
+  return await coll.deleteMany({ flagId });
+}
+
+async function findFlag(flagId) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("FlaggedIncidents");
+  const cursor = coll.find({ flagId });
+  const results = [];
+  await cursor.forEach(doc => results.push(doc));
+  return results;
+}
+
+async function updateFlag(flagId, updateDoc) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("FlaggedIncidents");
+  return await coll.updateMany({ flagId }, { $set: updateDoc });
+}
+
 module.exports = {
   // master function (entry represents the details)
   dbOp: async function (operationType, entry) {
@@ -107,26 +137,47 @@ module.exports = {
           console.log("Updated count:", result.modifiedCount);
           break;
 
-          case 'insert-exam':
-            result = await insertExam(entry);
-            console.log("Inserted IDs:", result.insertedIds);
-            break;
+        case 'insert-exam':
+          result = await insertExam(entry);
+          console.log("Inserted IDs:", result.insertedIds);
+          break;
   
-          case 'delete-exam':
-            result = await deleteExam(entry);
-            console.log("Deleted count:", result.deletedCount);
-            break;
+        case 'delete-exam':
+          result = await deleteExam(entry);
+          console.log("Deleted count:", result.deletedCount);
+          break;
   
-          case 'find-exam':
-            const db = client.db("SoftwareDesignStudio");
-            const coll = db.collection("ExamDetails");
-            const cursor = coll.find({});
-            return cursor.toArray(); // Convert the cursor to an array
+        case 'find-exam':
+          const db = client.db("SoftwareDesignStudio");
+          const coll = db.collection("ExamDetails");
+          const cursor = coll.find({});
+          return cursor.toArray(); // Convert the cursor to an array
   
-          case 'update-exam':
-            result = await updateExam(entry.examId, entry.updateDoc);
-            console.log("Updated count:", result.modifiedCount);
-            break;
+        case 'update-exam':
+          result = await updateExam(entry.examId, entry.updateDoc);
+          console.log("Updated count:", result.modifiedCount);
+          break;
+        
+        case 'insert-flag':
+          result = await insertFlag(entry);
+          console.log("Inserted Flag: ", result.insertedId);
+          break;
+    
+        case 'delete-flag':
+          result = await deleteFlag(entry);
+          console.log("Deleted count: ", result.deletedCount);
+          break;
+    
+        case 'find-flag':
+          result = await findFlag(entry);
+          console.log("Found flags: ", result);
+          return result;
+          break;
+    
+        case 'update-flag':
+          result = await updateFlag(entry.studentId, entry.updateDoc);
+          console.log("Updated count: ", result.modifiedCount);
+          break;
 
         default:
           console.log("Invalid operation type.");
