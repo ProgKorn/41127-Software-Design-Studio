@@ -5,14 +5,11 @@ const { dbOp } = require('./DatabaseAccess/databaseMaster');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
-const mongoose = require('mongoose');
 const studentRoutes = require('./routes/student');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
 const flagRoutes = require('./routes/flag');
-const { dbOp } = require('../DatabaseAccess/databaseMaster'); // Database Operations from master file
 
 const app = express();
 const PORT = 4000;
