@@ -1,7 +1,7 @@
 import '../App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './Login';
-import Header from './Header';
+import { Title } from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
 import FacialLandmarkRecognition from './FacialLandmarkRecognition';
@@ -15,7 +15,10 @@ import Schedule from './Schedule';
 import LaunchExam from './LaunchExam';
 import CreateSession from './CreateSession';
 import ManageClasses from './ManageClasses';
+import StudentHomepage from './StudentHomepage';
+import PreviousExams from './PreviousExams';
 import ExamSession from './ExamSession';
+import NoAccess from './NoAccess';
 
 function App() {
   return (
@@ -38,7 +41,10 @@ function App() {
           <Route path="/launchexam" element={<LaunchExam />} />
           <Route path="/createsession" element={<CreateSession />} />
           <Route path="/manageclasses" element={<ManageClasses />} />
+          <Route path="/studenthomepage" element={<StudentHomepage />} />
+          <Route path="/previousexams" element={<PreviousExams />} />
           <Route path="/examsession" element={<ExamSession />} />
+          <Route path="/noaccess" element={<NoAccess />} />
         </Routes>
       </div>
     </Router>
@@ -50,7 +56,7 @@ function App() {
 function HomePage() {
   return (
     <div>
-      <Header />
+      <Title />
       <div className="button-container">
         <Link to="/login" className="button">
           Sign In
