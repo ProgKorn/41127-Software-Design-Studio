@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
-
 const Exam = require('../models/examModel');
 const User = require('../models/userModel');
 const databaseMaster = require('../DatabaseAccess/databaseMaster')
