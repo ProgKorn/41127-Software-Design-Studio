@@ -50,32 +50,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 function StudentHomepage() 
 {
-
    const [student, getStudent] = useState(''); // retrieve data returned by the api response
    const [loading, setLoading] = useState(true); //loading state that prevents access to undefined data, while waiting to get a response from api call
-//    const [isAdmin, setIsAdmin] = useState(false);
-//    const navigate = useNavigate();
 
    //send a get  api request to the server to retrieve and store the student details using axios 
    useEffect(() => {
-    // Student View does not load locally so do not want to push untested code. Please test then uncomment.
-    // const token = localStorage.getItem('token');
-    // if (token) {
-	//   const decodedToken = jwt_decode(token);
-	//   console.log(decodedToken);
-    //   if (decodedToken.isAdmin === true) {
-    //     setIsAdmin(true);
-    //   } else {
-	// 	navigate('/noaccess');
-	//   }
-	// }
     axios.get('http://localhost:4000/student/get').then((response) => {
         getStudent(response.data);
         setLoading(false);
     })
     .catch(error => console.error(error)); 
    }, []);
-   //}, [isAdmin, navigate]);
 
    //wait for all information to be retrieved before loading the student homepage
    if (loading)

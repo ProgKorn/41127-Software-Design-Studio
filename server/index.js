@@ -11,12 +11,17 @@ const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
 const flagRoutes = require('./routes/flag');
 
+
 const app = express();
 const PORT = 4000;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/flag', flagRoutes);
+app.use('/student', studentRoutes);
+app.use('/admin', adminRoutes);
+app.use('/auth', authRoutes);
+app.use('/exam', examRoutes);
 
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
