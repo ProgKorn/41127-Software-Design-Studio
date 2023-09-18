@@ -25,7 +25,6 @@ function ExamStart() {
   const [examDetails, setExamDetails] = useState(null);
   const [loading, setLoading] = useState(true); // Initialize as true
   const navigate = useNavigate();
-  const examId = "64e5f5e6775cbbddcd2afab2";
 
   const fetchExamDetails = async () => {
     try {
