@@ -13,9 +13,22 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentHeader from '../components/StudentHeader';
 import axios from 'axios';
 
+  
+function createData(name, value) {
+  return { name, value };
+}
+
 function createData2(examName, examStart, details, seatNo, accessExam) {
   return {examName, examStart, details, seatNo, accessExam };
 }
+
+const rows = [
+  createData('Full Name:', 'John Doe'),
+  createData('Student ID:', '123456789'),
+  createData('Email:', 'test@gmail.com'),
+  createData('Institution:', 'UTS'),
+  createData('Time Zone:', 'Sydney')
+]
 
 const rows2 = [
   createData2('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', 'ACCESS'),
