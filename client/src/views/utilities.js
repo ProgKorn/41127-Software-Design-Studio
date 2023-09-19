@@ -1,3 +1,7 @@
+const MIN_INCIDENT_DURATION = 5000; // Minimum duration for an incident to be considered unique (in milliseconds)
+const incidents = [];
+const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
+
 export const cheatingObject = (detections) => {
   var personCounter = 0; // Keep track of how many people are in the frame
   // Loop through each prediction
@@ -5,33 +9,59 @@ export const cheatingObject = (detections) => {
     
     // Extract classes for each frame
     const object = prediction['class']; 
-    const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
+    const timestamp = Date.now();
 
     if (object === "person") { // Is this prediction a person?
       personCounter++; // Add to the person counter for the room
     }
 
-    var isCheating = objectConditions(object, bannedObjects, personCounter);
-    if (isCheating) {
-      // Raise Flagged Incident
-      console.log("I am raising a flag");
-    }
+    objectConditions(object, bannedObjects, personCounter, timestamp);
   });
 }
 
-function objectConditions(object, bannedObjects, personCounter) { // Return true if cheating is detected
-  var cheating = false; // Initially, assume no cheating
-  // Cheating Conditions
+function objectConditions(object, bannedObjects, personCounter, timestamp) { // Return true if cheating is detected
+  /* Cheating Conditions */
   if (personCounter > 1) { // Cheating Action -- more than one person in the room
-    cheating = true;
-    console.log("Cheating Detected! More than one person in the room.");
+    incidentCheck(timestamp, "People Counter");
   }
   if (bannedObjects.includes(object)) { // Cheating Action -- using a banned object i.e cell phone
-    cheating = true;
-    console.log("Cheating Detected! Banned object spotted in frame.");
+    //console.log("Cheating Detected! Banned object spotted in frame.");
+    incidentCheck(timestamp, "Banned Object");
   }
+}
 
-  return cheating;
+function incidentCheck(timestamp, flagType) {
+  // Check if an incident with this flag type already exists
+  const existingIncident = incidents.find((incident) => {
+    return incident.flagType === flagType;
+  });
+
+  if (!existingIncident) {
+    // Create a new incident
+    const newIncident = {
+      flagType: flagType,
+      timestamp,
+      flagged: true,
+    };
+
+    // Add it to the incidents list
+    incidents.push(newIncident);
+    //console.log("Active flags " + JSON.stringify(incidents));
+    console.log("New incident " + JSON.stringify(newIncident));
+
+    // Raise a flag for this incident
+    console.log("Cheating Detected! Banned object spotted in frame.");
+    //console.log("Cheating Detected! More than one person in the room.");
+
+    // Set a timer to reset the incident after a duration
+    setTimeout(() => {
+      const index = incidents.findIndex((incident) => incident === newIncident);
+      if (index !== -1) { // if found
+        incidents.splice(index, 1);
+        console.log('Incident reset.');
+      }
+    }, MIN_INCIDENT_DURATION);
+  }
 }
 
 export const drawRect = (detections, ctx) => {
