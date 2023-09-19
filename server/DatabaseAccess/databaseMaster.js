@@ -53,10 +53,10 @@ async function deleteStudent(studentId) {
   return await coll.deleteMany({ studentId });
 }
 
-async function findStudent(studentId) {
+async function findStudent(email) {
   const db = client.db("SoftwareDesignStudio");
   const coll = db.collection("StudentDetails");
-  const cursor = coll.find({ studentId });
+  const cursor = coll.find({ email });
   const results = [];
   await cursor.forEach(doc => results.push(doc));
   return results;

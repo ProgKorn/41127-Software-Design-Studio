@@ -8,8 +8,9 @@ router.get('/', (req, res) => {
     res.json({ message: 'Student' });
 });
 
-router.get('/get', (req,res) => {
-    databaseMaster.dbOp('find-student', 42345678).then(data => {;
+router.get('/get/:email', (req,res) => {
+  const email = req.params.email;
+    databaseMaster.dbOp('find-student', email).then(data => {;
       res.json(new User(data[0]));
   
     });

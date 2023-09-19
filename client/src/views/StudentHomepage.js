@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -12,6 +13,7 @@ import '../css/StudentView.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentHeader from '../components/StudentHeader';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
   
 function createData(name, value) {
@@ -52,14 +54,25 @@ function StudentHomepage()
 {
    const [student, getStudent] = useState(''); // retrieve data returned by the api response
    const [loading, setLoading] = useState(true); //loading state that prevents access to undefined data, while waiting to get a response from api call
-
+   const navigate = useNavigate();
    //send a get  api request to the server to retrieve and store the student details using axios 
    useEffect(() => {
-    axios.get('http://localhost:4000/student/get').then((response) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+	  const decodedToken = jwt_decode(token);
+      const url ="http://localhost:4000/student/get/" + decodedToken.userName;
+      axios.get(url).then((response) => {
         getStudent(response.data);
         setLoading(false);
-    })
-    .catch(error => console.error(error)); 
+        })
+        .catch(error => console.error(error)); 
+    
+    } else {
+        navigate("/login");
+        setLoading(false);
+        
+    }
+
    }, []);
 
    //wait for all information to be retrieved before loading the student homepage
@@ -107,6 +120,10 @@ function StudentHomepage()
                             <TableRow >
                             <StyledTableCell>Seat Number: </StyledTableCell>  
                             <StyledTableCell>{student.seatNumber}</StyledTableCell>
+                            </TableRow>
+                            <TableRow >
+                            <StyledTableCell>Email: </StyledTableCell>  
+                            <StyledTableCell>{student.email}</StyledTableCell>
                             </TableRow>
 
                             </TableBody>

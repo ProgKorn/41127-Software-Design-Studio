@@ -9,7 +9,8 @@ userSchema = new schema({
   },
   studentId: {type: Number, required: true},
   seatNumber: {type: Number, required: true},
-  faceImageUrl: {type: String, required: true} 
+  faceImageUrl: {type: String, required: true},
+  email: {type: String, required: true}
   
 })
 
