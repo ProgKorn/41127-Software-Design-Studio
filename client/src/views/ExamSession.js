@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import "../css/Exam.css";
 
+import axios from "axios";
+
 function ExamSession() {
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(60); 
@@ -24,6 +26,24 @@ function ExamSession() {
   const minutes = Math.floor(countdown / 60);
   const seconds = countdown % 60;
   const formattedCountdown = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+
+  
+  const createExamStudent = async () => {
+    try {
+      // const response = await axios.create("API endpoint to post exam student") 
+      const response = await axios.get("http://localhost:4000/exam/getExamDetails");
+      console.log("Exam Details Response:", response.data); // Log the response
+      // setExamDetails(response.data);
+      // setLoading(false); // Set loading to false once data is fetched
+    } catch (error) {
+      console.error(error);
+      // setLoading(false); // Set loading to false in case of an error
+    }
+  };
+
+  useEffect(() => {
+    createExamStudent();
+  }, []);
 
   return (
     <Box className="main">
