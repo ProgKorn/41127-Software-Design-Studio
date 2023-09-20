@@ -4,6 +4,7 @@ import Login from './Login';
 import { Title } from './Header';
 import HelpCentre from './HelpCentre';
 import ExamStart from './ExamStart';
+import FacialLandmarkRecognition from './FacialLandmarkRecognition';
 import ObjectRecognition from './ObjectRecognition';
 import AdminDashboard from './AdminDashboard';
 import Exam from './Exam';
@@ -29,6 +30,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
           <Route path="/examstart" element={<ExamStart />} />
+          <Route path="/faciallandmarkrecognition" element={<FacialLandmarkRecognition />} />
           <Route path="/objectrecognition" element={<ObjectRecognition />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/examhistory" element={<ExamHistory />} />

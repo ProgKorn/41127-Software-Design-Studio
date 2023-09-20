@@ -5,12 +5,21 @@ const { dbOp } = require('./DatabaseAccess/databaseMaster');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const studentRoutes = require('./routes/student');
+const adminRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
+const examRoutes = require('./routes/exam');
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use('/student', studentRoutes);
+app.use('/admin', adminRoutes);
+app.use('/auth', authRoutes);
+app.use('/exam', examRoutes);
 
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
