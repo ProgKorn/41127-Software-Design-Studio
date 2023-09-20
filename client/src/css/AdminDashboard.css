@@ -32,6 +32,33 @@
     padding: 20px;
 }
 
+.clockContainer {
+    font-weight: 600;
+    font-size: 1.5em;
+    height: 140px;
+    width: 400px;
+    border-radius: 25px; 
+    background: linear-gradient(#292E64, #740014);
+    color: white;
+    margin: auto;
+    padding-top: 40px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.clockDateText {
+    font-size:0.7em; 
+    font-weight: 400; 
+    margin: 0px; 
+    padding-bottom: 10px;
+    font-family: Montserrat, sans-serif;
+}
+
+.clockTimeText {
+    font-size: 2em;
+    margin: 0px;
+    font-family: Montserrat, sans-serif;
+}
+
 h1 {
     font-family: Montserrat, sans-serif;
     color: rgb(104, 99, 124);

@@ -18,52 +18,75 @@ function Schedule() {
     color: 'white',
     backgroundColor: "#292E64"
   }
+
   return (
 		<div className="Schedule">
 			<AdminHeader/>
 			<h1>Exam Schedule</h1>
-			<div style={{ paddingLeft: 40, paddingRight: 40 }}>
+			<div className='pageCardPadding'>
 				<Card title={"Upcoming Examinations"}>
-					<div style={{ display: 'flex', height: 660 }}>
+					<div className='scheduleContainer'>
 						<div style={{ width: '30%'}}>
-              <div style={{ fontWeight: 'bold', padding: 20, paddingTop: 40, paddingLeft: 30, fontFamily: 'Montserrat, sans-serif', textAlign: 'left', fontSize: '1.2rem' }}>
+              <div className='scheduleTitleSection'>
                 Today (18/09/2023)
               </div>
-              <div style={{padding: 20, paddingLeft: 30, fontFamily: 'Montserrat, sans-serif', textAlign: 'left', fontSize: '1.2rem',
-                border: 'solid 1px rgb(223, 223, 223)', borderRadius: 20, margin: 20, marginTop: 0 }}>
+              <div className='scheduleSmallCard'>
                 <div style={{ fontWeight: 'bold', padding: 10 }}>
-                  Software Design Studio 31274 Finals</div>
+                  Software Design Studio 31274 Finals
+                </div>
                 <div style={{ padding: 10 }}>
-                  3:00PM - 4:00PM</div>
+                  3:00PM - 4:00PM
+                </div>
                 <div style={{ padding: 10, paddingTop: 0 }}>
-                  Session ID: 2138342</div>
+                  Session ID: 2138342
+                </div>
               </div>
 						</div>
-						<div style={{ width: '70%', height: 660, borderBottomRightRadius: 10, paddingLeft: 150, paddingTop: 80, textAlign: 'left', fontFamily: 'Montserrat, sans-serif', borderLeft: 'solid 1px rgb(223, 223, 223)' }}>
+						<div className='scheduleLargeCard'>
               <div style={{ fontWeight: 'bold',  fontSize: '1.8rem'}}>
-                Software Design Studio 31274 Finals</div>
+                Software Design Studio 31274 Finals
+              </div>
               <div style={{ paddingTop: 40, fontSize: '1.3rem' }}>
-                3:00PM - 4:00PM</div>
+                3:00PM - 4:00PM
+              </div>
               <div style={{ paddingTop: 20, fontSize: '1.3rem' }}>
-                Session ID: 2138342</div>
+                Session ID: 2138342
+              </div>
               <div style={{ paddingTop: 20 }}>
-              <a href='/exam' style={{ color: 'blue',  fontSize: '1.3rem' }}>Show Exam Details</a></div>
-              <div style={{ display: 'flex', paddingTop: 80, gap: 40, overflow: 'auto' }}>
+              <a href='/exam' style={{ color: 'blue',  fontSize: '1.3rem' }}>
+                Show Exam Details</a></div>
+              <div className='scheduleButtonContainer'>
                 <Button component={Link} to="/launchExam" sx={buttonStyles} className="scheduleButton" variant="contained">
-                  <div className="scheduleIcons"><LaunchRoundedIcon /></div>
-                  <div style={{ fontSize: '1rem', paddingTop: 15 }}>Launch</div>
+                  <div className="scheduleIcons">
+                    <LaunchRoundedIcon />
+                  </div>
+                  <div className='scheduleButtonText'>
+                    Launch
+                  </div>
                 </Button>
                 <Button component={Link} to="/manageClasses" sx={buttonStyles}className="scheduleButton" variant="contained">
-                  <div className="scheduleIcons"><GroupsOutlinedIcon /></div>
-                  <div style={{ fontSize: '1rem', paddingTop: 15 }}>View Class</div>
+                  <div className="scheduleIcons">
+                    <GroupsOutlinedIcon />
+                  </div>
+                  <div className='scheduleButtonText'>
+                    View Class
+                  </div>
               </Button>
               <Button component={Link} sx={buttonStyles} className="scheduleButton" variant="contained">
-                  <div className="scheduleIcons"><ModeEditOutlinedIcon /></div>
-                  <div style={{ fontSize: '1rem', paddingTop: 15 }}>Edit</div>
+                  <div className="scheduleIcons">
+                    <ModeEditOutlinedIcon />
+                  </div>
+                  <div className='scheduleButtonText'>
+                    Edit
+                  </div>
                 </Button>
                 <Button component={Link} sx={buttonStyles}className="scheduleButton" variant="contained">
-                  <div className="scheduleIcons"><DeleteOutlineOutlinedIcon /></div>
-                  <div style={{ fontSize: '1rem', paddingTop: 15 }}>Delete</div>
+                  <div className="scheduleIcons">
+                    <DeleteOutlineOutlinedIcon />
+                  </div>
+                  <div className='scheduleButtonText'>
+                    Delete
+                  </div>
               </Button>
               </div>
 						</div>
