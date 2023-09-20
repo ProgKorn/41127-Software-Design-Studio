@@ -15,27 +15,6 @@ import StudentHeader from '../components/StudentHeader';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
-  
-function createData(name, value) {
-  return { name, value };
-}
-
-function createData2(examName, examStart, details, seatNo, accessExam) {
-  return {examName, examStart, details, seatNo, accessExam };
-}
-
-const rows = [
-  createData('Full Name:', 'John Doe'),
-  createData('Student ID:', '123456789'),
-  createData('Email:', 'test@gmail.com'),
-  createData('Institution:', 'UTS'),
-  createData('Time Zone:', 'Sydney')
-]
-
-const rows2 = [
-  createData2('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', 'ACCESS'),
-  createData2('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', 'ACCESS'),
-]
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -54,19 +33,26 @@ function StudentHomepage()
 {
    const [student, getStudent] = useState(''); // retrieve data returned by the api response
    const [loading, setLoading] = useState(true); //loading state that prevents access to undefined data, while waiting to get a response from api call
+   const [exam, getExam] = useState([]);
    const navigate = useNavigate();
    //send a get  api request to the server to retrieve and store the student details using axios 
    useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
 	  const decodedToken = jwt_decode(token);
-      const url ="http://localhost:4000/student/get/" + decodedToken.userName;
-      axios.get(url).then((response) => {
+      const studenturl ="http://localhost:4000/student/get/" + decodedToken.userName;
+      const examurl="http://localhost:4000/exam/getExamDetails";
+      axios.get(studenturl).then((response) => {
         getStudent(response.data);
         setLoading(false);
         })
         .catch(error => console.error(error)); 
-    
+        axios.get(examurl)
+        .then((response) => {
+          getExam(response.data);
+          setLoading(false);
+        })
+        .catch(error => console.error(error));
     } else {
         navigate("/login");
         setLoading(false);
@@ -107,7 +93,7 @@ function StudentHomepage()
                             <TableBody>
                             <TableRow >
                             <StyledTableCell>First Name: </StyledTableCell>  
-                            <StyledTableCell>{name.firstName}</StyledTableCell>
+                            <StyledTableCell>{student.firstName}</StyledTableCell>
                             </TableRow >
                             <TableRow >
                             <StyledTableCell>Last Name: </StyledTableCell>  
@@ -154,15 +140,15 @@ function StudentHomepage()
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows2.map((row) => (
+                        {exam.map((row) => (
                         <TableRow 
-                            key={row.name}
+                            key={row.examId}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
                             {row.examName}
                             </TableCell>
-                            <TableCell align="center">{row.examStart}</TableCell>
+                            <TableCell align="center">{row.startTime}</TableCell>
                             <TableCell align="center">{row.details}</TableCell>
                             <TableCell align="center">{row.seatNo}</TableCell>
                             <TableCell align="center">
