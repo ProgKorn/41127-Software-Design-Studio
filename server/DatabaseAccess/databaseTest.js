@@ -1,5 +1,6 @@
 const { dbOp } = require('./databaseMaster.js');
 
+// Test inserting documents
 async function testInsert() {
   try {
     const documents = [{ name: "TESTAlice", age: 25 }, { name: "TESTBob", age: 30 }];
@@ -10,6 +11,7 @@ async function testInsert() {
   }
 }
 
+// Test deleting documents
 async function testDelete() {
   try {
     const query = { name: "TESTAlice" };
@@ -20,6 +22,7 @@ async function testDelete() {
   }
 }
 
+// Test finding documents
 async function testFind() {
   try {
     const query = { name: "TESTBob" };
@@ -30,6 +33,7 @@ async function testFind() {
   }
 }
 
+// Test finding documents in ExamDetails
 async function testExamFind() {
   try {
     const query = { examName: 'Maths' };
@@ -40,6 +44,7 @@ async function testExamFind() {
   }
 }
 
+// Test updating user details
 async function testUpdateUser() {
   try {
     const email = "TESTBob@email.com";
@@ -51,6 +56,7 @@ async function testUpdateUser() {
   }
 }
 
+// Test updating documents
 async function testUpdateDoc() {
   try {
     const query = { name: "TESTBob" };
@@ -62,6 +68,49 @@ async function testUpdateDoc() {
   }
 }
 
+// Additional Tests
+async function testFindWithFilter() {
+  try {
+    const query = { age: { $gte: 30 } };
+    const result = await dbOp('find', 'UserDetails', { query });
+    console.log('Find operation with filters succeeded:', result);
+  } catch (error) {
+    console.log('Find operation with filters failed:', error);
+  }
+}
+
+async function testDeleteByQuery() {
+  try {
+    const query = { age: { $gte: 30 } };
+    await dbOp('delete', 'UserDetails', { query });
+    console.log('Delete operation with query succeeded');
+  } catch (error) {
+    console.log('Delete operation with query failed:', error);
+  }
+}
+
+async function testUpdateAdmin() {
+  try {
+    const query = { adminID: 123 };
+    const docs = { $set: { classID: 144 } };
+    await dbOp('update', 'Admin', { query, docs });
+    console.log('UpdateAdmin operation succeeded');
+  } catch (error) {
+    console.log('UpdateAdmin operation failed:', error);
+  }
+}
+
+async function testFindFlaggedIncidents() {
+  try {
+    const query = { flag: { $regex: 'YOLO', $options: 'i' } };
+    const result = await dbOp('find', 'FlaggedIncidents', { query });
+    console.log('FindFlaggedIncidents operation succeeded:', result);
+  } catch (error) {
+    console.log('FindFlaggedIncidents operation failed:', error);
+  }
+}
+
+// Run all the test functions
 async function runTests() {
   try {
     await testInsert();
@@ -70,9 +119,14 @@ async function runTests() {
     await testExamFind();
     await testUpdateUser();
     await testUpdateDoc();
+    await testFindWithFilter();
+    await testDeleteByQuery();
+    await testUpdateAdmin();
+    await testFindFlaggedIncidents();
   } catch (error) {
     console.error('An error occurred during testing:', error);
   }
 }
 
+// Execute tests
 runTests().catch(console.error);
