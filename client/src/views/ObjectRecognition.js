@@ -4,6 +4,7 @@ import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd"; // Importing required model (COCO SSD) -- this is allowing us to download the pre-trained model
 import Webcam from "react-webcam";
 import { cheatingObject, drawRect } from "./utilities";
+import "../css/Exam.css";
 
 function ObjectRecognition() {
   const webcamRef = useRef(null);
@@ -54,8 +55,7 @@ function ObjectRecognition() {
   useEffect(()=>{runCoco()},[]);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="unmirror">
         <Webcam
           ref={webcamRef}
           muted={true} 
@@ -86,7 +86,6 @@ function ObjectRecognition() {
             height: 480,
           }}
         />
-      </header>
     </div>
   );
 }
