@@ -93,7 +93,7 @@ function StudentHomepage()
                             <TableBody>
                             <TableRow >
                             <StyledTableCell>First Name: </StyledTableCell>  
-                            <StyledTableCell>{student.firstName}</StyledTableCell>
+                            <StyledTableCell>{name.firstName}</StyledTableCell>
                             </TableRow >
                             <TableRow >
                             <StyledTableCell>Last Name: </StyledTableCell>  
