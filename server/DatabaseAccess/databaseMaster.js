@@ -49,8 +49,9 @@ module.exports = {
   // master function (entry represents the details)
   dbOp: async function (operationType, collType, entry) {
     await client.connect();
+    let result;
     try {
-      let result;
+      const { query, docs, email, updateDoc } = entry; // Extract data from the entry object
       switch (operationType) {
         
         //Example usage:
@@ -81,8 +82,8 @@ module.exports = {
 
         // Example usage:
         // dbOp('update', { studentId : 12345678, updateDoc: { seatNumber : 200 }})
-        case 'update-student':
-          result = await updateStudent(entry.studentId, entry.updateDoc);
+        case 'update-user':
+          result = await updateUser(entry.email, entry.updateDoc);
           console.log("Updated count:", result.modifiedCount);
           break;
 
