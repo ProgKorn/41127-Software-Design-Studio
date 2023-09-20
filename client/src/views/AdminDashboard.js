@@ -37,7 +37,8 @@ function AdminDashboard() {
     fontWeight: 500,
     textTransform: 'Capitalize',
     color: 'white',
-    backgroundColor: "#8d99ae",
+    backgroundColor: "#292E64",
+    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
   }
 
   return (
@@ -48,10 +49,11 @@ function AdminDashboard() {
         <div style={{fontWeight:"600", fontSize:"1.5em", height: 140,
             width: 400, 
             borderRadius: 25, 
-            backgroundColor: "darkslateblue", 
+            background: 'linear-gradient(#292E64, #740014)',
             color: "white", 
             margin: "auto",
-            paddingTop: 40
+            paddingTop: 40,
+            boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
             }}>
             <p style={{ fontSize:"0.7em", 
               fontWeight: 300, 
@@ -76,28 +78,28 @@ function AdminDashboard() {
               <Button component={Link} to="/launchExam" sx={buttonStyles}
                 className="dashboardButton" variant="contained">
                 <div className="dashboardIcons"><LaunchRoundedIcon /></div>
-                Launch Exam
+                <div style={{ color: 'white' }}>Launch Exam</div>
               </Button>
             </Grid>
             <Grid item xs={6}>
               <Button component={Link} to="/createSession" sx={buttonStyles}
                 className="dashboardButton" variant="contained">
               <div className="dashboardIcons"><AddBoxOutlinedIcon /></div>
-                Create Session
+              <div style={{ color: 'white' }}>Create Session</div>
               </Button>
             </Grid>
             <Grid item xs={6}>
               <Button component={Link} to="/manageClasses" sx={buttonStyles}
                 className="dashboardButton" variant="contained">
                 <div className="dashboardIcons"><GroupsOutlinedIcon /></div>
-                Manage Classes
+                <div style={{ color: 'white' }}>Manage Classes</div>
               </Button>
             </Grid>
             <Grid item xs={6}>
               <Button component={Link} to="/examhistory" sx={buttonStyles}
                 className="dashboardButton" variant="contained">
                 <div className="dashboardIcons"><CollectionsBookmarkOutlinedIcon /></div>
-                Exam History</Button>
+                <div style={{ color: 'white' }}>Exam History</div></Button>
             </Grid>
           </Grid>
         </div>

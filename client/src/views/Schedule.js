@@ -16,7 +16,7 @@ function Schedule() {
     fontWeight: 500,
     textTransform: 'Capitalize',
     color: 'white',
-    // backgroundColor: "#8d99ae"
+    backgroundColor: "#292E64"
   }
   return (
 		<div className="Schedule">

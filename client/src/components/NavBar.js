@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import '../css/NavBar.css';
-import logo from '../SentinelV1.svg';
+import logo from '../SentinelV1White.svg';
 
 function ResponsiveAppBar({routes, type, icons}) {
   const pages = Object.keys(routes);
@@ -79,7 +79,7 @@ function ResponsiveAppBar({routes, type, icons}) {
 
         case 'admin':
           return (
-            <AppBar position="static" sx={{ backgroundColor: "rgb(85, 90, 130)"}}>
+            <AppBar position="static" sx={{ backgroundColor: "#2b2d42"}}>
               <Container maxWidth="xl">
                 <Toolbar disableGutters>
                   <Button component={Link} to='/'>
