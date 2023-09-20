@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -13,13 +13,12 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentHeader from '../components/StudentHeader';
 import axios from 'axios';
 
-  
 function createData(name, value) {
   return { name, value };
 }
 
 function createData2(examName, examStart, details, seatNo, accessExam) {
-  return {examName, examStart, details, seatNo, accessExam };
+  return { examName, examStart, details, seatNo, accessExam };
 }
 
 const rows = [
@@ -28,47 +27,57 @@ const rows = [
   createData('Email:', 'test@gmail.com'),
   createData('Institution:', 'UTS'),
   createData('Time Zone:', 'Sydney')
-]
+];
 
 const rows2 = [
   createData2('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', 'ACCESS'),
   createData2('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', 'ACCESS'),
-]
+];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#8D99AE',
-      color: 'black',
-      fontSize: '1.50em',
-      marginTop: '0.83em',
-      marginBottom: '0.83em',
-      marginLeft: 0,
-      marginRight: 0,
-      fontWeight: 'bold',
-    },
-  }));
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#8D99AE',
+    color: 'black',
+    fontSize: '1.50em',
+    marginTop: '0.83em',
+    marginBottom: '0.83em',
+    marginLeft: 0,
+    marginRight: 0,
+    fontWeight: 'bold',
+  },
+}));
 
-function StudentHomepage() 
-{
-   const [student, getStudent] = useState(''); // retrieve data returned by the api response
-   const [loading, setLoading] = useState(true); //loading state that prevents access to undefined data, while waiting to get a response from api call
+function StudentHomepage() {
+  const [student, getStudent] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); 
 
-   //send a get  api request to the server to retrieve and store the student details using axios 
-   useEffect(() => {
-    axios.get('http://localhost:4000/student/get').then((response) => {
+  useEffect(() => {
+    axios.get('http://localhost:4000/student/get')
+      .then((response) => {
         getStudent(response.data);
         setLoading(false);
-    })
-    .catch(error => console.error(error)); 
-   }, []);
+      })
+      .catch(error => {
+        console.error(error);
+        setError(error); 
+        setLoading(false);
+      });
+  }, []);
 
-   //wait for all information to be retrieved before loading the student homepage
-   if (loading)
-   {
-      return <div> Retrieving Data </div>
-   }
-        const name = student.name;
-   return (
+  if (loading) {
+    return <div> Retrieving Data </div>;
+  }
+
+  if (error) {
+    return <div> An error occurred: {error.message} </div>; 
+  }
+
+  const firstName = student && student.name ? student.name.firstName : 'N/A';
+  const lastName = student && student.name ? student.name.lastName : 'N/A';
+  
+
+  return (
     <div>
         <StudentHeader/>
         <div className="main">
@@ -94,11 +103,11 @@ function StudentHomepage()
                             <TableBody>
                             <TableRow >
                             <StyledTableCell>First Name: </StyledTableCell>  
-                            <StyledTableCell>{name.firstName}</StyledTableCell>
+                            <StyledTableCell>{firstName}</StyledTableCell>
                             </TableRow >
                             <TableRow >
                             <StyledTableCell>Last Name: </StyledTableCell>  
-                            <StyledTableCell>{name.lastName}</StyledTableCell>
+                            <StyledTableCell>{lastName}</StyledTableCell>
                             </TableRow>
                             <TableRow >
                             <StyledTableCell>Student ID: </StyledTableCell>  
