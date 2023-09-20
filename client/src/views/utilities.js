@@ -1,14 +1,19 @@
-const MIN_INCIDENT_DURATION = 5000; // Minimum duration for an incident to be considered unique (in milliseconds)
-const incidents = [];
+const incidents = []; // Active Incidents
 const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
 
 export const cheatingObject = (detections) => {
   var personCounter = 0; // Keep track of how many people are in the frame
+
+  const hasBannedObject = detections.some((detection) => bannedObjects.includes(detection.class)); // if theres ONE detection that includes a banned object
+  const personCount = detections.filter((detection) => detection.class === "person").length;
+  const isCheating = personCount > 1;
+  checkAndResetIncidents("Banned Object", hasBannedObject);
+  checkAndResetIncidents("Person Count", isCheating);
+
   // Loop through each prediction
-  detections.forEach(prediction => { // Looking at one prediction at a time
-    
+  detections.forEach(prediction => {
     // Extract classes for each frame
-    const object = prediction['class']; 
+    const object = prediction['class'];
     const timestamp = Date.now();
 
     if (object === "person") { // Is this prediction a person?
@@ -20,14 +25,18 @@ export const cheatingObject = (detections) => {
 }
 
 function objectConditions(object, bannedObjects, personCounter, timestamp) { // Return true if cheating is detected
-  /* Cheating Conditions */
-  if (personCounter > 1) { // Cheating Action -- more than one person in the room
-    incidentCheck(timestamp, "People Counter");
-  }
-  if (bannedObjects.includes(object)) { // Cheating Action -- using a banned object i.e cell phone
-    //console.log("Cheating Detected! Banned object spotted in frame.");
-    incidentCheck(timestamp, "Banned Object");
-  }
+  const cheatingBehaviours = [
+    {type: "Person Count", condition: personCounter > 1},
+    {type: "Banned Object", condition: bannedObjects.includes(object)},
+    // Insert more here
+  ]
+
+  // Check each cheating behavior
+  cheatingBehaviours.forEach((behavior) => {
+    if (behavior.condition) {
+      incidentCheck(timestamp, behavior.type);
+    }
+  });
 }
 
 function incidentCheck(timestamp, flagType) {
@@ -46,21 +55,21 @@ function incidentCheck(timestamp, flagType) {
 
     // Add it to the incidents list
     incidents.push(newIncident);
-    //console.log("Active flags " + JSON.stringify(incidents));
     console.log("New incident " + JSON.stringify(newIncident));
+    console.log("Cheating Detected! " + flagType);
 
     // Raise a flag for this incident
-    console.log("Cheating Detected! Banned object spotted in frame.");
-    //console.log("Cheating Detected! More than one person in the room.");
+    // To be added
+  }
+}
 
-    // Set a timer to reset the incident after a duration
-    setTimeout(() => {
-      const index = incidents.findIndex((incident) => incident === newIncident);
-      if (index !== -1) { // if found
-        incidents.splice(index, 1);
-        console.log('Incident reset.');
-      }
-    }, MIN_INCIDENT_DURATION);
+function checkAndResetIncidents(flagType, hasBannedObject) {
+  for (let i = incidents.length - 1; i >= 0; i--) {
+    const incident = incidents[i];
+    if (!hasBannedObject && incident.flagType === flagType) { // if the parsed behaviour matches the behaviour of this incident AND if it's no longer active
+      incidents.splice(i, 1); // Remove the incident from the list
+      console.log("Incident reset for " + flagType);
+    }
   }
 }
 
