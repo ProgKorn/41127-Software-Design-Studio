@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
-          <Route path="/examstart" element={<ExamStart />} />
+          <Route path="/examstart/:studentId/:examId" element={<ExamStart />} />
           <Route path="/faciallandmarkrecognition" element={<FacialLandmarkRecognition />} />
           <Route path="/objectrecognition" element={<ObjectRecognition />} />
           <Route path="/exam" element={<Exam />} />

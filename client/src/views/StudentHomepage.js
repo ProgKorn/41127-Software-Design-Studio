@@ -67,6 +67,8 @@ function StudentHomepage()
       return <div> Retrieving Data </div>
    }
         const name = student.name;
+        const studentId = 42345678;
+        const examId = 1;
    return (
     <div>
         <StudentHeader/>
@@ -152,7 +154,7 @@ function StudentHomepage()
                             <TableCell align="center">{row.details}</TableCell>
                             <TableCell align="center">{row.seatNo}</TableCell>
                             <TableCell align="center">
-                                <Link to="/examStart" className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
+                                <Link to= {`/examstart/${studentId}/${examId}`} className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
                                     Access Exam
                                 </Link>
                             </TableCell>
