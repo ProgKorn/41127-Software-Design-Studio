@@ -1,0 +1,84 @@
+/* CSS classes for exam related things */
+.main {
+    display: flex;
+    max-width: 1170px;
+    margin: auto;
+    flex-direction: column;
+}
+
+.title {
+    padding: 10px;
+}
+
+.detailsTable {
+    max-width: 700px;
+    align-self: center;
+    border-collapse: separate;
+    text-align-last: center;
+}
+
+.terms {
+    background-color: #109cfc;
+    border-radius: 6px;
+    color: white;
+    padding: 20px;
+}
+
+.preview {
+    height: 550px;
+    background-color: #109cfc;
+    border-radius: 6px;
+    color: white;
+    padding: 20px;
+}
+
+.formBox {
+    align-items: center;
+}
+
+.checkBoxStyle {
+    color: white !important;
+}
+
+.subtitle {
+    padding: 10px;
+}
+
+.continueButtonBox {
+    margin-top: "20px";
+    margin-bottom: "20px";
+    padding: 20px;  
+}
+
+.continueButton {
+    color: "white";
+    margin-top: "20px";
+    margin-bottom: "20px";
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+  
+.countdown-box {
+    width: 100px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: slategray;
+}
+
+h2 {
+    font-weight: 700;
+    text-align: left;
+}
