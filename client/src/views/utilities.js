@@ -1,5 +1,9 @@
+import axios from "axios";
+
 const incidents = []; // Active Incidents
 const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
+
+const url = 'http://localhost:4000/flag';
 
 export const cheatingObject = (detections) => {
   var personCounter = 0; // Keep track of how many people are in the frame
@@ -57,9 +61,15 @@ function incidentCheck(timestamp, flagType) {
     incidents.push(newIncident);
     console.log("New incident " + JSON.stringify(newIncident));
     console.log("Cheating Detected! " + flagType);
-
+    
     // Raise a flag for this incident
-    // To be added
+    axios.post(url + '/addFlag', newIncident)
+    .then((response) => {
+        console.log('Flag added successfully: ', response.data);
+    })
+    .catch(error => {
+        console.error('Error adding flag: ', error);
+    });
   }
 }
 

@@ -1,10 +1,9 @@
-const { Int32 } = require('mongodb')
 const { Schema, model } = require('mongoose')
 
 var schema = Schema
 
 flagSchema = new schema({
-    flagId: {type: Number, required: true},
+    flagId: {type: String, required: true},
     examId: {type: Number, required: true},
     studentId: {type: Number, required: true},
     status: {type: String, required: true},

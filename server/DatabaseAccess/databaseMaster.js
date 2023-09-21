@@ -44,36 +44,6 @@ async function updateDocument(collType, query, docs) {  // Renamed to updateDocu
   return await coll.updateMany(query, docs);
 }
 
-/* Flag Functions */
-// for inserting a new flagged incident
-async function insertFlag(docs) {
-  const db = client.db("SoftwareDesignStudio");
-  const coll = db.collection("FlaggedIncidents");
-  return await coll.insertOne(docs);
-}
-
-// for deleting an exam
-async function deleteFlag(flagId) {
-  const db = client.db("SoftwareDesignStudio");
-  const coll = db.collection("FlaggedIncidents");
-  return await coll.deleteMany({ flagId });
-}
-
-async function findFlag(flagId) {
-  const db = client.db("SoftwareDesignStudio");
-  const coll = db.collection("FlaggedIncidents");
-  const cursor = coll.find({ flagId });
-  const results = [];
-  await cursor.forEach(doc => results.push(doc));
-  return results;
-}
-
-async function updateFlag(flagId, updateDoc) {
-  const db = client.db("SoftwareDesignStudio");
-  const coll = db.collection("FlaggedIncidents");
-  return await coll.updateMany({ flagId }, { $set: updateDoc });
-}
-
 module.exports = {
   dbOp: async function (operationType, collType, entry) {
     await client.connect();
@@ -96,28 +66,6 @@ module.exports = {
         case 'update':
           result = await updateDocument(collType, query, docs); // Renamed to updateDocument
           break;
-
-        case 'insert-flag':
-          result = await insertFlag(entry);
-          console.log("Inserted Flag: ", result.insertedId);
-          break;
-      
-        case 'delete-flag':
-          result = await deleteFlag(entry);
-          console.log("Deleted count: ", result.deletedCount);
-          break;
-      
-        case 'find-flag':
-          result = await findFlag(entry);
-          console.log("Found flags: ", result);
-          return result;
-          break;
-      
-        case 'update-flag':
-          result = await updateFlag(entry.studentId, entry.updateDoc);
-          console.log("Updated count: ", result.modifiedCount);
-          break;
-
         default:
           console.log("Invalid operation type.");
       }
