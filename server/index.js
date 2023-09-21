@@ -25,7 +25,7 @@ app.use('/exam', examRoutes);
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
 
-  const user = await dbOp('find-user', { email : username});
+  const user = await dbOp('find', 'UserDetails', { query: { email: username } });
 
   if (!user || user.length === 0) {
     res.status(401).json({ success: false, message: 'User not found' });

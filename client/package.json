@@ -10,7 +10,6 @@
     "@mui/material": "^5.14.6",
     "@mui/styled-engine-sc": "^5.14.6",
     "@tensorflow-models/coco-ssd": "^2.1.0",
-    "@tensorflow-models/face-landmarks-detection": "^0.0.2",
     "@tensorflow/tfjs": "^3.21.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
