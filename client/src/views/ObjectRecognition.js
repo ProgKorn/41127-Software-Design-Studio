@@ -3,7 +3,8 @@ import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd"; // Importing required model (COCO SSD) -- this is allowing us to download the pre-trained model
 import Webcam from "react-webcam";
-import { drawRect } from "./utilities";
+import { cheatingObject, drawRect } from "./utilities";
+import "../css/Exam.css";
 
 function ObjectRecognition() {
   const webcamRef = useRef(null);
@@ -42,21 +43,23 @@ function ObjectRecognition() {
       // Make Detections
       const obj = await net.detect(video);
 
+      // Cheating Detections
+      cheatingObject(obj);
+
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
-      drawRect(obj, ctx); 
+      drawRect(obj, ctx);
     }
   };
 
   useEffect(()=>{runCoco()},[]);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="unmirror">
         <Webcam
           ref={webcamRef}
           muted={true} 
-          style={{
+          /* style={{
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
@@ -66,7 +69,7 @@ function ObjectRecognition() {
             zindex: 9,
             width: 640,
             height: 480,
-          }}
+          }} */
         />
 
         <canvas
@@ -83,7 +86,6 @@ function ObjectRecognition() {
             height: 480,
           }}
         />
-      </header>
     </div>
   );
 }

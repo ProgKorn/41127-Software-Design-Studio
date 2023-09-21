@@ -25,7 +25,8 @@ function FacialLandmarkRecognition() {
   const canvasRef = useRef(null);
 
   //  Load posenet
-  const runFacemesh = async () => {
+  /*
+  const runFacemeshOriginal = async () => {
     // OLD MODEL
     // const net = await facemesh.load({
     //   inputResolution: { width: 640, height: 480 },
@@ -37,6 +38,20 @@ function FacialLandmarkRecognition() {
       detect(net);
     }, 10);
   };
+*/
+
+  const runFacemesh = async () => {
+    const model = facemesh.SupportedModels.MediaPipeFaceMesh;
+    const detectorConfig = {
+      runtime: 'mediapipe',
+      solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh',
+    };
+    const net = await facemesh.createDetector(model, detectorConfig);
+    setInterval(() => {
+      detect(net);
+    }, 10);
+  };
+
 
   const detect = async (net) => {
     if (
@@ -61,7 +76,10 @@ function FacialLandmarkRecognition() {
       // OLD MODEL
       //       const face = await net.estimateFaces(video);
       // NEW MODEL
-      const face = await net.estimateFaces({input:video});
+      //const face = await net.estimateFaces({input:video}); //Original
+
+      const face = await net.estimateFaces(video);
+
       console.log(face);
 
       // Get canvas context

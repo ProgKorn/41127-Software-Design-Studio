@@ -9,6 +9,7 @@ import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';
 import '../css/AdminDashboard.css';
 import jwt_decode from 'jwt-decode';
+import Clock from '../components/Clock';
 
 function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -17,51 +18,80 @@ function AdminDashboard() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-	  const decodedToken = jwt_decode(token);
-      if (decodedToken.isAdmin === true) {
-        setIsAdmin(true);
-      } else {
-		navigate('/noaccess');
+      const decodedToken = jwt_decode(token);
+        if (decodedToken.isAdmin === true) {
+          setIsAdmin(true);
+        } else {
+      navigate('/noaccess');
 	  }
 	}
   }, [isAdmin, navigate]);
 
+  const buttonStyles = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "1rem",
+    fontWeight: 500,
+    textTransform: 'Capitalize',
+    color: 'white',
+    backgroundColor: "#292E64",
+    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+  }
+
   return (
     <div>
-      <AdminHeader />
-      {isAdmin ? (
-        <div className="adminDashboard">
-          <h1>Admin Dashboard</h1>
-          <div className="dashboardMenu">
-            <Grid container rowSpacing={4} columnSpacing={{ xs: 1 }}>
-              <Grid item xs={6}>
-                <Button component={Link} to="/launchExam" className="dashboardButton" variant="contained">
-                  <div className="dashboardIcons"><LaunchRoundedIcon /></div>
+      <AdminHeader/>
+      <div className="adminDashboard">
+        <h1>Admin Dashboard</h1>
+        <Clock />
+        <div className="dashboardMenu">
+          <Grid container rowSpacing={4} columnSpacing={{ xs: 1 }}>
+            <Grid item xs={6}>
+              <Button component={Link} to="/launchExam" sx={buttonStyles}
+                className="dashboardButton" variant="contained">
+                <div className="dashboardIcons">
+                  <LaunchRoundedIcon />
+                </div>
+                <div>
                   Launch Exam
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button component={Link} to="/createSession" className="dashboardButton" variant="contained">
-                  <div className="dashboardIcons"><AddBoxOutlinedIcon /></div>
-                  Create Session
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button component={Link} to="/manageClasses" className="dashboardButton" variant="contained">
-                  <div className="dashboardIcons"><GroupsOutlinedIcon /></div>
-                  Manage Classes
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button component={Link} to="/examhistory" className="dashboardButton" variant="contained">
-                  <div className="dashboardIcons"><CollectionsBookmarkOutlinedIcon /></div>
-                  Exam History
-                </Button>
-              </Grid>
+                </div>
+              </Button>
             </Grid>
-          </div>
+            <Grid item xs={6}>
+              <Button component={Link} to="/createSession" sx={buttonStyles}
+                className="dashboardButton" variant="contained">
+              <div className="dashboardIcons">
+                <AddBoxOutlinedIcon />
+              </div>
+              <div>
+                Create Session
+              </div>
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button component={Link} to="/manageClasses" sx={buttonStyles}
+                className="dashboardButton" variant="contained">
+                <div className="dashboardIcons">
+                  <GroupsOutlinedIcon />
+                </div>
+                <div>
+                  Manage Classes
+                </div>
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button component={Link} to="/examhistory" sx={buttonStyles}
+                className="dashboardButton" variant="contained">
+                <div className="dashboardIcons">
+                  <CollectionsBookmarkOutlinedIcon />
+                </div>
+                <div>
+                  Exam History
+                </div>
+              </Button>
+            </Grid>
+          </Grid>
         </div>
-      ) : null}
+      </div>
     </div>
   );
 }

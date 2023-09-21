@@ -16,7 +16,7 @@ function Login() {
   const handleLogin = async () => {
     await axios.post('http://localhost:4000/login', { username, password, keepLoggedIn: document.getElementById('keepSignedIn').checked }).then(response => {
     if (response.data.isAdmin === true) {
-        navigate('/admindashboard');
+        navigate('/admin');
       } else {
         navigate ('/studenthomepage');
       }

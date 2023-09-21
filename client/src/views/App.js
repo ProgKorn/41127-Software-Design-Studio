@@ -37,7 +37,7 @@ function App() {
           <Route path="/flaglog" element={<FlagLog />} />
           <Route path="/flag" element={<Flag />} />
           <Route path="/schedule" element={<Schedule />} />
-          <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/launchexam" element={<LaunchExam />} />
           <Route path="/createsession" element={<CreateSession />} />
           <Route path="/manageclasses" element={<ManageClasses />} />
