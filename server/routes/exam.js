@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 
 router.get('/getExamDetails', async (req, res) => {
     try {
-        const data = await databaseMaster.dbOp('find-exam', {});
+        const data = await databaseMaster.dbOp('find', 'ExamDetails', {});
         console.log(data);
         res.json(data); // Send the array of exam data directly
       } catch (error) {
