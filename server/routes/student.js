@@ -9,10 +9,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/get', (req,res) => {
-    databaseMaster.dbOp('find-student', 42345678).then(data => {;
-      res.json(new User(data[0]));
-  
-    });
+  databaseMaster.dbOp('find', 'StudentDetails', { query: { studentId: 42345678 } }).then(data => {
+    res.json(new User(data[0]));
   });
+});
+
 
 module.exports = router;
