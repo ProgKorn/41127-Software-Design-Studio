@@ -12,6 +12,7 @@ import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
 import { MultiInputTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputTimeRangeField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -20,9 +21,21 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import dayjs from "dayjs";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from '@mui/material/Alert';
+
+//TO-DO:
+//Time input validation (endTime !> startTime) --> ctrl+f "handleClickSave" for expected implementation location
+//Date selection validation (cannot select a date in the past) --> ctrl+f "handleClickSave" for expected implementation location
+//General style cleanup
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const height = 300;
@@ -31,16 +44,27 @@ const labelOffset = -6;
 function CreateSession() {
   const [examDate, setExamDate] = React.useState(dayjs("2022-04-17"));
   const [ammendedExamDate, setAmmendedExamDate] = React.useState("");
-  const [examStartTime, setExamStartTime] = React.useState(0);
-  const [examEndTime, setExamEndTime] = React.useState(0);
+
+  const [startTime, setStartTime] = React.useState(0);
+  const [endTime, setEndTime] = React.useState(0);
+  const [ammendedStartTime, setAmmendedStartTime] = React.useState(0);
+  const [ammendedEndTime, setAmmendedEndTime] = React.useState(0);
+
   const [scheduledClass, setScheduledClass] = React.useState(0);
   const [examName, setExamName] = React.useState("");
-  const [examDescription, setExamDescription] = React.useState(0);
+  const [examDescription, setExamDescription] = React.useState(
+    "No Description Provided"
+  );
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpenDialogue = () => {
-    setOpen(true);
+  const [snackbarMessage, setSnackbarMessage] = React.useState(
+    "Error encountered while saving form"
+  );
+  const [snackbarState, setSnackbarState] = React.useState(false);
+
+  const handleCloseSnackbar = () => {
+    setSnackbarState(false);
   };
 
   const handleCloseDialogue = () => {
@@ -51,19 +75,6 @@ function CreateSession() {
     //current placeholder for this method only closes the dialogue
     //will replace with .post request when DB connections are complete
     setOpen(false);
-  };
-
-  const handleChangeExamDate = (dateTimeString) => {
-    var dateString = dateTimeString.toString();
-    dateString = dateString.slice(0, 6);
-    setExamDate(dateString);
-  };
-  const handleChangeExamStartTime = (event) => {
-    setExamStartTime(event.target.value);
-  };
-
-  const handleChangeExamEndTime = (event) => {
-    setExamEndTime(event.target.value);
   };
 
   const handleChangeClass = (event) => {
@@ -79,24 +90,38 @@ function CreateSession() {
   };
 
   useEffect(() => {
-    console.log(examDate + " is the old exam date");
-
-    var trimmedString = examDate.toString()
+    var trimmedString = examDate.toString();
     trimmedString = trimmedString.slice(0, 13);
-
     setAmmendedExamDate(trimmedString);
-
-    console.log(trimmedString + " is the new exam date");
   }, [examDate]);
 
+  useEffect(() => {
+    var trimmedString = startTime.toString();
+    trimmedString = trimmedString.slice(17);
+    setAmmendedStartTime(trimmedString);
+  }, [startTime]);
+
+  useEffect(() => {
+    var trimmedString = endTime.toString();
+    trimmedString = trimmedString.slice(17);
+    setAmmendedEndTime(trimmedString);
+  }, [endTime]);
+
   const handleClickSave = () => {
-    //validate that exam start time inputs is not null
-    //validate that exam end time input is not null
-    //validate that class input is not null
-    if (examName !== "" && scheduledClass !== 0) {
-      setOpen("true");
+    if (examName == "") {
+      setSnackbarMessage("Error: No Exam Name Provided");
+      setSnackbarState(true);
+    } else if (scheduledClass == 0) {
+      setSnackbarMessage("Error: No Class Provided");
+      setSnackbarState(true);
+    } else if (startTime == 0) {                                
+      setSnackbarMessage("Error: No Start Time Provided");
+      setSnackbarState(true);
+    } else if (endTime == 0) {
+      setSnackbarMessage("Error: No End Time Provided");
+      setSnackbarState(true);
     } else {
-      //add warning dialogue for incomplete form
+      setOpen("true");
     }
   };
 
@@ -106,90 +131,107 @@ function CreateSession() {
       <div className="createSession">
         <Card title={"Schedule an Exam"} sx={{ p: 10 }}>
           <Grid container columns={4}>
-            <Grid item xs={2} sx={{ p: 3 }}>
-              <h1>Exam Date</h1>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateCalendar
-                  value={examDate}
-                  onChange={(newValue) => setExamDate(newValue)}
-                />
-              </LocalizationProvider>
+            <Grid item xs={2}>
+              <Box sx={{ pl: 10, pr: 10, pt: 3 }}>
+                <h1>Exam Date and Duration</h1>
+              </Box>
 
-              <h1>Exam Duration</h1>
-
-              <FormControl sx={{ pt: 2 }}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <MultiInputTimeRangeField
-                    id="timeRange"
-                    slotProps={{
-                      textField: ({ position }) => ({
-                        label: position === "start" ? "From" : "To",
-                      }),
-                    }}
-                  />
-                </LocalizationProvider>
-              </FormControl>
+              <Grid container columns={2} sx={{ pt: 1 }}>
+                <Grid item xs={1}>
+                  <Box sx={{ pl: 15, pr: 1, pt: 3 }}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateCalendar
+                        orientation="landscape"
+                        value={examDate}
+                        onChange={(newValue) => setExamDate(newValue)}
+                      />
+                    </LocalizationProvider>
+                  </Box>
+                </Grid>
+                <Grid item xs={1}>
+                  <Box sx={{ p: 5, pl: 0 }}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Box sx={{ pt: 7 }}>
+                        <TimePicker
+                          fullWidth
+                          label="Start Time"
+                          onChange={setStartTime}
+                        />
+                      </Box>
+                      <Box sx={{ pt: 3 }}>
+                        <TimePicker
+                          fullWidth
+                          label="End Time"
+                          onChange={setEndTime}
+                        />
+                      </Box>
+                    </LocalizationProvider>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
 
             <Grid item xs={2} sx={{ p: 3 }}>
-              <h1>Exam Details</h1>
-              <FormControl fullWidth sx={{ minWidth: 120 }}>
-                <InputLabel required>Class</InputLabel>
-                <Select
-                  labelId=""
-                  id="demo-simple-select-helper"
-                  value={scheduledClass}
-                  label="Class"
-                  onChange={handleChangeClass}
-                >
-                  <MenuItem value={"Class 1"}>Class 1</MenuItem>
-                  <MenuItem value={"Class 2"}>Class 2</MenuItem>
-                  <MenuItem value={"Class 3"}>Class 3</MenuItem>
-                </Select>
-              </FormControl>
+              <Box sx={{ pl: 10, pr: 10 }}>
+                <h1>Exam Details</h1>
+                <FormControl fullWidth sx={{ minWidth: 120 }}>
+                  <InputLabel required>Class</InputLabel>
+                  <Select
+                    labelId=""
+                    id="demo-simple-select-helper"
+                    value={scheduledClass}
+                    label="Class"
+                    onChange={handleChangeClass}
+                  >
+                    <MenuItem value={"Class 1"}>Class 1</MenuItem>
+                    <MenuItem value={"Class 2"}>Class 2</MenuItem>
+                    <MenuItem value={"Class 3"}>Class 3</MenuItem>
+                  </Select>
+                </FormControl>
 
-              <FormControl fullWidth sx={{ pt: 5, minWidth: 120 }}>
-                <TextField
-                  required
-                  fullWidth
-                  label="Exam Name"
-                  id="fullWidth"
-                  onChange={handleChangeExamName}
-                />
-              </FormControl>
+                <FormControl fullWidth sx={{ pt: 5, minWidth: 120 }}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Exam Name"
+                    id="fullWidth"
+                    onChange={handleChangeExamName}
+                  />
+                </FormControl>
 
-              <FormControl fullWidth sx={{ pt: 5 }}>
-                <TextField
-                  fullWidth
-                  label="Description"
-                  id="fullWidth"
-                  style={{ height }}
-                  InputLabelProps={{
-                    style: {
-                      height,
-                      ...{ top: `${labelOffset}px` },
-                    },
-                  }}
-                  inputProps={{
-                    style: {
-                      height,
-                      padding: "0 14px",
-                    },
-                  }}
-                  onChange={handleChangeExamDescription}
-                />
-              </FormControl>
+                <FormControl fullWidth sx={{ pt: 5 }}>
+                  <TextField
+                    fullWidth
+                    label="Description"
+                    id="fullWidth"
+                    style={{ height }}
+                    InputLabelProps={{
+                      style: {
+                        height,
+                        ...{ top: `${labelOffset}px` },
+                      },
+                    }}
+                    inputProps={{
+                      style: {
+                        height,
+                        padding: "0 14px",
+                      },
+                    }}
+                    onChange={handleChangeExamDescription}
+                  />
+                </FormControl>
 
-              <FormControl sx={{ pt: 5 }}>
-                <Button
-                  variant="contained"
-                  color="success"
-                  sx={{ p: 2 }}
-                  onClick={handleClickSave}
-                >
-                  Schedule Exam
-                </Button>
-              </FormControl>
+                <FormControl sx={{ pt: 5 }}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    sx={{ p: 2 }}
+                    onClick={handleClickSave}
+                  >
+                    Schedule Exam
+                  </Button>
+                </FormControl>
+              </Box>
             </Grid>
           </Grid>
         </Card>
@@ -202,11 +244,15 @@ function CreateSession() {
         >
           <DialogTitle>{"Confirm Exam Details"}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              maxWidth={"lg"}
+            >
+              Name: {examName} <br />
+              Start Time: {ammendedStartTime} <br />
+              End Time: {ammendedEndTime} <br />
               Date: {ammendedExamDate} <br />
-              Class: {scheduledClass}
-              <br />
+              Class: {scheduledClass} <br />
               Description: {examDescription}
             </DialogContentText>
           </DialogContent>
@@ -221,6 +267,11 @@ function CreateSession() {
             </Button>
           </DialogActions>
         </Dialog>
+        <Snackbar
+          open={snackbarState}
+        >
+          <Alert severity="error" onClose={handleCloseSnackbar} >{snackbarMessage}</Alert>
+        </Snackbar>
       </div>
     </div>
   );
