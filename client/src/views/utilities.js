@@ -1,24 +1,110 @@
-export const drawRect = (detections, ctx) =>{
-    // Loop through each prediction
-    detections.forEach(prediction => {
-  
-      // Extract boxes and classes
-      const [x, y, width, height] = prediction['bbox']; 
-      const text = prediction['class']; 
-  
-      // Set styling
-      const color = Math.floor(Math.random()*16777215).toString(16);
-      ctx.strokeStyle = '#' + color
-      ctx.font = '18px Arial';
-  
-      // Draw rectangles and text
-      ctx.beginPath();   
-      ctx.fillStyle = '#' + color
-      ctx.fillText(text, x, y);
-      ctx.rect(x, y, width, height); 
-      ctx.stroke();
+import axios from "axios";
+
+const incidents = []; // Active Incidents
+const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
+
+const url = 'http://localhost:4000/flag';
+
+export const cheatingObject = (detections) => {
+  var personCounter = 0; // Keep track of how many people are in the frame
+
+  const hasBannedObject = detections.some((detection) => bannedObjects.includes(detection.class)); // if theres ONE detection that includes a banned object
+  const personCount = detections.filter((detection) => detection.class === "person").length;
+  const isCheating = personCount > 1;
+  checkAndResetIncidents("Banned Object", hasBannedObject);
+  checkAndResetIncidents("Person Count", isCheating);
+
+  // Loop through each prediction
+  detections.forEach(prediction => {
+    // Extract classes for each frame
+    const object = prediction['class'];
+    const timestamp = Date.now();
+
+    if (object === "person") { // Is this prediction a person?
+      personCounter++; // Add to the person counter for the room
+    }
+
+    objectConditions(object, bannedObjects, personCounter, timestamp);
+  });
+}
+
+function objectConditions(object, bannedObjects, personCounter, timestamp) { // Return true if cheating is detected
+  const cheatingBehaviours = [
+    {type: "Person Count", condition: personCounter > 1},
+    {type: "Banned Object", condition: bannedObjects.includes(object)},
+    // Insert more here
+  ]
+
+  // Check each cheating behavior
+  cheatingBehaviours.forEach((behavior) => {
+    if (behavior.condition) {
+      incidentCheck(timestamp, behavior.type);
+    }
+  });
+}
+
+function incidentCheck(timestamp, flagType) {
+  // Check if an incident with this flag type already exists
+  const existingIncident = incidents.find((incident) => {
+    return incident.flagType === flagType;
+  });
+
+  if (!existingIncident) {
+    // Create a new incident
+    const newIncident = {
+      flagType: flagType,
+      timestamp,
+      flagged: true,
+    };
+
+    // Add it to the incidents list
+    incidents.push(newIncident);
+    console.log("New incident " + JSON.stringify(newIncident));
+    console.log("Cheating Detected! " + flagType);
+    
+    // Raise a flag for this incident
+    axios.post(url + '/addFlag', newIncident)
+    .then((response) => {
+        console.log('Flag added successfully: ', response.data);
+    })
+    .catch(error => {
+        console.error('Error adding flag: ', error);
     });
   }
+}
+
+function checkAndResetIncidents(flagType, hasBannedObject) {
+  for (let i = incidents.length - 1; i >= 0; i--) {
+    const incident = incidents[i];
+    if (!hasBannedObject && incident.flagType === flagType) { // if the parsed behaviour matches the behaviour of this incident AND if it's no longer active
+      incidents.splice(i, 1); // Remove the incident from the list
+      console.log("Incident reset for " + flagType);
+    }
+  }
+}
+
+export const drawRect = (detections, ctx) => {
+  // Loop through each prediction
+  detections.forEach(prediction => {
+
+    // Extract boxes and classes
+    const [x, y, width, height] = prediction['bbox']; 
+    const text = prediction['class']; 
+
+    // Set styling
+    const color = Math.floor(Math.random()*16777215).toString(16);
+    ctx.strokeStyle = '#' + color
+    ctx.font = '18px Arial';
+
+    // Draw rectangles and text
+    ctx.beginPath();   
+    ctx.fillStyle = '#' + color
+    ctx.fillText(text, x, y);
+    ctx.rect(x, y, width, height); 
+    ctx.stroke();
+  });
+}
+
 //  Triangulation sets of three
 export const TRIANGULATION = [
     127,
