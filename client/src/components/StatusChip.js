@@ -7,11 +7,11 @@ import CloseIcon from '@mui/icons-material/Close';
 
 function colorForStatus(status) {
   switch (status) {
-    case "Active":
+    case "Resolved":
       return "success";
     case "Pending":
       return "warning";
-    case "Inactive":
+    case "Terminated":
       return "error";
     default:
       return grey;
@@ -20,11 +20,11 @@ function colorForStatus(status) {
 
 function iconForStatus(status) {
     switch (status) {
-      case "Active":
+      case "Resolved":
         return <DoneIcon />;
       case "Pending":
         return <PendingActionsIcon />;
-      case "Inactive":
+      case "Terminated":
         return <CloseIcon />;
       default:
         return grey;

@@ -21,11 +21,11 @@ function createData(session, examinee, flag, status, flag_no, session_no) {
 }
 
 const rows = [
-  createData("Student 1", 159, 6.0, "Active", 4.0, 1),
+  createData("Student 1", 159, 6.0, "Resolved", 4.0, 1),
   createData("Student 2", 237, 9.0, "Pending", 4.3, 1),
-  createData("Student 3", 262, 16.0, "Inactive", 6.0, 1),
-  createData("Student 4", 305, 3.7, "Active", 4.3, 1),
-  createData("Student 5", 356, 16.0, "Inactive", 3.9, 1),
+  createData("Student 3", 262, 16.0, "Terminated", 6.0, 1),
+  createData("Student 4", 305, 3.7, "Resolved", 4.3, 1),
+  createData("Student 5", 356, 16.0, "Terminated", 3.9, 1),
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
