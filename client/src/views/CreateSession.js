@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import AdminHeader from "../components/AdminHeader";
 import "../css/AdminFonts.css";
 import { Button, Grid } from "@mui/material";
@@ -29,10 +29,8 @@ const height = 300;
 const labelOffset = -6;
 
 function CreateSession() {
-  const [value, setValue] = React.useState(dayjs("2022-04-17"));
-
-  const [examDate, setExamDate] = React.useState(null);
-
+  const [examDate, setExamDate] = React.useState(dayjs("2022-04-17"));
+  const [ammendedExamDate, setAmmendedExamDate] = React.useState("");
   const [examStartTime, setExamStartTime] = React.useState(0);
   const [examEndTime, setExamEndTime] = React.useState(0);
   const [scheduledClass, setScheduledClass] = React.useState(0);
@@ -55,6 +53,11 @@ function CreateSession() {
     setOpen(false);
   };
 
+  const handleChangeExamDate = (dateTimeString) => {
+    var dateString = dateTimeString.toString();
+    dateString = dateString.slice(0, 6);
+    setExamDate(dateString);
+  };
   const handleChangeExamStartTime = (event) => {
     setExamStartTime(event.target.value);
   };
@@ -75,13 +78,21 @@ function CreateSession() {
     setExamDescription(event.target.value);
   };
 
+  useEffect(() => {
+    console.log(examDate + " is the old exam date");
+
+    var trimmedString = examDate.toString()
+    trimmedString = trimmedString.slice(0, 13);
+
+    setAmmendedExamDate(trimmedString);
+
+    console.log(trimmedString + " is the new exam date");
+  }, [examDate]);
+
   const handleClickSave = () => {
     //validate that exam start time inputs is not null
     //validate that exam end time input is not null
     //validate that class input is not null
-
-    console.log(examDate + " is the exam date");
-
     if (examName !== "" && scheduledClass !== 0) {
       setOpen("true");
     } else {
@@ -98,7 +109,10 @@ function CreateSession() {
             <Grid item xs={2} sx={{ p: 3 }}>
               <h1>Exam Date</h1>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateCalendar value={examDate} />
+                <DateCalendar
+                  value={examDate}
+                  onChange={(newValue) => setExamDate(newValue)}
+                />
               </LocalizationProvider>
 
               <h1>Exam Duration</h1>
@@ -189,7 +203,8 @@ function CreateSession() {
           <DialogTitle>{"Confirm Exam Details"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Date: {examDate} <br />
+              
+              Date: {ammendedExamDate} <br />
               Class: {scheduledClass}
               <br />
               Description: {examDescription}
