@@ -1,16 +1,25 @@
 import React from 'react';
 import ResponsiveAppBar from './NavBar';
+import FlagRoundedIcon from '@mui/icons-material/FlagRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
 
 function AdminHeader() {
   const adminRoutes = {
-	  Home: '/admindashboard',
+	  Home: '/admin',
 	  Schedule: '/schedule',
 	  Activity: '/flaglog',
 	}
 
+  const AdminIcons = {
+	  Home: <HomeRoundedIcon style={{width: 35, height: 30}} />,
+	  Schedule: <EventNoteRoundedIcon style={{width: 35, height: 30}} />,
+	  Activity: <FlagRoundedIcon style={{width: 35, height: 30}} />,
+	}
+
   return (
     <div>
-      <ResponsiveAppBar routes={adminRoutes} type='admin'/>
+      <ResponsiveAppBar routes={adminRoutes} type='admin' icons={AdminIcons}/>
       <div className="AdminHeader"></div>
     </div>
   );
