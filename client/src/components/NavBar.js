@@ -4,20 +4,27 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import '../css/NavBar.css';
-import logo from '../SentinelV1.svg';
+import logo from '../SentinelV1White.svg';
 
-function ResponsiveAppBar({routes, type}) {
+function ResponsiveAppBar({routes, type, icons}) {
   const pages = Object.keys(routes);
+
+  const buttonStyles = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.7rem",
+    textTransform: 'Uppercase',
+    color: 'white',
+    display: 'inline-block', 
+    padding: '1em 2em 1em 2em'
+  }
 
   const getAppBarContent = () => {
     switch (type) {
-
       case 'signIn':
         return (
           <Box sx={{ flexGrow: 1 }}>
@@ -72,37 +79,24 @@ function ResponsiveAppBar({routes, type}) {
 
         case 'admin':
           return (
-            <AppBar position="static">
+            <AppBar position="static" sx={{ backgroundColor: "#2b2d42"}}>
               <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                  {(
-                    //replace below typography component with logo
-                    <Typography
-                      variant="h6"
-                      noWrap
-                      component="a"
-                      href="/"
-                      sx={{
-                        mr: 2,
-                        display: { xs: 'none', md: 'flex' },
-                        fontFamily: 'monospace',
-                        fontWeight: 700,
-                        letterSpacing: '.3rem',
-                        color: 'inherit',
-                        textDecoration: 'none',
-                      }}
-                    >
-                      LOGO
-                    </Typography>
-                  )}
+                  <Button component={Link} to='/'>
+                    <img src={logo} className="Mini-logo" alt="Logo" />
+                    <div style={{ fontFamily: 'Montserrat, sans-serif', color: 'white', paddingLeft: 10 }}>Sentinel</div>
+                  </Button>
                   <Box 
+                  style={{ paddingRight: 90}}
                     justifyContent="center"
                     sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                       {pages.map((page) => (
-                      <Button key={page} component={Link} to={routes[page]}
-                        sx={{ my: 3, color: 'white', display: 'block' }}>
-                        {page}
-                      </Button>
+                        <Button key={page} component={Link} to={routes[page]} sx={buttonStyles}>
+                          {icons && icons[page]}
+                          <div style={{fontSize:"1.3em"}}>
+                            {page}
+                          </div>
+                        </Button>
                       ))}
                   </Box>
                   <Box sx={{ flexGrow: 0 }}>

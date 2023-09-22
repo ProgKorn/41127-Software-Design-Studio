@@ -9,13 +9,14 @@ const studentRoutes = require('./routes/student');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
-
+const flagRoutes = require('./routes/flag');
 
 const app = express();
 const PORT = 4000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use('/flag', flagRoutes);
 app.use('/student', studentRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
@@ -24,7 +25,7 @@ app.use('/exam', examRoutes);
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
 
-  const user = await dbOp('find-user', { email : username});
+  const user = await dbOp('find', 'UserDetails', { query: { email: username } });
 
   if (!user || user.length === 0) {
     res.status(401).json({ success: false, message: 'User not found' });

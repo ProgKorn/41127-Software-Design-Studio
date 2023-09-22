@@ -17,17 +17,17 @@ import jwt_decode from 'jwt-decode';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#8D99AE',
-      color: 'black',
-      fontSize: '1.50em',
-      marginTop: '0.83em',
-      marginBottom: '0.83em',
-      marginLeft: 0,
-      marginRight: 0,
-      fontWeight: 'bold',
-    },
-  }));
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#8D99AE',
+    color: 'black',
+    fontSize: '1.50em',
+    marginTop: '0.83em',
+    marginBottom: '0.83em',
+    marginLeft: 0,
+    marginRight: 0,
+    fontWeight: 'bold',
+  },
+}));
 
 function StudentHomepage() 
 {
@@ -102,10 +102,6 @@ function StudentHomepage()
                             <TableRow >
                             <StyledTableCell>Student ID: </StyledTableCell>  
                             <StyledTableCell>{student.studentId}</StyledTableCell>
-                            </TableRow>
-                            <TableRow >
-                            <StyledTableCell>Seat Number: </StyledTableCell>  
-                            <StyledTableCell>{student.seatNumber}</StyledTableCell>
                             </TableRow>
                             <TableRow >
                             <StyledTableCell>Email: </StyledTableCell>  

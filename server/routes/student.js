@@ -10,10 +10,10 @@ router.get('/', (req, res) => {
 
 router.get('/get/:email', (req,res) => {
   const email = req.params.email;
-    databaseMaster.dbOp('find-student', email).then(data => {;
-      res.json(new User(data[0]));
-  
-    });
+  databaseMaster.dbOp('find', 'StudentDetails', { query: { email: email } }).then(data => {
+    res.json(new User(data[0]));
   });
+    });
+
 
 module.exports = router;

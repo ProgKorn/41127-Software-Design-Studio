@@ -16,7 +16,7 @@ function Login() {
   const handleLogin = async () => {
     await axios.post('http://localhost:4000/login', { username, password, keepLoggedIn: document.getElementById('keepSignedIn').checked }).then(response => {
     if (response.data.isAdmin === true) {
-        navigate('/admindashboard');
+        navigate('/admin');
       } else {
         navigate ('/studenthomepage');
       }
@@ -34,7 +34,7 @@ function Login() {
     <div className='App'>
       <SignInHeader />
       <header className='sign-in-header'>
-        <h1 className="text">Sign In</h1>
+        <h1 className="text">Welcome</h1>
       </header>
       <div>
       <input
@@ -58,7 +58,7 @@ function Login() {
         {errorMessage && <ErrorMessage message={errorMessage}/>}
       </div>
       <div>
-        <button onClick={handleLogin} className='button'>Login</button>
+        <button onClick={handleLogin} className='button-grey-out'>Login</button>
       </div>
       <div>
         {/* <input type="checkbox" id="keepSignedIn"></input> */}
