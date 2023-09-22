@@ -28,6 +28,8 @@ import MuiAlert from '@mui/material/Alert';
 //TO-DO:
 //Time input validation (endTime !> startTime) --> ctrl+f "handleClickSave" for expected implementation location
 //Date selection validation (cannot select a date in the past) --> ctrl+f "handleClickSave" for expected implementation location
+//Cannot assign multiple exams to a class --> ctrl+r "classValidation" for more info
+//Add functionality to handleCreateSession() which will send a .post() request to the DB [classes are hard-coded rn]
 //General style cleanup
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -121,6 +123,9 @@ function CreateSession() {
       setSnackbarMessage("Error: No End Time Provided");
       setSnackbarState(true);
     } else {
+      //validate that date selected is not in the past
+      //validate that endTime > startTime (cannot end an exam before it starts)
+      //
       setOpen("true");
     }
   };
@@ -136,8 +141,8 @@ function CreateSession() {
                 <h1>Exam Date and Duration</h1>
               </Box>
 
-              <Grid container columns={2} sx={{ pt: 1 }}>
-                <Grid item xs={1}>
+              <Grid container columns={2} sx={{ pt: 7 }}>
+                <Grid item xs={1} >
                   <Box sx={{ pl: 15, pr: 1, pt: 3 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DateCalendar
@@ -183,7 +188,8 @@ function CreateSession() {
                     label="Class"
                     onChange={handleChangeClass}
                   >
-                    <MenuItem value={"Class 1"}>Class 1</MenuItem>
+                    {/* Classes are hard-coded here */}
+                    <MenuItem value={"Class 1"}>Class 1</MenuItem> 
                     <MenuItem value={"Class 2"}>Class 2</MenuItem>
                     <MenuItem value={"Class 3"}>Class 3</MenuItem>
                   </Select>
