@@ -38,7 +38,7 @@ async function findDoc(collType, query) {
   return results;
 }
 
-async function updateDocument(collType, query, docs) {  // Renamed to updateDocument
+async function updateDocument(collType, query, docs) { 
   const db = client.db("SoftwareDesignStudio");
   const coll = db.collection(collType);
   return await coll.updateMany(query, docs);
@@ -53,18 +53,24 @@ module.exports = {
       switch (operationType) {
         case 'insert':
           result = await insertDoc(collType, docs);
+          console.log('Insert Doc Result:', result);
           break;
         case 'delete':
           result = await deleteDoc(collType, query);
+          console.log('Delete Doc Result:', result);
           break;
         case 'find':
           result = await findDoc(collType, query);
+          console.log('Find Doc Input:', query);
+          console.log('Find Doc Result:', result);
           return result;
         case 'update-user':
           result = await updateUser(email, updateDoc);
+          console.log('Update User Result:', result);
           break;
         case 'update':
-          result = await updateDocument(collType, query, docs); // Renamed to updateDocument
+          result = await updateDocument(collType, query, docs);
+          console.log('Update Doc Result:', result);
           break;
         default:
           console.log("Invalid operation type.");

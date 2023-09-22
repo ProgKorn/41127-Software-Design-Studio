@@ -10,12 +10,155 @@
     font-family: Montserrat, sans-serif;
 }
 
-
 .MuiTableHead-root {
-    
     font-size: 0.6em;
     font-family: Montserrat, sans-serif;
     text-transform: uppercase;
     background-color: rgb(245, 247, 253);
-    font-weight: 'bold' !important;
+    font-weight: bold !important;
+}
+
+.listRowContainer {
+    display: flex;
+    font-family: Montserrat, sans-serif;
+    border-bottom: solid 1px rgb(223, 223, 223);
+    align-content: space-between;
+}
+
+.listTitleText {
+    font-weight: bold;
+    background-color: rgb(245, 247, 253);
+    color: rgb(85, 89, 130);
+    padding: 20px;
+    text-align: left;
+    padding-left: 60px;
+}
+
+.listDescriptionText {
+    padding: 20px;
+    text-align: left;
+}
+
+.tableContainer {
+    font-family: Montserrat, sans-serif;
+    min-width: 650px;
+}
+
+.flagDetailSection {
+    height: 130px;
+    padding: 20px;
+}
+
+.flagDetailContainer {
+    display: flex;
+    margin: auto;
+    width: 90%;
+    border: solid 1px rgb(223, 223, 223);
+    margin: auto;
+    padding: 0px;
+    border-radius: 20px;
+    height: 130px;
+}
+
+.flagDetailTitle {
+    width: 20%;
+    border-right: solid 1px rgb(223, 223, 223)
+}
+
+.flagDetailTitleSection {
+    padding: 20px;
+}
+
+.flagDetailTitleText {
+    color: #CC3746;
+    padding: 5px;
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.flagDetailDescriptionText {
+    font-family: Montserrat, sans-serif;
+    padding: 25px;
+    text-align: left;
+}
+
+.flagVideoSection {
+    padding: 20px;
+}
+
+.flagVideoTitle {
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    text-align: left;
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+}
+
+.scheduleButton {
+    display: block;
+    color: #ffffff;
+    width: 10rem;
+    height: 10rem;
+    flex-direction: column;
+}
+
+.pageCardPadding {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.scheduleContainer {
+    display: flex;
+    height: 660px;
+}
+
+.scheduleTitleSection {
+    font-weight: bold;
+    padding: 20px;
+    padding-top: 40px;
+    padding-left: 30px;
+    font-family: Montserrat, sans-serif;
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+.scheduleSmallCard {
+    padding: 20px;
+    padding-left: 30px;
+    font-family: Montserrat, sans-serif;
+    text-align: left;
+    font-size: 1.2rem;            
+    border: solid 1px rgb(223, 223, 223);
+    border-radius: 20px;
+    margin: 20px;
+    margin-top: 0px;
+}
+
+.scheduleLargeCard {
+    width: 70%;
+    height: 660px;
+    border-bottom-right-radius: 10px;
+    padding-left: 150px;
+    padding-top: 80px;
+    text-align: left;
+    font-family: Montserrat, sans-serif;
+    border-left: solid 1px rgb(223, 223, 223);
+}
+
+.scheduleButtonContainer {
+    display: flex;
+    padding-top: 80px;gap: 40px;
+    overflow: auto;
+}
+
+.scheduleButtonText {
+    font-size: 1rem;
+    padding-top: 15px;
+}
+
+.scheduleIcons {
+    transform: scale(2.2);
+    padding-top: 10px;
 }

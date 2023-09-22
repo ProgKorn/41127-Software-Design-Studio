@@ -1,29 +1,32 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "http://localhost:4000",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mediapipe/face_mesh": "^0.4.1633559619",
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.10",
     "@mui/styled-engine-sc": "^5.14.6",
     "@mui/x-date-pickers": "^6.14.0",
     "@mui/x-date-pickers-pro": "^6.14.0",
     "@tensorflow-models/coco-ssd": "^2.1.0",
-    "@tensorflow-models/face-landmarks-detection": "^0.0.2",
+    "@tensorflow-models/face-landmarks-detection": "^1.0.5",
     "@tensorflow/tfjs": "^3.21.0",
+    "@tensorflow/tfjs-converter": "^4.11.0",
+    "@tensorflow/tfjs-core": "^4.11.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.0",
     "dayjs": "^1.11.10",
+    "http-proxy-middleware": "^2.0.6",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-webcam": "^7.1.1",
     "web-vitals": "^2.1.4"
   },
@@ -50,5 +53,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "options": {
+    "allowedHosts": [
+      "localhost",
+      ".localhost"
+    ],
+    "proxy": "https://localhost:4000/"
   }
 }
