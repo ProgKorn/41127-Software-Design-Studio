@@ -24,6 +24,7 @@
 .text {
     font-family: Montserrat, sans-serif;
     font-size: 40px;
+    text-align: center;
 }
 
 .helpDashboardButton {
@@ -31,7 +32,7 @@
     color: #ffffff;
     width: 100%;
     max-width: 20rem;
-    height: 11rem;
+    height: 12rem;
     margin: auto;
     flex-direction: column;
     border-radius: 20px;
@@ -45,6 +46,16 @@
 }
 
 .help-dashboard {
+    width: 50rem;
+    max-width: 80%;
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-manual-dashboard {
     width: 50rem;
     max-width: 80%;
     margin: auto;
@@ -79,5 +90,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    margin: auto;
+}
+
+.header {
+    margin-bottom: 3rem;
+}
+
+.user-manual-group {
+    width: 30rem;
+    gap: 10px;
+    max-width: 60%;
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.return {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    width: 30rem;
 }
