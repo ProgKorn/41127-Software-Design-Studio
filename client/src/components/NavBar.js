@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState }from 'react';
+import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import '../css/NavBar.css';
 import logo from '../SentinelV1White.svg';
+import { Menu, MenuItem } from '@mui/material';
 
 function ResponsiveAppBar({routes, type, icons}) {
   const pages = Object.keys(routes);
@@ -22,6 +25,42 @@ function ResponsiveAppBar({routes, type, icons}) {
     display: 'inline-block', 
     padding: '1em 2em 1em 2em'
   }
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      const decodedToken = jwt_decode(storedToken);
+      const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+      if (decodedToken.exp < currentTimeInSeconds) {
+        localStorage.removeItem('token');
+        navigate('/login');
+      } 
+    }
+  }, []);
+
+  const [anchor, setAnchor] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchor(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchor(null);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        localStorage.removeItem('token');
+      }
+      navigate('/login'); 
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   const getAppBarContent = () => {
     switch (type) {
@@ -100,12 +139,15 @@ function ResponsiveAppBar({routes, type, icons}) {
                       ))}
                   </Box>
                   <Box sx={{ flexGrow: 0 }}>
-                    <Tooltip title="Open settings">
-                    <IconButton onClick={null} sx={{ p: 0 }}>
+                    <Tooltip title="Open account settings">
+                    <IconButton onClick={handleClick} sx={{ p: 0 }}>
                       {/* Add the user's name under 'alt' to change letter profile image */}
                       <Avatar alt="Anonymous" src="/static/images/avatar/2.jpg" />
                     </IconButton>
                     </Tooltip>
+                    <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={handleClose}>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
                   </Box>
                 </Toolbar>
               </Container>

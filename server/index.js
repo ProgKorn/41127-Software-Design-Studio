@@ -35,7 +35,7 @@ app.post('/login', async(req, res) => {
       isAdmin: user[0].isAdmin,
     };
   
-    const expiresIn = keepSignedIn ? 'never' : '1h';
+    const expiresIn = keepSignedIn ? 'never' : '4h';
     const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn });
   
     res.json({
