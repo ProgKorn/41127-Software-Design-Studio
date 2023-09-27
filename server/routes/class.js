@@ -13,9 +13,9 @@ router.get('/get', (req, res) => {
 
 router.get('/get/:studentId', (req,res) => {
     const studentId = req.params.studentId;
-    databaseMaster.dbOp('find-student', 'ClassDetails', {query: studentId}).then(data => {
-      res.json(data);
+    databaseMaster.dbOp('find', 'ClassDetails', {query: {students: { $elemMatch: { studentId: parseInt(studentId)}}}}).then(data => {
+        res.json(data);
     });
-      });
-
+        });
+        
 module.exports = router;
