@@ -38,6 +38,16 @@ async function findDoc(collType, query) {
   return results;
 }
 
+async function findStudent(collType, query) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection(collType);
+  console.log(query);
+  const cursor = coll.find({students: { $elemMatch: { studentId: parseInt(query)}}});
+  const results = [];
+  await cursor.forEach(doc => results.push(doc));
+  return results;
+}
+
 async function updateDocument(collType, query, docs) { 
   const db = client.db("SoftwareDesignStudio");
   const coll = db.collection(collType);
@@ -72,6 +82,11 @@ module.exports = {
           result = await updateDocument(collType, query, docs);
           console.log('Update Doc Result:', result);
           break;
+          case 'find-student':
+            result = await findStudent(collType, query);
+            console.log('Find Doc Input:', query);
+            console.log('Find Doc Result:', result);
+            return result;
         default:
           console.log("Invalid operation type.");
       }

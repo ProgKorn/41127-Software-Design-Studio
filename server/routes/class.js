@@ -11,4 +11,11 @@ router.get('/get', (req, res) => {
         });
 });
 
+router.get('/get/:studentId', (req,res) => {
+    const studentId = req.params.studentId;
+    databaseMaster.dbOp('find-student', 'ClassDetails', {query: studentId}).then(data => {
+      res.json(data);
+    });
+      });
+
 module.exports = router;
