@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const studentRoutes = require('./routes/student');
+const classRoutes = require('./routes/class')
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/flag', flagRoutes);
 app.use('/student', studentRoutes);
+app.use('/class', classRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/exam', examRoutes);
