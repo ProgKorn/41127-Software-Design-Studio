@@ -1,7 +1,6 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 import Login from './Login';
 import { Title } from './Header';
 import HelpCentre from './HelpCentre';
@@ -25,15 +24,22 @@ import PrivateRoute from './PrivateRoute';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
+    const loadingTimeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
     if (storedToken) {
-      setIsLoggedIn(!!storedToken);
+      setIsLoggedIn(true);
     }
+    return () => clearTimeout(loadingTimeout);
   }, []);
 
-  return (
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : (
     // Routing setup for individual pages
     <Router>
       <div className="App">
@@ -56,21 +62,6 @@ function App() {
           <Route path="/studenthomepage" element={<PrivateRoute element={<StudentHomepage />} isLoggedIn={isLoggedIn} />} />
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examsession" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
-          {/* <Route path="/examstart" element={<ExamStart />} /> */}
-          {/* <Route path="/faciallandmarkrecognition" element={<FacialLandmarkRecognition />} /> */}
-          {/* <Route path="/objectrecognition" element={<ObjectRecognition />} /> */}
-          {/* <Route path="/exam" element={<Exam />} /> */}
-          {/* <Route path="/examhistory" element={<ExamHistory />} /> */}
-          {/* <Route path="/flaglog" element={<FlagLog />} /> */}
-          {/* <Route path="/flag" element={<Flag />} /> */}
-          {/* <Route path="/schedule" element={<Schedule />} /> */}
-          {/* <Route path="/admin" element={<AdminDashboard />} /> */}
-          {/* <Route path="/launchexam" element={<LaunchExam />} /> */}
-          {/* <Route path="/createsession" element={<CreateSession />} /> */}
-          {/* <Route path="/manageclasses" element={<ManageClasses />} /> */}
-          {/* <Route path="/studenthomepage" element={<StudentHomepage />} /> */}
-          {/* <Route path="/previousexams" element={<PreviousExams />} /> */}
-          {/* <Route path="/examsession" element={<ExamSession />} /> */}
           <Route path="/noaccess" element={<NoAccess />} />
         </Routes>
       </div>

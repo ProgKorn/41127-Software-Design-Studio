@@ -1,14 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import NoAccess from './NoAccess';
 
 const PrivateRoute = ({ element, isLoggedIn }) => {
-  const navigate = useNavigate();
-
-  if (!isLoggedIn) {
-    navigate('/noaccess');
-    return null; 
-  }
-
-  return element;
+  return isLoggedIn ? element : <NoAccess />;
 };
 
 export default PrivateRoute;

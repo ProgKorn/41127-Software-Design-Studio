@@ -38,7 +38,7 @@ function ResponsiveAppBar({routes, type, icons}) {
         navigate('/login');
       } 
     }
-  }, []);
+  }, [navigate]);
 
   const [anchor, setAnchor] = useState(null);
 
