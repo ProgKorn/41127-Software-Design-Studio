@@ -16,6 +16,34 @@ router.get('/get/:studentId', (req,res) => {
     databaseMaster.dbOp('find', 'ClassDetails', {query: {students: { $elemMatch: { studentId: parseInt(studentId)}}}}).then(data => {
         res.json(data);
     });
+});
+
+router.get('/get-exam/:studentId', (req, res) => {
+    const studentId = parseInt(req.params.studentId);
+
+    // Search for the student in the ClassDetails collection
+    databaseMaster.dbOp('find', 'ClassDetails', { query: { "students.studentId": studentId } })
+        .then(data => {
+            // Check if any documents were found
+            if (data && data.length > 0) {
+                // Assuming there may be multiple students with the same studentId in different exams,
+                // you can retrieve all the examIds where the student is found.
+                const examIds = data.map(doc => doc.examId);
+
+                // Send the list of examIds to the client
+                res.json(examIds);
+            } else {
+                // No matching student found
+                res.json([]);
+            }
+        })
+        .catch(error => {
+            // Handle any errors here
+            console.error(error);
+            res.status(500).json({ error: "An error occurred while searching for the student." });
         });
-        
+});
+
+
+
 module.exports = router;
