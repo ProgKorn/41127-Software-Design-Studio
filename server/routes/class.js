@@ -30,8 +30,12 @@ router.get('/get-exam/:studentId', (req, res) => {
                 // you can retrieve all the examIds where the student is found.
                 const examIds = data.map(doc => doc.examId);
 
-                // Send the list of examIds to the client
-                res.json(examIds);
+                // Send the list of exams to the client
+                databaseMaster.dbOp('find', 'ExamDetails', { query: { examId: {$in: examIds} }})
+                    .then(examData => {
+                        res.json(examData)
+                })
+                
             } else {
                 // No matching student found
                 res.json([]);
