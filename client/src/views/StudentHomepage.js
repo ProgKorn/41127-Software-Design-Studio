@@ -29,37 +29,51 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function StudentHomepage() 
-{
-   const [student, getStudent] = useState(''); // retrieve data returned by the api response
-   const [loading, setLoading] = useState(true); //loading state that prevents access to undefined data, while waiting to get a response from api call
-   const [exam, getExam] = useState([]);
-   const navigate = useNavigate();
-   //send a get  api request to the server to retrieve and store the student details using axios 
-   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-	  const decodedToken = jwt_decode(token);
-      const studenturl ="http://localhost:4000/student/get/" + decodedToken.userName;
-      const examurl="http://localhost:4000/exam/getExamDetails";
-      axios.get(studenturl).then((response) => {
-        getStudent(response.data);
-        setLoading(false);
-        })
-        .catch(error => console.error(error)); 
-        axios.get(examurl)
-        .then((response) => {
-          getExam(response.data);
-          setLoading(false);
-        })
-        .catch(error => console.error(error));
-    } else {
+function StudentHomepage() {
+    const [student, getStudent] = useState(''); // retrieve data returned by the api response
+    const [studentId, setStudentId] = useState(' ');
+    const [loading, setLoading] = useState(true); // loading state that prevents access to undefined data, while waiting to get a response from api call
+    const [exam, getExam] = useState([]);
+    const navigate = useNavigate();
+    
+    // send a get api request to the server to retrieve and store the student details using axios
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      
+      if (token) {
+        const decodedToken = jwt_decode(token);
+        const studenturl = "http://localhost:4000/student/get/" + decodedToken.userName;
+        // const examurl="http://localhost:4000/class/get-exam" + studentId;
+  
+        axios.get(studenturl)
+          .then((response) => {
+            const studentData = response.data; // Extract student data from the response
+            const studentId = studentData.studentId; // Extract the studentId
+            getStudent(studentData);
+            setStudentId(studentId); // Store the studentId
+            setLoading(false);
+  
+            const examurl = "http://localhost:4000/class/get-exam/" + studentId;
+            axios.get(examurl)
+              .then((examResponse) => {
+                getExam(examResponse.data);
+                setLoading(false);
+              })
+              .catch(examError => {
+                console.error(examError);
+                setLoading(false);
+              });
+          })
+          .catch(studentError => {
+            console.error(studentError);
+            setLoading(false);
+          });
+      } else {
         navigate("/login");
         setLoading(false);
-        
-    }
-
-   }, []);
+      }
+    }, []); // End of useEffect
+  
 
    //wait for all information to be retrieved before loading the student homepage
    if (loading)
