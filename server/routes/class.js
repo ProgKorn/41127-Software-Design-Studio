@@ -33,7 +33,17 @@ router.get('/get-exam/:studentId', (req, res) => {
                 // Send the list of exams to the client
                 databaseMaster.dbOp('find', 'ExamDetails', { query: { examId: {$in: examIds} }})
                     .then(examData => {
-                        res.json(examData)
+                
+                //iterate through the each exam
+                for (i = 0; i < examData.length; i++){
+                //find the class associated with the examID
+                   const foundClass =  data.find(document => document.examId == examData[i].examId)
+                //find the seatNumber in the found class associated with the student id
+                   const foundStudent = foundClass.students.find(student => student.studentId == studentId)
+                //add seatNumber to the exam
+                   examData[i]["seatNumber"] = foundStudent.seatNumber;
+                }
+                res.json(examData)
                 })
                 
             } else {

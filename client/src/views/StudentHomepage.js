@@ -43,7 +43,6 @@ function StudentHomepage() {
       if (token) {
         const decodedToken = jwt_decode(token);
         const studenturl = "http://localhost:4000/student/get/" + decodedToken.userName;
-        // const examurl="http://localhost:4000/class/get-exam" + studentId;
   
         axios.get(studenturl)
           .then((response) => {
@@ -51,7 +50,7 @@ function StudentHomepage() {
             const studentId = studentData.studentId; // Extract the studentId
             getStudent(studentData);
             setStudentId(studentId); // Store the studentId
-            setLoading(false);
+            //setLoading(false);
   
             const examurl = "http://localhost:4000/class/get-exam/" + studentId;
             axios.get(examurl)
@@ -160,7 +159,7 @@ function StudentHomepage() {
                             </TableCell>
                             <TableCell align="center">{row.startTime}</TableCell>
                             <TableCell align="center">{row.details}</TableCell>
-                            <TableCell align="center">{row.seatNo}</TableCell>
+                            <TableCell align="center">{row.seatNumber}</TableCell>
                             <TableCell align="center">
                                 <Link to= {`/examstart/${student.studentId}/${row.examId}`} className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
                                     Access Exam
