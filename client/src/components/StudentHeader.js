@@ -3,14 +3,14 @@ import ResponsiveAppBar from './NavBar';
 
 function StudentHeader() {
   const studentRoutes = {
-	  Home: '/',
+	  Home: '/studenthomepage',
 	  Help: '/helpcentre',
 	  Signout: '/login',
 	}
 
   return (
     <div>
-      <ResponsiveAppBar routes={studentRoutes}/>
+      <ResponsiveAppBar routes={studentRoutes} type='student'/>
       <div className="StudentHeader"></div>
     </div>
   );
