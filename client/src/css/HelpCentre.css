@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .help-centre-header {
   margin-bottom: 3rem;
   background-color: #dfdfe4;
-  min-height: 11rem;
+  min-height: 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,19 +11,20 @@
   font-size: 20px;
   color: rgb(0, 0, 0);
   padding: 2px;
-  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: Montserrat, sans-serif;
 }
 
 .searchBox {
     background-color: white;
     width: 20rem;
-    margin-bottom: 5rem;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    margin-bottom: 1rem;
+    font-family: Montserrat, sans-serif;
 }
 
 .text {
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-family: Montserrat, sans-serif;
     font-size: 40px;
+    text-align: center;
 }
 
 .helpDashboardButton {
@@ -29,11 +32,12 @@
     color: #ffffff;
     width: 100%;
     max-width: 20rem;
-    height: 11rem;
+    height: 12rem;
     margin: auto;
     flex-direction: column;
     border-radius: 20px;
-    justify-content: top;
+    justify-content: center;
+    font-family: Montserrat, sans-serif;
 }
 
 .helpDashboardIcons {
@@ -42,6 +46,16 @@
 }
 
 .help-dashboard {
+    width: 50rem;
+    max-width: 80%;
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-manual-dashboard {
     width: 50rem;
     max-width: 80%;
     margin: auto;
@@ -53,7 +67,7 @@
 }
 
 .subtext {
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-family: Montserrat, sans-serif;
     font-size: 20px;
 }
 
@@ -65,7 +79,7 @@
     position: fixed;
     bottom: 20px;
     left: 20px;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-family: Montserrat, sans-serif;
 }
 
 .back-link:hover {
@@ -76,5 +90,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    margin: auto;
+}
+
+.header {
+    margin-bottom: 3rem;
+}
+
+.user-manual-group {
+    width: 30rem;
+    gap: 10px;
+    max-width: 60%;
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.return {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    width: 30rem;
+}
+
+.list {
+    width: 20rem;
 }

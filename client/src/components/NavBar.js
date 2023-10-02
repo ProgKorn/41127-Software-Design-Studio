@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState }from 'react';
+import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import '../css/NavBar.css';
 import logo from '../SentinelV1White.svg';
+import { Menu, MenuItem } from '@mui/material';
 
 function ResponsiveAppBar({routes, type, icons}) {
   const pages = Object.keys(routes);
@@ -23,18 +26,54 @@ function ResponsiveAppBar({routes, type, icons}) {
     padding: '1em 2em 1em 2em'
   }
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      const decodedToken = jwt_decode(storedToken);
+      const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+      if (decodedToken.exp < currentTimeInSeconds) {
+        localStorage.removeItem('token');
+        navigate('/login');
+      } 
+    }
+  }, [navigate]);
+
+  const [anchor, setAnchor] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchor(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchor(null);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        localStorage.removeItem('token');
+      }
+      navigate('/login'); 
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   const getAppBarContent = () => {
     switch (type) {
       case 'signIn':
         return (
           <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ backgroundColor: "#2b2d42"}}>
               <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button component={Link} to='/'>
                   <img src={logo} className="Mini-logo" alt="Logo" />
                 </Button>
                 <div> {/* Spacer */}
-                  <Button component={Link} to="/helpcentre" color="inherit">
+                  <Button component={Link} to="/helpcentre" color="inherit" className='text'>
                     Help Centre
                   </Button>
                   <span style={{ margin: '0 30px '}}></span>
@@ -42,6 +81,7 @@ function ResponsiveAppBar({routes, type, icons}) {
                     component={Link}
                     to="https://www.uts.edu.au/current-students/support"
                     color="inherit"
+                    className='text'
                   >
                     Contact Us
                   </Button>
@@ -54,7 +94,7 @@ function ResponsiveAppBar({routes, type, icons}) {
         case 'helpCentre':
           return (
             <Box sx={{ flexGrow: 1 }}>
-              <AppBar position="static">
+              <AppBar position="static" sx={{ backgroundColor: "#2b2d42"}}>
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Button component={Link} to='/'>
                     <img src={logo} className="Mini-logo" alt="Logo" />
@@ -100,17 +140,54 @@ function ResponsiveAppBar({routes, type, icons}) {
                       ))}
                   </Box>
                   <Box sx={{ flexGrow: 0 }}>
-                    <Tooltip title="Open settings">
-                    <IconButton onClick={null} sx={{ p: 0 }}>
+                    <Tooltip title="Open account settings">
+                    <IconButton onClick={handleClick} sx={{ p: 0 }}>
                       {/* Add the user's name under 'alt' to change letter profile image */}
                       <Avatar alt="Anonymous" src="/static/images/avatar/2.jpg" />
                     </IconButton>
                     </Tooltip>
+                    <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={handleClose}>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
                   </Box>
                 </Toolbar>
               </Container>
             </AppBar>
           );
+
+          case 'student':
+            return (
+              <AppBar position="static">
+                <Container maxWidth="xl">
+                  <Toolbar disableGutters>
+                    {(
+                <Button component={Link} to='/'>
+                <img src={logo} className="Mini-logo" alt="Logo" >
+                </img>
+              </Button>
+                    )}
+                    <Box 
+                      justifyContent="center"
+                      sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        {pages.map((page) => (
+                        <Button key={page} component={Link} to={routes[page]}
+                          sx={{ my: 3, color: 'white', display: 'block' }}>
+                          {page}
+                        </Button>
+                        ))}
+                    </Box>
+                    <Box sx={{ flexGrow: 0 }}>
+                      <Tooltip title="Open settings">
+                      <IconButton onClick={null} sx={{ p: 0 }}>
+                        {/* Add the user's name under 'alt' to change letter profile image */}
+                        <Avatar alt="Student" src="/static/images/avatar/2.jpg" />
+                      </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </Toolbar>
+                </Container>
+              </AppBar>
+            );
 
       default:
         return <AppBar/>;
