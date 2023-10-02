@@ -47,7 +47,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
-          <Route path="/examstart" element={<PrivateRoute element={<ExamStart />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examstart/:studentId/:examId" element={<PrivateRoute element={<ExamStart />} isLoggedIn={isLoggedIn} />} />
           <Route path="/faciallandmarkrecognition" element={<PrivateRoute element={<FacialLandmarkRecognition />} isLoggedIn={isLoggedIn} />} />
           <Route path="/objectrecognition" element={<PrivateRoute element={<ObjectRecognition />} isLoggedIn={isLoggedIn} />} />
           <Route path="/exam" element={<PrivateRoute element={<Exam />} isLoggedIn={isLoggedIn} />} />
