@@ -14,19 +14,26 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentHeader from '../components/StudentHeader';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import Loader from '../components/Loader'
+import { capitalize } from '@mui/material';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#8D99AE',
-    color: 'black',
-    fontSize: '1.50em',
+    backgroundColor: '#2b2d42',
+    color: 'white',
+    fontSize: '1.85em',
     marginTop: '0.83em',
     marginBottom: '0.83em',
     marginLeft: 0,
     marginRight: 0,
     fontWeight: 'bold',
+    fontFamily: 'Montserrat, sans-serif',
+    textTransform: "capitalize",
   },
+  [`&.${tableCellClasses.body}`]: {
+    fontFamily: 'Montserrat, sans-serif'
+  }
 }));
 
 function StudentHomepage() {
@@ -77,7 +84,7 @@ function StudentHomepage() {
    //wait for all information to be retrieved before loading the student homepage
    if (loading)
    {
-      return <div> Retrieving Data </div>
+      return  <Loader loading={loading} />
    }
         const name = student.name;
    return (
@@ -131,21 +138,21 @@ function StudentHomepage() {
                     <Table sx={{ minWidth: 650 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell colSpan={2} align = 'left'>Upcoming Exams</StyledTableCell>
-                            <StyledTableCell colSpan={3}  align = 'right'>
+                            <StyledTableCell colSpan={1} align = 'left'>Upcoming Exams</StyledTableCell>
+                            <StyledTableCell colSpan={4}  align = 'right'>
                                 <div className=".button-container-student">
-                                <Link to="/previousexams" className="student-button" style= {{ width:'200px', display:'inline-flex', textAlign:'center'}}>
+                                <Link to="/previousexams" className="student-button" style= {{ width:'250px', display:'inline-flex', textAlign:'center'}}>
                                     View Previous Exams
                                 </Link>
                                 </div>
                             </StyledTableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Exam Name</TableCell>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Exam Start</TableCell>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Details</TableCell>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Seat No.</TableCell>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Access Exam</TableCell>
+                            <TableCell style={{ fontWeight: 'bold',  fontFamily: 'Montserrat, sans-serif' }} align="left" >Exam Name</TableCell>
+                            <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Exam Start</TableCell>
+                            <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Details</TableCell>
+                            <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Seat No.</TableCell>
+                            <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Access Exam</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -154,17 +161,17 @@ function StudentHomepage() {
                             key={row.examId}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row">
+                            <StyledTableCell component="th" scope="row">
                             {row.examName}
-                            </TableCell>
-                            <TableCell align="center">{row.startTime}</TableCell>
-                            <TableCell align="center">{row.details}</TableCell>
-                            <TableCell align="center">{row.seatNumber}</TableCell>
-                            <TableCell align="center">
+                            </StyledTableCell>
+                            <StyledTableCell align="center">{row.startTime}</StyledTableCell>
+                            <StyledTableCell align="center">{row.details}</StyledTableCell>
+                            <StyledTableCell align="center">{row.seatNumber}</StyledTableCell>
+                            <StyledTableCell align="center">
                                 <Link to= {`/examstart/${student.studentId}/${row.examId}`} className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
                                     Access Exam
                                 </Link>
-                            </TableCell>
+                            </StyledTableCell>
                         </TableRow>
                         ))}
                     </TableBody>
@@ -178,11 +185,11 @@ function StudentHomepage() {
                 <TableRow>
                     <StyledTableCell align = 'left'>Test Your Equipment </StyledTableCell>
                 </TableRow>
-                <TableRow>
-                    <TableCell align="left">It is highly advised that you check your computer system you are using beforehand to ensure a smooth online testing experience.</TableCell>
-                </TableRow>
             </TableHead>
             <TableBody>
+            <TableRow>
+                    <TableCell align="left" style = {{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif', fontSize: "1em"}} >It is highly advised that you check your computer system you are using beforehand to ensure a smooth online testing experience.</TableCell>
+                </TableRow>
                 <TableRow>
                   <TableCell align= 'left'>
                    <div className=".button-container-student">

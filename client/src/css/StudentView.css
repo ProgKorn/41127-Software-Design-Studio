@@ -13,14 +13,13 @@
   }
 
   .student-button {
-    background-color: #EF233C;
+    background-color: rgb(85, 89, 130);
     width: 30%;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 1rem;
     box-sizing: border-box;
     color: #FFFFFF;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: 1rem;
+    font-family: Montserrat, sans-serif;
     font-weight: 600;
     line-height: 3rem;
     text-align: center;
