@@ -21,6 +21,16 @@ function HelpCentre() {
     setSelectedButton(null);
   };
 
+  const buttonStyles = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "1rem",
+    fontWeight: 500,
+    textTransform: 'Capitalize',
+    color: 'white',
+    backgroundColor: "#292E64",
+    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+  }
+
   return (
     <div>
       <HelpCentreHeader/>
@@ -34,25 +44,25 @@ function HelpCentre() {
         <div className='help-dashboard'>
           <Grid container rowSpacing={10} columnSpacing={{ xs: 1 }}>
 						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('userManual')}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('userManual')} sx={buttonStyles}>
 								<div className="helpDashboardIcons"><AssignmentIcon/></div>
 								User Manual
 							</Button>
 						</Grid>
 						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('faceAuthTroubleshoot')}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('faceAuthTroubleshoot')} sx={buttonStyles}>
 							<div className="helpDashboardIcons"><FaceRetouchingOffIcon/></div>
 								Face Auth Troubleshoot?
 							</Button>
 						</Grid>
 						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')}>
+							<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')} sx={buttonStyles}>
 								<div className="helpDashboardIcons"><FlagIcon/></div>
 								Flagging
 							</Button>
 						</Grid>
 						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('termsAndConditions')}>
+							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('termsAndConditions')} sx={buttonStyles}>
 								<div className="helpDashboardIcons"><AssignmentLateIcon/></div>
 								Terms and Conditions
               </Button>

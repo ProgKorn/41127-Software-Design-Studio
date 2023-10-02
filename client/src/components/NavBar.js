@@ -67,13 +67,13 @@ function ResponsiveAppBar({routes, type, icons}) {
       case 'signIn':
         return (
           <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ backgroundColor: "#2b2d42"}}>
               <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button component={Link} to='/'>
                   <img src={logo} className="Mini-logo" alt="Logo" />
                 </Button>
                 <div> {/* Spacer */}
-                  <Button component={Link} to="/helpcentre" color="inherit">
+                  <Button component={Link} to="/helpcentre" color="inherit" className='text'>
                     Help Centre
                   </Button>
                   <span style={{ margin: '0 30px '}}></span>
@@ -81,6 +81,7 @@ function ResponsiveAppBar({routes, type, icons}) {
                     component={Link}
                     to="https://www.uts.edu.au/current-students/support"
                     color="inherit"
+                    className='text'
                   >
                     Contact Us
                   </Button>
@@ -93,7 +94,7 @@ function ResponsiveAppBar({routes, type, icons}) {
         case 'helpCentre':
           return (
             <Box sx={{ flexGrow: 1 }}>
-              <AppBar position="static">
+              <AppBar position="static" sx={{ backgroundColor: "#2b2d42"}}>
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Button component={Link} to='/'>
                     <img src={logo} className="Mini-logo" alt="Logo" />
