@@ -1,4 +1,5 @@
 import '../App.css';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './Login';
 import { Title } from './Header';
@@ -19,9 +20,26 @@ import StudentHomepage from './StudentHomepage';
 import PreviousExams from './PreviousExams';
 import ExamSession from './ExamSession';
 import NoAccess from './NoAccess';
+import PrivateRoute from './PrivateRoute'; 
 
 function App() {
-  return (
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    const loadingTimeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    if (storedToken) {
+      setIsLoggedIn(true);
+    }
+    return () => clearTimeout(loadingTimeout);
+  }, []);
+
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : (
     // Routing setup for individual pages
     <Router>
       <div className="App">
@@ -29,21 +47,21 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
-          <Route path="/examstart/:studentId/:examId" element={<ExamStart />} />
-          <Route path="/faciallandmarkrecognition" element={<FacialLandmarkRecognition />} />
-          <Route path="/objectrecognition" element={<ObjectRecognition />} />
-          <Route path="/exam" element={<Exam />} />
-          <Route path="/examhistory" element={<ExamHistory />} />
-          <Route path="/flaglog" element={<FlagLog />} />
-          <Route path="/flag" element={<Flag />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/launchexam" element={<LaunchExam />} />
-          <Route path="/createsession" element={<CreateSession />} />
-          <Route path="/manageclasses" element={<ManageClasses />} />
-          <Route path="/studenthomepage" element={<StudentHomepage />} />
-          <Route path="/previousexams" element={<PreviousExams />} />
-          <Route path="/examsession" element={<ExamSession />} />
+          <Route path="/examstart/:studentId/:examId" element={<PrivateRoute element={<ExamStart />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/faciallandmarkrecognition" element={<PrivateRoute element={<FacialLandmarkRecognition />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/objectrecognition" element={<PrivateRoute element={<ObjectRecognition />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/exam" element={<PrivateRoute element={<Exam />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examhistory" element={<PrivateRoute element={<ExamHistory />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/flaglog" element={<PrivateRoute element={<FlagLog />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/flag" element={<PrivateRoute element={<Flag />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/schedule" element={<PrivateRoute element={<Schedule />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/admin" element={<PrivateRoute element={<AdminDashboard />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/launchexam" element={<PrivateRoute element={<LaunchExam />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/createsession" element={<PrivateRoute element={<CreateSession />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/manageclasses" element={<PrivateRoute element={<ManageClasses />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/studenthomepage" element={<PrivateRoute element={<StudentHomepage />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examsession" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
         </Routes>
       </div>

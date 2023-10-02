@@ -19,12 +19,12 @@ function AdminDashboard() {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken = jwt_decode(token);
-        if (decodedToken.isAdmin === true) {
-          setIsAdmin(true);
-        } else {
-      navigate('/noaccess');
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        navigate('/noaccess');
+	    }
 	  }
-	}
   }, [isAdmin, navigate]);
 
   const buttonStyles = {

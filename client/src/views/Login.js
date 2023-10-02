@@ -15,13 +15,13 @@ function Login() {
 
   const handleLogin = async () => {
     await axios.post('http://localhost:4000/login', { username, password, keepLoggedIn: document.getElementById('keepSignedIn').checked }).then(response => {
-    if (response.data.isAdmin === true) {
+      localStorage.setItem('token', response.data.token);  
+      if (response.data.isAdmin === true) {
         navigate('/admin');
       } else {
         navigate ('/studenthomepage');
       }
-      localStorage.setItem('token', response.data.token);}
-    ).catch(error => {
+    }).catch(error => {
       setErrorMessage("Login failed: " + error.response.data.message);
     })
   };
