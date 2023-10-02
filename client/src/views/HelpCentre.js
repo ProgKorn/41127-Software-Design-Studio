@@ -9,28 +9,17 @@ import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import {UserManual, FaceAuthenticationTroubleshoot, ComputerSpecs, TermsAndConditions} from '../components/HelpCentrePages';
 import SearchBar from '../components/SearchBar';
-import { Introduction, Overview, GettingStarted, UsingTheSoftware, Troubleshooting} from "../components/UserManual";
-
 
 function HelpCentre() {
   const [selectedButton, setSelectedButton] = useState(null);
-  const [selectedSection, setSelectedSection] = useState(null);
-
-  const handleSelectedSection = (section) => {
-    setSelectedSection(section);
-    setSelectedButton(null);
-  }
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
-    setSelectedSection(null);
   };
 
   const handleBackButtonClick = () => {
     setSelectedButton(null);
-    setSelectedSection(null);
   };
-  
 
   const buttonStyles = {
     fontFamily: "Montserrat, sans-serif",
@@ -48,10 +37,10 @@ function HelpCentre() {
       <header className="help-centre-header">
         <h1 className="text">Sentinel Help Centre</h1>
         <div>
-            <SearchBar onSelectSection={handleSelectedSection}/>
+            <SearchBar />
         </div>
       </header>
-      {!selectedButton && !selectedSection && (
+      {!selectedButton && (
         <div className='help-dashboard'>
           <Grid container rowSpacing={10} columnSpacing={{ xs: 1 }}>
 						<Grid item xs={6}>
@@ -94,11 +83,6 @@ function HelpCentre() {
       {selectedButton === 'termsAndConditions' && (
       <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
       )}
-      {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Overview' && <Overview onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Getting Started' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Using the Software' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Troubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}
     </div>
   );
 }

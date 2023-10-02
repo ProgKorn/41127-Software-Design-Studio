@@ -1,8 +1,8 @@
 [
     {
-        "id": "userIntroduction",
+        "id": "userManual",
         "icon": "AssignmentIcon",
-        "title": "User Manual Introduction",
-        "content": "This User Manual (UM) provides the information necessary for students and examiners to effectively use the Sentinel web application which uses Artificial Intelligence (AI) software to prevent misconduct during exams. This application aims to enable examiners to detect misconduct easily and allow students to perform their respective exams while being monitored in the easiest way possible. The scope of this application was to deliver a web-based application to schools that could revitalise the way schools hold their online exams. Given this scope, the main requirements that the business analyst was able to derive from the perspective of both the students and the examiners includes the following: To be able to verify the student’s identity upon login. To flag any incidents of misconduct during an exam. To be able to terminate a student’s exam when there are two flagged incidents. To keep a log of incidents for each exam. To keep full-length videos of students where misconduct was not detected. In the event of a system or software update (including bug fixes and the creation of additional features), newer versions of this user manual will be released to keep up with these changes. Because the student’s camera feed and all user information (including that of the examiner) is being stored, it is essential to have privacy protection software. All video information stored on the database will be encrypted and will require user authentication. Passwords stored on the system will be salted and password complexity will also be enforced. Data privacy and protection is at the core of the Sentinel AI Cheating Detection Software."
+        "title": "User Manual",
+        "content": "This manual is very insightful"
     }
 ]
