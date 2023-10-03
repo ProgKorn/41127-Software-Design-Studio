@@ -20,7 +20,8 @@ import StudentHomepage from './StudentHomepage';
 import PreviousExams from './PreviousExams';
 import ExamSession from './ExamSession';
 import NoAccess from './NoAccess';
-import PrivateRoute from './PrivateRoute'; 
+import PrivateRoute from './PrivateRoute';
+import Loader from '../components/Loader';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,7 +39,7 @@ function App() {
   }, []);
 
   return isLoading ? (
-    <div>Loading...</div>
+    <div> <Loader loading={isLoading}/> </div>
   ) : (
     // Routing setup for individual pages
     <Router>
