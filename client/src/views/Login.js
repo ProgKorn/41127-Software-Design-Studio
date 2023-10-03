@@ -15,6 +15,12 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  }
+
   const handleLogin = async () => {
     setLoading(true);
     try {
@@ -59,6 +65,7 @@ function Login() {
               placeholder="Email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
           </div>
           <div>
@@ -68,6 +75,7 @@ function Login() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
           </div>
           <div className="error-message-container">
