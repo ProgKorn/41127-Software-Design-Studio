@@ -18,17 +18,19 @@ function createData (examName,  examStart, details, seatNo, finishTime) {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#8D99AE',
-      color: 'black',
-      fontSize: '1.50em',
-      marginTop: '0.83em',
-      marginBottom: '0.83em',
-      marginLeft: 0,
-      marginRight: 0,
+      backgroundColor: '#2b2d42',
+      color: 'white',
+      fontSize: '20px',
       fontWeight: 'bold',
+      fontFamily: 'Montserrat, sans-serif',
+      textTransform: "capitalize",
     },
+    [`&.${tableCellClasses.body}`]: {
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '15px'
+    }
   }));
-
+  
   const rows = [
     createData('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', '21/08/2023 5:00:00'),
     createData('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', '21/08/2023 5:00:00'),
@@ -37,10 +39,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 function PreviousExams(){
     return(
         <div>
-            <StudentHeader/>
-            <div className='main'>
-                <h1>Student Homepage</h1>
-            </div>
+        <StudentHeader/>
+        <header class = "student-header">
+            <div className="student-heading">Student Homepage</div>
+        </header>
             <div style={{width:'80%', marginLeft:'50px', marginTop:'30px'}}>
                 <TableContainer component={Paper}>
                     <Table sx={{minWidth: 200}} aria-label="customised table">
@@ -48,27 +50,27 @@ function PreviousExams(){
                             <TableRow>
                                 <StyledTableCell colspan={5}>View Previous Exams</StyledTableCell>
                             </TableRow>
-                            <TableRow>
-                                <TableCell style={{ fontWeight: 'bold' }} align="center">Exam Name</TableCell>
-                                <TableCell style={{ fontWeight: 'bold' }} align="center">Exam Start</TableCell>
-                                <TableCell style={{ fontWeight: 'bold' }} align="center">Details</TableCell>
-                                <TableCell style={{ fontWeight: 'bold' }} align="center">Seat No.</TableCell>
-                                <TableCell style={{ fontWeight: 'bold' }} align="center">Exam Finish Time</TableCell>
-                            </TableRow>
                         </TableHead>
                         <TableBody>
+                        <TableRow>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="left">Exam Name</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Exam Start</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Details</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Seat No.</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Exam Finish Time</StyledTableCell>
+                            </TableRow>
                             {rows.map((row) => (
                             <TableRow 
                                 key={row.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row">
+                                <StyledTableCell component="th" scope="row">
                                 {row.examName}
-                                </TableCell>
-                                <TableCell align="center">{row.examStart}</TableCell>
-                                <TableCell align="center">{row.details}</TableCell>
-                                <TableCell align="center">{row.seatNo}</TableCell>
-                                <TableCell align="center">{row.finishTime}</TableCell>
+                                </StyledTableCell>
+                                <StyledTableCell align="center">{row.examStart}</StyledTableCell>
+                                <StyledTableCell align="center">{row.details}</StyledTableCell>
+                                <StyledTableCell align="center">{row.seatNo}</StyledTableCell>
+                                <StyledTableCell align="center">{row.finishTime}</StyledTableCell>
                             </TableRow>
                             ))}
                         </TableBody>
