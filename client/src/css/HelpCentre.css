@@ -48,7 +48,7 @@
 .help-dashboard {
     width: 50rem;
     max-width: 80%;
-    padding: 1rem;
+    padding: 0.5rem;
     margin: auto;
     display: flex;
     flex-direction: column;

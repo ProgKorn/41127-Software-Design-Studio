@@ -53,7 +53,7 @@ function HelpCentre() {
       </header>
       {!selectedButton && !selectedSection && (
         <div className='help-dashboard'>
-          <Grid container rowSpacing={10} columnSpacing={{ xs: 1 }}>
+          <Grid container rowSpacing={8} columnSpacing={{ xs: 1 }}>
 						<Grid item xs={6}>
 							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('userManual')} sx={buttonStyles}>
 								<div className="helpDashboardIcons"><AssignmentIcon/></div>
