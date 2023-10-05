@@ -8,8 +8,8 @@ userSchema = new schema({
     lastName: {type: String, required: true},
   },
   studentId: {type: Number, required: true},
-  seatNumber: {type: Number, required: true},
-  faceImageUrl: {type: String, required: true} 
+  faceImageUrl: {type: String, required: true},
+  email: {type: String, required: true}
   
 })
 

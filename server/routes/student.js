@@ -8,11 +8,12 @@ router.get('/', (req, res) => {
     res.json({ message: 'Student' });
 });
 
-router.get('/get', (req,res) => {
-  databaseMaster.dbOp('find', 'StudentDetails', { query: { studentId: 42345678 } }).then(data => {
+router.get('/get/:email', (req,res) => {
+  const email = req.params.email;
+  databaseMaster.dbOp('find', 'StudentDetails', { query: { email: email } }).then(data => {
     res.json(new User(data[0]));
   });
-});
+    });
 
 
 module.exports = router;

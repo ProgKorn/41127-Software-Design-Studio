@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AdminHeader from '../components/AdminHeader';
 import { Grid } from '@mui/material';
 import Card from '../components/Card';
 import FlagRoundedIcon from '@mui/icons-material/FlagRounded';
 import '../css/AdminPages.css';
+import jwt_decode from 'jwt-decode';
 
 function Flag() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        navigate('/noaccess'); 
+	    }
+	  }
+  }, [isAdmin, navigate]);
 
   return (
     <div className="Flag">

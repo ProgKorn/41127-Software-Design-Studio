@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .error-message-container {
     display: flex;
     flex-direction: column;
@@ -14,7 +16,7 @@
     /* border: 1px solid #fc1313; */
     border-radius: 1rem;
     color: rgb(74, 72, 72);
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-family: Montserrat, sans-serif;
     font-size: 20px;
     font-weight: 600;
     line-height: 3rem;

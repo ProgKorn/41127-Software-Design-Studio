@@ -78,7 +78,7 @@ module.exports = {
     } catch (error) {
       console.error('An error occurred:', error);
     } finally {
-      await client.close();
+      setTimeout(async ()  => await client.close(), 6000)
     }
   }
 };
