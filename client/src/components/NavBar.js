@@ -71,6 +71,7 @@ function ResponsiveAppBar({routes, type, icons}) {
               <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button component={Link} to='/'>
                   <img src={logo} className="Mini-logo" alt="Logo" />
+                  <div style={{ fontFamily: 'Montserrat, sans-serif', color: 'white', paddingLeft: 10 }}>Sentinel</div>
                 </Button>
                 <div> {/* Spacer */}
                   <Button component={Link} to="/helpcentre" color="inherit" className='text'>
@@ -98,6 +99,7 @@ function ResponsiveAppBar({routes, type, icons}) {
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Button component={Link} to='/'>
                     <img src={logo} className="Mini-logo" alt="Logo" />
+                    <div style={{ fontFamily: 'Montserrat, sans-serif', color: 'white', paddingLeft: 10 }}>Sentinel</div>
                   </Button>
                   <div> {/* Spacer */}
                     <Button component={Link} to="/login" color="inherit">

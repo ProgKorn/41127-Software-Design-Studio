@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentHeader from '../components/StudentHeader';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import Loader from '../components/Loader';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -77,7 +78,7 @@ function StudentHomepage() {
    //wait for all information to be retrieved before loading the student homepage
    if (loading)
    {
-      return <div> Retrieving Data </div>
+      return <div> <Loader loading={loading}/> </div>
    }
         const name = student.name;
    return (
