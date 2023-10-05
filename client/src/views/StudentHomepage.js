@@ -113,7 +113,7 @@ function StudentHomepage() {
                       <StyledTableCell style = {{fontSize: '16px'}}>{student.studentId}</StyledTableCell>
                       </TableRow>
                       <TableRow >
-                      <StyledTableCell style = {{ fontWeight:'bold', fontSize: '16.5px'}}>Email </StyledTableCell>  
+                      <StyledTableCell style = {{ fontWeight:'bold', fontSize: '16.5px'}}>Email: </StyledTableCell>  
                       <StyledTableCell style = {{fontSize: '16px'}}>{student.email}</StyledTableCell>
                       </TableRow>
                       </TableBody>

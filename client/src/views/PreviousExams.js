@@ -64,9 +64,9 @@ function PreviousExams(){
                                 key={row.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row">
+                                <StyledTableCell component="th" scope="row">
                                 {row.examName}
-                                </TableCell>
+                                </StyledTableCell>
                                 <StyledTableCell align="center">{row.examStart}</StyledTableCell>
                                 <StyledTableCell align="center">{row.details}</StyledTableCell>
                                 <StyledTableCell align="center">{row.seatNo}</StyledTableCell>
