@@ -76,11 +76,9 @@ function incidentCheck(timestamp, flagType) {
       flagType: flagType,
       timestamp,
       flagged: true,
-      params: {
-        studentId: studentId,
-        examId: 2,  // This needs to be fetched dynamically from studentId (from token)
-        sessionName: "English", // This needs to be fetched dynamically from examId
-      }
+      studentId: studentId,
+      examId: 2,  // This needs to be fetched dynamically from studentId (from token)
+      sessionName: "English", // This needs to be fetched dynamically from examId
     };
 
     // Add it to the incidents list
