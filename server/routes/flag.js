@@ -81,11 +81,11 @@ router.post('/addFlag', async (req, res) => { // Add a new flag
 
         const newFlag = new Flag ({
             flagId: newFlagId.toString(),
-            examId: req.body.params.examId, 
-            studentId: req.body.params.studentId,
+            examId: req.body.examId, 
+            studentId: req.body.studentId,
             status: "Pending",
             description: req.body.flagType,
-            sessionName: req.body.params.sessionName,
+            sessionName: req.body.sessionName,
         });
         const flag = await databaseMaster.dbOp('insert', 'FlaggedIncidents', { docs: [newFlag] });
         console.log("I have raised this flag " + newFlag);
