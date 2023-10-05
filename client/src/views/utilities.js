@@ -1,9 +1,30 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 const incidents = []; // Active Incidents
 const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
 
 const url = 'http://localhost:4000/flag';
+
+const token = localStorage.getItem('token');
+var decodedToken, studentId;
+
+if (token) {
+  decodedToken = jwtDecode(token);
+  // Do a lookup in the StudentDetails collection to get their studentId using their email
+  const studenturl = "http://localhost:4000/student/get/" + decodedToken.userName;
+  axios.get(studenturl).then((response) => {
+    studentId = response.data.studentId; // Extract the studentId
+  });
+}
+
+// Get the examId from the studentId -- would need to look at ExamStudent (maybe filtering for whichever document has status: "Active")
+// Fetch examId from here, and then sessionName from that examId
+
+/* const examurl = "http://localhost:4000/%examstudent%" + studentId;
+axios.get(examurl).then((response) => {
+  examId = response.data.examId;
+}); */
 
 export const cheatingObject = (detections) => {
   var personCounter = 0; // Keep track of how many people are in the frame
@@ -55,6 +76,9 @@ function incidentCheck(timestamp, flagType) {
       flagType: flagType,
       timestamp,
       flagged: true,
+      studentId: studentId,
+      examId: 2,  // This needs to be fetched dynamically from studentId (from token)
+      sessionName: "English", // This needs to be fetched dynamically from examId
     };
 
     // Add it to the incidents list
@@ -104,6 +128,51 @@ export const drawRect = (detections, ctx) => {
     ctx.stroke();
   });
 }
+
+/* FACIAL LANDMARK DETECTION */
+
+// Define the indices of the nose, left eye, and right eye landmarks in the keypoints array
+const NOSE_INDEX = 168;
+const LEFT_EYE_INDEX = 159;
+const RIGHT_EYE_INDEX = 386;
+
+// Define a threshold to determine if the face is turned
+const TURNED_FACE_THRESHOLD = 20;
+
+export const cheatingFace = (predictions) => {
+  if (predictions.length > 0) {
+    predictions.forEach((prediction) => {
+      const keypoints = prediction.scaledMesh;
+      const timestamp = Date.now();
+      facialLandmarkConditions(keypoints, timestamp);
+    });
+  }
+}
+
+function facialLandmarkConditions(keypoints, timestamp) { // Return true if cheating is detected -- cheating behaviours are: Iris keypoints detection (are they looking at notes, etc) + Detection for rotated faces (looking away from the screen, posters on the wall etc)
+  const cheatingBehaviours = [
+    { type: "Turned Face", condition: isFaceTurned(keypoints) },
+    // Add more for Gaze Tracking
+  ];
+
+  // Check each cheating behavior
+  cheatingBehaviours.forEach((behavior) => {
+    if (behavior.condition) {
+      incidentCheck(timestamp, behavior.type);
+    }
+  });
+}
+
+const isFaceTurned = (keypoints) => { // Is the user's face turned left or right?
+  const nose = keypoints[NOSE_INDEX];
+  const leftEye = keypoints[LEFT_EYE_INDEX];
+  const rightEye = keypoints[RIGHT_EYE_INDEX];
+
+  const rightDistance = rightEye[0] - nose[0]; // Calculate the horizontal distance between the nose and right eye
+  const leftDistance = nose[0] - leftEye[0]; // Calculate the horizontal distance between the nose and left eye
+
+  return rightDistance > TURNED_FACE_THRESHOLD || leftDistance > TURNED_FACE_THRESHOLD;
+};
 
 //  Triangulation sets of three
 export const TRIANGULATION = [
