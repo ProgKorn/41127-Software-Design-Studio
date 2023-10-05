@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const studentRoutes = require('./routes/student');
+const classRoutes = require('./routes/class')
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/flag', flagRoutes);
 app.use('/student', studentRoutes);
+app.use('/class', classRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/exam', examRoutes);
@@ -35,7 +37,7 @@ app.post('/login', async(req, res) => {
       isAdmin: user[0].isAdmin,
     };
   
-    const expiresIn = keepSignedIn ? 'never' : '1h';
+    const expiresIn = keepSignedIn ? 'never' : '4h';
     const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn });
   
     res.json({
