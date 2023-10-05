@@ -96,14 +96,7 @@ function StudentHomepage() {
                   <Table sx={{ minWidth: 100 }} aria-label="customized table">
                       <TableHead>
                           <TableRow>
-                              <StyledTableCell>Student Details</StyledTableCell>
-                              <StyledTableCell  align = 'right'>
-                          <div className=".button-container-student">
-                          <Link to="/editdetails" className="student-button" style= {{ width:'180px', display:'inline-flex', textAlign:'center'}}>
-                              Edit Details
-                          </Link>
-                          </div>
-                      </StyledTableCell>
+                              <StyledTableCell colSpan = {2}> Student Details</StyledTableCell>
                           </TableRow> 
                       </TableHead>
                       <TableBody >
