@@ -17,5 +17,17 @@ router.get('/getExamDetails', async (req, res) => {
   }
 });
 
+router.get('/getExamDetails/:examId', async (req, res) => {
+  try {
+    const examId = parseInt(req.params.examId);
+    //returns the exam details associated with the examId parameter
+    const data = await databaseMaster.dbOp('find', 'ExamDetails', { query: {examId: examId} });
+    console.log(data);
+    res.json(data[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 module.exports = router;

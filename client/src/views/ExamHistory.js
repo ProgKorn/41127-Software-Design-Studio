@@ -8,7 +8,7 @@ import jwt_decode from 'jwt-decode';
 function ExamHistory() {
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
-
+  const examId = 1;
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -25,7 +25,7 @@ function ExamHistory() {
     <div className="ExamHistory">
       <AdminHeader/>
       <h1>Exam History</h1>
-			<Button component={Link} to="/exam" variant="contained">
+			<Button component={Link} to={`/exam/${examId}`} variant="contained">
 				Exam Page
 			</Button>
     </div>
