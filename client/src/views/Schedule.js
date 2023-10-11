@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AdminHeader from '../components/AdminHeader';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import '../css/AdminPages.css';
+import jwt_decode from 'jwt-decode';
 
 function Schedule() {
   const buttonStyles = {
@@ -18,6 +20,21 @@ function Schedule() {
     color: 'white',
     backgroundColor: "#292E64"
   }
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        navigate('/noaccess'); 
+	    }
+	  }
+  }, [isAdmin, navigate]);
 
   return (
 		<div className="Schedule">
