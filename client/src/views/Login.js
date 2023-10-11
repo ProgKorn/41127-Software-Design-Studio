@@ -15,6 +15,7 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [facialDatafromComp, setFacialData] = useState(null);
   const navigate = useNavigate();
 
   const handleKeyPress = (e) => {
@@ -26,18 +27,34 @@ function Login() {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:4000/login', { 
-        username, 
-        password, 
-        keepLoggedIn: document.getElementById('keepSignedIn').checked,
-      });
-
-      localStorage.setItem('token', response.data.token);
-      
-      if (response.data.isAdmin === true) {
-        navigate('/admin');
+      if (isAdmin || !username) {
+        const response = await axios.post('http://localhost:4000/login', {
+          username,
+          password,
+          keepLoggedIn: document.getElementById('keepSignedIn').checked,
+        });
+  
+        localStorage.setItem('token', response.data.token);
+  
+        if (response.data.isAdmin === true) {
+          navigate('/admin');
+        } 
       } else {
-        navigate('/studenthomepage');
+        const response = await axios.post('http://localhost:4000/studentlogin', {
+          username,
+          keepLoggedIn: document.getElementById('keepSignedIn').checked,
+          facialData: facialDatafromComp
+        });
+
+        console.log(facialDatafromComp)
+  
+        localStorage.setItem('token', response.data.token);
+  
+        if (response.data.success) {
+          navigate('/studenthomepage');
+        } else {
+          setErrorMessage(response.data.message);
+        }
       }
     } catch (error) {
       setErrorMessage("Login failed: " + error.response.data.message);
@@ -53,6 +70,10 @@ function Login() {
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
     setIsAdmin(isEmailAdmin(e.target.value));
+  };
+
+  const receiveFacialData = (data) => {
+    setFacialData(data);
   };
 
   return (
@@ -88,7 +109,7 @@ function Login() {
             </div>
           ) : (
         <div>
-          <FacialLandmarkLogin />
+           <FacialLandmarkLogin receiveFacialData={receiveFacialData} />
         </div>
       )}
       <div className="error-message-container">
