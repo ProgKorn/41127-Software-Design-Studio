@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.6",
     "@mui/styled-engine-sc": "^5.14.6",
+    "@tensorflow-models/body-pix": "2.2.0",
     "@tensorflow-models/coco-ssd": "2.2.2",
     "@tensorflow-models/face-detection": "1.0.1",
     "@tensorflow-models/face-landmarks-detection": "1.0.1",
