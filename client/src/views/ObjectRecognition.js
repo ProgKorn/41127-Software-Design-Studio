@@ -62,39 +62,6 @@ function ObjectRecognition() {
 
 const drawBody = async (bodySegmentation) => {
     const canvas = canvasRef.current;
-<<<<<<< Updated upstream
-    const ctx = canvas.getContext('2d');
-
-    const video = webcamRef.current.video;
-    const { videoWidth: width, videoHeight: height } = video;
-
-    const blurCanvas = document.createElement('canvas');
-    blurCanvas.width = width;
-    blurCanvas.height = height;
-    const blurCtx = blurCanvas.getContext('2d');
-
-    blurCtx.filter = 'blur(10px)';
-    blurCtx.drawImage(video, 0, 0, width, height);
-
-    const maskCanvas = createMaskImage(bodySegmentation, width, height);
-
-    const personCanvas = document.createElement('canvas');
-    personCanvas.width = width;
-    personCanvas.height = height;
-    const personCtx = personCanvas.getContext('2d');
-
-    personCtx.drawImage(maskCanvas, 0, 0, width, height);
-    personCtx.globalCompositeOperation = 'source-in';
-    personCtx.drawImage(video, 0, 0, width, height);
-
-    canvas.width = 640;
-    canvas.height = 480;
-
-    ctx.drawImage(blurCanvas, 0, 0, 640, 480);
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.drawImage(personCanvas, 0, 0, 640, 480);
-};
-=======
 
     if (!canvas) {
       console.error('Video is not available.');
@@ -138,7 +105,6 @@ const drawBody = async (bodySegmentation) => {
     }
   };
   
->>>>>>> Stashed changes
 
 
 
