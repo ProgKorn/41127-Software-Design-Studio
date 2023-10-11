@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
@@ -8,7 +9,6 @@ import "../css/Exam.css";
 function ObjectRecognition() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-  const [isMounted, setIsMounted] = useState(true);
 
   const runModels = async () => {
     const net = await bodyPix.load();
@@ -58,50 +58,57 @@ function ObjectRecognition() {
     }
     maskCtx.putImageData(imageData, 0, 0);
     return maskCanvas;
-  };
+};
 
-  const drawBody = async (bodySegmentation) => {
+const drawBody = async (bodySegmentation) => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+
+    if (!canvas) {
+      console.error('Video is not available.');
+      return; // Exit the function to avoid further errors
+    }
   
+    const ctx = canvas.getContext('2d');
+    
     const video = webcamRef.current.video;
     const { videoWidth: width, videoHeight: height } = video;
   
-    const blurCanvas = document.createElement('canvas');
-    blurCanvas.width = width;
-    blurCanvas.height = height;
-    const blurCtx = blurCanvas.getContext('2d');
+    try {
+      const blurCanvas = document.createElement('canvas');
+      blurCanvas.width = width;
+      blurCanvas.height = height;
+      const blurCtx = blurCanvas.getContext('2d');
   
-    blurCtx.filter = 'blur(10px)'; // Adjust the blur amount as needed
-    blurCtx.drawImage(video, 0, 0, width, height);
+      blurCtx.filter = 'blur(10px)';
+      blurCtx.drawImage(video, 0, 0, width, height);
   
-    const maskCanvas = createMaskImage(bodySegmentation, width, height);
+      const maskCanvas = createMaskImage(bodySegmentation, width, height);
   
-    const personCanvas = document.createElement('canvas');
-    personCanvas.width = width;
-    personCanvas.height = height;
-    const personCtx = personCanvas.getContext('2d');
+      const personCanvas = document.createElement('canvas');
+      personCanvas.width = width;
+      personCanvas.height = height;
+      const personCtx = personCanvas.getContext('2d');
   
-    personCtx.drawImage(maskCanvas, 0, 0, width, height);
-    personCtx.globalCompositeOperation = 'source-in';
-    personCtx.drawImage(video, 0, 0, width, height);
+      personCtx.drawImage(maskCanvas, 0, 0, width, height);
+      personCtx.globalCompositeOperation = 'source-in';
+      personCtx.drawImage(video, 0, 0, width, height);
   
-    canvas.width = 640;
-    canvas.height = 480;
+      canvas.width = 640;
+      canvas.height = 480;
   
-    ctx.drawImage(blurCanvas, 0, 0, 640, 480);
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.drawImage(personCanvas, 0, 0, 640, 480);
+      ctx.drawImage(blurCanvas, 0, 0, 640, 480);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.drawImage(personCanvas, 0, 0, 640, 480);
+    } catch (error) {
+      // Handle the error here and log it for debugging
+      console.log('An error occurred in drawBody:', error);
+    }
   };
   
 
-  useEffect(() => {
-    runModels();
-    return () => {
-      // Cleanup function when the component unmounts
-      setIsMounted(false);
-    };
-  }, []);
+
+
+  useEffect(() => { runModels() }, []);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
