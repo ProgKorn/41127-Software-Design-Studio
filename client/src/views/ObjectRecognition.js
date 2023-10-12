@@ -17,7 +17,7 @@ function ObjectRecognition() {
     console.log('Models loaded');
     setInterval(() => {
       detect(net, cocoSsdNet);
-    }, 16);
+    }, 30);
   };
 
   const detect = async (net, cocoSsdNet) => {
