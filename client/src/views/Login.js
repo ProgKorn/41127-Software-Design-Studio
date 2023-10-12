@@ -16,7 +16,8 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
-  const [facialDatafromComp, setFacialData] = useState(null);
+  const [facialDatafromComp, setFacialData] = useState(false);
+  
   const navigate = useNavigate();
 
   const handleKeyPress = (e) => {
@@ -46,8 +47,6 @@ function Login() {
           keepLoggedIn: document.getElementById('keepSignedIn').checked,
           facialData: facialDatafromComp
         });
-
-        console.log(facialDatafromComp)
   
         localStorage.setItem('token', response.data.token);
   
@@ -85,6 +84,12 @@ function Login() {
   const receiveFacialData = (data) => {
     setFacialData(data);
   };
+
+  useEffect(() => {
+    if (isStudent) {
+      setTimeout(() => navigate('/studenthomepage'), 8000)
+    }
+  }, [facialDatafromComp, isStudent]);
 
   return (
     <div className='App'>

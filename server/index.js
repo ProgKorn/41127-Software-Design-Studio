@@ -56,8 +56,6 @@ app.post('/studentlogin', async(req, res) => {
 
   const student = await dbOp('find', 'StudentDetails', { query: { email: username } });
 
-  console.log(facialData)
-
   if (!student || student.length === 0) {
     res.status(401).json({ success: false, message: 'Student not found' });
   } else if (facialData === true) {
