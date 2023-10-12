@@ -8,7 +8,7 @@ function SearchBar({ onSelectSection }) {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = (searchText) => {
-    if (searchText.length > 3) {
+    if (searchText.length > 0) {
       const filteredData = data.filter((text) => text.content.includes(searchText));
       setSearchResults(filteredData);
     } else {
@@ -23,9 +23,7 @@ function SearchBar({ onSelectSection }) {
   };
 
   const handleInputChange = (e) => {
-    const searchText = e.target.value;
-    setInputText(searchText);
-    handleSearch(searchText);
+    setInputText(e.target.value);
   };
 
   const handleKeyPress = (e) => {

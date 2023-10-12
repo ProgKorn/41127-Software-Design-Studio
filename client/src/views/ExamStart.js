@@ -91,7 +91,7 @@ function ExamStart() {
                       component="th"
                       scope="row"
                       sx={{
-                        backgroundColor: "#2b2d42",
+                        backgroundColor: "#109cfc",
                         color: "white",
                         fontWeight: "bold",
                       }}
@@ -148,7 +148,7 @@ function ExamStart() {
             variant="contained"
             className="continueButton"
             style={{
-              backgroundColor: isChecked ? "#2b2d42" : "grey",
+              backgroundColor: isChecked ? "#109cfc" : "grey",
             }}
           >
             <strong>Continue</strong>
