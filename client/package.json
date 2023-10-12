@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.11.0",
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@mui/icons-material": "^5.14.7",
-    "@mui/material": "^5.14.13",
+    "@mui/material": "^5.14.6",
     "@mui/styled-engine-sc": "^5.14.6",
     "@mui/x-date-pickers": "^6.16.1",
     "@tensorflow-models/body-pix": "2.2.0",
