@@ -32,5 +32,10 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
+  },
+  "overrides": {
+    "mongoose": {
+      "bson": "6.1.0"
+    }
   }
 }
