@@ -91,14 +91,6 @@ function ExamHistory() {
 	  }
   }, [isAdmin, navigate]);
 
-  const [flags, setFlags] = React.useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/getFlagLog")
-      .then((flags) => setFlags(flags.data))
-      .catch((err) => console.log(err));
-  }, []);
-
   return (
     <div className="ExamHistory">
       <AdminHeader />
