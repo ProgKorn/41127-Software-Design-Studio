@@ -122,7 +122,11 @@ function FlagLog() {
                     <TableCell align="center">
                       <StatusChip status={flag.status} />
                     </TableCell>
-                    <TableCell align="center">{flag.flagId}</TableCell>
+                    <TableCell align="center">{
+					<a href={`/flag/${flag.flagId}`} style={{ color: 'black' }}>
+                        {flag.flagId}
+                    </a>
+					}</TableCell>
                     <TableCell align="center">{flag.examId}</TableCell>
                   </TableRow>
                 ))}
