@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/Exam.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -25,7 +25,9 @@ function ExamStart() {
   const [examDetails, setExamDetails] = useState(null);
   const [loading, setLoading] = useState(true); // Initialize as true
   const navigate = useNavigate();
-  const examId = "64e5f5e6775cbbddcd2afab2";
+  const {studentId} = useParams();
+  const {examId} = useParams();
+  console.log("URL Parameters:", studentId, examId);
 
   const fetchExamDetails = async () => {
     try {
@@ -61,6 +63,7 @@ function ExamStart() {
   };
 
   return (
+
     <Box>
       <StudentHeader />
       <Box className="main">
@@ -88,7 +91,7 @@ function ExamStart() {
                       component="th"
                       scope="row"
                       sx={{
-                        backgroundColor: "#109cfc",
+                        backgroundColor: "#2b2d42",
                         color: "white",
                         fontWeight: "bold",
                       }}
@@ -145,7 +148,7 @@ function ExamStart() {
             variant="contained"
             className="continueButton"
             style={{
-              backgroundColor: isChecked ? "#109cfc" : "grey",
+              backgroundColor: isChecked ? "#2b2d42" : "grey",
             }}
           >
             <strong>Continue</strong>

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import AdminHeader from '../components/AdminHeader';
 import Card from '../components/Card';
@@ -9,8 +10,24 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import '../css/AdminPages.css';
+import jwt_decode from 'jwt-decode';
 
 function Exam() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        navigate('/noaccess'); 
+	    }
+	  }
+  }, [isAdmin, navigate]);
+
   function createData(name, stat1, stat2, stat3, stat4) {
     return { name, stat1, stat2, stat3, stat4 };
   }

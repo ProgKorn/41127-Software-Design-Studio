@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState }, { useEffect } from "react";
 import AdminHeader from "../components/AdminHeader";
 import "../css/AdminFonts.css";
 import { Button, Grid } from "@mui/material";
@@ -42,8 +43,24 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const height = 300;
 const labelOffset = -6;
+import jwt_decode from 'jwt-decode';
 
 function CreateSession() {
+	const [isAdmin, setIsAdmin] = useState(false);
+	const navigate = useNavigate();
+  
+	useEffect(() => {
+	  const token = localStorage.getItem('token');
+	  if (token) {
+		const decodedToken = jwt_decode(token);
+		if (decodedToken.isAdmin === true) {
+		  setIsAdmin(true);
+		} else {
+		  navigate('/noaccess'); 
+		  }
+		}
+	}, [isAdmin, navigate]);
+
   const [examDate, setExamDate] = React.useState(dayjs("2022-04-17"));
   const [ammendedExamDate, setAmmendedExamDate] = React.useState("");
 

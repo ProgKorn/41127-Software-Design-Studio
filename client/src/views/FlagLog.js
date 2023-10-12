@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import AdminHeader from "../components/AdminHeader";
 import { Button, Grid, Chip  } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -49,6 +50,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+import jwt_decode from 'jwt-decode';
 
 function FlagLog() {
   const [flags, setFlags] = React.useState([]);
@@ -58,6 +60,21 @@ function FlagLog() {
       .then((flags) => setFlags(flags.data))
       .catch((err) => console.log(err));
   }, []);
+
+	const [isAdmin, setIsAdmin] = useState(false);
+	const navigate = useNavigate();
+  
+	useEffect(() => {
+	  const token = localStorage.getItem('token');
+	  if (token) {
+		const decodedToken = jwt_decode(token);
+		if (decodedToken.isAdmin === true) {
+		  setIsAdmin(true);
+		} else {
+		  navigate('/noaccess'); 
+		  }
+		}
+	}, [isAdmin, navigate]);
 
   return (
     <div>

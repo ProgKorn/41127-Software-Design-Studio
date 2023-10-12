@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 import AdminHeader from "../components/AdminHeader";
 import { Button, Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -49,6 +51,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function ManageClasses() {
+	const [isAdmin, setIsAdmin] = useState(false);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const token = localStorage.getItem('token');
+		if (token) {
+		const decodedToken = jwt_decode(token);
+		if (decodedToken.isAdmin === true) {
+			setIsAdmin(true);
+		} else {
+			navigate('/noaccess'); 
+			}
+		}
+	}, [isAdmin, navigate]);
+
   const [selectedRow, setSelectedRow] = React.useState(0);
   const [selectionString, setSelectionString] = React.useState('Select a Class to Begin');
   
@@ -97,7 +114,7 @@ function ManageClasses() {
           </Grid>
         </Card>
       </div>
-    </div>
+	</div>
   );
 }
 

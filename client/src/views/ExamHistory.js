@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import AdminHeader from "../components/AdminHeader";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
@@ -72,8 +73,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+import jwt_decode from 'jwt-decode';
 
 function ExamHistory() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        navigate('/noaccess'); 
+	    }
+	  }
+  }, [isAdmin, navigate]);
+
   const [flags, setFlags] = React.useState([]);
   useEffect(() => {
     axios
