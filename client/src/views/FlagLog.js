@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode';
 function FlagLog() {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const navigate = useNavigate();
+	const flagId = "ed3a1dad-d9fb-4f19-8438-8308a2bb8e8f"
   
 	useEffect(() => {
 	  const token = localStorage.getItem('token');
@@ -26,7 +27,7 @@ function FlagLog() {
 		<div className="FlagLog">
 			<AdminHeader/>
 			<h1>Flag Log</h1>
-			<Button component={Link} to="/flag" variant="contained" startIcon={<FlagRoundedIcon/>}>
+			<Button component={Link} to={`/flag/${flagId}`} variant="contained" startIcon={<FlagRoundedIcon/>}>
 				Flag Page
 			</Button>
 		</div>
