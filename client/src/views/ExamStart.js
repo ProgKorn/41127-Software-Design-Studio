@@ -27,18 +27,16 @@ function ExamStart() {
   const fetchExamDetails = async () => {
     try {
       const response = await axios.get(`http://localhost:4000/exam/getExamDetails/${examId}`);
-      console.log("Exam Details Response:", response.data); // Log the response
-      // setExamDetails(response.data);
+      console.log("Get Exam Response:", response.data); // Log the response
       
-      // Apply transformations and filter out undefined entries
-      setExamDetails(Object.fromEntries(
-        Object.entries(response.data).map(([key, value]) => {
-        if (transformations[key] !== undefined) {
-          return [transformations[key] || key, value];
-        }
-        })
-      ));
-      console.log("Transformed Details:", response.data)
+      const examData = {
+        "Exam Name": response.data.examName,
+        "Start Time": response.data.startTime,
+        "End Time": response.data.endTime,
+        Details: response.data.details,
+      };
+      setExamDetails(examData)
+      console.log("Exam Details:", examDetails)
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error(error);
@@ -49,17 +47,6 @@ function ExamStart() {
   useEffect(() => {
     fetchExamDetails();
   }, []);
-
-  // Define the transformations
-  const transformations = {
-    _id: undefined, // Set to undefined to filter it out
-    examName: "Exam Name",
-    startTime: "Start Time",
-    endTime: "End Time",
-    details: "Details",
-  };
-
-
 
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
