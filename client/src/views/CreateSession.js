@@ -26,8 +26,6 @@ import MuiAlert from "@mui/material/Alert";
 import jwt_decode from "jwt-decode";
 
 //TO-DO:
-//Time input validation (endTime !> startTime) --> ctrl+f "handleClickSave" for expected implementation location
-//Date selection validation (cannot select a date in the past) --> ctrl+f "handleClickSave" for expected implementation location
 //Cannot assign multiple exams to a class --> ctrl+r "classValidation" for more info
 //Add functionality to handleCreateSession() which will send a .post() request to the DB [classes are hard-coded rn]
 //General style cleanup
@@ -167,9 +165,6 @@ function CreateSession() {
       setSnackbarMessage("Error: Exam end time occurs before start time.");
       setSnackbarState(true);
     }else {
-      //validate that date selected is not in the past
-      //validate that endTime > startTime (cannot end an exam before it starts)
-      //
       setOpen("true");
     }
   };
