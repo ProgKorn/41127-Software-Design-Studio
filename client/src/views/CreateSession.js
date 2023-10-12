@@ -13,8 +13,6 @@ import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
-import { MultiInputTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputTimeRangeField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,6 +23,7 @@ import dayjs from "dayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from '@mui/material/Alert';
+import jwt_decode from 'jwt-decode';
 
 //TO-DO:
 //Time input validation (endTime !> startTime) --> ctrl+f "handleClickSave" for expected implementation location
@@ -43,7 +42,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const height = 300;
 const labelOffset = -6;
-import jwt_decode from 'jwt-decode';
 
 function CreateSession() {
 	const [isAdmin, setIsAdmin] = useState(false);

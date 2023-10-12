@@ -16,6 +16,7 @@ import "../css/AdminTables.css";
 import StatusChip from "../components/StatusChip";
 import axios from "axios";
 import Card from "../components/Card";
+import jwt_decode from 'jwt-decode';
 
 function createData(session, examinee, flag, status, flag_no, session_no) {
   return { session, examinee, flag, status, flag_no, session_no };
@@ -50,7 +51,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-import jwt_decode from 'jwt-decode';
 
 function FlagLog() {
   const [flags, setFlags] = React.useState([]);

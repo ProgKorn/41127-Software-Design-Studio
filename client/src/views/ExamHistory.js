@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import "../css/AdminTables.css";
 import Card from "../components/Card";
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
 
 function createData(examName, term, examiner, attendance, examStart, examEnd, status, sessionNo) {
   return { examName, term, examiner, attendance, examStart, examEnd, status, sessionNo };
@@ -73,7 +74,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-import jwt_decode from 'jwt-decode';
 
 function ExamHistory() {
   const [isAdmin, setIsAdmin] = useState(false);
