@@ -44,9 +44,14 @@ const height = 300;
 const labelOffset = -6;
 
 function CreateSession() {
-  const today = new Date(); // get today's date
+  const today = new Date(); 
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
+  
+  const offset = tomorrow.getTimezoneOffset()
+  const offsetDate = new Date(tomorrow.getTime() - (offset*60*1000))
+  const reformattedDate = offsetDate.toISOString().split('T')[0];
+  
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
@@ -113,6 +118,8 @@ function CreateSession() {
     var trimmedString = examDate.toString();
     trimmedString = trimmedString.slice(0, 13);
     setAmmendedExamDate(trimmedString);
+    console.log("tomorrow is " + tomorrow);
+    console.log(reformattedDate);
   }, [examDate]);
 
   useEffect(() => {
@@ -166,6 +173,7 @@ function CreateSession() {
                       <DateCalendar
                         disablePast={true}
                         disableHighlightToday={true}
+                        minDate={dayjs(reformattedDate)}
                         orientation="landscape"
                         value={examDate}
                         onChange={(newValue) => setExamDate(newValue)}
