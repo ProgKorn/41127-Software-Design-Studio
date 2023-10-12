@@ -31,8 +31,9 @@ function ExamStart() {
       
       const examData = {
         "Exam Name": response.data.examName,
-        "Start Time": response.data.startTime,
-        "End Time": response.data.endTime,
+        "Exam Date": new Date(response.data.startTime).toLocaleDateString("en-GB"),
+        "Start Time": new Date(response.data.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        "End Time": new Date(response.data.endTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
         Details: response.data.details,
       };
       setExamDetails(examData)
