@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
-const uri = process.env.DATABASE_URI;
+const uri = "mongodb+srv://Amy:amy@proctordb.ifkuafa.mongodb.net/?retryWrites=true&w=majority";;
 const client = new MongoClient(uri);
 const bcrypt = require('bcrypt');
 
