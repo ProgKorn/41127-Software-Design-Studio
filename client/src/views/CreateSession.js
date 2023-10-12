@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import AdminHeader from "../components/AdminHeader";
 import "../css/AdminFonts.css";
@@ -22,8 +22,8 @@ import Slide from "@mui/material/Slide";
 import dayjs from "dayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from '@mui/material/Alert';
-import jwt_decode from 'jwt-decode';
+import MuiAlert from "@mui/material/Alert";
+import jwt_decode from "jwt-decode";
 
 //TO-DO:
 //Time input validation (endTime !> startTime) --> ctrl+f "handleClickSave" for expected implementation location
@@ -44,22 +44,25 @@ const height = 300;
 const labelOffset = -6;
 
 function CreateSession() {
-	const [isAdmin, setIsAdmin] = useState(false);
-	const navigate = useNavigate();
-  
-	useEffect(() => {
-	  const token = localStorage.getItem('token');
-	  if (token) {
-		const decodedToken = jwt_decode(token);
-		if (decodedToken.isAdmin === true) {
-		  setIsAdmin(true);
-		} else {
-		  navigate('/noaccess'); 
-		  }
-		}
-	}, [isAdmin, navigate]);
+  const today = new Date(); // get today's date
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
-  const [examDate, setExamDate] = React.useState(dayjs("2022-04-17"));
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        navigate("/noaccess");
+      }
+    }
+  }, [isAdmin, navigate]);
+
+  const [examDate, setExamDate] = React.useState(dayjs(tomorrow));
   const [ammendedExamDate, setAmmendedExamDate] = React.useState("");
 
   const [startTime, setStartTime] = React.useState(0);
@@ -131,7 +134,7 @@ function CreateSession() {
     } else if (scheduledClass == 0) {
       setSnackbarMessage("Error: No Class Provided");
       setSnackbarState(true);
-    } else if (startTime == 0) {                                
+    } else if (startTime == 0) {
       setSnackbarMessage("Error: No Start Time Provided");
       setSnackbarState(true);
     } else if (endTime == 0) {
@@ -157,10 +160,12 @@ function CreateSession() {
               </Box>
 
               <Grid container columns={2} sx={{ pt: 7 }}>
-                <Grid item xs={1} >
+                <Grid item xs={1}>
                   <Box sx={{ pl: 15, pr: 1, pt: 3 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DateCalendar
+                        disablePast={true}
+                        disableHighlightToday={true}
                         orientation="landscape"
                         value={examDate}
                         onChange={(newValue) => setExamDate(newValue)}
@@ -204,7 +209,7 @@ function CreateSession() {
                     onChange={handleChangeClass}
                   >
                     {/* Classes are hard-coded here */}
-                    <MenuItem value={"Class 1"}>Class 1</MenuItem> 
+                    <MenuItem value={"Class 1"}>Class 1</MenuItem>
                     <MenuItem value={"Class 2"}>Class 2</MenuItem>
                     <MenuItem value={"Class 3"}>Class 3</MenuItem>
                   </Select>
@@ -288,10 +293,10 @@ function CreateSession() {
             </Button>
           </DialogActions>
         </Dialog>
-        <Snackbar
-          open={snackbarState}
-        >
-          <Alert severity="error" onClose={handleCloseSnackbar} >{snackbarMessage}</Alert>
+        <Snackbar open={snackbarState}>
+          <Alert severity="error" onClose={handleCloseSnackbar}>
+            {snackbarMessage}
+          </Alert>
         </Snackbar>
       </div>
     </div>
