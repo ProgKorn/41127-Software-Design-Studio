@@ -3,7 +3,7 @@ import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
-import { drawRect } from "./utilities";
+import { cheatingObject, drawRect } from "./utilities";
 import "../css/Exam.css";
 
 function ObjectRecognition() {
@@ -32,6 +32,9 @@ function ObjectRecognition() {
 
       const obj = await cocoSsdNet.detect(video);
       drawRect(obj, canvas.getContext("2d"));
+
+      // Cheating Detections
+      cheatingObject(obj);
     }
   };
 
