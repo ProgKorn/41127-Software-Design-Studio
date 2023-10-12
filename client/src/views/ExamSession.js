@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import "../css/Exam.css";
@@ -10,16 +10,13 @@ function ExamSession() {
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(60); 
   const [examLength, setExamLength] = useState(0);
+  const {studentId} = useParams();
+  const {examId} = useParams();
   
   const createExamStudent = async () => {
     try {
-      //Update this with real data passed on from previous pages? Need to update URLs.
-      const examSessionData  ={
-        studentId: 42345678,
-        examId: 1
-      }
-      const response = await axios.post("http://localhost:4000/examStudent/createExamStudent", examSessionData) 
-      console.log("Exam Details Response:", response.data); // Log the response
+      const response = await axios.get(`http://localhost:4000/examStudent/createExamStudent/${studentId}/${examId}`);
+      console.log("Exam Session Response:", response.data); // Log the response
       // setExamDetails(response.data);
       // setLoading(false); // Set loading to false once data is fetched
     } catch (error) {

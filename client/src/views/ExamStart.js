@@ -14,15 +14,10 @@ import StudentHeader from "../components/StudentHeader";
 import { Checkbox, Button, FormControlLabel } from "@mui/material";
 import axios from "axios";
 
-function createData(name, value) {
-  return { name, value };
-}
-
-
-
 function ExamStart() {
   const [isChecked, setIsChecked] = useState(false);
   const [examDetails, setExamDetails] = useState(null);
+  // const [transformedDetails, setTransformedDetails] = useState(null);
   const [loading, setLoading] = useState(true); // Initialize as true
   const navigate = useNavigate();
   const {studentId} = useParams();
@@ -31,9 +26,19 @@ function ExamStart() {
 
   const fetchExamDetails = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/exam/getExamDetails");
+      const response = await axios.get(`http://localhost:4000/exam/getExamDetails/${examId}`);
       console.log("Exam Details Response:", response.data); // Log the response
-      setExamDetails(response.data);
+      // setExamDetails(response.data);
+      
+      // Apply transformations and filter out undefined entries
+      setExamDetails(Object.fromEntries(
+        Object.entries(response.data).map(([key, value]) => {
+        if (transformations[key] !== undefined) {
+          return [transformations[key] || key, value];
+        }
+        })
+      ));
+      console.log("Transformed Details:", response.data)
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error(error);
@@ -45,13 +50,15 @@ function ExamStart() {
     fetchExamDetails();
   }, []);
 
-  // Handle exam details table contents, using fetched data
-  const rows = [
-    createData("Exam Name", examDetails ? examDetails[0].examName : "Loading..."),
-    createData("Exam Details", examDetails ? examDetails[0].details : "Loading..."),
-    createData("Start Time", examDetails ? examDetails[0].startTime : "Loading..."),
-    createData("End Time", examDetails ? examDetails[0].endTime : "Loading..."),
-  ];
+  // Define the transformations
+  const transformations = {
+    _id: undefined, // Set to undefined to filter it out
+    examName: "Exam Name",
+    startTime: "Start Time",
+    endTime: "End Time",
+    details: "Details",
+  };
+
 
 
   const handleCheckboxChange = (event) => {
@@ -59,8 +66,14 @@ function ExamStart() {
   };
 
   const handleButtonClick = () => {
-    navigate("/examsession");
+    navigate(`/examsession/${studentId}/${examId}`);
+    // navigate("/examsession");
   };
+
+  if (loading)
+   {
+      return <div> Retrieving Data </div>
+   }
 
   return (
 
@@ -82,9 +95,10 @@ function ExamStart() {
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
               <TableBody>
-                {rows.map((row) => (
+                {/* {examDetails.map((examDetail) => ( */}
+                {Object.entries(examDetails).map(([name, value]) => (
                   <TableRow
-                    key={row.name}
+                    key={name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell
@@ -97,10 +111,10 @@ function ExamStart() {
                       }}
                       width="250px"
                     >
-                      {row.name}
+                      {name}
                     </TableCell>
                     <TableCell align="right" width="250px">
-                      {row.value}
+                      {value}
                     </TableCell>
                   </TableRow>
                 ))}

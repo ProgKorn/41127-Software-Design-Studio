@@ -6,10 +6,11 @@ router.get('/', (req, res) => {
     res.json({ message: 'Exam Student' });
 });
 
-router.post('/createExamStudent', async (req, res) => {
+// router.post('/createExamStudent', async (req, res) => {
+router.post('/createExamStudent/:studentId/:examId', async (req, res) => {
     try {
         //const data = await databaseMaster.dbOp('insert', 'Exam-Student', {}); This will be actual - need to get exam id and student id somehow
-        const doc = {seatNumber: 1, studentId: req.body.studentId, examId: req.body.examId, status: "Active"}
+        const doc = {seatNumber: 1, studentId: parseInt(req.params.studentId), examId: parseInt(req.params.examId), status: "Active"}
         const data = await databaseMaster.dbOp('insert', 'Exam-Student', {docs: [doc]});
         console.log(data);
         res.json(data); // Send the array of exam student data directly
