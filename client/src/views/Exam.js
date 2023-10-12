@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import AdminHeader from '../components/AdminHeader';
 import Card from '../components/Card';
@@ -11,10 +11,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import '../css/AdminPages.css';
 import jwt_decode from 'jwt-decode';
+import Loader from '../components/Loader';
+import axios from 'axios';
 
 function Exam() {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [exam, getExam] = useState('');
+  const [examStudent, getExamStudent] = useState('');
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
   const navigate = useNavigate();
+  const {examId} = useParams();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,22 +33,22 @@ function Exam() {
         navigate('/noaccess'); 
 	    }
 	  }
+    const examUrl = 'http://localhost:4000/exam/getExamDetails/' + examId
+    axios.get(examUrl)
+    .then((response) => {
+      getExam(response.data);
+      setLoading1(false);
+    });
+    const examStudentUrl = 'http://localhost:4000/student/getExamStudents/' + examId
+    axios.get(examStudentUrl)
+    .then((response) => {
+      getExamStudent(response.data);
+      setLoading2(false);
+    });
   }, [isAdmin, navigate]);
 
-  function createData(name, stat1, stat2, stat3, stat4) {
-    return { name, stat1, stat2, stat3, stat4 };
-  }
-
-  const rows = [
-    createData('Student1', 159, 6.0, 24, 4.0),
-    createData('Student2', 237, 9.0, 37, 4.3),
-    createData('Student3', 262, 16.0, 24, 6.0),
-    createData('Student4', 305, 3.7, 67, 4.3),
-    createData('Student5', 356, 16.0, 49, 3.9),
-  ];
-
   const columns = [
-    'Examinee', 'Student Id', 'Flags', 'Duration', 'Status'
+    'Examinee', 'Student Id', 'Flags', 'Seat Number', 'Status'
   ]
 
   const tableTitleTextStyle = {
@@ -54,7 +61,11 @@ function Exam() {
     '&:last-child td, &:last-child th': { border: 0 },
     fontFamily: 'Montserrat, sans-serif'
   }
-  
+  //wait for all information to be retrieved before loading the student homepage
+  if (loading2 || loading1)
+    {
+      return  <Loader loading={(loading2 || loading1)} />
+    }
   return (
     <div className="Exam">
       <AdminHeader/>
@@ -64,12 +75,44 @@ function Exam() {
           <Card title={"Examination Details"}>
             <div className='listRowContainer'>
               <div className='listTitleText' style={{ width: '30%' }}>
-                Type
+                Exam ID:
               </div>
               <div className='listDescriptionText' style={{ width: '70%' }}>
-                Description
+                {exam.examId}
               </div>
             </div>
+            <div className='listRowContainer'>
+              <div className='listTitleText' style={{ width: '30%' }}>
+                Exam Name:
+              </div>
+              <div className='listDescriptionText' style={{ width: '70%' }}>
+                {exam.examName}
+              </div>
+            </div>
+            <div className='listRowContainer'>
+              <div className='listTitleText' style={{ width: '30%' }}>
+                Details:
+              </div>
+              <div className='listDescriptionText' style={{ width: '70%' }}>
+                {exam.details}
+              </div>
+            </div> 
+            <div className='listRowContainer'>
+              <div className='listTitleText' style={{ width: '30%' }}>
+                Start Time:
+              </div>
+              <div className='listDescriptionText' style={{ width: '70%' }}>
+                {exam.startTime}
+              </div>
+            </div>
+            <div className='listRowContainer'>
+              <div className='listTitleText' style={{ width: '30%' }}>
+                End Time:
+              </div>
+              <div className='listDescriptionText' style={{ width: '70%' }}>
+                {exam.endTime}
+              </div>
+            </div>           
           </Card>
         </Grid>
         <Grid item xs={8}>
@@ -79,35 +122,28 @@ function Exam() {
                 <TableHead>
                   <TableRow >
                     {columns.map((col) => (
-                      <TableCell  align='center' sx={tableTitleTextStyle}>
+                      <TableCell  sx={tableTitleTextStyle} align='center' style={{fontFamily: 'Montserrat, sans-serif'}}>
                         {col}
                       </TableCell>
                     ))}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={tableRowStyle}>
-                      <TableCell component="th" scope="row" style={{fontFamily: 'Montserrat, sans-serif' }}>
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                        {row.stat1}
-                      </TableCell>
-                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                        {row.stat2}
-                      </TableCell>
-                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                        {row.stat3}
-                      </TableCell>
-                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                        {row.stat4}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                      {examStudent.map((row) => (
+                      <TableRow 
+                          key={row.examId}
+                          sx={tableRowStyle}
+                      >
+                          <TableCell component="th" scope="row" style={{fontFamily: 'Montserrat, sans-serif'}}>
+                          {row.name}
+                          </TableCell>
+                          <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.studentId}</TableCell>
+                          <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.flags}</TableCell>
+                          <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.seatNumber}</TableCell>
+                          <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.status}</TableCell>
+                      </TableRow>
+                      ))}
+                  </TableBody>
               </Table>
             </TableContainer>
           </Card>
