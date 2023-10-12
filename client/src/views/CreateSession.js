@@ -87,6 +87,7 @@ function CreateSession() {
     "Error encountered while saving form"
   );
   const [snackbarState, setSnackbarState] = React.useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = React.useState("");
 
   const handleCloseSnackbar = () => {
     setSnackbarState(false);
@@ -118,36 +119,54 @@ function CreateSession() {
     var trimmedString = examDate.toString();
     trimmedString = trimmedString.slice(0, 13);
     setAmmendedExamDate(trimmedString);
-    console.log("tomorrow is " + tomorrow);
-    console.log(reformattedDate);
   }, [examDate]);
 
   useEffect(() => {
     var trimmedString = startTime.toString();
     trimmedString = trimmedString.slice(17);
     setAmmendedStartTime(trimmedString);
+    console.log("start time is " + startTime + "or " + trimmedString)
+
+    if(startTime > endTime){
+      setSnackbarSeverity("warning");
+      setSnackbarMessage("Warning: Exam end time occurs before start time. Please correct before proceeding.");
+      setSnackbarState(true);
+    }
   }, [startTime]);
 
   useEffect(() => {
     var trimmedString = endTime.toString();
     trimmedString = trimmedString.slice(17);
-    setAmmendedEndTime(trimmedString);
+
+    if (startTime > endTime){
+      setSnackbarSeverity("warning");
+      setSnackbarMessage("Warning: Exam end time occurs before start time. Please correct before proceeding.");
+      setSnackbarState(true);
+    }
   }, [endTime]);
 
   const handleClickSave = () => {
     if (examName == "") {
       setSnackbarMessage("Error: No Exam Name Provided");
+      setSnackbarSeverity("error");
       setSnackbarState(true);
     } else if (scheduledClass == 0) {
       setSnackbarMessage("Error: No Class Provided");
+      setSnackbarSeverity("error");
       setSnackbarState(true);
     } else if (startTime == 0) {
       setSnackbarMessage("Error: No Start Time Provided");
+      setSnackbarSeverity("error");
       setSnackbarState(true);
     } else if (endTime == 0) {
       setSnackbarMessage("Error: No End Time Provided");
+      setSnackbarSeverity("error");
       setSnackbarState(true);
-    } else {
+    } else if (startTime > endTime){
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Error: Exam end time occurs before start time.");
+      setSnackbarState(true);
+    }else {
       //validate that date selected is not in the past
       //validate that endTime > startTime (cannot end an exam before it starts)
       //
@@ -217,9 +236,9 @@ function CreateSession() {
                     onChange={handleChangeClass}
                   >
                     {/* Classes are hard-coded here */}
-                    <MenuItem value={"Class 1"}>Class 1</MenuItem>
-                    <MenuItem value={"Class 2"}>Class 2</MenuItem>
-                    <MenuItem value={"Class 3"}>Class 3</MenuItem>
+                    <MenuItem value={"48230: Economics and Finance"}>48230: Economics and Finance</MenuItem>
+                    <MenuItem value={"91001: Cloud SAAS"}>91001: Cloud SAAS</MenuItem>
+                    <MenuItem value={"80085: Engineering Communications"}>80085: Engineering Communications</MenuItem>
                   </Select>
                 </FormControl>
 
@@ -302,7 +321,7 @@ function CreateSession() {
           </DialogActions>
         </Dialog>
         <Snackbar open={snackbarState}>
-          <Alert severity="error" onClose={handleCloseSnackbar}>
+          <Alert severity={snackbarSeverity} onClose={handleCloseSnackbar}>
             {snackbarMessage}
           </Alert>
         </Snackbar>
