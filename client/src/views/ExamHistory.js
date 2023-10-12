@@ -78,7 +78,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ExamHistory() {
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
-
+  const examId = 1;
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {

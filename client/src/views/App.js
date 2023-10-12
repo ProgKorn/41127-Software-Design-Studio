@@ -51,7 +51,7 @@ function App() {
           <Route path="/examstart/:studentId/:examId" element={<PrivateRoute element={<ExamStart />} isLoggedIn={isLoggedIn} />} />
           <Route path="/faciallandmarkrecognition" element={<PrivateRoute element={<FacialLandmarkRecognition />} isLoggedIn={isLoggedIn} />} />
           <Route path="/objectrecognition" element={<PrivateRoute element={<ObjectRecognition />} isLoggedIn={isLoggedIn} />} />
-          <Route path="/exam" element={<PrivateRoute element={<Exam />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/exam/:examId" element={<PrivateRoute element={<Exam />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examhistory" element={<PrivateRoute element={<ExamHistory />} isLoggedIn={isLoggedIn} />} />
           <Route path="/flaglog" element={<PrivateRoute element={<FlagLog />} isLoggedIn={isLoggedIn} />} />
           <Route path="/flag" element={<PrivateRoute element={<Flag />} isLoggedIn={isLoggedIn} />} />
