@@ -136,9 +136,7 @@ function FacialLandmarkLogin({ comparisonDataParent }) {
           height="480"
           style={{
             position: 'absolute',
-            top: '0',
-            left: '0',
-            transform: 'translate(-50%, -50%)', // Center the canvas
+            transform: 'translate(-100%)',
           }}
         />
       </div>

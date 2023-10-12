@@ -15,6 +15,7 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
   const [facialDatafromComp, setFacialData] = useState(null);
   const navigate = useNavigate();
 
@@ -60,6 +61,9 @@ function Login() {
       setErrorMessage("Login failed: " + error.response.data.message);
     } finally {
       setLoading(false);
+      setUsername("");
+      setIsAdmin(false);
+      setIsStudent(false);
     }
   };  
 
@@ -67,9 +71,15 @@ function Login() {
     return email.endsWith("apple@gmail.com");
   };
 
+  const isEmailStudent = (email) => {
+    return email.endsWith("steve@musk.com");
+  }
+
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
     setIsAdmin(isEmailAdmin(e.target.value));
+    setIsStudent(isEmailStudent(e.target.value));
+    setErrorMessage("");
   };
 
   const receiveFacialData = (data) => {
@@ -96,22 +106,23 @@ function Login() {
                 onKeyPress={handleKeyPress}
               />
           </div>
-          {isAdmin || !setUsername ? (
-        <div>
-                <input
-                  className="form"
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                />
+          {isAdmin && (
+            <div>
+              <input
+                className="form"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
             </div>
-          ) : (
-        <div>
-           <FacialLandmarkLogin receiveFacialData={receiveFacialData} />
-        </div>
-      )}
+          )}
+          {isStudent && (
+            <div>
+              <FacialLandmarkLogin receiveFacialData={receiveFacialData} />
+            </div>
+          )}
       <div className="error-message-container">
             {errorMessage && <ErrorMessage message={errorMessage}/>}
           </div>
