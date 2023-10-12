@@ -2,7 +2,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 const incidents = []; // Active Incidents
-const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
+export const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
 
 const url = 'http://localhost:4000/flag';
 
