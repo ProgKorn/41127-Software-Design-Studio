@@ -95,7 +95,7 @@ function HelpCentre() {
       <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Overview' && <Overview onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userOverview' && <Overview onBackButtonClick={handleBackButtonClick} />}
       {selectedSection === 'Getting Started' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
       {selectedSection === 'Using the Software' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
       {selectedSection === 'Troubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}
