@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import AdminHeader from "../components/AdminHeader";
-import { Button, Grid, Chip  } from "@mui/material";
+import { Button, Grid, Chip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
@@ -16,7 +16,7 @@ import "../css/AdminTables.css";
 import StatusChip from "../components/StatusChip";
 import axios from "axios";
 import Card from "../components/Card";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 
 function createData(session, examinee, flag, status, flag_no, session_no) {
   return { session, examinee, flag, status, flag_no, session_no };
@@ -53,28 +53,42 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function FlagLog() {
-  const [flags, setFlags] = React.useState([]);
+  const [flagList, setFlags] = React.useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/getFlagLog")
-      .then((flags) => setFlags(flags.data))
+      .get("http://localhost:4000/flag/getAllFlags")
+      .then((flagList) => {
+        setFlags(flagList.data)
+      })
       .catch((err) => console.log(err));
   }, []);
 
-	const [isAdmin, setIsAdmin] = useState(false);
-	const navigate = useNavigate();
-  
-	useEffect(() => {
-	  const token = localStorage.getItem('token');
-	  if (token) {
-		const decodedToken = jwt_decode(token);
-		if (decodedToken.isAdmin === true) {
-		  setIsAdmin(true);
-		} else {
-		  navigate('/noaccess'); 
-		  }
-		}
-	}, [isAdmin, navigate]);
+  // useEffect(() => {
+  //   fetch("http://localhost:4000/flag/getAllFlags",{
+  //       method: "GET",
+  //     })
+  //     .then((res) => setFlags(res.json))
+  //     .then(data =>{
+  //       HTMLFormControlsCollection.log(data, "flagData");
+  //     });
+  // }, []);
+
+
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        navigate("/noaccess");
+      }
+    }
+  }, [isAdmin, navigate]);
 
   return (
     <div>
@@ -94,22 +108,22 @@ function FlagLog() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((flag) => (
+                {flagList.map((flag) => (
                   <TableRow>
-                    <TableCell align="center">{flag.session}</TableCell>
-                    <TableCell align="center">{flag.examinee}</TableCell>
-                    <TableCell align="center">{flag.flag}</TableCell>
+                    <TableCell align="center">{flag.sessionName}</TableCell>
+                    <TableCell align="center">{flag.studentId}</TableCell>
+                    <TableCell align="center">{flag.description}</TableCell>
                     {/* <TableCell align="center" className={"label label-"+flag.status}>{flag.status}</TableCell> */}
                     {/* <TableCell align="center">
                       <Chip
                         label={flag.status}
                       />
                     </TableCell> */}
-					<TableCell align="center">
-					<StatusChip status={flag.status} />
+                    <TableCell align="center">
+                      <StatusChip status={flag.status} />
                     </TableCell>
-                    <TableCell align="center">{flag.flag_no}</TableCell>
-                    <TableCell align="center">{flag.session_no}</TableCell>
+                    <TableCell align="center">{flag.flagId}</TableCell>
+                    <TableCell align="center">{flag.examId}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
