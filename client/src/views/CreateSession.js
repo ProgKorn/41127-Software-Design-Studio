@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState }, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AdminHeader from "../components/AdminHeader";
 import "../css/AdminFonts.css";
 import { Button, Grid } from "@mui/material";
