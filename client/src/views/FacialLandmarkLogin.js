@@ -2,7 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
 import LoadingOverlay from '../components/Initialise';
 
-function FacialLandmarkLogin({ comparisonDataParent, receiveFacialData, onVideoTurnOff  }) {
+
+function FacialLandmarkLogin({ comparisonDataParent, receiveFacialData, onVideoTurnOff }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const modelRef = useRef(null);
@@ -21,13 +22,15 @@ function FacialLandmarkLogin({ comparisonDataParent, receiveFacialData, onVideoT
         );
 
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        videoRef.current.srcObject = stream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
 
-        if (videoRef.current != null) {
           videoRef.current.onloadedmetadata = () => {
-            videoRef.current.play();
-            detectFaceLandmarks();
-            setLoading(false); 
+            if (videoRef.current) {
+              videoRef.current.play();
+              detectFaceLandmarks();
+              setLoading(false);
+            }
           };
         }
       } catch (error) {
@@ -41,63 +44,65 @@ function FacialLandmarkLogin({ comparisonDataParent, receiveFacialData, onVideoT
       const stream = videoRef.current?.srcObject;
       if (stream) {
         const tracks = stream.getTracks();
-        tracks.forEach((track) => { track.stop(); });
+        tracks.forEach((track) => {
+          track.stop();
+        });
       }
     };
   }, []);
 
   useEffect(() => {
     if (timeOnScreen >= 8) {
-      setShowVideo(false); 
-      onVideoTurnOff = true;
+      setShowVideo(false);
+      onVideoTurnOff(); // Call the provided onVideoTurnOff function
     }
   }, [timeOnScreen, onVideoTurnOff]);
 
   async function detectFaceLandmarks() {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    try {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
 
-    const processFrame = async () => {
-        const predictions = await modelRef.current.estimateFaces({ input: videoRef.current });
+      const processFrame = async () => {
+        if (videoRef.current) {
+          const predictions = await modelRef.current.estimateFaces({ input: videoRef.current });
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const newLandmarksData = [];
-        if (predictions.length > 0) {
+          const newLandmarksData = [];
+          if (predictions.length > 0) {
             for (const prediction of predictions) {
-                const keypoints = prediction.scaledMesh;
+              const keypoints = prediction.scaledMesh;
+              if (videoRef.current) {
                 const scaleX = canvas.width / videoRef.current.videoWidth;
                 const scaleY = canvas.height / videoRef.current.videoHeight;
                 const landmarks = keypoints.map(([x, y, z]) => ({
-                    x: x * scaleX,
-                    y: y * scaleY,
-                    z: z,
+                  x: x * scaleX,
+                  y: y * scaleY,
+                  z: z,
                 }));
                 newLandmarksData.push(landmarks);
 
                 for (const point of keypoints) {
-                    const [x, y] = point;
-                    ctx.beginPath();
-                    ctx.arc(x * scaleX, y * scaleY, 2, 0, 2 * Math.PI);
-                    ctx.fillStyle = 'red';
-                    ctx.fill();
+                  const [x, y] = point;
+                  ctx.beginPath();
+                  ctx.arc(x * scaleX, y * scaleY, 2, 0, 2 * Math.PI);
+                  ctx.fillStyle = 'red';
+                  ctx.fill();
                 }
+              }
             }
-        }
-
-        setLandmarksData(newLandmarksData);
-
-        if (videoRef.current !== null) {
+          }
+          setLandmarksData(newLandmarksData);
           requestAnimationFrame(processFrame);
         }
-      
-        // compareFacialData(newLandmarksData);
-    };
+      };
 
-    if (videoRef.current !== null) {
       processFrame();
+    } catch (error) {
+      console.error(error);
     }
-}
+  }
 
   // async function compareFacialData(detectedLandmarks) {
   //   try {

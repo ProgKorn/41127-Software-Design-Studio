@@ -87,7 +87,7 @@ function Login() {
 
   useEffect(() => {
     if (isStudent) {
-      setTimeout(() => navigate('/studenthomepage'), 8000)
+      setTimeout(() => navigate('/studenthomepage'), 30000)
     }
   }, [facialDatafromComp, isStudent]);
 
