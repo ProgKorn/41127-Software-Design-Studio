@@ -12,70 +12,76 @@ import CardTable from './CardTable';
 import { formatISODate } from '../components/Clock';
 
 function ExamSection(props) {
-  const [exam, setExam] = useState(null);
+  const [studentExams, setStudentExams] = useState(null);
 
-  const fetchExam = async () => {
+  const fetchStudentExams = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/exam/getExamDetails/' + props.examId);
-      setExam(response.data);
+      const response = await axios.get('http://localhost:4000/student/getStudentExams/' + props.studentId);
+      setStudentExams(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchExam();
+    fetchStudentExams();
   }, []);
 
-  return exam ? <CardTable 
-    columns={["Exam ID", "Name", "Details", "Start Time", "End Time"]}
-    rows={[exam.examId, exam.examName, exam.details, formatISODate(exam.startTime), formatISODate(exam.endTime)]}
+  return studentExams ? <CardTable 
+    columns={studentExams.map((exam) => `${exam.examName}`)}
+    rows={studentExams.map((exam) => `Seat: ${exam.seatNumber}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
   /> : <></>
 }
 
 function StudentSection(props) {
-  const [student, setStudent] = useState(null);
-
-  const fetchStudent = async () => {
-    try {
-      const response = await axios.get('http://localhost:4000/student/getStudentDetails/' + props.studentId);
-      setStudent(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchStudent();
-  }, []);
+  const student = props.student;
 
   return student ? <div style={{ display: 'flex'}}>
     <div style={{ width: '70%'}}>
       <CardTable 
         columns={["Student ID", "Name", "Email"]}
         rows={[student.studentId, `${student.name.firstName} ${student.name.lastName}`, student.email]}
-        headerWidth={150}
       />
     </div>
-    <img style={{ height: 250,
+    {student.faceImageUrl && <img style={{ height: 250,
       width: '30%',
       margin: 20,
-      borderRadius: 10}}src={student.faceImageUrl} alt="student profile">
-    </img>
+      borderRadius: 10}} src={student.faceImageUrl} alt="student profile">
+    </img>}
   </div> : <></>
 }
 
-function Flag() {
+function FlagSection(props) {
+  const [studentFlags, setStudentFlags] = useState(null);
+
+  const fetchStudentFlags = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/flag/getStudentFlagDetails/' + props.studentId);
+      setStudentFlags(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudentFlags();
+  }, []);
+
+  // Gets the latest five flags. TODO: add overflow scrolling
+  return studentFlags ? studentFlags.slice(0, 5).map(flag => (<div>{`Exam #${flag.examId} ${flag.sessionName}: ${flag.description}`}</div>)) : <></>
+}
+
+function Student() {
   const [isAdmin, setIsAdmin] = useState(false);
-  const [flag, setFlag] = useState(null);
+  const [student, setStudent] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const {flagId} = useParams();
+  const {studentId} = useParams();
 
-  const fetchFlag = async () => {
+  const fetchStudent = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/flag/getFlagDetails/' + flagId);
-      setFlag(response.data);
+      const response = await axios.get('http://localhost:4000/student/getStudentDetails/' + studentId);
+      setStudent(response.data);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -92,24 +98,24 @@ function Flag() {
         navigate('/noaccess'); 
 	    }
 	  }
-    fetchFlag();
+    fetchStudent();
   }, [isAdmin, navigate]);
 
   return loading ? <Loader loading={(loading)} /> 
     :(<div className="Flag">
       <AdminHeader/>
-      <h1>Flag Details</h1>
+      <h1>Student Details</h1>
       <Grid container spacing={2} columns={16} className='pageCardPadding'>
         <Grid item xs={8}>
           <Card title={"Examinee"} half>
-            {flag.studentId && <StudentSection studentId={flag.studentId}/>}
+            {student && <StudentSection student={student}/>}
           </Card>
-          <Card title={"Exam Details"} half>
-           {flag.examId && <ExamSection examId={flag.examId}/>}
+          <Card title={"Exams"} half>
+           {student && <ExamSection studentId={student.studentId}/>}
           </Card>
         </Grid>
         <Grid item xs={8}>
-          <Card title={"Flag Report"}>
+          <Card title={"Flag History"}>
             <div className='flagDetailSection'>
               <div className='flagDetailContainer'>
                 <div className='flagDetailTitle'>
@@ -122,8 +128,9 @@ function Flag() {
                 </div>
                 <div style={{ width: '80%' }}>
                   <div className='flagDetailDescriptionText'>
-                    <div style={{ paddingBottom: 20 }}>{flag.sessionName}</div>
-                    <div>The current status is '{flag.status}'.</div>
+                    <FlagSection studentId={student.studentId}/>
+                    {/* <div style={{ paddingBottom: 20 }}>{flag.sessionName}</div>
+                    <div>The current status is '{flag.status}'.</div> */}
                   </div>
                 </div>
               </div>
@@ -148,4 +155,4 @@ function Flag() {
   );
 }
 
-export default Flag;
+export default Student;

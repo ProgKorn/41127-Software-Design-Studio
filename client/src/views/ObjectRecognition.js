@@ -1,9 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
-import { drawRect } from "./utilities";
+import { cheatingObject, drawRect, bannedObjects } from "./utilities";
 import "../css/Exam.css";
 
 function ObjectRecognition() {
@@ -17,7 +16,7 @@ function ObjectRecognition() {
     console.log('Models loaded');
     setInterval(() => {
       detect(net, cocoSsdNet);
-    }, 16);
+    }, 40);
   };
 
   const detect = async (net, cocoSsdNet) => {
@@ -28,10 +27,12 @@ function ObjectRecognition() {
       const video = webcamRef.current.video;
       const canvas = canvasRef.current;
       const segmentation = await net.segmentPerson(video);
-      drawBody(segmentation);
-
       const obj = await cocoSsdNet.detect(video);
+      drawBody(segmentation, obj);  // Pass detected objects here
+
       drawRect(obj, canvas.getContext("2d"));
+      // Cheating Detections
+      cheatingObject(obj);
     }
   };
 
@@ -58,55 +59,62 @@ function ObjectRecognition() {
     }
     maskCtx.putImageData(imageData, 0, 0);
     return maskCanvas;
-};
+  };
 
-const drawBody = async (bodySegmentation) => {
+  const drawBody = async (bodySegmentation, detectedObjects) => {
     const canvas = canvasRef.current;
 
     if (!canvas) {
       console.error('Video is not available.');
-      return; // Exit the function to avoid further errors
+      return;
     }
-  
+
     const ctx = canvas.getContext('2d');
-    
     const video = webcamRef.current.video;
     const { videoWidth: width, videoHeight: height } = video;
-  
+
     try {
       const blurCanvas = document.createElement('canvas');
       blurCanvas.width = width;
       blurCanvas.height = height;
       const blurCtx = blurCanvas.getContext('2d');
-  
+
       blurCtx.filter = 'blur(10px)';
       blurCtx.drawImage(video, 0, 0, width, height);
-  
+
       const maskCanvas = createMaskImage(bodySegmentation, width, height);
-  
+
+      // Draw only banned objects on the mask canvas
+      const maskCtx = maskCanvas.getContext('2d');
+      maskCtx.fillStyle = 'white';
+      detectedObjects.forEach((obj) => {
+        if (bannedObjects.includes(obj.class)) {
+          maskCtx.fillRect(obj.bbox[0], obj.bbox[1], obj.bbox[2], obj.bbox[3]);
+        }
+      });
+
       const personCanvas = document.createElement('canvas');
       personCanvas.width = width;
       personCanvas.height = height;
       const personCtx = personCanvas.getContext('2d');
-  
+
+      //Draw only people
       personCtx.drawImage(maskCanvas, 0, 0, width, height);
       personCtx.globalCompositeOperation = 'source-in';
       personCtx.drawImage(video, 0, 0, width, height);
-  
+
       canvas.width = 640;
       canvas.height = 480;
-  
+
       ctx.drawImage(blurCanvas, 0, 0, 640, 480);
       ctx.globalCompositeOperation = 'source-over';
       ctx.drawImage(personCanvas, 0, 0, 640, 480);
+
+      //Deal with video ending
     } catch (error) {
-      // Handle the error here and log it for debugging
       console.log('An error occurred in drawBody:', error);
     }
   };
-  
-
-
 
   useEffect(() => { runModels() }, []);
 
@@ -125,9 +133,9 @@ const drawBody = async (bodySegmentation) => {
           right: 0,
           textAlign: "center",
           zIndex: 8,
-          width: 640, // Set the width to the desired value
-          height: 480, // Set the height to the desired value
-          transform: "scaleX(-1)", // Flip the text horizontally
+          width: 640,
+          height: 480,
+          transform: "scaleX(-1)",
         }}
       />
     </div>

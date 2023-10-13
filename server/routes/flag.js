@@ -38,7 +38,7 @@ router.get('/getFlagDetails/:flagId', async (req, res) => { // Get details for a
 
 router.get('/getStudentFlagDetails/:studentId', async (req, res) => { // Get all flagged incidents for a student
     try {
-        const studentId = req.params.studentId;
+        const studentId = parseInt(req.params.studentId);
         await databaseMaster.dbOp('find', 'FlaggedIncidents', { query: { studentId: studentId } }).then((data) => {
             const flagObjects = data.map((flagData) => new Flag(flagData));
             res.json(flagObjects);
