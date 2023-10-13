@@ -107,7 +107,7 @@ function ExamHistory() {
                   <StyledTableCell align="center">Exam Start</StyledTableCell>
                   <StyledTableCell align="center">Exam End</StyledTableCell>
                   <StyledTableCell align="center">Status</StyledTableCell>
-                  <StyledTableCell align="center">Sesion #</StyledTableCell>
+                  <StyledTableCell align="center">Session #</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -120,7 +120,11 @@ function ExamHistory() {
                     <TableCell align="center">{exam.examStart}</TableCell>
                     <TableCell align="center">{exam.examEnd}</TableCell>
                     <TableCell align="center">{exam.status}</TableCell>
-                    <TableCell align="center">{exam.sessionNo}</TableCell>
+                    <TableCell align="center">{
+                      <a href={`/exam/${examId}`} style={{ color: 'black' }}>
+                        {exam.sessionNo}
+                      </a>
+                 }</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
