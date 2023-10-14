@@ -15,17 +15,15 @@ function ExamSession() {
   
   const createExamStudent = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/examStudent/createExamStudent/${studentId}/${examId}`);
+      const response = await axios.post(`http://localhost:4000/examStudent/createExamStudent/${studentId}/${examId}`);
       console.log("Exam Session Response:", response.data); // Log the response
-      // setExamDetails(response.data);
-      // setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error(error);
-      // setLoading(false); // Set loading to false in case of an error
     }
   };
 
   useEffect(() => {
+    console.log("Creating Exam Student")
     createExamStudent();
   }, []);
 

@@ -55,7 +55,6 @@ function ExamStart() {
 
   const handleButtonClick = () => {
     navigate(`/examsession/${studentId}/${examId}`);
-    // navigate("/examsession");
   };
 
   if (loading)
