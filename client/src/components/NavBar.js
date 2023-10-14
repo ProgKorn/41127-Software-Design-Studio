@@ -71,6 +71,7 @@ function ResponsiveAppBar({routes, type, icons}) {
               <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button component={Link} to='/'>
                   <img src={logo} className="Mini-logo" alt="Logo" />
+                  <div style={{ fontFamily: 'Montserrat, sans-serif', color: 'white', paddingLeft: 10 }}>Sentinel</div>
                 </Button>
                 <div> {/* Spacer */}
                   <Button component={Link} to="/helpcentre" color="inherit" className='text'>
@@ -98,6 +99,7 @@ function ResponsiveAppBar({routes, type, icons}) {
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Button component={Link} to='/'>
                     <img src={logo} className="Mini-logo" alt="Logo" />
+                    <div style={{ fontFamily: 'Montserrat, sans-serif', color: 'white', paddingLeft: 10 }}>Sentinel</div>
                   </Button>
                   <div> {/* Spacer */}
                     <Button component={Link} to="/login" color="inherit">
@@ -154,40 +156,6 @@ function ResponsiveAppBar({routes, type, icons}) {
               </Container>
             </AppBar>
           );
-
-          case 'student':
-            return (
-              <AppBar position="static">
-                <Container maxWidth="xl">
-                  <Toolbar disableGutters>
-                    {(
-                <Button component={Link} to='/'>
-                <img src={logo} className="Mini-logo" alt="Logo" >
-                </img>
-              </Button>
-                    )}
-                    <Box 
-                      justifyContent="center"
-                      sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                        <Button key={page} component={Link} to={routes[page]}
-                          sx={{ my: 3, color: 'white', display: 'block' }}>
-                          {page}
-                        </Button>
-                        ))}
-                    </Box>
-                    <Box sx={{ flexGrow: 0 }}>
-                      <Tooltip title="Open settings">
-                      <IconButton onClick={null} sx={{ p: 0 }}>
-                        {/* Add the user's name under 'alt' to change letter profile image */}
-                        <Avatar alt="Student" src="/static/images/avatar/2.jpg" />
-                      </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </Toolbar>
-                </Container>
-              </AppBar>
-            );
 
       default:
         return <AppBar/>;

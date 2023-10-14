@@ -53,7 +53,7 @@ function HelpCentre() {
       </header>
       {!selectedButton && !selectedSection && (
         <div className='help-dashboard'>
-          <Grid container rowSpacing={10} columnSpacing={{ xs: 1 }}>
+          <Grid container rowSpacing={8} columnSpacing={{ xs: 1 }}>
 						<Grid item xs={6}>
 							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('userManual')} sx={buttonStyles}>
 								<div className="helpDashboardIcons"><AssignmentIcon/></div>
@@ -95,7 +95,7 @@ function HelpCentre() {
       <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Overview' && <Overview onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userOverview' && <Overview onBackButtonClick={handleBackButtonClick} />}
       {selectedSection === 'Getting Started' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
       {selectedSection === 'Using the Software' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
       {selectedSection === 'Troubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}

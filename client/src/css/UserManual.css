@@ -12,4 +12,23 @@ ul {
     font-weight: bold;
     text-align: left;
 }
-  
+
+.sub-heading {
+  text-align: center;
+  font-family: Montserrat, sans-serif;
+}
+
+.image {
+  width: 50%;
+}
+
+.icon-image {
+  display: inline;
+  vertical-align: middle;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.image-text-container {
+  display: flex;
+  align-items: center;
+}

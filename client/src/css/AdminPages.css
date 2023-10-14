@@ -136,6 +136,11 @@
     margin-top: 0px;
 }
 
+.scheduleSmallCard:hover {
+    background-color: #a03421;
+    color: #ffffff
+}
+
 .scheduleLargeCard {
     width: 70%;
     height: 660px;

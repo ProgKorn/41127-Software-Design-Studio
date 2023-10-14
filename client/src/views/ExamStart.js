@@ -93,7 +93,7 @@ function ExamStart() {
                       component="th"
                       scope="row"
                       sx={{
-                        backgroundColor: "#109cfc",
+                        backgroundColor: "#2b2d42",
                         color: "white",
                         fontWeight: "bold",
                       }}
@@ -117,16 +117,43 @@ function ExamStart() {
         {/* Terms and conditions box and checkbox go here */}
         <Box className="terms">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tempor nec feugiat nisl pretium fusce id velit. Turpis egestas integer eget aliquet nibh praesent tristique magna. Ligula ullamcorper malesuada proin libero. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Viverra vitae congue eu consequat ac felis. Id ornare arcu odio ut sem nulla pharetra diam sit. Volutpat diam ut venenatis tellus in metus vulputate eu. In aliquam sem fringilla ut morbi tincidunt augue. Lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi. Consequat semper viverra nam libero justo laoreet sit amet. Malesuada fames ac turpis egestas. Vitae et leo duis ut diam quam nulla. Dignissim cras tincidunt lobortis feugiat. Orci nulla pellentesque dignissim enim sit amet.
+            These terms and conditions (the "Agreement") govern the use of an AI Online Exam Proctoring Tool (the "Service") provided by Sentinel (the "Company") to the user (the "User"). By using this service, the user agrees to abide by the terms and conditions outlined below.
           </p>
           <p>
-            Tincidunt ornare massa eget egestas. Neque sodales ut etiam sit amet nisl purus. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Amet cursus sit amet dictum sit amet. Tincidunt dui ut ornare lectus sit amet. Neque convallis a cras semper auctor neque vitae tempus. Est lorem ipsum dolor sit amet consectetur adipiscing. Elit sed vulputate mi sit. Adipiscing elit ut aliquam purus sit amet. Quis commodo odio aenean sed. Eu lobortis elementum nibh tellus. Et netus et malesuada fames ac turpis egestas. Cras ornare arcu dui vivamus arcu felis. Quam vulputate dignissim suspendisse in est. Quam id leo in vitae turpis massa sed. Nulla at volutpat diam ut venenatis tellus in metus. Est pellentesque elit ullamcorper dignissim. Ultrices neque ornare aenean euismod elementum nisi quis eleifend. Nisl rhoncus mattis rhoncus urna. Praesent tristique magna sit amet purus gravida.
+            1. Acceptance of Terms
           </p>
           <p>
-            Fringilla phasellus faucibus scelerisque eleifend donec pretium. In mollis nunc sed id semper risus in hendrerit gravida. Arcu cursus euismod quis viverra. Ornare lectus sit amet est placerat in. Augue ut lectus arcu bibendum at varius vel pharetra vel. In pellentesque massa placerat duis ultricies lacus sed turpis tincidunt. Vitae tortor condimentum lacinia quis vel eros donec. Vel facilisis volutpat est velit egestas. Et tortor consequat id porta nibh. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Nisl purus in mollis nunc.
+            By using this service, the User acknowledges and agrees to these Terms and Conditions. If the User does not agree to these terms, they should refrain from using the Service.
           </p>
           <p>
-            Mattis aliquam faucibus purus in massa tempor. Convallis posuere morbi leo urna molestie. In fermentum posuere urna nec tincidunt praesent semper. Et sollicitudin ac orci phasellus egestas tellus rutrum. Elit duis tristique sollicitudin nibh sit amet. Ut porttitor leo a diam sollicitudin tempor id eu nisl. Eget arcu dictum varius duis at consectetur lorem donec. Elementum curabitur vitae nunc sed velit dignissim sodales ut eu. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Sem et tortor consequat id porta nibh. Sapien eget mi proin sed libero enim. Tortor condimentum lacinia quis vel eros donec ac. Id diam maecenas ultricies mi eget mauris.
+            2. User Eligibility
+          </p>
+          <p>
+            This Service is intended for use by educational institutions, examiners and students. To use the service, users must be at least 18 years of age or have the consent of a parent or guardian to use the Service.
+          </p>
+          <p>
+            3. Registration and Account Security
+          </p>
+          <p>
+            The User is responsible for maintaining the confidentiality of their login credentials and account information. The User is also responsible for any activities conducted through their account. If the User suspects any unauthorised access to their account, they must notify their provider immediately.
+          </p>
+          <p>
+            4. Privacy and Data Usage
+          </p>
+          <p>
+            The Provider may collect, use and process personal data and information provided by the User in accordance with the Privacy Policy, which can be found on the provider's website.
+          </p>
+          <p>
+            5. Proctoring and Monitoring
+          </p>
+          <p>
+            The Service uses AI and other technologies to proctor and monitor online exams. This includes but is not limited to webcam, microphone and screen mirroring. The User's actions, such as eye movements and background noise, may be recorded during an examination.
+          </p>
+          <p>
+            6. Code of Conduct
+          </p>
+          <p>
+            The User agrees to adhere to the following code of conduct while using the Service:
           </p>
           {/* Checkbox form that activates the continue button */}
           <FormGroup className="formBox">
@@ -150,7 +177,7 @@ function ExamStart() {
             variant="contained"
             className="continueButton"
             style={{
-              backgroundColor: isChecked ? "#109cfc" : "grey",
+              backgroundColor: isChecked ? "#2b2d42" : "grey",
             }}
           >
             <strong>Continue</strong>
