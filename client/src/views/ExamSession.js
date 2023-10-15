@@ -8,6 +8,7 @@ import ObjectRecognition from "./ObjectRecognition";
 
 function ExamSession() {
   const navigate = useNavigate();
+  const [examSessionCreated, setExamSessionCreated] = useState(false);
   const [countdown, setCountdown] = useState(60); 
   const [examLength, setExamLength] = useState(0);
   const {studentId} = useParams();
@@ -15,6 +16,7 @@ function ExamSession() {
   
   const createExamStudent = async () => {
     try {
+      console.log("Creating Exam Student");
       const response = await axios.post(`http://localhost:4000/examStudent/createExamStudent/${studentId}/${examId}`);
       console.log("Exam Session Response:", response.data); // Log the response
     } catch (error) {
@@ -23,11 +25,31 @@ function ExamSession() {
   };
 
   useEffect(() => {
-    console.log("Creating Exam Student")
-    createExamStudent();
+    if (!examSessionCreated) {
+      console.log("Creating Exam Student")
+      createExamStudent();
+      setExamSessionCreated(true);
+    }
   }, []);
 
   useEffect(() => {
+    console.log("Fetching Exam Length")
+    axios.get(`http://localhost:4000/exam/getExamDetails/${examId}}`).then((response) => {
+      const { startTime, endTime } = response.data;
+      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
+      setExamLength(examLengthInSeconds);
+      setCountdown(examLengthInSeconds); // Set countdown to the examLength
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  return () => {
+    console.log("Finished Fetching Details");
+  };
+  }, [examId]);
+
+  useEffect(() => {
+    console.log("Setting up countdown timer");
     const timer = setInterval(() => {
       if (countdown > 0) {
         setCountdown(countdown - 1);
@@ -37,11 +59,15 @@ function ExamSession() {
       }
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      console.log("Cleaning up timer");
+    }
   }, [countdown, navigate]);
-  const minutes = Math.floor(countdown / 60);
+  const hours = Math.floor(countdown / 3600);
+  const minutes = Math.floor((countdown % 3600) / 60);
   const seconds = countdown % 60;
-  const formattedCountdown = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  const formattedCountdown = `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
   return (
     <Box className="main">
