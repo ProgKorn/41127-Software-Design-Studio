@@ -23,6 +23,11 @@
     justify-content: center;
   }
 
+  .student-button:hover {
+    background-color: #f44336;
+    color: white;
+  }
+
   .button-container-student {
     display: flex;
     flex-direction: column;
