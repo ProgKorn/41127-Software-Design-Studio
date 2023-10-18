@@ -59,5 +59,9 @@
   align-items: center;
   justify-content: center;
   padding: 1px;
+}
 
+.table {
+  display: flex;
+  flex-direction: column;
 }

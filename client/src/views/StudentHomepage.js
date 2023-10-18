@@ -94,10 +94,10 @@ function StudentHomepage() {
         <Grid container spacing = {1}  className = 'pageCardPadding'>
           <Grid item xs={4}>
               <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 100 }} aria-label="customized table">
+                  <Table sx={{ minWidth: 100 }} aria-label="customized table" className='table'>
                       <TableHead>
                           <TableRow>
-                              <StyledTableCell colSpan = {2}> Student Details</StyledTableCell>
+                              <StyledTableCell colSpan = {2} style={{ height: '40px' }}>Student Details</StyledTableCell>
                           </TableRow> 
                       </TableHead>
                       <TableBody >
@@ -123,13 +123,13 @@ function StudentHomepage() {
             </Grid>
             <Grid item xs={7} style = {{marginLeft: '100px'}}>
               <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="customized table">
+                  <Table sx={{ minWidth: 650 }} aria-label="customized table" className='table'>
                   <TableHead>
                       <TableRow>
-                          <StyledTableCell colSpan={1} align = 'left'>Upcoming Exams</StyledTableCell>
+                          <StyledTableCell colSpan={1} align = 'left' style={{ height: '40px' }}>Upcoming Exams</StyledTableCell>
                           <StyledTableCell colSpan={4}  align = 'right'>
                               <div className=".button-container-student">
-                              <Link to="/previousexams" className="student-button" style= {{ width:'250px', display:'inline-flex', textAlign:'center', fontSize: '19px'}}>
+                              <Link to="/previousexams" className="student-button" style= {{ width:'250px', display:'inline-flex', textAlign:'center', fontSize: '19px', height:'35px'}}>
                                   View Previous Exams
                               </Link>
                               </div>
