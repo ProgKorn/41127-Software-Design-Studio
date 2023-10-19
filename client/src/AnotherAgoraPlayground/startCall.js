@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
-import AgoraRTC from "agora-rtc-sdk";
+import AgoraRTC, { getCameras } from "agora-rtc-sdk-ng";
 import AdminHeader from "../components/AdminHeader";
 import { Button } from "@mui/material";
 
@@ -20,49 +20,62 @@ var localStreams = {
   },
 };
 
+
 function StartCall() {
-  const [uid, setUserId] = useState("");
-
-  // // Function to get temporary token from your server
-  // const getTempToken = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:3001/generateAgoraToken?channelName=main&uid=your_user_id');
-  //     const data = await response.json();
-  //     return data.token;
-  //   } catch (error) {
-  //     console.error('Error fetching temporary token:', error);
-  //   }
-  // };
-
+  const [userId, setUserId] = useState();
   const initAgora = async () => {
+
     const client = AgoraRTC.createClient({ mode: "rtc", codec: "h264" });
 
-    client.init(APP_ID, async () => {
-      console.log("AgoraRTC client initialized");
-      client.join(TOKEN, "main", null, (uid) => {
-        console.log("User " + uid + " joined the channel");
-        setUserId(uid);
-      });
+    await client.join(TOKEN, "main", null).then((res) => {
+      console.log("user " + res + " joined the channel");
+      setUserId(res)
+      }) 
 
-      const localStream = AgoraRTC.createStream({
-        streamID: uid,
-        audio: true,
-        video: true,
-        screen: false,
-      });
+      const cameras = await getCameras();
+      console.log("cameras are " + JSON.stringify(cameras));
+      console.log("singular " + cameras[0].deviceId);
 
-      localStream.setVideoProfile("480p_4");
+    // Join the channel directly using the client object
+    //await client.join(APP_ID, CHANNEL, TOKEN, null);
 
-      localStream.init(() => {
-        localStream.play("video-container");
-        client.publish(localStream, function (err) {
-          console.log("[ERROR] : publish local stream error: " + err);
-        });
-      });
-    });
+    // Get the locally assigned UID
+    // const localUid = client.getLocalUid();
+    // setUserId(localUid);
+
+    // const localStream = AgoraRTC.createStream({
+    //   streamID: userId,
+    //   audio: true,
+    //   video: true,
+    //   screen: false,
+    // });
+
+    // localStream.setVideoProfile("480p_4");
+
+    // await localStream.init(() => {
+    //   localStream.play("video-container");
+    //   client.publish(localStream, function (err) {
+    //     console.log("[ERROR] : publish local stream error: " + err);
+    //   });
+    // });
+
+    // // Initialize the local stream
+    // await localStream.init();
+
+    // // Play the local stream in a div with the ID 'video-container'
+    // localStream.play("video-container");
+
+    // // Publish the local stream to the channel
+    // await client.publish(localStream);
+
+    return;
   };
 
-  initAgora();
+  //initAgora();
+
+  useEffect(() => {
+    initAgora();
+  }, []);
 
   return (
     <div>
