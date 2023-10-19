@@ -51,6 +51,21 @@ app.post('/login', async(req, res) => {
   }
 });
 
+app.post('/saveVideo', async (req, res) => {
+  const videoBlob = req.body;
+
+  try {
+
+    // MongoDB code to save the video to the database
+    const result = await dbOp('insert', 'Exam-Student', [{ studentId, examId, fullRecording: videoBlob }]);
+    
+    res.status(200).json({ message: 'Video saved successfully', insertedId: result.insertedId });
+  } catch (error) {
+    console.error('Error saving video:', error);
+    res.status(500).json({ error: 'Error saving video' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

@@ -4,6 +4,8 @@ import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
 import { cheatingObject, drawRect, bannedObjects } from "./utilities";
 import "../css/Exam.css";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function ObjectRecognition() {
   const webcamRef = useRef(null);
@@ -12,6 +14,10 @@ function ObjectRecognition() {
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [videoSaved, setVideoSaved] = useState(false);
   const mediaRecorderRef = useRef(null);
+  const {studentId} = useParams();
+  const {examId} = useParams();
+
+  console.log("URL Parameters:", studentId, examId);
 
   const runModels = async () => {
     const net = await bodyPix.load();
@@ -122,50 +128,71 @@ function ObjectRecognition() {
     }
   };
 
-  const toggleRecording = () => {
-    if (recording) {
-      stopRecording();
-    } else {
-      startRecording();
-    }
-  };
-
+  // Start recording tells the MediaRecorder API to start recording
   const startRecording = () => {
     console.log("Started recording");
+
+    // Capturing the content of the canvas as a media stream called stream with 30FPS
     const stream = canvasRef.current.captureStream(30);
+
+    //Setting new instance of MediaRecorder and adding it to a current reference for later stopping it and recording timestamps
     const mediaRecorder = new MediaRecorder(stream);
     mediaRecorderRef.current = mediaRecorder;
 
+    // Checking if anything is being captured, when it is it will log the data and append it to recordedChunks
+    // then it will use setRecordedChunks as a reference to update it
     mediaRecorder.ondataavailable = (e) => {
       console.log('Data available:', e);
       if (e.data.size > 0) {
         setRecordedChunks((prev) => prev.concat(e.data));
       }
     };
-
+    
+    // For logging when recording is stopped
     mediaRecorder.onstop = () => {
       console.log('MediaRecorder stopped');
     };
-
+    
+    // Tells MediaRecorder API to actually start capturing video
     mediaRecorder.start();
     setRecording(true);
   };
 
+  // Stop recording tells the mediarecorder to stop and set the recording status to false
   const stopRecording = () => {
     console.log("Stopping recording");
     if (mediaRecorderRef.current) {
       console.log('Stopping MediaRecorder state:', mediaRecorderRef.current.state);
       mediaRecorderRef.current.stop();
       setRecording(false);
-    }
-  };
+
+      // Create FormData object to send video
+      const formData = new FormData();
+      formData.append("studentId", studentId); // Add studentID
+      formData.append("examId", examId); // Add examID
+      formData.append("fullRecording", new Blob(recordedChunks, {
+        type: "video/webm; codecs=vp9", // Create blob with recorded data in WebM format with VP9 codec
+      }));
+
+      // Send video data to the server using Axios
+      axios.post("http://localhost:4000/saveVideo", formData, {
+      })
+      .then((response) => {
+        console.log("Video saved successfully", response.data);
+      })
+      .catch((error) => {
+        console.error("Error saving video:", error);
+      });
+  }
+};
 
   useEffect(() => {
+    //If a video has been recorded and the recording is no longer happening
     if (recordedChunks.length > 0 && !recording) {
       const blob = new Blob(recordedChunks, {
-        type: "video/webm; codecs=vp9",
+        type: "video/webm; codecs=vp9", //Create blob with recorded data in WebM format with VP9 codec
       });
-      const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(blob); //Create blob URL
 
       // Create a download link
       const a = document.createElement("a");
@@ -221,9 +248,6 @@ function ObjectRecognition() {
           transform: "scaleX(-1)",
         }}
       />
-      <button onClick={() => { recording ? stopRecording() : startRecording(); }}>
-        {recording ? "Stop Recording" : "Start Recording"}
-      </button>
     </div>
   );
 }
