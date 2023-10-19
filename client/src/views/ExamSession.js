@@ -37,6 +37,7 @@ function ExamSession() {
     axios.get(`http://localhost:4000/exam/getExamDetails/${examId}}`).then((response) => {
       const { startTime, endTime } = response.data;
       const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
+      // const examLengthInSeconds = 60;
       setExamLength(examLengthInSeconds);
       setCountdown(examLengthInSeconds); // Set countdown to the examLength
     })
@@ -54,8 +55,10 @@ function ExamSession() {
       if (countdown > 0) {
         setCountdown(countdown - 1);
       } else {
-        clearInterval(timer);
-        navigate("/examdone");
+          clearInterval(timer);
+          // Update exam session status to "Completed"
+          axios.patch(`http://localhost:4000/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
+          navigate("/examdone");
       }
     }, 1000);
 
