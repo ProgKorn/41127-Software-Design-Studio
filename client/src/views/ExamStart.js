@@ -59,7 +59,7 @@ function ExamStart() {
   };
 
   const handleButtonClick = () => {
-    navigate("/examsession");
+    navigate("/examverify");
   };
 
   return (

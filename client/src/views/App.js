@@ -23,6 +23,7 @@ import ExamSession from './ExamSession';
 import NoAccess from './NoAccess';
 import PrivateRoute from './PrivateRoute';
 import Loader from '../components/Loader';
+import Verify from './Verify';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,6 +66,7 @@ function App() {
           <Route path="/studenthomepage" element={<PrivateRoute element={<StudentHomepage />} isLoggedIn={isLoggedIn} />} />
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examsession" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examverify" element={<PrivateRoute element={<Verify />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
         </Routes>
       </div>
