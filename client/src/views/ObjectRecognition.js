@@ -8,6 +8,9 @@ import "../css/Exam.css";
 function ObjectRecognition() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const [recording, setRecording] = useState(false);
+  const [recordedChunks, setRecordedChunks] = useState([]);
+  const mediaRecorderRef = useRef(null);
 
   const runModels = async () => {
     const net = await bodyPix.load();
@@ -116,7 +119,66 @@ function ObjectRecognition() {
     }
   };
 
-  useEffect(() => { runModels() }, []);
+  const toggleRecording = () => {
+    if (recording) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
+  };
+
+  const startRecording = () => {
+    const stream = canvasRef.current.captureStream(30);
+    const mediaRecorder = new MediaRecorder(stream);
+    mediaRecorderRef.current = mediaRecorder;
+
+    mediaRecorder.ondataavailable = (e) => {
+      console.log('Data available:', e);
+      if (e.data.size > 0) {
+        setRecordedChunks((prev) => prev.concat(e.data));
+      }
+    };
+
+    mediaRecorder.onstop = () => {
+      console.log('MediaRecorder stopped');
+    };
+
+    mediaRecorder.start();
+    setRecording(true);
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current) {
+      console.log('Stopping MediaRecorder state:', mediaRecorderRef.current.state);
+      mediaRecorderRef.current.stop();
+      setRecording(false);
+    }
+  };
+
+  useEffect(() => {
+    if (recordedChunks.length > 0 && !recording) {
+      const blob = new Blob(recordedChunks, {
+        type: "video/webm; codecs=vp9",
+      });
+      const url = URL.createObjectURL(blob);
+
+      // Create a download link
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "test.webm";
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      // Clear the recorded chunks
+      setRecordedChunks([]);
+    }
+  }, [recordedChunks, recording]);
+
+  useEffect(() => {
+    runModels();
+  }, []);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -138,6 +200,9 @@ function ObjectRecognition() {
           transform: "scaleX(-1)",
         }}
       />
+      <button onClick={() => { recording ? stopRecording() : startRecording(); }}>
+        {recording ? "Stop Recording" : "Start Recording"}
+      </button>
     </div>
   );
 }
