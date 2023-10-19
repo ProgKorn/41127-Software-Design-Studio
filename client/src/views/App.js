@@ -24,6 +24,8 @@ import NoAccess from './NoAccess';
 import PrivateRoute from './PrivateRoute';
 import Loader from '../components/Loader';
 
+import StartCall from '../AgoraPlayground/startCall';
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,6 +68,8 @@ function App() {
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examsession" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
+
+          <Route path="/startCall" element={<StartCall />} />
         </Routes>
       </div>
     </Router>
