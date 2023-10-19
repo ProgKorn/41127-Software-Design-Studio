@@ -6,6 +6,7 @@ import { cheatingObject, drawRect, bannedObjects } from "./utilities";
 import "../css/Exam.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import jwtdecode from "jwt-decode";
 
 function ObjectRecognition() {
   const webcamRef = useRef(null);
@@ -14,10 +15,26 @@ function ObjectRecognition() {
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [videoSaved, setVideoSaved] = useState(false);
   const mediaRecorderRef = useRef(null);
-  const {studentId} = useParams();
   const {examId} = useParams();
+  const [studentId, setStudentId] = useState(""); // State to store the student ID
 
   console.log("URL Parameters:", studentId, examId);
+
+  useEffect(() => {
+    // Make an API call to retrieve student data
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtdecode(token);
+    axios
+      .get("http://localhost:4000/student/get/" + decodedToken.userName)
+      .then((response) => {
+        const studentData = response.data; // Extract student data from the response
+        const studentId = studentData.studentId; // Extract the studentId
+        setStudentId(studentId); // Store the studentId in state
+      })
+      .catch((error) => {
+        console.error("Error fetching student data:", error);
+      });
+  }, []); // Empty dependency array ensures this runs only once on component mount
 
   const runModels = async () => {
     const net = await bodyPix.load();
