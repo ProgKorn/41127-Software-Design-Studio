@@ -16,7 +16,6 @@ export default function VideoCall(props) {
   const client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
-  useEffect(() => {
     let init = async (name) => {
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
@@ -64,17 +63,16 @@ export default function VideoCall(props) {
         console.log(error);
       }
     }
-  }, [channelName, client, ready, tracks]);
 
   return (
     <Grid container direction="column" style={{ height: "100%" }}>
       <Grid item style={{ height: "5%" }}>
-        {ready && tracks && (
-          <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
-        )}
+        {/* {ready && tracks && (
+          <Controls tracks={tracks} setStart={(res) => setStart(res)} setInCall={setInCall} />
+        )} */}
       </Grid>
       <Grid item style={{ height: "95%" }}>
-        {start && tracks && <Video tracks={tracks} users={users} />}
+        {/* {start && tracks && <Video tracks={tracks} users={users} />} */}
       </Grid>
     </Grid>
   );
