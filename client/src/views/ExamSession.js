@@ -14,6 +14,8 @@ function ExamSession() {
       if (countdown > 0) {
         setCountdown(countdown - 1);
       } else {
+        const event = new CustomEvent('countdownEnded');
+        window.dispatchEvent(event);
         clearInterval(timer);
         navigate("/examdone");
       }

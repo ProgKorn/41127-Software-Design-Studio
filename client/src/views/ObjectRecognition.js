@@ -17,6 +17,8 @@ function ObjectRecognition() {
     const cocoSsdNet = await cocossd.load();
 
     console.log('Models loaded');
+
+    startRecording(); // Start recording after models are loaded
     setInterval(() => {
       detect(net, cocoSsdNet);
     }, 40);
@@ -128,6 +130,7 @@ function ObjectRecognition() {
   };
 
   const startRecording = () => {
+    console.log("Started recording");
     const stream = canvasRef.current.captureStream(30);
     const mediaRecorder = new MediaRecorder(stream);
     mediaRecorderRef.current = mediaRecorder;
@@ -148,6 +151,7 @@ function ObjectRecognition() {
   };
 
   const stopRecording = () => {
+    console.log("Stopping recording");
     if (mediaRecorderRef.current) {
       console.log('Stopping MediaRecorder state:', mediaRecorderRef.current.state);
       mediaRecorderRef.current.stop();
@@ -178,6 +182,19 @@ function ObjectRecognition() {
 
   useEffect(() => {
     runModels();
+  }, []);
+
+  useEffect(() => {
+    const handleCountdownEnd = () => {
+      stopRecording();
+      console.log("Countdown ended detected from exam sesh!");
+    };
+  
+    window.addEventListener('countdownEnded', handleCountdownEnd);
+  
+    return () => {
+      window.removeEventListener('countdownEnded', handleCountdownEnd);
+    };
   }, []);
 
   return (
