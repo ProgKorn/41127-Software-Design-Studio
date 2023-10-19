@@ -61,7 +61,7 @@ const StartPage = () => {
 
   return (
     <div>
-      <h1>Video Call App</h1>
+      <h1>Kat's Agora Playground</h1>
       {!inCall ? (
         <VideoCall setInCall={setInCall} />
       ) : (
