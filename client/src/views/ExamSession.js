@@ -8,7 +8,7 @@ import ObjectRecognition from "./ObjectRecognition";
 function ExamSession() {
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(60); 
-
+  const [shouldNavigate, setShouldNavigate] = useState(false);
   useEffect(() => {
     const timer = setInterval(() => {
       if (countdown > 0) {
@@ -17,12 +17,29 @@ function ExamSession() {
         const event = new CustomEvent('countdownEnded');
         window.dispatchEvent(event);
         clearInterval(timer);
-        navigate("/examdone");
       }
     }, 1000);
 
     return () => clearInterval(timer);
   }, [countdown, navigate]);
+
+  useEffect(() => {
+    const handleVideoSaved = () => {
+      setShouldNavigate(true);
+    };
+  
+    window.addEventListener('videoSaved', handleVideoSaved);
+  
+    return () => {
+      window.removeEventListener('videoSaved', handleVideoSaved);
+    };
+  }, []);
+  
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate("/examdone");
+    }
+  }, [shouldNavigate]);
 
   const minutes = Math.floor(countdown / 60);
   const seconds = countdown % 60;

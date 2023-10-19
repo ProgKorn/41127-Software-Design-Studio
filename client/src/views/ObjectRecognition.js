@@ -10,6 +10,7 @@ function ObjectRecognition() {
   const canvasRef = useRef(null);
   const [recording, setRecording] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
+  const [videoSaved, setVideoSaved] = useState(false);
   const mediaRecorderRef = useRef(null);
 
   const runModels = async () => {
@@ -177,6 +178,9 @@ function ObjectRecognition() {
 
       // Clear the recorded chunks
       setRecordedChunks([]);
+      setVideoSaved(true);
+      const event = new CustomEvent('videoSaved');
+      window.dispatchEvent(event);
     }
   }, [recordedChunks, recording]);
 
