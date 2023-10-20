@@ -6,7 +6,7 @@ import { cheatingObject, drawRect, bannedObjects } from "./utilities";
 import "../css/Exam.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import jwtdecode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 function ObjectRecognition() {
   const webcamRef = useRef(null);
@@ -15,26 +15,27 @@ function ObjectRecognition() {
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [videoSaved, setVideoSaved] = useState(false);
   const mediaRecorderRef = useRef(null);
-  const {examId} = useParams();
-  const [studentId, setStudentId] = useState(""); // State to store the student ID
+  const studentId = 42345678;
+  const examId = 1;
+  //const [studentId, setStudentId] = useState(""); // State to store the student ID
 
   console.log("URL Parameters:", studentId, examId);
 
-  useEffect(() => {
-    // Make an API call to retrieve student data
-    const token = localStorage.getItem('token');
-    const decodedToken = jwtdecode(token);
-    axios
-      .get("http://localhost:4000/student/get/" + decodedToken.userName)
-      .then((response) => {
-        const studentData = response.data; // Extract student data from the response
-        const studentId = studentData.studentId; // Extract the studentId
-        setStudentId(studentId); // Store the studentId in state
-      })
-      .catch((error) => {
-        console.error("Error fetching student data:", error);
-      });
-  }, []); // Empty dependency array ensures this runs only once on component mount
+  // useEffect(() => {
+  //   // Make an API call to retrieve student data
+  //   const token = localStorage.getItem('token');
+  //   const decodedToken = jwt_decode(token);
+  //   axios
+  //     .get("http://localhost:4000/student/get/" + decodedToken.userName)
+  //     .then((response) => {
+  //       const studentData = response.data; // Extract student data from the response
+  //       const studentId = studentData.studentId; // Extract the studentId
+  //       setStudentId(studentId); // Store the studentId in state
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching student data:", error);
+  //     });
+  // }, []); // Empty dependency array ensures this runs only once on component mount
 
   const runModels = async () => {
     const net = await bodyPix.load();
@@ -156,18 +157,23 @@ function ObjectRecognition() {
     const mediaRecorder = new MediaRecorder(stream);
     mediaRecorderRef.current = mediaRecorder;
 
+    // Create an array to store chunks
+    const chunks = [];
+
     // Checking if anything is being captured, when it is it will log the data and append it to recordedChunks
     // then it will use setRecordedChunks as a reference to update it
     mediaRecorder.ondataavailable = (e) => {
       console.log('Data available:', e);
       if (e.data.size > 0) {
-        setRecordedChunks((prev) => prev.concat(e.data));
+        chunks.push(e.data); // Append the data to chunks
       }
     };
     
     // For logging when recording is stopped
     mediaRecorder.onstop = () => {
       console.log('MediaRecorder stopped');
+      // Update recordedChunks with the collected chunks
+      setRecordedChunks(chunks); 
     };
     
     // Tells MediaRecorder API to actually start capturing video
@@ -192,7 +198,11 @@ function ObjectRecognition() {
       }));
 
       // Send video data to the server using Axios
-      axios.post("http://localhost:4000/saveVideo", formData, {
+      console.log(formData);
+      axios.post("http://localhost:4000/saveVideo/", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
       .then((response) => {
         console.log("Video saved successfully", response.data);

@@ -52,14 +52,19 @@ app.post('/login', async(req, res) => {
 });
 
 app.post('/saveVideo', async (req, res) => {
-  const videoBlob = req.body;
+  const { studentId, examId, fullRecording } = req.body;
 
   try {
 
     // MongoDB code to save the video to the database
-    const result = await dbOp('insert', 'Exam-Student', [{ studentId, examId, fullRecording: videoBlob }]);
+    console.log(req.body)
+    const result = await dbOp('update', 'Exam-Student', { studentId, examId}, { $set: {fullRecording}});
     
-    res.status(200).json({ message: 'Video saved successfully', insertedId: result.insertedId });
+    if (result.modifiedCount === 1) {
+      res.status(200).json({ message: 'Video saved successfully' });
+    } else {
+      res.status(404).json({ error: 'Document not found or not updated' });
+    }
   } catch (error) {
     console.error('Error saving video:', error);
     res.status(500).json({ error: 'Error saving video' });
