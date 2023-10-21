@@ -24,11 +24,7 @@ import NoAccess from './NoAccess';
 import PrivateRoute from './PrivateRoute';
 import Loader from '../components/Loader';
 
-import StartCall from '../AgoraPlayground/startCall';
-
-import SecondPlayground from '../AnotherAgoraPlayground/startCall';
-import VideoChat from '../AnotherAgoraPlayground/VideoChat';
-
+import ThirdPlayground from '../KatsAgoraPlayground/startCall';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -73,10 +69,8 @@ function App() {
           <Route path="/examsession" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
 
-          <Route path="/startCall" element={<StartCall />} />
+          <Route path="/startCall" element={<ThirdPlayground />} />
 
-          <Route path="/secondPlayground" element={<SecondPlayground />} />
-          <Route path="/videoChat" element={<VideoChat />} />
         </Routes>
       </div>
     </Router>
