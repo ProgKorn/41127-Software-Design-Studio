@@ -17,25 +17,8 @@ function ObjectRecognition() {
   const mediaRecorderRef = useRef(null);
   const studentId = 42345678;
   const examId = 1;
-  //const [studentId, setStudentId] = useState(""); // State to store the student ID
 
   console.log("URL Parameters:", studentId, examId);
-
-  // useEffect(() => {
-  //   // Make an API call to retrieve student data
-  //   const token = localStorage.getItem('token');
-  //   const decodedToken = jwt_decode(token);
-  //   axios
-  //     .get("http://localhost:4000/student/get/" + decodedToken.userName)
-  //     .then((response) => {
-  //       const studentData = response.data; // Extract student data from the response
-  //       const studentId = studentData.studentId; // Extract the studentId
-  //       setStudentId(studentId); // Store the studentId in state
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching student data:", error);
-  //     });
-  // }, []); // Empty dependency array ensures this runs only once on component mount
 
   const runModels = async () => {
     const net = await bodyPix.load();
@@ -188,14 +171,35 @@ function ObjectRecognition() {
       console.log('Stopping MediaRecorder state:', mediaRecorderRef.current.state);
       mediaRecorderRef.current.stop();
       setRecording(false);
+  }
+};
 
-      // Create FormData object to send video
-      const formData = new FormData();
-      formData.append("studentId", studentId); // Add studentID
-      formData.append("examId", examId); // Add examID
-      formData.append("fullRecording", new Blob(recordedChunks, {
-        type: "video/webm; codecs=vp9", // Create blob with recorded data in WebM format with VP9 codec
-      }));
+  useEffect(() => {
+    //If a video has been recorded and the recording is no longer happening
+    if (recordedChunks.length > 0 && !recording) {
+      const blob = new Blob(recordedChunks, {
+        type: "video/webm; codecs=vp9", //Create blob with recorded data in WebM format with VP9 codec
+      });
+      const url = URL.createObjectURL(blob); //Create blob URL
+
+      // Create a download link for local download and automatically download
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "test.webm";
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      // Create a File object from the blob
+      const videoFile = new File([blob], 'test.webm', { type: 'video/webm' });
+
+     // Create FormData object to send video
+     const formData = new FormData();
+     formData.append("studentId", studentId); // Add studentID
+     formData.append("examId", examId); // Add examID
+     formData.append("fullRecording", videoFile); // Append the File object
+
 
       // Send video data to the server using Axios
       console.log(formData);
@@ -210,25 +214,6 @@ function ObjectRecognition() {
       .catch((error) => {
         console.error("Error saving video:", error);
       });
-  }
-};
-
-  useEffect(() => {
-    //If a video has been recorded and the recording is no longer happening
-    if (recordedChunks.length > 0 && !recording) {
-      const blob = new Blob(recordedChunks, {
-        type: "video/webm; codecs=vp9", //Create blob with recorded data in WebM format with VP9 codec
-      });
-      const url = URL.createObjectURL(blob); //Create blob URL
-
-      // Create a download link
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = url;
-      a.download = "test.webm";
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
 
       // Clear the recorded chunks
       setRecordedChunks([]);

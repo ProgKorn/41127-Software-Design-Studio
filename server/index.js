@@ -1,4 +1,6 @@
 require('dotenv').config();
+const multer = require('multer');
+const upload = multer();
 const express = require('express');
 const cors = require('cors');
 const { dbOp } = require('./DatabaseAccess/databaseMaster');
@@ -51,14 +53,20 @@ app.post('/login', async(req, res) => {
   }
 });
 
-app.post('/saveVideo', async (req, res) => {
-  const { studentId, examId, fullRecording } = req.body;
+app.post('/saveVideo', upload.single('fullRecording'), async (req, res) => {
+  const studentId = parseInt(req.body.studentId, 10);  // Matching studentId in MongoDB
+  const examId = parseInt(req.body.examId, 10); // Matching examId in MongoDB
+  const fullRecording = req.file;  // gets the uploaded file
+
+  console.log('studentId:', studentId);
+  console.log('examId:', examId);
+  console.log('fullRecording:', fullRecording.buffer);
+  console.log(req.file);
+
 
   try {
-
-    // MongoDB code to save the video to the database
-    console.log(req.body)
-    const result = await dbOp('update', 'Exam-Student', { studentId, examId}, { $set: {fullRecording}});
+    // MongoDB code to save the video to the database using the uploadVideo function
+    const result = await dbOp('upload-video', 'Exam-Student', { studentId, examId, fullRecording });
     
     if (result.modifiedCount === 1) {
       res.status(200).json({ message: 'Video saved successfully' });
@@ -70,6 +78,7 @@ app.post('/saveVideo', async (req, res) => {
     res.status(500).json({ error: 'Error saving video' });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

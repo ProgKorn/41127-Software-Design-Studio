@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, Binary } = require('mongodb');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -44,12 +44,27 @@ async function updateDocument(collType, query, docs) {
   return await coll.updateMany(query, docs);
 }
 
+async function uploadVideo(studentId, examId, fullRecording) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("Exam-Student");
+
+  // Query for the document to update
+  const query = {studentId, examId};
+
+  // Convert Node.js Buffer to MongoDB Binary
+  const binaryData = new Binary(fullRecording.buffer);
+
+  // Update field fullRecording
+  const update = { $set: { "fullRecording.binaryData": binaryData } };
+  return await coll.updateOne(query, update);
+}
+
 module.exports = {
   dbOp: async function (operationType, collType, entry) {
     await client.connect();
     let result;
     try {
-      const { query, docs, email, updateDoc } = entry;
+      const { query, docs, email, updateDoc, studentId, examId, fullRecording } = entry;
       switch (operationType) {
         case 'insert':
           result = await insertDoc(collType, docs);
@@ -71,6 +86,10 @@ module.exports = {
         case 'update':
           result = await updateDocument(collType, query, docs);
           console.log('Update Doc Result:', result);
+          break;
+        case 'upload-video':
+          result = await uploadVideo(studentId, examId, fullRecording);
+          console.log('Upload Video Result:', result);
           break;
         default:
           console.log("Invalid operation type.");
