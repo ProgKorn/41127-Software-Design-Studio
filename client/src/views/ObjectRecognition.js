@@ -15,7 +15,7 @@ function ObjectRecognition() {
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [videoSaved, setVideoSaved] = useState(false);
   const mediaRecorderRef = useRef(null);
-  const studentId = 42345678;
+  const studentId = 22345678;
   const examId = 1;
 
   console.log("URL Parameters:", studentId, examId);
