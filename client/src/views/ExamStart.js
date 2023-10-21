@@ -115,43 +115,72 @@ function ExamStart() {
         {/* Terms and conditions box and checkbox go here */}
         <Box className="terms">
           <p>
-            These terms and conditions (the "Agreement") govern the use of an AI Online Exam Proctoring Tool (the "Service") provided by Sentinel (the "Company") to the user (the "User"). By using this service, the user agrees to abide by the terms and conditions outlined below.
+            These terms and conditions (the "Agreement") govern the use of an AI Online Exam Proctoring Tool (the "Service") provided by Sentinel (the "Company") to the user (the "User"). By using this service, the user agrees to abide by the terms and conditions outlined below:
           </p>
-          <p>
+          <br />
+          <p align="left" style={{fontWeight: 'bold'}}>
             1. Acceptance of Terms
           </p>
-          <p>
+          <p align="left">
             By using this service, the User acknowledges and agrees to these Terms and Conditions. If the User does not agree to these terms, they should refrain from using the Service.
           </p>
-          <p>
+          <p align="left" style={{fontWeight:'bold'}}>
             2. User Eligibility
           </p>
-          <p>
+          <p align="left">
             This Service is intended for use by educational institutions, examiners and students. To use the service, users must be at least 18 years of age or have the consent of a parent or guardian to use the Service.
           </p>
-          <p>
+          <p align="left" style={{fontWeight:'bold'}} >
             3. Registration and Account Security
           </p>
-          <p>
+          <p align="left">
             The User is responsible for maintaining the confidentiality of their login credentials and account information. The User is also responsible for any activities conducted through their account. If the User suspects any unauthorised access to their account, they must notify their provider immediately.
           </p>
-          <p>
+          <p align="left" style={{fontWeight:'bold'}}>
             4. Privacy and Data Usage
           </p>
-          <p>
+          <p align="left">
             The Provider may collect, use and process personal data and information provided by the User in accordance with the Privacy Policy, which can be found on the provider's website.
           </p>
-          <p>
+          <p align="left" style={{fontWeight:'bold'}}>
             5. Proctoring and Monitoring
           </p>
-          <p>
+          <p align="left">
             The Service uses AI and other technologies to proctor and monitor online exams. This includes but is not limited to webcam, microphone and screen mirroring. The User's actions, such as eye movements and background noise, may be recorded during an examination.
           </p>
-          <p>
+          <p align="left" style={{fontWeight:'bold'}}>
             6. Code of Conduct
           </p>
-          <p>
+          <p align="left">
             The User agrees to adhere to the following code of conduct while using the Service:
+            <br />
+            a. The User will not attempt to cheat or engage in any form of academic dishonesty.<br />
+            b. The User will not impersonate or provide false information. <br />
+            c. The User will not disrupt or interfere with the operation of the Service. <br />
+            d. The User will not attempt to reverse engineer, hack, or modify the Service. <br />
+            e. The User will not share or distribute exam content without permission.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            7. Exam Results and Reporting
+          </p>
+          <p align="left">
+              The Provider will share the results of proctored examinations and corresponding flag logs with authorised  individuals or organizations, such as instructors, educational institutions, or third-party exam providers, as specified by the User or required by law.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            8. Termination
+          </p>
+          <p align="left">
+            The Provider reserves the right to suspend or terminate a User's access to the Service at any time, for any reason, without notice. In case of termination, the User will not be entitled to a refund of any fees paid.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            9. Contact Information
+          </p>
+          <p align="left">
+            For any questions or concerns regarding these Terms and Conditions or the Service, the User may contact the Provider at service@Sentinel.com.
+          </p>
+          <br /> 
+          <p>
+            By using the AI Online Exam Proctoring Tool, the User acknowledges and accepts these Terms and Conditions.
           </p>
           {/* Checkbox form that activates the continue button */}
           <FormGroup className="formBox">
