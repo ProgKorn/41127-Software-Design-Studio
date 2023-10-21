@@ -6,6 +6,31 @@ const uri = process.env.DATABASE_URI;
 const client = new MongoClient(uri);
 const bcrypt = require('bcrypt');
 
+const fs = require('fs');
+
+async function downloadVideo(studentId, examId) {
+  const db = client.db("SoftwareDesignStudio");
+  const coll = db.collection("Exam-Student");
+
+  // Query for the document to find
+  const query = { studentId, examId };
+
+  const doc = await coll.findOne(query);
+
+  if (!doc || !doc.fullRecording || !doc.fullRecording.binaryData) {
+    console.error("Document or binary data not found.");
+    return null;
+  }
+
+  // Convert MongoDB Binary to Node.js Buffer
+  const buffer = doc.fullRecording.binaryData.buffer;
+
+  // Optional: Save to file system for verification
+  fs.writeFileSync('output.webm', buffer);
+
+  return buffer;
+}
+
 async function insertDoc(collType, docs) {
   const db = client.db("SoftwareDesignStudio");
   const coll = db.collection(collType);
@@ -91,6 +116,10 @@ module.exports = {
           result = await uploadVideo(studentId, examId, fullRecording);
           console.log('Upload Video Result:', result);
           break;
+        case 'download-video':
+          result = await downloadVideo(studentId, examId);
+          console.log('Download Video Result:', result);
+          return result;
         default:
           console.log("Invalid operation type.");
       }
@@ -99,5 +128,6 @@ module.exports = {
     } finally {
       setTimeout(async ()  => await client.close(), 6000)
     }
-  }
+  },
+  downloadVideo,
 };
