@@ -1,11 +1,11 @@
 import './startCall.css'
 import AgoraRTC from "agora-rtc-sdk-ng";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const secrets = {
-  appId: "4973b0f30bc9433eb0737b3af0464ab6",
+  appId: "e5709f8be2604869864acfa71a1f8b42",
   channelName: "main",
-  token: "007eJxTYNiZJZDEnbJkj8Szym0pi0sn64W9fcn4mmHJrDYPM8kPNgcUGFJNzQ0s0yySUo3MDEwszCwtzEwSk9MSzQ0TDYGiJkZJhsapDYGMDCd/lzEwQiGIz8KQm5iZx8AAABTYHsM=",
+  token: "007eJxTYJCrqJmy7ruBOOeRitQupsRft9Uf3nqokNxX4bRw46/TwtMUGFJNzQ0s0yySUo3MDEwszCwtzEwSk9MSzQ0TDYGiJka+i01SGwIZGarFNjMwQiGIz8KQm5iZx8AAAFqBH0o=",
 };
 
 const rtc = {
@@ -46,7 +46,9 @@ async function startCall() {
 const App = () => {
   const [videoOn, setVideoOn] = useState(false);
   const [joined, setJoined] = useState(false);
+  
   console.log(process.env);
+  
   const handleCamera = () => {
     if (videoOn) {
       stopVideo();
@@ -56,6 +58,11 @@ const App = () => {
       setVideoOn(true);
     }
   };
+
+  // useEffect(() => {
+  //   startCall();
+  //   setJoined(true);
+  // }, []);
 
   return (
     <div>
