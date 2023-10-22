@@ -37,8 +37,23 @@ const startVideo = async () => {
   console.log("Connection State: ", rtc.client.connectionState);
   if (rtc.client.connectionState === "CONNECTED") {
     rtc.client.publish(rtc.localVideoTrack);
-    rtc.localVideoTrack.play("videoContainer", { fit: "fill" });
+    rtc.localVideoTrack.play("videoContainer", { fit: "cover" });
   }
+
+  // Subscribe to remote users' video tracks
+  rtc.client.on("user-published", async (user, mediaType) => {
+    // Ensure the user has subscribed to the video
+    await rtc.client.subscribe(user, mediaType);
+
+    // If the subscribed media type is video, add it to the video container
+    if (mediaType === "video") {
+      const remoteVideoTrack = user.videoTrack;
+      const remoteContainer = document.getElementById("remoteContainer");
+
+      // Render remote video track
+      remoteVideoTrack.play(remoteContainer, { fit: "cover" });
+    }
+  });
 };
 
 const stopVideo = async () => {
@@ -71,6 +86,7 @@ const App = () => {
     startCall();
     startVideo();
     setVideoOn(true);
+    setJoined(true);
   };
 
   return (
@@ -80,15 +96,16 @@ const App = () => {
         <Button
           onClick={() => {
             handleStart();
-            setJoined(true);
           }}
         >
           I consent to being recorded
         </Button>
       ) : (
-        <Button disabled>I consent to being recorded</Button>
+        <Button disabled>I have consented to being recorded</Button>
       )}
       <div id="videoContainer"></div>
+      <div id="remoteContainer">
+</div>
     </div>
   );
 };
