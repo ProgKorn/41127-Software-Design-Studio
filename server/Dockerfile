@@ -9,10 +9,10 @@ LABEL fly_launch_runtime="Node.js"
 # Node.js app lives here
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV="production"
-ENV DATABASE_URI="mongodb+srv://Amy:amy@proctordb.ifkuafa.mongodb.net/?retryWrites=true&w=majority"
-ENV SECRET_KEY="mySecretKey123#"
+# Set production environment - censored, ensure its filled out before running fly deploy
+ENV NODE_ENV=""
+ENV DATABASE_URI=""
+ENV SECRET_KEY=""
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
