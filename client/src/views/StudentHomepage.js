@@ -92,8 +92,9 @@ function StudentHomepage() {
           <div className="student-heading">Student Homepage</div>
         </header>
         <Grid container spacing = {1}  className = 'pageCardPadding'>
+          <Grid className='grid'>
           <Grid item xs={4}>
-              <TableContainer component={Paper} style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
+              <TableContainer component={Paper} className="table-container">
                   <Table sx={{ minWidth: 100 }} aria-label="customized table" className='table'>
                       <TableHead>
                           <TableRow>
@@ -122,7 +123,7 @@ function StudentHomepage() {
               </TableContainer>  
             </Grid>
             <Grid item xs={7} style = {{marginLeft: '100px'}}>
-              <TableContainer component={Paper} style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
+              <TableContainer component={Paper} className="table-container">
                   <Table sx={{ minWidth: 650 }} aria-label="customized table" className='table'>
                   <TableHead>
                       <TableRow>
@@ -165,10 +166,11 @@ function StudentHomepage() {
                   </TableBody>
                   </Table>
               </TableContainer>
+              </Grid>
             </Grid>
-            <Grid item xs={8} style = {{marginTop: '80px'}}>
-              <TableContainer component={Paper} style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
-                <Table sx={{ minWidth: 500 }} aria-label="customized table">
+            <Grid item xs={11.70} style = {{marginTop: '80px'}} className='grid'> 
+              <TableContainer component={Paper} className="table-container">
+                <Table sx={{ width: '100%' }} aria-label="customized table">
                   <TableHead>
                       <TableRow>
                           <StyledTableCell align = 'left'>Test Your Equipment </StyledTableCell>
