@@ -23,7 +23,7 @@ function Schedule() {
 
   const fetchExamDetails = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/exam/getExamDetails");
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL + "/exam/getExamDetails");
       setExams(response.data);
       setSelectedExam(response.data[0]);
       setLoading(false);

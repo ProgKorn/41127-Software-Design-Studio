@@ -1,11 +1,11 @@
 import '../App.css';
 import '../css/Login.css';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from './ErrorMessage'; 
 import SignInHeader from '../components/SignInHeader'
 import { Checkbox } from '@mui/material';
+import axios from 'axios';
 import Loader from '../components/Loader';
 
 function Login() {
@@ -14,6 +14,7 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  console.log("SERVER URL IS: " + process.env.REACT_APP_SERVER_URL);
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -24,7 +25,7 @@ function Login() {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:4000/login', {
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/login', {
         username,
         password,
         keepLoggedIn: document.getElementById('keepSignedIn').checked,

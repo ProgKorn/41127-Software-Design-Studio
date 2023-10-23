@@ -56,7 +56,7 @@ function FlagLog() {
   const [flagList, setFlags] = React.useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/flag/getAllFlags")
+      .get(process.env.REACT_APP_SERVER_URL +"flag/getAllFlags")
       .then((flagList) => {
         setFlags(flagList.data)
       })
@@ -64,7 +64,7 @@ function FlagLog() {
   }, []);
 
   // useEffect(() => {
-  //   fetch("http://localhost:4000/flag/getAllFlags",{
+  //   fetch(process.env.REACT_APP_SERVER_URL +"flag/getAllFlags",{
   //       method: "GET",
   //     })
   //     .then((res) => setFlags(res.json))
