@@ -11,6 +11,25 @@ router.get('/get', (req, res) => {
         });
 });
 
+router.get('/getStudentDetails/:className', (req, res) => {
+    const className = req.params.className;
+    databaseMaster.dbOp('find', 'ClassDetails', { query: {className: className} }).then(data => { 
+        if(data[0]!= null && data[0]["students"].length > 0)
+        {
+            const studentIds = data[0]["students"].flatMap((element) => (element.studentId));
+            //students.forEach((element) => studentIds.push(element.studentId));
+            
+            databaseMaster.dbOp('find', 'StudentDetails', { query: { studentId: {$in: studentIds} }}).then(studentData => {
+                res.json(studentData);
+                });
+        } else {
+            res.json('no class with students found');
+        }
+    
+        });
+        
+});
+
 router.get('/get/:studentId', (req,res) => {
     const studentId = req.params.studentId;
     databaseMaster.dbOp('find', 'ClassDetails', {query: {students: { $elemMatch: { studentId: parseInt(studentId)}}}}).then(data => {

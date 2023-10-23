@@ -19,10 +19,6 @@ import Loader from '../components/Loader'
 //Retrieve and class details (subject, class members, etc)
 //Retrieve and Store 
 
-function createData(name) {
-  return { name };
-}
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.white,
@@ -45,6 +41,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const columns = [
+  'Student Id', 'Name', 'Email'
+]
+
 function ManageClasses() {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const navigate = useNavigate();
@@ -54,7 +54,7 @@ function ManageClasses() {
   const [className, setClassName] = React.useState('Select a Class to Begin');
   const [numberOfStudents, setNumberOfStudents] = React.useState('');
   const [exam, setExam] = React.useState('');
-  //const [students, setStudents] = React.useState('');
+  const [students, setStudents] = React.useState('');
 
   
   const fetchClasses  = async () => {
@@ -76,16 +76,16 @@ function ManageClasses() {
     }
   };
 
-  /*
-  const fetchStudents  = async (students) => {
+  
+  const fetchStudents  = async (className) => {
     try {
-     // const response = await axios.get('http://localhost:4000/student/get/');
-     // setStudents(response.data);
+      const response = await axios.get('http://localhost:4000/class/getStudentDetails/' + className);
+      setStudents(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-  */
+  
 
 
 	useEffect(() => {
@@ -108,18 +108,18 @@ function ManageClasses() {
 
       //add .get function to retrieve class code
       const foundClass = classes.find(element => element.className == selectedRow)
-      const className = foundClass.className;
-      setClassName(className)
+      const foundClassName = foundClass.className;
+      setClassName(foundClassName)
 
       //add .get function to retrieve number of students
-      const numberStudents = foundClass.students.length
-      setNumberOfStudents(numberStudents)
+      const foundNumberOfStudents = foundClass.students.length
+      setNumberOfStudents(foundNumberOfStudents)
 
-      //retrieve the exams 
+      //retrieve the exam associated with the class
       fetchExam(foundClass.examId)
       
-      // retrieve the students
-      //fetchStudents(foundClass.students)
+       //retrieve the students associated with the class
+      fetchStudents(foundClassName)
       
     }
   }, [selectedRow]);
@@ -151,7 +151,6 @@ function ManageClasses() {
                 </Table>
               </TableContainer>
             </Grid>
-
             <Grid item xs={1}>
               <p>{className}</p>
               <p>Number of Enrolled Students: {numberOfStudents}</p>
@@ -160,7 +159,32 @@ function ManageClasses() {
               <p>Exam Name: {exam.examName}</p>
               <p>Scheduled Date: {exam.startTime}</p>
               <p>Enrolled Students:</p>
-              
+              <TableContainer className='tableContainer'>
+              <Table>
+                  <TableRow >
+                    {columns.map((col) => (
+                      <TableCell>
+                        {col}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                <TableBody>
+                  {students && students.map((row) => (
+                  <TableRow 
+                    key={row.studentId}
+                  >
+                    <TableCell component="th" scope="row">
+                      <a>
+                        {row.studentId}
+                      </a>
+                    </TableCell>
+                    <TableCell>{row.name.firstName + " "  + row.name.lastName}</TableCell>
+                    <TableCell>{row.email}</TableCell>
+                  </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              </TableContainer>
             </Grid>
           </Grid>
         </Card>
