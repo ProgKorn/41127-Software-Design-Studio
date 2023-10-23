@@ -85,11 +85,11 @@ function Login() {
     setFacialData(data);
   };
 
-  useEffect(() => {
-    if (isStudent) {
-      setTimeout(() => navigate('/studenthomepage'), 30000)
-    }
-  }, [facialDatafromComp, isStudent]);
+  // useEffect(() => {
+  //   if (isStudent) {
+  //     setTimeout(() => navigate('/studenthomepage'), 30000)
+  //   }
+  // }, [facialDatafromComp, isStudent]);
 
   return (
     <div className='App'>
@@ -125,7 +125,7 @@ function Login() {
           )}
           {isStudent && (
             <div>
-              <FacialLandmarkLogin receiveFacialData={receiveFacialData} />
+              <FacialLandmarkLogin />
             </div>
           )}
       <div className="error-message-container">
