@@ -12,6 +12,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "../css/AdminTables.css";
 import Card from "../components/Card";
+import axios from 'axios';
+import Loader from '../components/Loader'
 
 //TO-DO:
 //Retrieve and class details (subject, class members, etc)
@@ -20,13 +22,6 @@ import Card from "../components/Card";
 function createData(name) {
   return { name };
 }
-
-const classes = [
-  createData("Class Code 1"),
-  createData("Class Code 2"),
-  createData("Class Code 3"),
-  createData("Class Code 4"),
-];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -53,6 +48,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ManageClasses() {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const navigate = useNavigate();
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  
+  const fetchClasses  = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/class/get/");
+      setClasses(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
@@ -60,6 +68,7 @@ function ManageClasses() {
 		const decodedToken = jwt_decode(token);
 		if (decodedToken.isAdmin === true) {
 			setIsAdmin(true);
+      fetchClasses();
 		} else {
 			navigate('/noaccess'); 
 			}
@@ -81,7 +90,7 @@ function ManageClasses() {
   }, [selectedRow]);
   
 
-  return (
+  return (loading) ? <Loader loading={true} /> : (
     <div>
       <AdminHeader />
       <div class="adminTable">
@@ -91,16 +100,16 @@ function ManageClasses() {
               <TableContainer component={Paper}>
                 <Table>
                   <TableBody>
-                    {classes.map((thisClass) => (
+                    {classes.map((row) => (
                       <TableRow
                         hover
-                        onClick={() => setSelectedRow(thisClass.name)}
-                        key={thisClass.name}
+                        onClick={() => setSelectedRow(row.className)}
+                        key={row.className}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell align="center">{thisClass.name}</TableCell>
+                        <TableCell align="center">{row.className}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
