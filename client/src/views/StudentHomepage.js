@@ -152,7 +152,7 @@ function StudentHomepage() {
                           <StyledTableCell component="th" scope="row">
                           {row.examName}
                           </StyledTableCell>
-                          <StyledTableCell align="center">{row.startTime}</StyledTableCell>
+                          <StyledTableCell align="center">{new Date(row.startTime).toLocaleString()}</StyledTableCell>
                           <StyledTableCell align="center">{row.details}</StyledTableCell>
                           <StyledTableCell align="center">{row.seatNumber}</StyledTableCell>
                           <StyledTableCell align="center">
