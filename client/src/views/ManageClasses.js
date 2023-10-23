@@ -50,6 +50,11 @@ function ManageClasses() {
 	const navigate = useNavigate();
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedRow, setSelectedRow] = React.useState(0);
+  const [className, setClassName] = React.useState('Select a Class to Begin');
+  const [numberOfStudents, setNumberOfStudents] = React.useState('');
+  const [exam, setExam] = React.useState('');
+  //const [students, setStudents] = React.useState('');
 
   
   const fetchClasses  = async () => {
@@ -61,6 +66,27 @@ function ManageClasses() {
       console.error(error);
     }
   };
+
+  const fetchExam  = async (examId) => {
+    try {
+      const response = await axios.get('http://localhost:4000/exam/getExamDetails/' + examId);
+      setExam(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /*
+  const fetchStudents  = async (students) => {
+    try {
+     // const response = await axios.get('http://localhost:4000/student/get/');
+     // setStudents(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  */
+
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
@@ -75,17 +101,26 @@ function ManageClasses() {
 		}
 	}, [isAdmin, navigate]);
 
-  const [selectedRow, setSelectedRow] = React.useState(0);
-  const [selectionString, setSelectionString] = React.useState('Select a Class to Begin');
-  
   useEffect(() => {
     console.log({ selectedRow });
     
     if(selectedRow !== 0){
-      setSelectionString(selectedRow + " has been selected")
+
       //add .get function to retrieve class code
+      const foundClass = classes.find(element => element.className == selectedRow)
+      const className = foundClass.className;
+      setClassName(className)
+
       //add .get function to retrieve number of students
-      //add .get function to retrieve number of students
+      const numberStudents = foundClass.students.length
+      setNumberOfStudents(numberStudents)
+
+      //retrieve the exams 
+      fetchExam(foundClass.examId)
+      
+      // retrieve the students
+      //fetchStudents(foundClass.students)
+      
     }
   }, [selectedRow]);
   
@@ -118,7 +153,14 @@ function ManageClasses() {
             </Grid>
 
             <Grid item xs={1}>
-              <p>{selectionString}</p>
+              <p>{className}</p>
+              <p>Number of Enrolled Students: {numberOfStudents}</p>
+              <p>Currently Scheduled Exams</p>
+              <p>Session # {exam.examId}</p>
+              <p>Exam Name: {exam.examName}</p>
+              <p>Scheduled Date: {exam.startTime}</p>
+              <p>Enrolled Students:</p>
+              
             </Grid>
           </Grid>
         </Card>
