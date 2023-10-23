@@ -93,7 +93,7 @@ function StudentHomepage() {
         </header>
         <Grid container spacing = {1}  className = 'pageCardPadding'>
           <Grid item xs={4}>
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper} style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
                   <Table sx={{ minWidth: 100 }} aria-label="customized table" className='table'>
                       <TableHead>
                           <TableRow>
@@ -122,7 +122,7 @@ function StudentHomepage() {
               </TableContainer>  
             </Grid>
             <Grid item xs={7} style = {{marginLeft: '100px'}}>
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper} style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
                   <Table sx={{ minWidth: 650 }} aria-label="customized table" className='table'>
                   <TableHead>
                       <TableRow>
@@ -136,7 +136,7 @@ function StudentHomepage() {
                           </StyledTableCell>
                       </TableRow>
                       <TableRow>
-                          <TableCell style={{ fontWeight: 'bold',  fontFamily: 'Montserrat, sans-serif' }} align="left" >Exam Name</TableCell>
+                          <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="left" >Exam Name</TableCell>
                           <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Exam Start</TableCell>
                           <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Details</TableCell>
                           <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Seat No.</TableCell>
@@ -167,7 +167,7 @@ function StudentHomepage() {
               </TableContainer>
             </Grid>
             <Grid item xs={8} style = {{marginTop: '80px'}}>
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper} style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
                 <Table sx={{ minWidth: 500 }} aria-label="customized table">
                   <TableHead>
                       <TableRow>
