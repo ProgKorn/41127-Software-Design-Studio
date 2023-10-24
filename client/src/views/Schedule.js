@@ -10,19 +10,28 @@ import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import '../css/AdminPages.css';
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
+import Loader from '../components/Loader';
+import { formatISODate, formatISOTime } from '../components/Clock';
 
 function Schedule() {
-  const buttonStyles = {
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "1rem",
-    fontWeight: 500,
-    textTransform: 'Capitalize',
-    color: 'white',
-    backgroundColor: "#292E64"
-  }
-
+  const [exams, setExams] = useState(null);
+  const [selectedExam, setSelectedExam] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+
+  const fetchExamDetails = async () => {
+    try {
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL + "/exam/getExamDetails");
+      setExams(response.data);
+      setSelectedExam(response.data[0]);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -34,9 +43,19 @@ function Schedule() {
         navigate('/noaccess'); 
 	    }
 	  }
+    fetchExamDetails();
   }, [isAdmin, navigate]);
 
-  return (
+  const buttonStyles = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "1rem",
+    fontWeight: 500,
+    textTransform: 'Capitalize',
+    color: 'white',
+    backgroundColor: "#292E64"
+  }
+
+  return loading ? <Loader loading={loading} /> : (
 		<div className="Schedule">
 			<AdminHeader/>
 			<h1>Exam Schedule</h1>
@@ -44,33 +63,40 @@ function Schedule() {
 				<Card title={"Upcoming Examinations"}>
 					<div className='scheduleContainer'>
 						<div style={{ width: '30%'}}>
-              <div className='scheduleTitleSection'>
-                Today (18/09/2023)
-              </div>
-              <div className='scheduleSmallCard'>
+              {exams && <div className='scheduleTitleSection'>
+                In {new Date(exams[0].startTime).toLocaleString('default', { month: 'long', year: 'numeric' })}
+              </div>}
+              {exams && exams.map((exam) => (
+              <div className='scheduleSmallCard' 
+                onClick={() => setSelectedExam(exam)}
+                style={{ backgroundColor: (selectedExam && selectedExam.examId === exam.examId) ? '#c94831' : '',
+                color: (selectedExam && selectedExam.examId === exam.examId) ? 'white' : '' }}>
                 <div style={{ fontWeight: 'bold', padding: 10 }}>
-                  Software Design Studio 31274 Finals
+                  {exam.examName}
                 </div>
                 <div style={{ padding: 10 }}>
-                  3:00PM - 4:00PM
+                  Exam ID: {exam.examId}
+                </div>
+                <div style={{ padding: 10 }}>
+                  {(new Date(exam.startTime).toDateString())}
                 </div>
                 <div style={{ padding: 10, paddingTop: 0 }}>
-                  Session ID: 2138342
+                  {(formatISOTime(new Date(exam.startTime)))} - {formatISOTime((new Date(exam.endTime)))}
                 </div>
-              </div>
+              </div>))}
 						</div>
-						<div className='scheduleLargeCard'>
+						{selectedExam && <div className='scheduleLargeCard'>
               <div style={{ fontWeight: 'bold',  fontSize: '1.8rem'}}>
-                Software Design Studio 31274 Finals
+                {selectedExam.examName}
               </div>
               <div style={{ paddingTop: 40, fontSize: '1.3rem' }}>
-                3:00PM - 4:00PM
+                {(formatISODate(new Date(selectedExam.startTime)))} - {formatISODate((new Date(selectedExam.endTime)))}
               </div>
               <div style={{ paddingTop: 20, fontSize: '1.3rem' }}>
-                Session ID: 2138342
+                Exam ID: {selectedExam.examId}
               </div>
               <div style={{ paddingTop: 20 }}>
-              <a href='/exam' style={{ color: 'blue',  fontSize: '1.3rem' }}>
+              <a href={`/exam/${selectedExam.examId}`} style={{ color: 'blue',  fontSize: '1.3rem' }}>
                 Show Exam Details</a></div>
               <div className='scheduleButtonContainer'>
                 <Button component={Link} to="/launchExam" sx={buttonStyles} className="scheduleButton" variant="contained">
@@ -106,7 +132,7 @@ function Schedule() {
                   </div>
               </Button>
               </div>
-						</div>
+						</div>}
 					</div>
 				</Card>
 			</div>
