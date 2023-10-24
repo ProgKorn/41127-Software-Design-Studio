@@ -7,7 +7,7 @@ import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import FlagIcon from '@mui/icons-material/Flag';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import {UserManual, FaceAuthenticationTroubleshoot, ComputerSpecs, TermsAndConditions} from '../components/HelpCentrePages';
+import {UserManual, FaceAuthenticationTroubleshoot, Flagging, TermsAndConditions} from '../components/HelpCentrePages';
 import SearchBar from '../components/SearchBar';
 import { Introduction, Overview, GettingStarted, UsingTheSoftware, Troubleshooting} from "../components/UserManual";
 
@@ -89,16 +89,19 @@ function HelpCentre() {
       <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedButton === 'flagging' && (
-      <ComputerSpecs onBackButtonClick={handleBackButtonClick} />
+      <Flagging onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedButton === 'termsAndConditions' && (
       <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} />}
       {selectedSection === 'userOverview' && <Overview onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Getting Started' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Using the Software' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Troubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userGettingStarted' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userSoftware' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userTroubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'faceAuth' && <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'flags' && <Flagging onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'termsAndConds' && <TermsAndConditions onBackButtonClick={handleBackButtonClick} />}
     </div>
   );
 }
