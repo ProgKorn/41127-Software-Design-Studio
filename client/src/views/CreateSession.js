@@ -24,6 +24,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 //TO-DO:
 //Cannot assign multiple exams to a class --> ctrl+r "classValidation" for more info
@@ -98,7 +99,22 @@ function CreateSession() {
   const handleCreateSession = () => {
     //current placeholder for this method only closes the dialogue
     //will replace with .post request when DB connections are complete
+    const requestBody = { 
+    examName: examName,
+    startTime: startTime, 
+    endTime: endTime, 
+    details: examDescription,
+    className: "Fundamentals of Bamology" };
+
+    axios.post('http://localhost:4000/exam/addExam', requestBody)
+    .then(response => {
+    console.log('POST request response:', response.data);
     setOpen(false);
+    })
+    .catch(error => {
+    console.error('Error:', error);
+    });
+
   };
 
   const handleChangeClass = (event) => {
