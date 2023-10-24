@@ -48,6 +48,20 @@
     padding: 20px;
 }
 
+.previewEnd {
+    height: 550px;
+    background-color: #dfdfe4;
+    border-radius: 6px;
+    color: white;
+    padding: 10px;
+}
+
+.icon {
+    font-size: 72px;
+    vertical-align: middle; /* Align the icon vertically with the text */
+    margin-left: 5px; /* Adjust the spacing between the text and the icon */
+}
+
 .formBox {
     align-items: center;
 }
@@ -93,6 +107,16 @@
 .unmirror {
     transform: scaleX(-1);
 }  
+
+.endTitle {
+    font-size: 72px;
+    margin-top: 20vh;
+}
+
+.description {
+    color: slategray;
+    margin: 5vh;
+}
 
 h1 {
     color: slategray;
