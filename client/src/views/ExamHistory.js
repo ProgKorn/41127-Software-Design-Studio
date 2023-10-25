@@ -15,68 +15,32 @@ import "../css/AdminTables.css";
 import Card from "../components/Card";
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
+import Loader from "../components/Loader";
+import { formatISODate } from '../components/Clock';
 
 function createData(examName, term, examiner, attendance, examStart, examEnd, status, sessionNo) {
   return { examName, term, examiner, attendance, examStart, examEnd, status, sessionNo };
 }
 
-const exams = [
-  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 5", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 5", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 22", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 5", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 5", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 1", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 2", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 3", "Autumn 2023", "Dr. Barbie", "13", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 4", "Autumn 2023", "Dr. Barbie", "33", "dateTime", "dateTime", "live", "123"),
-  createData("Exam 22", "Autumn 2023", "Dr. Barbie", "23", "dateTime", "dateTime", "live", "123"),
-];
+const columns = [
+  'Exam Name', 'Exam Start', 'Exam End', 'Details', 'Session #'
+]
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.white,
-    color: theme.palette.common.black,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 1148,
-  },
-}));
+const tableTitleTextStyle = {
+  fontFamily: 'Montserrat, sans-serif',
+  fontWeight: 700, 
+  color: 'rgb(85, 89, 130)'
+}
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+const tableRowStyle = {
+  '&:last-child td, &:last-child th': { border: 0 },
+  fontFamily: 'Montserrat, sans-serif'
+}
 
 function ExamHistory() {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [exams, setExams] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const examId = 1;
   useEffect(() => {
@@ -89,9 +53,20 @@ function ExamHistory() {
         navigate('/noaccess'); 
 	    }
 	  }
+    fetchExams();
   }, [isAdmin, navigate]);
 
-  return (
+  const fetchExams = async () => {
+    try {
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/exam/getExamDetails/');
+      setExams(response.data)
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return loading ? <Loader loading={true} /> : (
     <div className="ExamHistory">
       <AdminHeader />
       <div className="adminTable">
@@ -99,32 +74,26 @@ function ExamHistory() {
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">Exam Name</StyledTableCell>
-                  <StyledTableCell align="center">Term</StyledTableCell>
-                  <StyledTableCell align="center">Examiner</StyledTableCell>
-                  <StyledTableCell align="center">Attendance</StyledTableCell>
-                  <StyledTableCell align="center">Exam Start</StyledTableCell>
-                  <StyledTableCell align="center">Exam End</StyledTableCell>
-                  <StyledTableCell align="center">Status</StyledTableCell>
-                  <StyledTableCell align="center">Session #</StyledTableCell>
-                </TableRow>
+              <TableRow >
+                    {columns.map((col) => (
+                      <TableCell  sx={tableTitleTextStyle} align='left' style={{fontFamily: 'Montserrat, sans-serif'}}>
+                        {col}
+                      </TableCell>
+                    ))}
+                  </TableRow>
               </TableHead>
               <TableBody>
-                {exams.map((exam) => (
-                  <TableRow>
-                    <TableCell align="center">{exam.examName}</TableCell>
-                    <TableCell align="center">{exam.term}</TableCell>
-                    <TableCell align="center">{exam.examiner}</TableCell>
-                    <TableCell align="center">{exam.attendance}</TableCell>
-                    <TableCell align="center">{exam.examStart}</TableCell>
-                    <TableCell align="center">{exam.examEnd}</TableCell>
-                    <TableCell align="center">{exam.status}</TableCell>
-                    <TableCell align="center">{
-                      <a href={`/exam/${examId}`} style={{ color: 'black' }}>
-                        {exam.sessionNo}
+                {exams.map((exam)  => (
+                  <TableRow  sx={tableRowStyle}>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="left">{exam.examName}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="left">{formatISODate(exam.startTime)}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="left">{formatISODate(exam.endTime)}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="left">{exam.details}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="left">
+                      <a href={`/exam/${exam.examId}`} style={{ color: 'black' }}>
+                        {exam.examId}
                       </a>
-                 }</TableCell>
+                 </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
