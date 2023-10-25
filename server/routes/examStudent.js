@@ -10,18 +10,14 @@ router.get('/', (req, res) => {
 router.post('/createExamStudent/:studentId/:examId', async (req, res) => {
     try {
       const newExamStudent = new ExamStudent ({ 
-        seatNo: 50,
+        seatNo: 4,
         examId: req.params.examId, 
         studentId: req.params.studentId, 
         status: "Active"
     });
-      // const findExamStudent = databaseMaster.dbOp('find', 'Exam-Student', {docs: [newExamStudent]})
-      // console.log("Does Exam Student Exist: " + findExamStudent)
-      // if (findExamStudent) {
         const result = await databaseMaster.dbOp('insert', 'Exam-Student', {docs: [newExamStudent]});
         console.log("Exam Student created:" + newExamStudent);
         res.status(201).json(result); // Return the created exam student data
-      // }
 
     } catch (error) {
       console.error(error);
@@ -30,7 +26,7 @@ router.post('/createExamStudent/:studentId/:examId', async (req, res) => {
 });
 
 // Get request for exam sessions 
-router.get('/getExamStudent/:studentId/:examId', async (req, res) => {
+router.get('/getActiveExamStudent/:studentId/:examId', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
@@ -42,17 +38,19 @@ router.get('/getExamStudent/:studentId/:examId', async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
- });
+});
 
  // Patch request to update status of exam sessions
- router.patch('/updateExamStudentStatus/:studentId/:examId', async (req, res) => {
+ router.put('/updateExamStudentStatus/:studentId/:examId', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
-    const examStudent = {examId: examId, studentId: studentId}
+    const query = {examId: examId, studentId: studentId, seatNo: 4}
     const statusUpdate = { $set: { status: req.body.status } };
-
-    const data = await databaseMaster.dbOp('update', 'Exam-Student', { examStudent, statusUpdate }).then(data => {
+    const check = await databaseMaster.dbOp('find', 'Exam-Student', { query: query })
+    console.log(check)
+    console.log(req.body.status)
+    const data = await databaseMaster.dbOp('update', 'Exam-Student', { query, statusUpdate }).then(data => {
       res.json(new ExamStudent(data[0]));
     });
 

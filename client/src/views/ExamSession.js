@@ -9,7 +9,7 @@ import ObjectRecognition from "./ObjectRecognition";
 function ExamSession() {
   const navigate = useNavigate();
   const [examSessionCreated, setExamSessionCreated] = useState(false);
-  const [countdown, setCountdown] = useState(60); 
+  const [countdown, setCountdown] = useState(10); 
   const [examLength, setExamLength] = useState(0);
   const {studentId} = useParams();
   const {examId} = useParams();
@@ -34,10 +34,10 @@ function ExamSession() {
 
   useEffect(() => {
     console.log("Fetching Exam Length")
-    axios.get(`http://localhost:4000/exam/getExamDetails/${examId}}`).then((response) => {
+    axios.get(`http://localhost:4000/exam/getExamDetails/${examId}`).then((response) => {
       const { startTime, endTime } = response.data;
-      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
-      // const examLengthInSeconds = 60;
+      // const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
+      const examLengthInSeconds = 10;
       setExamLength(examLengthInSeconds);
       setCountdown(examLengthInSeconds); // Set countdown to the examLength
     })
@@ -57,7 +57,7 @@ function ExamSession() {
       } else {
           clearInterval(timer);
           // Update exam session status to "Completed"
-          axios.patch(`http://localhost:4000/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
+          axios.put(`http://localhost:4000/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
           navigate("/examdone");
       }
     }, 1000);
