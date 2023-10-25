@@ -81,8 +81,9 @@ function Login() {
     setErrorMessage("");
   };
 
-  const receiveFacialData = (data) => {
-    setFacialData(data);
+  const handleDataFromChild = (data) => {
+    // Process the data received from the child component
+    console.log(data);
   };
 
   // useEffect(() => {
@@ -125,7 +126,7 @@ function Login() {
           )}
           {isStudent && (
             <div>
-              <FacialLandmarkLogin />
+              <FacialLandmarkLogin sendDataToParent={ handleDataFromChild } />
             </div>
           )}
       <div className="error-message-container">
