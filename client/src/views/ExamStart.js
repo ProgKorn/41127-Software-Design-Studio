@@ -31,7 +31,7 @@ function ExamStart() {
 
   const fetchExamDetails = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/exam/getExamDetails");
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +"/exam/getExamDetails");
       console.log("Exam Details Response:", response.data); // Log the response
       setExamDetails(response.data);
       setLoading(false); // Set loading to false once data is fetched
