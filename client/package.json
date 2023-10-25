@@ -56,5 +56,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "options": {
+    "allowedHosts": [
+      "localhost",
+      ".localhost",
+      "sentinel-backend.fly.dev"
+    ],
+    "proxy": "https://sentinel-backend.fly.dev/"
   }
 }
