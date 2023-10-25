@@ -13,6 +13,7 @@ function ExamSession() {
   const [examLength, setExamLength] = useState(0);
   const {studentId} = useParams();
   const {examId} = useParams();
+  const [examName, setExamName] = useState("");
   
   const createExamStudent = async () => {
     try {
@@ -35,19 +36,20 @@ function ExamSession() {
   useEffect(() => {
     console.log("Fetching Exam Length")
     axios.get(`http://localhost:4000/exam/getExamDetails/${examId}`).then((response) => {
-      const { startTime, endTime } = response.data;
-
-      //Comment below line out to set exam length to 10 seconds for testing
-      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000; 
+      const {startTime, endTime } = response.data;
+      setExamName(response.data.examName)
+      // const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000; 
+      //Uncomment below line out to set exam length to 10 seconds for testing
+      const examLengthInSeconds = 10
       setExamLength(examLengthInSeconds);
       setCountdown(examLengthInSeconds); // Set countdown to the examLength
     })
     .catch((error) => {
       console.error(error);
     });
-  return () => {
-    console.log("Finished Fetching Details");
-  };
+    return () => {
+      console.log("Finished Fetching Details");
+    };
   }, [examId]);
 
   useEffect(() => {
@@ -77,7 +79,7 @@ function ExamSession() {
     <Box className="main">
       {/* Page Title goes here */}
       <Box className="subtitle">
-        <h1>Subject Number Subject Name: Exam Name</h1>
+        <h1>{examName}</h1>
       </Box>
       {/* Camera preview goes here */}
       <Box className="preview">

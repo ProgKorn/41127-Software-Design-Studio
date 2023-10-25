@@ -8,10 +8,11 @@ router.get('/', (req, res) => {
 });
 
 //Post request to create Exam-Students when an Exam Session starts
+//SeatNo currently hardcoded - Need to update lines 15 and 50 to be same seat No
 router.post('/createExamStudent/:studentId/:examId', async (req, res) => {
     try {
       const newExamStudent = new ExamStudent ({ 
-        seatNo: 7,
+        seatNo: 10,
         examId: req.params.examId, 
         studentId: req.params.studentId, 
         status: "Active"
@@ -27,11 +28,14 @@ router.post('/createExamStudent/:studentId/:examId', async (req, res) => {
 });
 
 // Get request for exam sessions 
-router.get('/getActiveExamStudent/:studentId/:examId', async (req, res) => {
+router.get('/getActiveExamStudent/:studentId/:examId/', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
-    const data = await databaseMaster.dbOp('find', 'Exam-Student', { query: {examId : examId} }).then(data => {
+    // const seatNo = parseInt(req.params.seatNo);
+    const query = {examId: examId, studentId: studentId, status: "Active"}
+    const data = await databaseMaster.dbOp('find', 'Exam-Student', { query: query }).then(data => {
+      console.log(data)
       res.json(new ExamStudent(data[0]));
     });
 
@@ -46,7 +50,7 @@ router.get('/getActiveExamStudent/:studentId/:examId', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
-    const query = {examId: examId, studentId: studentId, seatNo: 7}
+    const query = {examId: examId, studentId: studentId, seatNo: 10}
     const statusUpdate = { $set: { status: req.body.status } };
     const check = await databaseMaster.dbOp('find', 'Exam-Student', { query: query })
     console.log(check)
