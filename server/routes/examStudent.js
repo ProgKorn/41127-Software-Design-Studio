@@ -7,10 +7,11 @@ router.get('/', (req, res) => {
     res.json({ message: 'Exam Student' });
 });
 
+//Post request to create Exam-Students when an Exam Session starts
 router.post('/createExamStudent/:studentId/:examId', async (req, res) => {
     try {
       const newExamStudent = new ExamStudent ({ 
-        seatNo: 4,
+        seatNo: 7,
         examId: req.params.examId, 
         studentId: req.params.studentId, 
         status: "Active"
@@ -40,18 +41,18 @@ router.get('/getActiveExamStudent/:studentId/:examId', async (req, res) => {
   }
 });
 
- // Patch request to update status of exam sessions
+ // Put request to update status of exam sessions
  router.put('/updateExamStudentStatus/:studentId/:examId', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
-    const query = {examId: examId, studentId: studentId, seatNo: 4}
+    const query = {examId: examId, studentId: studentId, seatNo: 7}
     const statusUpdate = { $set: { status: req.body.status } };
     const check = await databaseMaster.dbOp('find', 'Exam-Student', { query: query })
     console.log(check)
     console.log(req.body.status)
-    const data = await databaseMaster.dbOp('update', 'Exam-Student', { query, statusUpdate }).then(data => {
-      res.json(new ExamStudent(data[0]));
+    const data = await databaseMaster.dbOp('update', 'Exam-Student', { query, docs: statusUpdate }).then(data => {
+      res.json("Exam Student Status Updated Successfully");
     });
 
   } catch (error) {

@@ -36,8 +36,9 @@ function ExamSession() {
     console.log("Fetching Exam Length")
     axios.get(`http://localhost:4000/exam/getExamDetails/${examId}`).then((response) => {
       const { startTime, endTime } = response.data;
-      // const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
-      const examLengthInSeconds = 10;
+
+      //Comment below line out to set exam length to 10 seconds for testing
+      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000; 
       setExamLength(examLengthInSeconds);
       setCountdown(examLengthInSeconds); // Set countdown to the examLength
     })
