@@ -16,7 +16,6 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
-  const [facialDatafromComp, setFacialData] = useState(false);
   
   const navigate = useNavigate();
 
@@ -45,7 +44,7 @@ function Login() {
         const response = await axios.post('http://localhost:4000/studentlogin', {
           username,
           keepLoggedIn: document.getElementById('keepSignedIn').checked,
-          facialData: facialDatafromComp
+          facialData: handleDataFromChild()
         });
   
         localStorage.setItem('token', response.data.token);
@@ -82,15 +81,8 @@ function Login() {
   };
 
   const handleDataFromChild = (data) => {
-    // Process the data received from the child component
     console.log(data);
   };
-
-  // useEffect(() => {
-  //   if (isStudent) {
-  //     setTimeout(() => navigate('/studenthomepage'), 30000)
-  //   }
-  // }, [facialDatafromComp, isStudent]);
 
   return (
     <div className='App'>
