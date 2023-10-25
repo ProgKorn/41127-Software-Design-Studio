@@ -92,12 +92,13 @@ function StudentHomepage() {
           <div className="student-heading">Student Homepage</div>
         </header>
         <Grid container spacing = {1}  className = 'pageCardPadding'>
+          <Grid className='grid'>
           <Grid item xs={4}>
-              <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 100 }} aria-label="customized table">
+              <TableContainer component={Paper} className="table-container">
+                  <Table sx={{ minWidth: 100 }} aria-label="customized table" className='table'>
                       <TableHead>
                           <TableRow>
-                              <StyledTableCell colSpan = {2}> Student Details</StyledTableCell>
+                              <StyledTableCell colSpan = {2} style={{ height: '40px' }}>Student Details</StyledTableCell>
                           </TableRow> 
                       </TableHead>
                       <TableBody >
@@ -122,21 +123,21 @@ function StudentHomepage() {
               </TableContainer>  
             </Grid>
             <Grid item xs={7} style = {{marginLeft: '100px'}}>
-              <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="customized table">
+              <TableContainer component={Paper} className="table-container">
+                  <Table sx={{ minWidth: 650 }} aria-label="customized table" className='table'>
                   <TableHead>
                       <TableRow>
-                          <StyledTableCell colSpan={1} align = 'left'>Upcoming Exams</StyledTableCell>
+                          <StyledTableCell colSpan={1} align = 'left' style={{ height: '40px' }}>Upcoming Exams</StyledTableCell>
                           <StyledTableCell colSpan={4}  align = 'right'>
                               <div className=".button-container-student">
-                              <Link to="/previousexams" className="student-button" style= {{ width:'250px', display:'inline-flex', textAlign:'center', fontSize: '19px'}}>
+                              <Link to="/previousexams" className="student-button" style= {{ width:'250px', display:'inline-flex', textAlign:'center', fontSize: '19px', height:'35px'}}>
                                   View Previous Exams
                               </Link>
                               </div>
                           </StyledTableCell>
                       </TableRow>
                       <TableRow>
-                          <TableCell style={{ fontWeight: 'bold',  fontFamily: 'Montserrat, sans-serif' }} align="left" >Exam Name</TableCell>
+                          <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="left" >Exam Name</TableCell>
                           <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Exam Start</TableCell>
                           <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Details</TableCell>
                           <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Seat No.</TableCell>
@@ -152,7 +153,7 @@ function StudentHomepage() {
                           <StyledTableCell component="th" scope="row">
                           {row.examName}
                           </StyledTableCell>
-                          <StyledTableCell align="center">{row.startTime}</StyledTableCell>
+                          <StyledTableCell align="center">{new Date(row.startTime).toLocaleString()}</StyledTableCell>
                           <StyledTableCell align="center">{row.details}</StyledTableCell>
                           <StyledTableCell align="center">{row.seatNumber}</StyledTableCell>
                           <StyledTableCell align="center">
@@ -165,10 +166,11 @@ function StudentHomepage() {
                   </TableBody>
                   </Table>
               </TableContainer>
+              </Grid>
             </Grid>
-            <Grid item xs={8} style = {{marginTop: '80px'}}>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 500 }} aria-label="customized table">
+            <Grid item xs={11.70} style = {{marginTop: '80px'}} className='grid'> 
+              <TableContainer component={Paper} className="table-container">
+                <Table sx={{ width: '100%' }} aria-label="customized table">
                   <TableHead>
                       <TableRow>
                           <StyledTableCell align = 'left'>Test Your Equipment </StyledTableCell>
