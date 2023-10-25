@@ -16,7 +16,7 @@ function ExamSection(props) {
 
   const fetchExam = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/exam/getExamDetails/' + props.examId);
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'exam/getExamDetails/' + props.examId);
       setExam(response.data);
     } catch (error) {
       console.error(error);
@@ -38,7 +38,7 @@ function StudentSection(props) {
 
   const fetchStudent = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/student/getStudentDetails/' + props.studentId);
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'student/getStudentDetails/' + props.studentId);
       setStudent(response.data);
     } catch (error) {
       console.error(error);
@@ -74,7 +74,7 @@ function Flag() {
 
   const fetchFlag = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/flag/getFlagDetails/' + flagId);
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/flag/getFlagDetails/' + flagId);
       setFlag(response.data);
       setLoading(false);
     } catch (error) {

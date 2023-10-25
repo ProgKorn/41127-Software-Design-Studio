@@ -66,8 +66,9 @@
   "options": {
     "allowedHosts": [
       "localhost",
-      ".localhost"
+      ".localhost",
+      "sentinel-backend.fly.dev"
     ],
-    "proxy": "https://localhost:4000/"
+    "proxy": "https://sentinel-backend.fly.dev/"
   }
 }
