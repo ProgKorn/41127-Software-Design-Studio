@@ -5,6 +5,21 @@ const Flag = require('../models/flagModel');
 const databaseMaster = require('../DatabaseAccess/databaseMaster');
 const { v4: uuidv4 } = require('uuid');
 
+const PORT = 4001;
+
+const io = require('socket.io')(PORT, {
+    cors: {
+        origin: ['http://localhost:3000'] // client URL
+    }
+});
+  
+io.on('connection', socket => { // function that runs everytime a client connects to our server, give a socket instance for each one
+    console.log(socket.id); // each person who connects to our server is assigned an ID
+    socket.on('custom-event', (number, string, obj) => {
+        console.log(number, string, obj);
+    })
+});
+
 /* 
 Example Implementation:
 
@@ -88,6 +103,7 @@ router.post('/addFlag', async (req, res) => { // Add a new flag
             sessionName: req.body.sessionName,
         });
         const flag = await databaseMaster.dbOp('insert', 'FlaggedIncidents', { docs: [newFlag] });
+        io.emit('add-flag');
         console.log("I have raised this flag " + newFlag);
         res.json(flag);
     } catch (error) {
