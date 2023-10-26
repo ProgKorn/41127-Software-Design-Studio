@@ -114,7 +114,7 @@ function Exam() {
                     </TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.studentId}</TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.flags}</TableCell>
-                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.seatNumber}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.seatNo}</TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.status}</TableCell>
                   </TableRow>
                   ))}

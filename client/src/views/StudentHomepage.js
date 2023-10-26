@@ -57,7 +57,7 @@ function StudentHomepage() {
             setStudentId(studentId); // Store the studentId
             //setLoading(false);
   
-            const examurl = process.env.REACT_APP_SERVER_URL + "/class/get-exam/" + studentId;
+            const examurl = "http://localhost:4000" + "/class/get-exam/" + studentId;
             axios.get(examurl)
               .then((examResponse) => {
                 getExam(examResponse.data);
@@ -155,7 +155,7 @@ function StudentHomepage() {
                           </StyledTableCell>
                           <StyledTableCell align="center">{new Date(row.startTime).toLocaleString()}</StyledTableCell>
                           <StyledTableCell align="center">{row.details}</StyledTableCell>
-                          <StyledTableCell align="center">{row.seatNumber}</StyledTableCell>
+                          <StyledTableCell align="center">{row.seatNo}</StyledTableCell>
                           <StyledTableCell align="center">
                               <Link to= {`/examstart/${student.studentId}/${row.examId}`} className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
                                   Access Exam
