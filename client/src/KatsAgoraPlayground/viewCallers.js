@@ -5,7 +5,7 @@ import './startCall.css'
 const secrets = {
   appId: "e5709f8be2604869864acfa71a1f8b42",
   channelName: "main",
-  token: "007eJxTYNB0nuUsMOl904xD4uy3jqY/vvB/d+j/vkixzz1Bcw56CdQqMKSamhtYplkkpRqZGZhYmFlamJkkJqclmhsmGgJFTYz01pukNgQyMqy6/Z2ZkQECQXwWhtzEzDwGBgCW6SDD",
+  token: process.env.REACT_APP_AGORA_TOKEN,
 };
 
 const rtc = {

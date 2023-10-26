@@ -9,8 +9,7 @@ import '../css/AdminExamSession.css';
 const secrets = {
     appId: "e5709f8be2604869864acfa71a1f8b42",
     channelName: "main",
-    token:
-      "007eJxTYPC/L54ft6/Oc76Vh+TmvAMybVE6pob7z9R6PzR9WZJcNUeBIdXU3MAyzSIp1cjMwMTCzNLCzCQxOS3R3DDREChqYrTgtVVqQyAjg+J1PgZGKATxWRhyEzPzGBgA2bEd4A==",
+    token: process.env.REACT_APP_AGORA_TOKEN,
   };
   
   const rtc = {
