@@ -8,9 +8,9 @@ import '../css/AdminExamSession.css';
 
 const secrets = {
     appId: "e5709f8be2604869864acfa71a1f8b42",
-    channelName: "newmain",
+    channelName: "main",
     token:
-      "007eJxTYPBSP1B96P/Vo0/f8Ow907FoxXU2lcq7aye4BLr7XbKQ3H1DgSHV1NzAMs0iKdXIzMDEwszSwswkMTkt0dww0RAoamI0id0ytSGQkUHA7gkLIwMEgvgsDLmJmXkMDADjICBR",
+      "007eJxTYPC/L54ft6/Oc76Vh+TmvAMybVE6pob7z9R6PzR9WZJcNUeBIdXU3MAyzSIp1cjMwMTCzNLCzCQxOS3R3DDREChqYrTgtVVqQyAjg+J1PgZGKATxWRhyEzPzGBgA2bEd4A==",
   };
   
   const rtc = {
