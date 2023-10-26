@@ -18,7 +18,7 @@ function ExamSession() {
   const createExamStudent = async () => {
     try {
       console.log("Creating Exam Student");
-      const response = await axios.post(`http://localhost:4000/examStudent/createExamStudent/${studentId}/${examId}`);
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + `/examStudent/createExamStudent/${studentId}/${examId}`);
       console.log("Exam Session Response:", response.data); // Log the response
     } catch (error) {
       console.error(error);
@@ -35,7 +35,7 @@ function ExamSession() {
 
   useEffect(() => {
     console.log("Fetching Exam Length")
-    axios.get(`http://localhost:4000/exam/getExamDetails/${examId}`).then((response) => {
+    axios.get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`).then((response) => {
       const {startTime, endTime } = response.data;
       setExamName(response.data.examName)
       const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000; 
@@ -61,7 +61,7 @@ function ExamSession() {
         } else {
             clearInterval(timer);
             // Update exam session status to "Completed"
-            axios.put(`http://localhost:4000/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
+            axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
             navigate("/examdone");
         }
       }, 1000);
