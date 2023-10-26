@@ -26,6 +26,8 @@ axios.get(examurl).then((response) => {
   examId = response.data.examId;
 }); */
 
+/* OBJECT DETECTION */
+
 export const cheatingObject = (detections) => {
   var personCounter = 0; // Keep track of how many people are in the frame
 
@@ -136,8 +138,8 @@ const NOSE_INDEX = 168;
 const LEFT_EYE_INDEX = 159;
 const RIGHT_EYE_INDEX = 386;
 
-// Define a threshold to determine if the face is turned
-const TURNED_FACE_THRESHOLD = 20;
+const TURNED_FACE_THRESHOLD = 20; // Define a threshold to determine if the face is turned
+const LOOKING_AWAY_THRESHOLD_ANGLE = 20;
 
 export const cheatingFace = (predictions) => {
   if (predictions.length > 0) {
@@ -151,27 +153,115 @@ export const cheatingFace = (predictions) => {
 
 function facialLandmarkConditions(keypoints, timestamp) { // Return true if cheating is detected -- cheating behaviours are: Iris keypoints detection (are they looking at notes, etc) + Detection for rotated faces (looking away from the screen, posters on the wall etc)
   const cheatingBehaviours = [
-    { type: "Turned Face", condition: isFaceTurned(keypoints) },
-    // Add more for Gaze Tracking
+    { type: "Face rotated to the left", condition: isFaceTurnedLeft(keypoints) },
+    { type: "Face rotated to the right", condition: isFaceTurnedRight(keypoints) },
+    { type: "Gaze directed away from the screen", condition: isLookingAway(keypoints) },
+    // Add more if needed
   ];
 
   // Check each cheating behavior
   cheatingBehaviours.forEach((behavior) => {
     if (behavior.condition) {
-      incidentCheck(timestamp, behavior.type);
+      faceIncidentCheck(timestamp, behavior.type);
     }
+
+    // Reset incidents here
   });
 }
 
-const isFaceTurned = (keypoints) => { // Is the user's face turned left or right?
+function faceIncidentCheck(timestamp, flagType) {
+  // Check if an incident with this flag type already exists
+  const existingIncident = incidents.find((incident) => {
+    return incident.flagType === flagType;
+  });
+
+  if (!existingIncident) {
+    // Create a new incident
+    const newIncident = {
+      flagType: flagType,
+      timestamp,
+      flagged: true,
+      studentId: studentId,
+      examId: 2,  // This needs to be fetched dynamically from studentId (from token)
+      sessionName: "English", // This needs to be fetched dynamically from examId
+    };
+
+    // Add it to the incidents list
+    incidents.push(newIncident);
+    console.log("New incident " + JSON.stringify(newIncident));
+    console.log("Cheating Detected! " + flagType);
+    
+    // Raise a flag for this incident
+    // axios.post(url + '/addFlag', newIncident)
+    // .then((response) => {
+    //     console.log('Flag added successfully: ', response.data);
+    // })
+    // .catch(error => {
+    //     console.error('Error adding flag: ', error);
+    // });
+  }
+}
+
+function checkAndResetFaceIncidents(flagType, hasBannedObject) {
+  // for (let i = incidents.length - 1; i >= 0; i--) {
+  //   const incident = incidents[i];
+  //   if (!hasBannedObject && incident.flagType === flagType) { // if the parsed behaviour matches the behaviour of this incident AND if it's no longer active
+  //     incidents.splice(i, 1); // Remove the incident from the list
+  //     console.log("Incident reset for " + flagType);
+  //   }
+  // }
+}
+
+// Function to determine if the face is turned to the right
+const isFaceTurnedRight = (keypoints) => {
   const nose = keypoints[NOSE_INDEX];
+  const leftEye = keypoints[LEFT_EYE_INDEX];
+
+  // Calculate the horizontal distance between the nose and left eye
+  const distance = nose[0] - leftEye[0];
+
+  // Check if the distance is greater than the threshold
+  return distance > TURNED_FACE_THRESHOLD;
+};
+
+// Function to determine if the face is turned to the left
+const isFaceTurnedLeft = (keypoints) => {
+  const nose = keypoints[NOSE_INDEX];
+  const rightEye = keypoints[RIGHT_EYE_INDEX];
+
+  // Calculate the horizontal distance between the nose and right eye
+  const distance = rightEye[0] - nose[0];
+
+  // Check if the distance is greater than the threshold
+  return distance > TURNED_FACE_THRESHOLD;
+};
+
+// Function to calculate the angle between two vectors
+const calculateAngle = (vector1, vector2) => {
+  const dotProduct = vector1[0] * vector2[0] + vector1[1] * vector2[1];
+  const magnitude1 = Math.sqrt(vector1[0] ** 2 + vector1[1] ** 2);
+  const magnitude2 = Math.sqrt(vector2[0] ** 2 + vector2[1] ** 2);
+
+  const cosTheta = dotProduct / (magnitude1 * magnitude2);
+  return Math.acos(cosTheta) * (180 / Math.PI);
+};
+
+// Function to determine if the person is looking away
+const isLookingAway = (keypoints) => {
   const leftEye = keypoints[LEFT_EYE_INDEX];
   const rightEye = keypoints[RIGHT_EYE_INDEX];
 
-  const rightDistance = rightEye[0] - nose[0]; // Calculate the horizontal distance between the nose and right eye
-  const leftDistance = nose[0] - leftEye[0]; // Calculate the horizontal distance between the nose and left eye
+  // Calculate the direction vector from left eye to right eye
+  const eyeDirectionVector = [rightEye[0] - leftEye[0], rightEye[1] - leftEye[1]];
 
-  return rightDistance > TURNED_FACE_THRESHOLD || leftDistance > TURNED_FACE_THRESHOLD;
+  // Define a reference vector (e.g., pointing straight ahead)
+  const referenceVector = [1, 0];
+
+  // Calculate the angle between the eye direction vector and the reference vector
+  const angle = calculateAngle(eyeDirectionVector, referenceVector);
+
+  // Check if the angle is greater than the threshold
+  return angle > LOOKING_AWAY_THRESHOLD_ANGLE;
 };
 
 //  Triangulation sets of three

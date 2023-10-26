@@ -18,7 +18,7 @@ import * as tf from "@tensorflow/tfjs";
 // NEW MODEL
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
-import { drawMesh } from "./utilities";
+import { cheatingFace } from "./utilities";
 
 function FacialLandmarkRecognition() {
   const webcamRef = useRef(null);
@@ -84,7 +84,10 @@ function FacialLandmarkRecognition() {
 
       // Get canvas context
       const ctx = canvasRef.current.getContext("2d");
-      requestAnimationFrame(()=>{drawMesh(face, ctx)});
+      //requestAnimationFrame(()=>{drawMesh(face, ctx)});
+
+      // Cheating Detections
+      cheatingFace(face);
     }
   };
 
