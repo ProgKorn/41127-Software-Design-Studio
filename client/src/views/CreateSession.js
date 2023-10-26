@@ -178,7 +178,7 @@ function CreateSession() {
 
   const fetchClasses = async() => {
     try{
-      const response = await axios.get('http://localhost:4000/class/get');
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/class/get');
       setClasses(response.data.map(doc => doc.className));
       setLoading(false);
     }
