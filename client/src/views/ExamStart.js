@@ -26,9 +26,17 @@ function ExamStart() {
 
   const fetchExamDetails = async () => {
     try {
-      const response = await axios.get(process.env.REACT_APP_SERVER_URL +"/exam/getExamDetails");
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +`/exam/getExamDetails/${examId}`);
       console.log("Exam Details Response:", response.data); // Log the response
-      setExamDetails(response.data);
+      const examData = {
+        "Exam Name": response.data.examName,
+        "Exam Date": new Date(response.data.startTime).toLocaleDateString("en-GB"),
+        "Start Time": new Date(response.data.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        "End Time": new Date(response.data.endTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        Details: response.data.details,
+      };
+      setExamDetails(examData)
+      console.log("Exam Details:", examDetails)
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error(error);
