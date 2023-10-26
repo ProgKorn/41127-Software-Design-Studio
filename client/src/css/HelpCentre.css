@@ -101,7 +101,6 @@
     width: 30rem;
     gap: 10px;
     max-width: 60%;
-    padding: 1rem;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -111,10 +110,15 @@
 .return {
     display: flex;
     flex-direction: column;
-    margin-top: 3rem;
+    margin-top: 1rem;
     width: 30rem;
 }
 
 .list {
-    width: 20rem;
+    width: max-content;
 }
+
+.terms {
+    font-size: 24px;
+    text-align: left;
+  }

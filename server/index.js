@@ -63,10 +63,10 @@ app.post('/saveVideo', upload.single('fullRecording'), async (req, res) => {
   console.log('fullRecording:', fullRecording.buffer);
   console.log(req.file);
 
-
   try {
-    // MongoDB code to save the video to the database using the uploadVideo function
     const result = await dbOp('upload-video', 'Exam-Student', { studentId, examId, fullRecording });
+    
+    console.log('Result from MongoDB:', result); // Debugging line
     
     if (result.modifiedCount === 1) {
       res.status(200).json({ message: 'Video saved successfully' });
@@ -80,6 +80,6 @@ app.post('/saveVideo', upload.single('fullRecording'), async (req, res) => {
 });
 
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);
 });

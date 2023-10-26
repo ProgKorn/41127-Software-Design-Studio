@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { InputAdornment, TextField, IconButton, List, ListItem, Button } from "@mui/material";
+import React, { useState, useRef } from "react";
+import { InputAdornment, TextField, IconButton, List, ListItem, Button,} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import data from "../components/helpCentreData.json";
 
@@ -8,8 +8,12 @@ function SearchBar({ onSelectSection }) {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = (searchText) => {
-    if (searchText.length > 3) {
-      const filteredData = data.filter((text) => text.content.includes(searchText));
+    const lowercaseSearchText = String(searchText).toLowerCase();
+
+    if (lowercaseSearchText.length > 2) {
+      const filteredData = data.filter((text) =>
+        text.content.toLowerCase().includes(lowercaseSearchText)
+      );
       setSearchResults(filteredData);
     } else {
       setSearchResults([]);
@@ -37,6 +41,7 @@ function SearchBar({ onSelectSection }) {
   return (
     <div>
       <TextField
+        fullWidth
         variant="filled"
         label="Search..."
         className="searchBox"
@@ -56,7 +61,9 @@ function SearchBar({ onSelectSection }) {
       <List className="list">
         {searchResults.map((text, index) => (
           <ListItem key={index}>
-            <Button onClick={() => handleSectionClick(text.id)}>{text.title}</Button>
+            <Button onClick={() => handleSectionClick(text.id)}>
+              {text.title}
+            </Button>
           </ListItem>
         ))}
       </List>

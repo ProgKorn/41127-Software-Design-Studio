@@ -80,7 +80,7 @@ async function uploadVideo(studentId, examId, fullRecording) {
   const binaryData = new Binary(fullRecording.buffer);
 
   // Update field fullRecording
-  const update = { $set: { "fullRecording.binaryData": binaryData } };
+  const update = { $set: { "fullRecording": binaryData } };
   return await coll.updateOne(query, update);
 }
 
@@ -123,6 +123,7 @@ module.exports = {
         default:
           console.log("Invalid operation type.");
       }
+      return result;
     } catch (error) {
       console.error('An error occurred:', error);
     } finally {

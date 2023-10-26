@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HelpCentreHeader from '../components/HelpCentreHeader';
 import '../css/HelpCentre.css';
 import '../css/Login.css';
@@ -7,14 +7,19 @@ import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import FlagIcon from '@mui/icons-material/Flag';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import {UserManual, FaceAuthenticationTroubleshoot, ComputerSpecs, TermsAndConditions} from '../components/HelpCentrePages';
+import {UserManual, FaceAuthenticationTroubleshoot, Flagging, TermsAndConditions} from '../components/HelpCentrePages';
 import SearchBar from '../components/SearchBar';
 import { Introduction, Overview, GettingStarted, UsingTheSoftware, Troubleshooting} from "../components/UserManual";
+import jwt_decode from 'jwt-decode';
+import AdminHeader from '../components/AdminHeader';
+import StudentHeader from '../components/StudentHeader';
 
 
 function HelpCentre() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [selectedSection, setSelectedSection] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null);
+  const [isStudent, setIsStudent] = useState(null);
 
   const handleSelectedSection = (section) => {
     setSelectedSection(section);
@@ -30,7 +35,20 @@ function HelpCentre() {
     setSelectedButton(null);
     setSelectedSection(null);
   };
-  
+
+  useEffect(() => {
+    try {
+      const token = localStorage.getItem('token');
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        setIsStudent(true);
+      }
+    } catch (error) {
+      
+    }
+  }, []);  
 
   const buttonStyles = {
     fontFamily: "Montserrat, sans-serif",
@@ -44,7 +62,15 @@ function HelpCentre() {
 
   return (
     <div>
-      <HelpCentreHeader/>
+      {!isStudent && !isAdmin && (
+        <HelpCentreHeader/>
+      )}
+      {!isStudent && isAdmin && (
+        <AdminHeader />
+      )}
+      {isStudent && !isAdmin && (
+        <StudentHeader />
+      )}
       <header className="help-centre-header">
         <h1 className="text">Sentinel Help Centre</h1>
         <div>
@@ -89,16 +115,19 @@ function HelpCentre() {
       <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedButton === 'flagging' && (
-      <ComputerSpecs onBackButtonClick={handleBackButtonClick} />
+      <Flagging onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedButton === 'termsAndConditions' && (
       <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} />}
       {selectedSection === 'userOverview' && <Overview onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Getting Started' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Using the Software' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'Troubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userGettingStarted' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userSoftware' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userTroubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'faceAuth' && <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'flags' && <Flagging onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'termsAndConds' && <TermsAndConditions onBackButtonClick={handleBackButtonClick} />}
     </div>
   );
 }

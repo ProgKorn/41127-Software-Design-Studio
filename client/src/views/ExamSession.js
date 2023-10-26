@@ -7,7 +7,7 @@ import ObjectRecognition from "./ObjectRecognition";
 
 function ExamSession() {
   const navigate = useNavigate();
-  const [countdown, setCountdown] = useState(10); 
+  const [countdown, setCountdown] = useState(60); 
   const [shouldNavigate, setShouldNavigate] = useState(false);
   useEffect(() => {
     const timer = setInterval(() => {

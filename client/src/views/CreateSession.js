@@ -24,6 +24,8 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
+import Loader from '../components/Loader';
 
 //TO-DO:
 //Cannot assign multiple exams to a class --> ctrl+r "classValidation" for more info
@@ -51,6 +53,8 @@ function CreateSession() {
   const reformattedDate = offsetDate.toISOString().split('T')[0];
   
   const [isAdmin, setIsAdmin] = useState(false);
+  const [classes, setClasses] = useState(null);
+  const [isLoading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,10 +63,12 @@ function CreateSession() {
       const decodedToken = jwt_decode(token);
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
+        fetchClasses();
       } else {
         navigate("/noaccess");
       }
     }
+    
   }, [isAdmin, navigate]);
 
   const [examDate, setExamDate] = React.useState(dayjs(tomorrow));
@@ -98,7 +104,7 @@ function CreateSession() {
   const handleCreateSession = () => {
     //current placeholder for this method only closes the dialogue
     //will replace with .post request when DB connections are complete
-    setOpen(false);
+    addExam();
   };
 
   const handleChangeClass = (event) => {
@@ -125,6 +131,11 @@ function CreateSession() {
     setAmmendedStartTime(trimmedString);
     console.log("start time is " + startTime + "or " + trimmedString)
 
+    var trimmedString = endTime.toString();
+    trimmedString = trimmedString.slice(17);
+    setAmmendedEndTime(trimmedString);
+    console.log("end time is " + endTime + "or " + trimmedString)
+
     if(startTime > endTime){
       setSnackbarSeverity("warning");
       setSnackbarMessage("Warning: Exam end time occurs before start time. Please correct before proceeding.");
@@ -148,10 +159,6 @@ function CreateSession() {
       setSnackbarMessage("Error: No Exam Name Provided");
       setSnackbarSeverity("error");
       setSnackbarState(true);
-    } else if (scheduledClass == 0) {
-      setSnackbarMessage("Error: No Class Provided");
-      setSnackbarSeverity("error");
-      setSnackbarState(true);
     } else if (startTime == 0) {
       setSnackbarMessage("Error: No Start Time Provided");
       setSnackbarSeverity("error");
@@ -169,7 +176,36 @@ function CreateSession() {
     }
   };
 
-  return (
+  const fetchClasses = async() => {
+    try{
+      const response = await axios.get('http://localhost:4000/class/get');
+      setClasses(response.data.map(doc => doc.className));
+      setLoading(false);
+    }
+    catch (error) {
+      console.log("The error" + error);
+    }
+  }
+
+  const addExam = async() => {
+    const requestBody = { 
+      examName: examName,
+      startTime: startTime, 
+      endTime: endTime, 
+      details: examDescription,
+      className: classes[scheduledClass] };
+
+    try{
+      const response = await axios.post('http://localhost:4000/exam/addExam', requestBody);
+      console.log('POST request response:', response.data);
+      setOpen(false);
+    }
+    catch (error) {
+      console.log("The error" + error);
+    }
+  }
+
+  return (isLoading) ? <Loader loading={true} /> : (
     <div>
       <AdminHeader />
       <div className="createSession">
@@ -230,10 +266,11 @@ function CreateSession() {
                     label="Class"
                     onChange={handleChangeClass}
                   >
-                    {/* Classes are hard-coded here */}
-                    <MenuItem value={"48230: Economics and Finance"}>48230: Economics and Finance</MenuItem>
-                    <MenuItem value={"91001: Cloud SAAS"}>91001: Cloud SAAS</MenuItem>
-                    <MenuItem value={"80085: Engineering Communications"}>80085: Engineering Communications</MenuItem>
+                    {classes.map((className, index) => {
+                      return (
+                      <MenuItem value={index}>{className}</MenuItem>
+                    )
+                    })}
                   </Select>
                 </FormControl>
 
@@ -300,7 +337,7 @@ function CreateSession() {
               Start Time: {ammendedStartTime} <br />
               End Time: {ammendedEndTime} <br />
               Date: {ammendedExamDate} <br />
-              Class: {scheduledClass} <br />
+              Class: {classes[scheduledClass]} <br />
               Description: {examDescription}
             </DialogContentText>
           </DialogContent>
