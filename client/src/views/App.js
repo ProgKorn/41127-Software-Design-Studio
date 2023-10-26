@@ -25,6 +25,7 @@ import NoAccess from './NoAccess';
 import PrivateRoute from './PrivateRoute';
 import Loader from '../components/Loader';
 import ExamDone from './ExamDone';
+import CreateClass from '../views/CreateClass';
 
 import ThirdPlayground from '../KatsAgoraPlayground/startCall';
 
@@ -67,9 +68,10 @@ function App() {
           <Route path="/launchexam" element={<PrivateRoute element={<LaunchExam />} isLoggedIn={isLoggedIn} />} />
           <Route path="/createsession" element={<PrivateRoute element={<CreateSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/manageclasses" element={<PrivateRoute element={<ManageClasses />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/createclass" element={<PrivateRoute element={<CreateClass />} isLoggedIn={isLoggedIn} />} />
           <Route path="/studenthomepage" element={<PrivateRoute element={<StudentHomepage />} isLoggedIn={isLoggedIn} />} />
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
-          <Route path="/examsession" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examsession/:studentId/:examId" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examdone" element={<PrivateRoute element={<ExamDone />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
 
