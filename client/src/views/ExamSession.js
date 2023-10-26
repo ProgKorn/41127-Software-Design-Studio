@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import "../css/Exam.css";
 import ObjectRecognition from "./ObjectRecognition";
+import FlagNotification from "../components/FlagNotification";
 
 function ExamSession() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function ExamSession() {
       {/* Camera preview goes here */}
       <Box className="preview">
         <ObjectRecognition/>
+        <FlagNotification/>
       </Box>
       {/* Countdown timer */}
       <Box className="countdown">
