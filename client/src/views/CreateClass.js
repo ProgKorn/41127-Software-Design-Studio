@@ -122,9 +122,7 @@ function CreateClass() {
             setSnackbarSeverity("error");
             setSnackbarState(true);
         } else {
-            var s = " ";
-            selectedRows.forEach((element) => s = s + " " + element.name.firstName + " " + element.name.lastName)
-            setStudentsString(s);
+            setStudentsString(selectedRows.map((element)=> element.name.firstName + " " + element.name.lastName).join(", "));
             setOpen(true);
         }
       };
