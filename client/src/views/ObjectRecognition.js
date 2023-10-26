@@ -203,7 +203,7 @@ function ObjectRecognition() {
 
       // Send video data to the server using Axios
       console.log(formData);
-      axios.post("http://localhost:4000/saveVideo/", formData, {
+      axios.post(process.env.REACT_APP_SERVER_URL + "/saveVideo", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
