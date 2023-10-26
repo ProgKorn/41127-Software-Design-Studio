@@ -5,8 +5,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 const secrets = {
   appId: "e5709f8be2604869864acfa71a1f8b42",
   channelName: "newmain",
-  token:
-    "007eJxTYPBSP1B96P/Vo0/f8Ow907FoxXU2lcq7aye4BLr7XbKQ3H1DgSHV1NzAMs0iKdXIzMDEwszSwswkMTkt0dww0RAoamI0id0ytSGQkUHA7gkLIwMEgvgsDLmJmXkMDADjICBR",
+  token: process.env.REACT_APP_AGORA_TOKEN,
 };
 
 const rtc = {
