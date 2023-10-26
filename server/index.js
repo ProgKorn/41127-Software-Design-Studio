@@ -12,6 +12,7 @@ const classRoutes = require('./routes/class')
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
+const examStudentRoutes = require('./routes/examStudent');
 const flagRoutes = require('./routes/flag');
 
 const app = express();
@@ -25,6 +26,7 @@ app.use('/class', classRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/exam', examRoutes);
+app.use('/examStudent', examStudentRoutes);
 
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
