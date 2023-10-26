@@ -65,7 +65,7 @@ function App() {
           <Route path="/manageclasses" element={<PrivateRoute element={<ManageClasses />} isLoggedIn={isLoggedIn} />} />
           <Route path="/studenthomepage" element={<PrivateRoute element={<StudentHomepage />} isLoggedIn={isLoggedIn} />} />
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
-          <Route path="/examsession" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examsession/:studentId/:examId" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examdone" element={<PrivateRoute element={<ExamDone />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
         </Routes>
