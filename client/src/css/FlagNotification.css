@@ -4,7 +4,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: orange; /* Background color is orange */
+    background-color: rgb(238, 73, 31); /* Background color is orange */
     border-radius: 10px; /* Rounded corners */
     padding: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a box shadow for depth */
@@ -36,7 +36,7 @@
 /* Styles for the "Ok" button */
 .ok-button {
     background-color: white; /* Button background color */
-    color: orange; /* Button text color */
+    color: black; /* Button text color */
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -46,4 +46,9 @@
   
 .ok-button:hover {
     background-color: #f0f0f0; /* Button background color on hover */
+}  
+
+.bold-underline {
+    font-weight: bold;
+    text-decoration: underline;
 }  

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import "../css/FlagNotification.css";
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import WarningIcon from '@mui/icons-material/Warning';
 
 const FlagNotification = () => {
   const [flagAdded, setFlagAdded] = useState(false);
@@ -21,16 +21,20 @@ const FlagNotification = () => {
     setFlagAdded(false);
   };
 
+  // Need to fetch how many flags associated with the active Exam Student to have dynamic message
+
   return (
     <div>
       {flagAdded && (
         <div className="popup-notification">
           <div className="popup-content">
             <div className="warning-icon">
-              <WarningAmberIcon/>
+              <WarningIcon fontSize="inherit"/>
             </div>
             <div className="notification-text">
-              <p>You have been flagged for academic misconduct. You have one remaining flag before your exam session is ended.</p>
+              <p>
+                You have been flagged for academic misconduct. You have <span className="bold-underline">one</span> remaining flag before your exam session is ended.
+              </p>
             </div>
             <button onClick={closeNotification} className="ok-button">OK</button>
           </div>
