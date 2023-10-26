@@ -53,23 +53,25 @@ function ExamSession() {
   }, [examId]);
 
   useEffect(() => {
-    console.log("Setting up countdown timer");
-    const timer = setInterval(() => {
-      if (countdown > 0) {
-        setCountdown(countdown - 1);
-      } else {
-          clearInterval(timer);
-          // Update exam session status to "Completed"
-          axios.put(`http://localhost:4000/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
-          navigate("/examdone");
-      }
-    }, 1000);
+    if (examLength > 0) {
+      console.log("Setting up countdown timer");
+      const timer = setInterval(() => {
+        if (countdown > 0) {
+          setCountdown(countdown - 1);
+        } else {
+            clearInterval(timer);
+            // Update exam session status to "Completed"
+            axios.put(`http://localhost:4000/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
+            navigate("/examdone");
+        }
+      }, 1000);
 
-    return () => {
-      clearInterval(timer);
-      console.log("Cleaning up timer");
+      return () => {
+        clearInterval(timer);
+        console.log("Cleaning up timer");
+      }
     }
-  }, [countdown, navigate]);
+  }, [countdown, examLength, navigate]);
   const hours = Math.floor(countdown / 3600);
   const minutes = Math.floor((countdown % 3600) / 60);
   const seconds = countdown % 60;
