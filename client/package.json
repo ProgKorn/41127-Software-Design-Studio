@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.6",
     "@mui/styled-engine-sc": "^5.14.6",
+    "@mui/x-date-pickers": "^6.16.1",
     "@tensorflow-models/body-pix": "2.2.0",
     "@tensorflow-models/coco-ssd": "2.2.2",
     "@tensorflow-models/face-detection": "1.0.1",
@@ -21,6 +22,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.0",
+    "dayjs": "^1.11.10",
     "http-proxy-middleware": "^2.0.6",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
@@ -58,8 +60,9 @@
   "options": {
     "allowedHosts": [
       "localhost",
-      ".localhost"
+      ".localhost",
+      "sentinel-backend.fly.dev"
     ],
-    "proxy": "https://localhost:4000/"
+    "proxy": "https://sentinel-backend.fly.dev/"
   }
 }

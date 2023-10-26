@@ -8,7 +8,6 @@ function StudentHeader() {
   const studentRoutes = {
 	  Home: '/studenthomepage',
 	  Help: '/helpcentre',
-	  Signout: '/login',
 	}
 
   const StudentIcons = {

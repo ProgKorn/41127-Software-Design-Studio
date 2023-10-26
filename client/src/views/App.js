@@ -16,12 +16,14 @@ import Schedule from './Schedule';
 import LaunchExam from './LaunchExam';
 import CreateSession from './CreateSession';
 import ManageClasses from './ManageClasses';
+import Student from './Student';
 import StudentHomepage from './StudentHomepage';
 import PreviousExams from './PreviousExams';
 import ExamSession from './ExamSession';
 import NoAccess from './NoAccess';
 import PrivateRoute from './PrivateRoute';
 import Loader from '../components/Loader';
+import ExamDone from './ExamDone';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,10 +53,11 @@ function App() {
           <Route path="/examstart/:studentId/:examId" element={<PrivateRoute element={<ExamStart />} isLoggedIn={isLoggedIn} />} />
           <Route path="/faciallandmarkrecognition" element={<PrivateRoute element={<FacialLandmarkRecognition />} isLoggedIn={isLoggedIn} />} />
           <Route path="/objectrecognition" element={<PrivateRoute element={<ObjectRecognition />} isLoggedIn={isLoggedIn} />} />
-          <Route path="/exam" element={<PrivateRoute element={<Exam />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/exam/:examId" element={<PrivateRoute element={<Exam />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/student/:studentId" element={<PrivateRoute element={<Student />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examhistory" element={<PrivateRoute element={<ExamHistory />} isLoggedIn={isLoggedIn} />} />
           <Route path="/flaglog" element={<PrivateRoute element={<FlagLog />} isLoggedIn={isLoggedIn} />} />
-          <Route path="/flag" element={<PrivateRoute element={<Flag />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/flag/:flagId" element={<PrivateRoute element={<Flag />} isLoggedIn={isLoggedIn} />} />
           <Route path="/schedule" element={<PrivateRoute element={<Schedule />} isLoggedIn={isLoggedIn} />} />
           <Route path="/admin" element={<PrivateRoute element={<AdminDashboard />} isLoggedIn={isLoggedIn} />} />
           <Route path="/launchexam" element={<PrivateRoute element={<LaunchExam />} isLoggedIn={isLoggedIn} />} />
@@ -63,6 +66,7 @@ function App() {
           <Route path="/studenthomepage" element={<PrivateRoute element={<StudentHomepage />} isLoggedIn={isLoggedIn} />} />
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examsession" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examdone" element={<PrivateRoute element={<ExamDone />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
         </Routes>
       </div>

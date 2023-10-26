@@ -2,8 +2,8 @@
     font-family: Montserrat, sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
   }
   
 ul {
@@ -13,9 +13,21 @@ ul {
     text-align: left;
 }
 
-.sub-heading {
+.figure-heading {
   text-align: center;
   font-family: Montserrat, sans-serif;
+}
+
+.account-heading {
+  font-family: Montserrat, sans-serif;
+  font-size: 32px;
+}
+
+.account-subheading {
+  font-family: Montserrat, sans-serif;
+  font-size: 24px;
+  text-align: left;
+  margin-left: 25%;
 }
 
 .image {
@@ -31,4 +43,10 @@ ul {
 .image-text-container {
   display: flex;
   align-items: center;
+}
+
+.paper-container {
+  width: 70%;
+  margin: auto;
+  margin-bottom: 3%;
 }
