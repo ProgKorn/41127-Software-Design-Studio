@@ -17,7 +17,6 @@ import StatusChip from "../components/StatusChip";
 import axios from "axios";
 import Card from "../components/Card";
 import jwt_decode from "jwt-decode";
-import Loader from "../components/Loader";
 
 function createData(session, examinee, flag, status, flag_no, session_no) {
   return { session, examinee, flag, status, flag_no, session_no };
@@ -54,35 +53,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function FlagLog() {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [flagList, setFlags] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [flagList, setFlags] = React.useState([]);
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    axios
+      .get(process.env.REACT_APP_SERVER_URL +"flag/getAllFlags")
+      .then((flagList) => {
+        setFlags(flagList.data)
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  // useEffect(() => {
+  //   fetch(process.env.REACT_APP_SERVER_URL +"flag/getAllFlags",{
+  //       method: "GET",
+  //     })
+  //     .then((res) => setFlags(res.json))
+  //     .then(data =>{
+  //       HTMLFormControlsCollection.log(data, "flagData");
+  //     });
+  // }, []);
+
+
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwt_decode(token);
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
-        navigate('/noaccess'); 
-	    }
-	  }
-    fetchFlags();
+        navigate("/noaccess");
+      }
+    }
   }, [isAdmin, navigate]);
 
-  const fetchFlags = async () => {
-    try {
-      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/flag/getAllFlags/');
-      setFlags(response.data)
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-
-    return loading ? <Loader loading={true} /> : (
+  return (
     <div>
       <AdminHeader />
       <div class="adminTable">
@@ -105,6 +113,12 @@ function FlagLog() {
                     <TableCell align="center">{flag.sessionName}</TableCell>
                     <TableCell align="center">{flag.studentId}</TableCell>
                     <TableCell align="center">{flag.description}</TableCell>
+                    {/* <TableCell align="center" className={"label label-"+flag.status}>{flag.status}</TableCell> */}
+                    {/* <TableCell align="center">
+                      <Chip
+                        label={flag.status}
+                      />
+                    </TableCell> */}
                     <TableCell align="center">
                       <StatusChip status={flag.status} />
                     </TableCell>
