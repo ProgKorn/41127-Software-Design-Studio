@@ -4,7 +4,7 @@ import "../css/FlagNotification.css";
 import WarningIcon from '@mui/icons-material/Warning';
 
 const FlagNotification = () => {
-  const [flagAdded, setFlagAdded] = useState(false);
+  const [flagAdded, setFlagAdded] = useState(false); // For Student
 
   useEffect(() => {
     const socket = io('http://localhost:4001'); // Change the URL to match your Socket.io server's URL
