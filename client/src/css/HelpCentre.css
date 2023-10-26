@@ -28,12 +28,10 @@
 }
 
 .helpDashboardButton {
-    display: block;
+    display: flex;
     color: #ffffff;
-    width: 100%;
-    max-width: 20rem;
-    height: 12rem;
-    margin: auto;
+    width: 16rem;
+    height: 16rem;
     flex-direction: column;
     border-radius: 20px;
     justify-content: center;
@@ -41,18 +39,8 @@
 }
 
 .helpDashboardIcons {
-    transform: scale(3);
+    transform: scale(3.5);
     padding: 30px;
-}
-
-.help-dashboard {
-    width: 50rem;
-    max-width: 80%;
-    padding: 0.5rem;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .user-manual-dashboard {

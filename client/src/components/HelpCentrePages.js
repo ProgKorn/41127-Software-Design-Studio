@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import '../css/HelpCentre.css';
 import { Button, Paper } from '@mui/material';
 import {Introduction, Overview, GettingStarted, UsingTheSoftware, Troubleshooting} from '../components/UserManual';
+import GazeTracking from '../helpCentreResources/GazeTracking.png';
+import MobileDetection from '../helpCentreResources/MobileDetection.png';
 
 const buttonStyles = {
     fontFamily: "Montserrat, sans-serif",
@@ -52,11 +54,9 @@ function UserManual( {onBackButtonClick} ) {
                                 <Button variant='contained' className='subtext' onClick={() => handleSectionClick('Using the Software')} sx={buttonStyles}>Using the Software</Button>
                                 <Button variant='contained' className='subtext' onClick={() => handleSectionClick('Troubleshoot')} sx={buttonStyles}>Troubleshooting and Support</Button>   
                             </div>
-                            <div className='return'>
-                                <Button variant='contained' onClick={() => onBackButtonClick()} sx={returnButtonStyles}>
-                                    Back to Dashboard
-                                </Button>                        
-                            </div>
+                            <Button variant='contained' onClick={() => onBackButtonClick()} sx={returnButtonStyles}>
+                                Back to Dashboard
+                            </Button> 
                         </div>
                 </Paper>
             )}
@@ -81,22 +81,6 @@ function UserManual( {onBackButtonClick} ) {
     );
 }
 
-function FaceAuthenticationTroubleshoot( {onBackButtonClick} ) {
-    return (
-        <Paper elevation={8} className="paper-container">
-            <header className='help-centre-header'>
-                <h2 className='text'>Face Authentication Guide</h2>
-            </header>
-            <div className='info-dump'>
-                <p className='subtext'>Oh no i need to use my actual sign in dang</p>
-                <Button variant='contained' onClick={() => onBackButtonClick()} sx={returnButtonStyles}>
-                    Back to Dashboard
-                </Button>
-            </div>
-        </Paper>
-    );
-}
-
 function Flagging( {onBackButtonClick} ) {
     return (
         <Paper elevation={8} className="paper-container">
@@ -104,11 +88,47 @@ function Flagging( {onBackButtonClick} ) {
                 <h2 className='text'>Flags</h2>
             </header>
             <div className='info-dump'>
-                <p className='subtext'>Prob outline what are the key things being flagged, also define the circumstance under which an exam is terminated + the steps that follow</p>
-                <Button variant='contained' onClick={() => onBackButtonClick()} sx={returnButtonStyles}>
-                    Back to Dashboard
-                </Button>
+
+                <p>The Sentinel application utilises a Machine Learning Model to detect certain patterns and behaviours as 'cheating'. This involves running a script that analyses frames from the real-time video provided by the webcam each interval; for this system, is every ~5ms.</p>
+
+                <p>In the event a 'cheating' behavious is detected by the system, the admin overseeing the exam session is notified of the event, being provided a short recorded clip of the detecetd behaviour.</p>
+                <h3>Insert admin flag pop up image</h3>
+                <h5 className='figure-heading'>Figure 1: Student misconduct requireing approval, admin perspective.</h5>
+
+                <p>If the admin verifies the flagged behaviour is a valid cheating instance, the student is notified and promptly warned of their misconduct.</p>
+                <h3>Insert student flag pop up</h3>
+                <h5 className='figure-heading'>Figure 2: Student misconduct flag, student perspective.</h5>
+
+                <p>The Machine Learning model analyses frames from the webcam to detect cheating through two methodologies, objection recognition analysis and facial landmark analysis.</p>
+
+                <h5 className='terms'>Object Cheating Behaviours</h5>
+                <p>The script interprets all objects in the camera feed, and raises a flag if any banned items are detected. These include:</p>
+                <ul>
+                    <li>Mobile phone, laptop, keyboard, and mouse.</li>
+                </ul>
+                <p>This aligns with the criteria, whereby a student should only have a pen, paper, eraser and calculator at any given time.</p>
+
+                <img src={MobileDetection} className='image'></img>
+                <h5 className='figure-heading'>Figure 3: Example mobile phone detection frame.</h5>
+
+                <p>This model also raises a flag if more than one person is present in the frame; only the student being examinated should be present at all times.</p>
+
+                <h5 className='terms'>Facial Landmark Behaviours</h5>
+                <p>The script identifies facial landmarks and draws a mesh over the student's face, comparing these in real-time to determine if two key events occur:</p>
+                <ul>
+                    <li>If the student turns their head away from the screen.</li>
+                    <li>If the student looks away from the designated exam screen.</li>
+                </ul>
+                <p>These behaviours have been identified as key indicators of a student engaging in suspicious activities, as this suggest the student is viewing content through an external source.</p>
+
+
+                <img src={GazeTracking} className='image'></img>
+                <h5 className='figure-heading'>Figure 4: Example facial landmark analysis for gaze detection.</h5>
+                
             </div>
+            <Button variant='contained' onClick={() => onBackButtonClick()} sx={returnButtonStyles}>
+                Back to Dashboard
+            </Button>
         </Paper>
     );
 }
@@ -121,7 +141,7 @@ function TermsAndConditions( {onBackButtonClick} ) {
             </header>
             <div className='info-dump'>
 
-                <p className='subtext'>These terms and conditions (the "Agreement") govern the use of an AI Online Exam Proctoring Tool (the "Service") provided by Sentinel (the "Company") to the user (the "User"). By using this service, the user agrees to abide by the terms and conditions outlined below:</p>
+                <p>These terms and conditions (the "Agreement") govern the use of an AI Online Exam Proctoring Tool (the "Service") provided by Sentinel (the "Company") to the user (the "User"). By using this service, the user agrees to abide by the terms and conditions outlined below:</p>
 
                 <h5 className='terms'>Acceptance of Terms</h5>
                 <p>By using this service, the User acknowledges and agrees to these Terms and Conditions. If the User does not agree to these terms, they should refrain from using the Service.</p>
@@ -165,4 +185,4 @@ function TermsAndConditions( {onBackButtonClick} ) {
     );
 }
 
-export {UserManual, FaceAuthenticationTroubleshoot, Flagging, TermsAndConditions};
+export {UserManual, Flagging, TermsAndConditions};

@@ -35,17 +35,10 @@
     },
 
     {
-        "id": "faceAuth",
-        "icon": "AssignmentIcon",
-        "title": "Face Authentication Troubleshooting",
-        "content": "Oh no i need to use my actual sign in dang"
-    },
-
-    {
         "id": "flags",
         "icon": "AssignmentIcon",
         "title": "Flagging",
-        "content": "Prob outline what are the key things being flagged, also define the circumstance under which an exam is terminated + the steps that follow"
+        "content": "The Sentinel application utilises a Machine Learning Model to detect certain patterns and behaviours as 'cheating'. This involves running a script that analyses frames from the real-time video provided by the webcam each interval; for this system, is every ~5ms. In the event a 'cheating' behavious is detected by the system, the admin overseeing the exam session is notified of the event, being provided a short recorded clip of the detecetd behaviour. Figure 1: Student misconduct requireing approval, admin perspective. If the admin verifies the flagged behaviour is a valid cheating instance, the student is notified and promptly warned of their misconduct. Figure 2: Student misconduct flag, student perspective. The Machine Learning model analyses frames from the webcam to detect cheating through two methodologies, objection recognition analysis and facial landmark analysis. Object cheating behaviours. The script interprets all objects in the camera feed, and raises a flag if any banned items are detected. These include: Mobile phone, laptop, keyboard, and mouse. This aligns with the criteria, whereby a student should only have a pen, paper, eraser and calculator at any given time. Figure 3: Example mobile phone detection frame. This model also raises a flag if more than one person is present in the frame; only the student being examinated should be present at all times.Facial Landmark Behaviours. The script identifies facial landmarks and draws a mesh over the student's face, comparing these in real-time to determine if two key events occur: If the student turns their head away from the screen. If the student looks away from the designated exam screen. These behaviours have been identified as key indicators of a student engaging in suspicious activities, as this suggest the student is viewing content through an external source. Figure 4: Example facial landmark analysis for gaze detection."
     },
 
     {
