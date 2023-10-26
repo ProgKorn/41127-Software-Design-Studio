@@ -10,7 +10,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 const secrets = {
   appId: "e5709f8be2604869864acfa71a1f8b42",
   channelName: "main",
-  token: REACT_APP_AGORA_TOKEN,
+  token: process.env.REACT_APP_AGORA_TOKEN,
 };
 
 const rtc = {
