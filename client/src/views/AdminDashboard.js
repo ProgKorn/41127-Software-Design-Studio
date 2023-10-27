@@ -63,7 +63,7 @@ function AdminDashboard() {
                 <AddBoxOutlinedIcon />
               </div>
               <div>
-                Create Session
+                Create Exam
               </div>
               </Button>
             </Grid>

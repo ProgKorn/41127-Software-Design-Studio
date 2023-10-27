@@ -12,7 +12,7 @@ const Loader = ({ loading }) => {
         color="#2b2d42"
         speedMultiplier={0.8}
         loading={loading} />
-        <p>Loading...</p> {/* Text to indicate loading */}
+        <p style={{fontFamily: 'Montserrat, sans-serif', padding: 5}}>Loading...</p> {/* Text to indicate loading */}
       </div>
     </div>
   );
