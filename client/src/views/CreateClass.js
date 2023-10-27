@@ -68,7 +68,7 @@ function CreateClass() {
 
       const fetchStudents = async() => {
         try{
-          const response = await axios.get('http://localhost:4000/student/get');
+          const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/student/get');
           setStudents(response.data);
           setLoading(false);
         }
@@ -91,7 +91,7 @@ function CreateClass() {
           students: studentsArray };
     
         try{
-          const response = await axios.post('http://localhost:4000/class/addClass', requestBody);
+          const response = await axios.post(process.env.REACT_APP_SERVER_URL +'/class/addClass', requestBody);
           console.log('POST request response:', response.data);
           setOpen(false);
         }
