@@ -8,6 +8,7 @@ import ExamStart from './ExamStart';
 import FacialLandmarkRecognition from './FacialLandmarkRecognition';
 import ObjectRecognition from './ObjectRecognition';
 import AdminDashboard from './AdminDashboard';
+import AdminExamSession from './AdminExamSession';
 import Exam from './Exam';
 import ExamHistory from './ExamHistory';
 import FlagLog from './FlagLog';
@@ -25,6 +26,8 @@ import PrivateRoute from './PrivateRoute';
 import Loader from '../components/Loader';
 import ExamDone from './ExamDone';
 import CreateClass from '../views/CreateClass';
+
+import ThirdPlayground from '../KatsAgoraPlayground/startCall';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,6 +64,7 @@ function App() {
           <Route path="/flag/:flagId" element={<PrivateRoute element={<Flag />} isLoggedIn={isLoggedIn} />} />
           <Route path="/schedule" element={<PrivateRoute element={<Schedule />} isLoggedIn={isLoggedIn} />} />
           <Route path="/admin" element={<PrivateRoute element={<AdminDashboard />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/adminExamSession" element={<PrivateRoute element={<AdminExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/launchexam" element={<PrivateRoute element={<LaunchExam />} isLoggedIn={isLoggedIn} />} />
           <Route path="/createsession" element={<PrivateRoute element={<CreateSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/manageclasses" element={<PrivateRoute element={<ManageClasses />} isLoggedIn={isLoggedIn} />} />
@@ -70,6 +74,9 @@ function App() {
           <Route path="/examsession/:studentId/:examId" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examdone" element={<PrivateRoute element={<ExamDone />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
+
+          <Route path="/startCall" element={<ThirdPlayground />} />
+
         </Routes>
       </div>
     </Router>

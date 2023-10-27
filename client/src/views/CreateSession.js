@@ -196,7 +196,7 @@ function CreateSession() {
       className: classes[scheduledClass] };
 
     try{
-      const response = await axios.post('http://localhost:4000/exam/addExam', requestBody);
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/exam/addExam', requestBody);
       console.log('POST request response:', response.data);
       setOpen(false);
     }
