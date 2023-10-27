@@ -6,6 +6,7 @@ import "../css/Exam.css";
 import axios from "axios";
 import ObjectRecognition from "./ObjectRecognition";
 import AgoraRTC from "agora-rtc-sdk-ng";
+import { raiseUnfocusedFlag } from "./utilities";
 
 const secrets = {
   appId: "e5709f8be2604869864acfa71a1f8b42",
@@ -79,6 +80,27 @@ function ExamSession() {
       createExamStudent();
       setExamSessionCreated(true);
     }
+  }, []);
+
+  useEffect(() => {
+    const handleBlur = () => {
+      const currentTime = new Date().toLocaleString();
+      console.log(`[${currentTime}] Window is not focused or minimized`);
+      raiseUnfocusedFlag();
+    };
+
+    const handleFocus = () => {
+      const currentTime = new Date().toLocaleString();
+      console.log(`[${currentTime}] Window is focused`);
+    };
+
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("focus", handleFocus);
+    };
   }, []);
 
   useEffect(() => {
