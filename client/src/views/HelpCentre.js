@@ -20,6 +20,7 @@ function HelpCentre() {
   const [selectedSection, setSelectedSection] = useState(null);
   const [isAdmin, setIsAdmin] = useState(null);
   const [isStudent, setIsStudent] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSelectedSection = (section) => {
     setSelectedSection(section);
@@ -75,7 +76,7 @@ function HelpCentre() {
       <header className="help-centre-header">
         <h1 className="text">Sentinel Help Centre</h1>
         <div>
-            <SearchBar onSelectSection={handleSelectedSection}/>
+            <SearchBar onSelectSection={handleSelectedSection} onSearch={setSearchTerm}/>
         </div>
       </header>
       {!selectedButton && !selectedSection && (
@@ -85,7 +86,7 @@ function HelpCentre() {
 						User Manual
 					</Button>
 					<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')} sx={buttonStyles}>							<div className="helpDashboardIcons"><FlagIcon/></div>
-						Flagging
+						Flags
 					</Button>
 					<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('termsAndConditions')} sx={buttonStyles}>
 						<div className="helpDashboardIcons"><AssignmentLateIcon/></div>
@@ -103,13 +104,13 @@ function HelpCentre() {
       {selectedButton === 'termsAndConditions' && (
       <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
       )}
-      {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'userOverview' && <Overview onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'userGettingStarted' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'userSoftware' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'userTroubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'flags' && <Flagging onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'termsAndConds' && <TermsAndConditions onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'userOverview' && <Overview onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'userGettingStarted' && <GettingStarted onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'userSoftware' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'userTroubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'flags' && <Flagging onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'termsAndConds' && <TermsAndConditions onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
     </div>
   );
 }
