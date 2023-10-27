@@ -58,6 +58,26 @@ router.get('/get-exam/:studentId', (req, res) => {
         });
 });
 
+router.post('/addClass', async (req, res) => { // Add a new exam and update the chosen class with exam 
+    try {
+      
+        //create instance of exam using the parameters in the request body
+        const newClass = {
+            className: req.body.className, 
+            subjectId: req.body.subjectId,
+            students: req.body.students,
+            examId: 0,
+        };
+    
+        //create exam in the ExamDetails collection of mongodbDatabase
+        const createdClass = await databaseMaster.dbOp('insert', 'ClassDetails', { docs: [newClass] });
+        res.json(createdClass);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
 
 
 module.exports = router;
