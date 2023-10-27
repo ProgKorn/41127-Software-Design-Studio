@@ -9,85 +9,100 @@ import ObjectRecognition from "./ObjectRecognition";
 function ExamSession() {
   const navigate = useNavigate();
   const [examSessionCreated, setExamSessionCreated] = useState(false);
-  const [countdown, setCountdown] = useState(10); 
-  const [examLength, setExamLength] = useState(0);
-  const {studentId} = useParams();
-  const {examId} = useParams();
+  const [examLength, setExamLength] = useState(0); // Initialize to 0
+  const { studentId } = useParams();
+  const { examId } = useParams();
   const [examName, setExamName] = useState("");
-  
+  const [cameraPermission, setCameraPermission] = useState(false);
+
   const createExamStudent = async () => {
     try {
       console.log("Creating Exam Student");
-      const response = await axios.post(`http://localhost:4000/examStudent/createExamStudent/${studentId}/${examId}`);
-      console.log("Exam Session Response:", response.data); // Log the response
+      const response = await axios.post(
+        `http://localhost:4000/examStudent/createExamStudent/${studentId}/${examId}`
+      );
+      console.log("Exam Session Response:", response.data);
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
   useEffect(() => {
     if (!examSessionCreated) {
-      console.log("Creating Exam Student")
+      console.log("Creating Exam Student");
       createExamStudent();
       setExamSessionCreated(true);
     }
   }, []);
 
   useEffect(() => {
-    console.log("Fetching Exam Length")
+    console.log("Fetching Exam Length");
     axios.get(`http://localhost:4000/exam/getExamDetails/${examId}`).then((response) => {
-      const {startTime, endTime } = response.data;
-      setExamName(response.data.examName)
-      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000; 
-      //Uncomment below line out to set exam length to 10 seconds for testing
-      // const examLengthInSeconds = 10
-      setExamLength(examLengthInSeconds);
-      setCountdown(examLengthInSeconds); // Set countdown to the examLength
-    })
-    .catch((error) => {
+      const { startTime, endTime } = response.data;
+      setExamName(response.data.examName);
+      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
+      setExamLength(examLengthInSeconds); // Set the actual exam length
+    }).catch((error) => {
       console.error(error);
     });
+
     return () => {
       console.log("Finished Fetching Details");
     };
   }, [examId]);
 
   useEffect(() => {
-    if (examLength > 0) {
+    // Check camera permission
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(() => {
+        // User granted camera permission
+        setCameraPermission(true);
+      })
+      .catch(() => {
+        // User denied camera permission
+        setCameraPermission(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (examLength > 0 && cameraPermission) {
       console.log("Setting up countdown timer");
       const timer = setInterval(() => {
-        if (countdown > 0) {
-          setCountdown(countdown - 1);
-        } else {
+        // Calculate the countdown value inside the timer logic
+        if (examLength > 0) {
+          setExamLength(examLength - 1);
+          if (examLength === 0) {
             clearInterval(timer);
-            // Update exam session status to "Completed"
-            axios.put(`http://localhost:4000/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
+            axios.put(`http://localhost:4000/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
             navigate("/examdone");
+          }
         }
       }, 1000);
 
       return () => {
         clearInterval(timer);
         console.log("Cleaning up timer");
-      }
+      };
     }
-  }, [countdown, examLength, navigate]);
-  const hours = Math.floor(countdown / 3600);
-  const minutes = Math.floor((countdown % 3600) / 60);
-  const seconds = countdown % 60;
+  }, [examLength, cameraPermission, navigate, examId, studentId]);
+
+  const hours = Math.floor(examLength / 3600);
+  const minutes = Math.floor((examLength % 3600) / 60);
+  const seconds = examLength % 60;
   const formattedCountdown = `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
   return (
     <Box className="main">
-      {/* Page Title goes here */}
       <Box className="subtitle">
         <h1>{examName}</h1>
       </Box>
-      {/* Camera preview goes here */}
       <Box className="preview">
-        <ObjectRecognition/>
+        {cameraPermission ? (
+          <ObjectRecognition />
+        ) : (
+          <p>Please grant camera permission to start the exam timer.</p>
+        )}
       </Box>
-      {/* Countdown timer */}
       <Box className="countdown">
         <Paper elevation={3} className="countdown-box">
           <h1>{formattedCountdown}</h1>
@@ -96,4 +111,5 @@ function ExamSession() {
     </Box>
   );
 }
+
 export default ExamSession;
