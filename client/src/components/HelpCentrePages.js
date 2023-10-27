@@ -118,7 +118,7 @@ function Flagging( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="The Machine Learning model analyses frames from the webcam to detect cheating through two methodologies, objection recognition analysis and facial landmark analysis." searchTerm={searchTerm}/>
 
-                <h5 className='terms'><HighlightedText text="Object Cheating Behaviours" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Object Cheating Behaviours</h5>
                 <HighlightedText text="The script interprets all objects in the camera feed, and raises a flag if any banned items are detected. These include:" searchTerm={searchTerm}/>
                 
                 <ul>
@@ -131,7 +131,7 @@ function Flagging( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="This model also raises a flag if more than one person is present in the frame; only the student being examinated should be present at all times." searchTerm={searchTerm}/>
 
-                <h5 className='terms'><HighlightedText text="Facial Landmark Behaviours" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Facial Landmark Behaviours</h5>
                 <HighlightedText text="The script identifies facial landmarks and draws a mesh over the student's face, comparing these in real-time to determine if two key events occur:" searchTerm={searchTerm}/>
                 <ul>
                     <li><HighlightedText text="If the student turns their head away from the screen." searchTerm={searchTerm}/></li>
@@ -162,22 +162,22 @@ function TermsAndConditions( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="These terms and conditions (the 'Agreement') govern the use of an AI Online Exam Proctoring Tool (the 'Service') provided by Sentinel (the 'Company') to the user (the 'User'). By using this service, the user agrees to abide by the terms and conditions outlined below:" searchTerm={searchTerm}/>
 
-                <h1 className='terms'><HighlightedText text="Acceptance of Terms" searchTerm={searchTerm}/></h1>
+                <h5 className='terms'>Acceptance of Terms</h5>
                 <HighlightedText text="By using this service, the User acknowledges and agrees to these Terms and Conditions. If the User does not agree to these terms, they should refrain from using the Service." searchTerm={searchTerm}/>
                 
-                <h5 className='terms'><HighlightedText text="User Eligibility" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>User Eligibility</h5>
                 <HighlightedText text="This Service is intended for use by educational institutions, examiners and students. To use the service, users must be at least 18 years of age or have the consent of a parent or guardian to use the Service." searchTerm={searchTerm}/>
 
-                <h5 className='terms'><HighlightedText text="Registration and Account Security" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Registration and Account Security</h5>
                 <HighlightedText text="The User is responsible for maintaining the confidentiality of their login credentials and account information. The User is also responsible for any activities conducted through their account. If the User suspects any unauthorised access to their account, they must notify their provider immediately." searchTerm={searchTerm}/>
 
-                <h5 className='terms'><HighlightedText text="Privacy and Data Usage" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Privacy and Data Usage</h5>
                 <HighlightedText text="The Provider may collect, use and process personal data and information provided by the User in accordance with the Privacy Policy, which can be found on the provider's website." searchTerm={searchTerm}/>
 
-                <h5 className='terms'><HighlightedText text="Proctoring and Monitoring" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Proctoring and Monitoring</h5>
                 <HighlightedText text="The Service uses AI and other technologies to proctor and monitor online exams. This includes but is not limited to webcam, microphone and screen mirroring. The User's actions, such as eye movements and background noise, may be recorded during an examination." searchTerm={searchTerm}/>
 
-                <h5 className='terms'><HighlightedText text="Code of Conduct" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Code of Conduct</h5>
                 
                 <HighlightedText text="The User agrees to adhere to the following code of conduct while using the Service:" searchTerm={searchTerm}/><p></p>
                 <ul>
@@ -188,13 +188,13 @@ function TermsAndConditions( {onBackButtonClick, searchTerm} ) {
                     <li><HighlightedText text="The User will not share or distribute exam content without permission." searchTerm={searchTerm}/></li>
                 </ul>
 
-                <h5 className='terms'><HighlightedText text="Exam Results and Reporting" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Exam Results and Reporting</h5>
                 <HighlightedText text="The Provider will share the results of proctored examinations and corresponding flag logs with authorised individuals or organizations, such as instructors, educational institutions, or third-party exam providers, as specified by the User or required by law." searchTerm={searchTerm}/>
 
-                <h5 className='terms'><HighlightedText text="Termination" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Termination</h5>
                 <HighlightedText text="The Provider reserves the right to suspend or terminate a User's access to the Service at any time, for any reason, without notice. In case of termination, the User will not be entitled to a refund of any fees paid." searchTerm={searchTerm}/>
 
-                <h5 className='terms'><HighlightedText text="Contact Information" searchTerm={searchTerm}/></h5>
+                <h5 className='terms'>Contact Information</h5>
                 <HighlightedText text="For any questions or concerns regarding these Terms and Conditions or the Service, the User may contact the Provider at service@Sentinel.com." searchTerm={searchTerm}/>
                 
                 <Button variant='contained' onClick={() => onBackButtonClick()} sx={returnButtonStyles}>

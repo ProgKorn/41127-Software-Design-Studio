@@ -92,7 +92,7 @@ function Overview( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="To use the system, the users will be authenticated based on the student/staff email address and password provided by the university." searchTerm={searchTerm}/>
 
-                <h5 className="terms"><HighlightedText text="Conventions" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Conventions</h5>
 
                 <img src={UM1} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 1: Introduction to Sentinel" searchTerm={searchTerm}/></h5>
@@ -124,7 +124,7 @@ function Overview( {onBackButtonClick, searchTerm} ) {
                     </ul>
                 </ul>
 
-                <h5 className="terms"><HighlightedText text="Cautions & Warnings" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Cautions & Warnings</h5>
 
                 <div className="image-text-container">
                     <img src={WarningIcon} className="icon-image"></img><HighlightedText text="Security: The Sentinel system uses authentication measures, parses middleware and also has data secured in a secured database to ensure that all sensitive information is kept secure. Although password complexity is not enforced during login, users are encouraged to utilise complex passwords for additional account security." searchTerm={searchTerm}/>
@@ -177,7 +177,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="The users will be brought to their respective homepages after successful login." searchTerm={searchTerm}/>
 
-                <h5 className="terms"><HighlightedText text="Set-up Considerations" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Set-up Considerations</h5>
 
                 <div className="image-text-container">
                     <img src={InfoIcon} className="icon-image"></img> <HighlightedText text="The Sentinel system requires constant internet connection to continue using the system and to detect cheating instances accurately. To ensure that the internet is connected on an Apple MacBook, navigate to the wifi symbol located on the menu bar on your screen and connect to your desired internet network." searchTerm={searchTerm}/>
@@ -196,23 +196,23 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                 <img src={UM9} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 9: Allowing Access to the Camera and Microphone" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms"><HighlightedText text="User Access Considerations" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">User Access Considerations</h5>
 
                 <HighlightedText text="For the Sentinel software, there are two types of users that log into their specific homepage based on the corresponding user types: student and examiner. The two users have different home pages after login and have different functionality in each user type. Both accounts have the ability to view upcoming exams and previous exams (but are formatted differently). Examiners have the ability to schedule new exams, view suspicious clips of a student, view a flag log after an examination and terminate a student’s exams after two subsequent flags have been raised. Additionally, they are also able to view all students currently sitting the exam. The student access on the other hand is limited to exam access and does not have any of the examiner functionality except viewing exams." searchTerm={searchTerm}/>
 
-                <h5 className="terms"><HighlightedText text="Accessing the Software" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Accessing the Software</h5>
 
                 <HighlightedText text="To access the Sentinel software, there are two types of sign-in modes depending on the user type. The examiner login utilises an email and password login while the student login utilises facial recognition software to log in. If the examiner logging in does not have valid login details or if they have forgotten their login details, they must contact the institution’s information technology department to solve this issue and receive their login details. In the case of the student login, they must lodge an external form that will upload their facial data and landmarks into the system, enabling them to log in. Common issues relating to Facial Authentication for students will be in the Help Centre '>' Face Auth Troubleshoot. For privacy purposes, the users will not be allowed to change their login details directly on the Sentinel application. To easily contact the IT department, go to the Help Centre '>' Contact Us." searchTerm={searchTerm}/>
                 <img src={UM10} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 10: Sample of Sentinel Help Centre" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms"><HighlightedText text="Software Organisation and Navigation" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Software Organisation and Navigation</h5>
 
                 <HighlightedText text="For different types of users, there are different menu options or ways to navigate through the Sentinel system. When the user inputs the URL into their browser, they will be brought to the main page where they can choose to Sign In or view the Help Centre." searchTerm={searchTerm}/>
                 <img src={UM11} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 11: Sentinel Home Page" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms"><HighlightedText text="Examiner Account" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Examiner Account</h5>
                 <HighlightedText text="These are the main functionalities provided to an admin account:" searchTerm={searchTerm}/>
                 <h5 className="account-subheading"><HighlightedText text="Login/Main Functions" searchTerm={searchTerm}/></h5>
                 <ul>
@@ -238,7 +238,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                     <li><HighlightedText text="Manage Classes - Select the Manage Classes Icon on the tiled menu displayed on the screen." searchTerm={searchTerm}/></li>
                 </ul>
 
-                <h5 className="terms"><HighlightedText text="Student Account" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Student Account</h5>
                 <HighlightedText text="These are the main functionalities provided to a student account:" searchTerm={searchTerm}/>
                 <h5 className="account-subheading"><HighlightedText text="Main Functionality" searchTerm={searchTerm}/></h5>
                 <ul>
@@ -259,7 +259,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                     <li><HighlightedText text="Test Your Equipment - Select the Test Your Equipment at the bottom of the page to ensure that your camera and microphone are working as intended." searchTerm={searchTerm}/></li>
                 </ul>
 
-                <h5 className="terms"><HighlightedText text="Exiting the Software" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Exiting the Software</h5>
 
                 <HighlightedText text="To exit the Sentinel web application, the user must click on their profile on the upper-right hand corner of the menu bar followed by “Sign Out”. Once the user has successfully signed out, they will be redirected back to the main Sentinel page. The user can choose to exit the page upon being redirected to the main page." searchTerm={searchTerm}/>
                 <img src={UM13} className="image"></img>
@@ -295,7 +295,7 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
             <div className="info-dump">
             <HighlightedText text="There are several error messages and remediation actions embedded into Sentinel to enable a smooth and easy user experience across the site. These messages have been detailed with the process, description, and where necessary, the remediation strategy. Sentinel is currently in beta testing and open to bug fix and error handling suggestions." searchTerm={searchTerm}/>
             
-                <h5 className="terms"><HighlightedText text="Error Messages" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Error Messages</h5>
                 
                 <TableContainer component={Paper}>
                     <Table>
@@ -330,11 +330,11 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
                     </Table>
                 </TableContainer>
 
-                <h5 className="terms"><HighlightedText text="Special Considerations" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Special Considerations</h5>
 
                 <HighlightedText text="Certain special considerations have been made, particularly as the system is in early stages of development and user acceptance testing is in progress. On rare occasions, a user will be presented with a “No Access” screen despite logging in successfully under an account with correct privileges. This is due to the request processing quickly that the token cannot be read before the component is loaded. A simple page refresh will remediate this." searchTerm={searchTerm}/>
 
-                <h5 className="terms"><HighlightedText text="Support" searchTerm={searchTerm}/></h5>
+                <h5 className="terms">Support</h5>
 
                 <HighlightedText text="Although Sentinel has made due diligence in troubleshooting major bugs, dynamic systems and unique user interactions may still enable errors to arise. Since the system is enabled by tertiary education institutions, support relating to password resets, examination queries, and flagging negotiations are directed to the relevant institution through the contact page linked in the ribbon. For the table below, the University of Technology Sydney (UTS) was taken as an example due to the initial beta rollout being for the university specifically. However, system related errors such as slow processing times, access requirements, and incorrect data can be directed to Sentinel through our incident management system." searchTerm={searchTerm}/>
                 
