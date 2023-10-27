@@ -56,7 +56,8 @@ async function startCall() {
 function ExamSession() {
   const navigate = useNavigate();
   const [examSessionCreated, setExamSessionCreated] = useState(false);
-  const [examLength, setExamLength] = useState(0); // Initialize to 0
+  const [examLength, setExamLength] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(0);
   const { studentId } = useParams();
   const { examId } = useParams();
   const [examName, setExamName] = useState("");
@@ -66,14 +67,13 @@ function ExamSession() {
     try {
       console.log("Creating Exam Student");
       const response = await axios.post(process.env.REACT_APP_SERVER_URL + `/examStudent/createExamStudent/${studentId}/${examId}`);
-      console.log("Exam Session Response:", response.data); // Log the response
+      console.log("Exam Session Response:", response.data);
     } catch (error) {
       console.error(error);
     }
   }
 
   useEffect(() => {
-    startCall();
     if (!examSessionCreated) {
       console.log("Creating Exam Student");
       createExamStudent();
@@ -82,17 +82,14 @@ function ExamSession() {
   }, []);
 
   useEffect(() => {
-    console.log("Fetching Exam Length")
+    console.log("Fetching Exam Length");
     axios.get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`).then((response) => {
-      const {startTime, endTime } = response.data;
-      setExamName(response.data.examName)
-      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000; 
-      //Uncomment below line out to set exam length to 10 seconds for testing
-      // const examLengthInSeconds = 10
+      const { startTime, endTime } = response.data;
+      setExamName(response.data.examName);
+      const examLengthInSeconds = 10; // For testing, replace with the actual exam length logic
       setExamLength(examLengthInSeconds);
-      setCountdown(examLengthInSeconds); // Set countdown to the examLength
-    })
-    .catch((error) => {
+      setRemainingTime(examLengthInSeconds); // Initialize remaining time
+    }).catch((error) => {
       console.error(error);
     });
 
@@ -118,28 +115,28 @@ function ExamSession() {
     if (examLength > 0 && cameraPermission) {
       console.log("Setting up countdown timer");
       const timer = setInterval(() => {
-        // Calculate the countdown value inside the timer logic
-        if (examLength > 0) {
-          setExamLength(examLength - 1);
-          if (examLength === 0) {
-            clearInterval(timer);
-            // Update exam session status to "Completed"
-            axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, {status: "Completed"});
-            navigate("/examdone");
-          }
+        if (remainingTime > 0) { // Use remainingTime
+          setRemainingTime(remainingTime - 1); // Update remaining time
         }
       }, 1000);
+
+      if (remainingTime <= 0) {
+        clearInterval(timer);
+        // Update exam session status to "Completed"
+        axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
+        navigate("/examdone");
+      }
 
       return () => {
         clearInterval(timer);
         console.log("Cleaning up timer");
       };
     }
-  }, [examLength, cameraPermission, navigate, examId, studentId]);
+  }, [remainingTime, cameraPermission, navigate, examId, studentId]);
 
-  const hours = Math.floor(examLength / 3600);
-  const minutes = Math.floor((examLength % 3600) / 60);
-  const seconds = examLength % 60;
+  const hours = Math.floor(remainingTime / 3600);
+  const minutes = Math.floor((remainingTime % 3600) / 60);
+  const seconds = remainingTime % 60;
   const formattedCountdown = `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
   return (
