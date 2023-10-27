@@ -1,7 +1,7 @@
 /*CSS classes for student view related things */
   .student-button {
     background-color: rgb(85, 89, 130);
-    width: 30%;
+    width:max-content;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 1rem;
     box-sizing: border-box;
