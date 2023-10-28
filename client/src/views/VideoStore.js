@@ -9,7 +9,9 @@ const useVideoStore = () => {
   const [recording, setRecording] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
   const canvasRef = useRef(null);
-  const { studentIdExtract, examIdExtract } = useParams(); // Get studentId and examId from URL params
+  const {studentIdExtract} = useParams();
+  const {examIdExtract} = useParams();
+
   const startRecording = (canvasRef) => {
     const stream = canvasRef.current.captureStream(30);
     const mediaRecorder = new MediaRecorder(stream);
@@ -61,37 +63,29 @@ const useVideoStore = () => {
      console.log("NEWVIDO - Student ID:", studentIdExtract);
      console.log("NEWVIDO - Exam ID:", examIdExtract);
         //trying to upload the url to mongodb using the index file
-     // Create FormData object to send video
-     const videoData = {
-      studentId: studentIdExtract,
-      examId: examIdExtract,
-      videoUrl: data.secure_url,
-    };    
 
-     console.log("NEWVIDO - Form data created");
-      // Send video data to the server using Axios
-      console.log("NEWVIDO - ",formData);
-
-      axios.post(process.env.REACT_APP_SERVER_URL + "/saveVideo", videoData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      axios.post(process.env.REACT_APP_SERVER_URL +'/genericDbOp', {
+        operationType: 'update',
+        collType: 'Exam-Student',  // Replace with the actual collection name
+        entry: { 
+          query: { studentId: studentIdExtract, examId: examIdExtract }, 
+          docs: { $set: { fullRecording: data.secure_url } } 
+        }
       })
-      .then((response) => {
-        console.log("NEWVIDO - Video URL saved successfully", response.data);
+      .then(response => {
+        console.log(response.data);
       })
-      .catch((error) => {
-        console.log("NEWVIDO - Error saving video URL:", error);
+      .catch(error => {
+        console.error('An error occurred:', error);
       });
-      
-
+        
 
       console.log("NEWVIDO - Navigated to exam done");
         setRecordedChunks([]);
-        navigate("/examdone");
+        //navigate("/examdone");
       })
       .catch((error) => {
-        console.error("Upload failed: ", error);
+        console.error("NEWVIDO - Upload failed: ", error);
       });
     }
   }, [recordedChunks, recording]);

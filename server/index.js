@@ -119,6 +119,16 @@ app.post('/saveVideo', async (req, res) => {
   }
 });
 
+app.post('/genericDbOp', async (req, res) => {
+  const { operationType, collType, entry } = req.body;
+  try {
+    const result = await dbOp(operationType, collType, entry);
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    console.error('Error in /genericDbOp:', error);
+    res.status(500).json({ success: false, error: 'An error occurred' });
+  }
+});
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);
