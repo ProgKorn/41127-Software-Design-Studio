@@ -10,6 +10,7 @@ const classRoutes = require('./routes/class')
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
+const examStudentRoutes = require('./routes/examStudent');
 const flagRoutes = require('./routes/flag');
 const { v4: uuidv4 } = require('uuid'); // Import uuidv4 from the uuid library
 const Flag = require('/Users/georgettebashour/Projects/41127-Software-Design-Studio/server/models/flagModel.js');
@@ -25,6 +26,7 @@ app.use('/class', classRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/exam', examRoutes);
+app.use('/examStudent', examStudentRoutes);
 
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
