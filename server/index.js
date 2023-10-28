@@ -12,8 +12,6 @@ const authRoutes = require('./routes/auth');
 const examRoutes = require('./routes/exam');
 const examStudentRoutes = require('./routes/examStudent');
 const flagRoutes = require('./routes/flag');
-const { v4: uuidv4 } = require('uuid'); // Import uuidv4 from the uuid library
-const Flag = require('/Users/georgettebashour/Projects/41127-Software-Design-Studio/server/models/flagModel.js');
 
 const app = express();
 const PORT = 4000;
