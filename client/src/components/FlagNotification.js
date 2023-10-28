@@ -6,22 +6,43 @@ import DoneIcon from '@mui/icons-material/Done';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
 
 const FlagNotification = () => {
   const [flagAdded, setFlagAdded] = useState(false);
   const [flagUpdated, setFlagUpdated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [flagId, setFlagId] = useState("");
+  const [student, setStudent] = useState('');
+  const [studentId, setStudentId] = useState('');
 
-  const url = 'http://localhost:4000/flag';
-  var flagId;
+  const url = process.env.REACT_APP_SERVER_URL + '/flag';
 
   useEffect(() => {
-    const socket = io('http://localhost:4001'); // Change the URL to match your Socket.io server's URL
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin) {
+        setIsAdmin(true);
+      }
+
+      const studenturl = process.env.REACT_APP_SERVER_URL + "/student/get/" + decodedToken.userName;
+      axios.get(studenturl).then((response) => {
+        const studentData = response.data; // Extract student data from the response
+        setStudent(studentData);
+        setStudentId(studentId); // Store the studentId
+      })
+      .catch(studentError => {
+        console.error(studentError);
+      });
+    }
+
+    const socket = io('http://localhost:4001'); // Change the URL to match the Socket.IO server URL
     socket.on('connect', () => {
       console.log(`You connected with id: ${socket.id}`);
-      // Emit here to make sure you're always connected before sending events if needed
     })
     socket.on('add-flag', (string) => { // When a flag is added
-      flagId = string;
+      setFlagId(string);
       setFlagAdded(true);
     })
     socket.on('update-flag', () => { // When a flag is updated
@@ -33,7 +54,7 @@ const FlagNotification = () => {
     setFlagUpdated(false);
   };
 
-  const resolveFlag = () => { // Resolve or Terminate a flag
+  const resolveFlag = () => { // Resolve a flag
     const updateObject = { 
       flagId: flagId,
       status: "Resolved" 
@@ -46,6 +67,7 @@ const FlagNotification = () => {
     .catch(error => {
         console.error('Error adding flag: ', error);
     });
+    setFlagAdded(false);
     setFlagUpdated(true);
   }
 
@@ -62,21 +84,30 @@ const FlagNotification = () => {
     .catch(error => {
         console.error('Error adding flag: ', error);
     });
+    setFlagAdded(false);
   }
 
-  // Need to fetch how many flags associated with the active Exam Student to have dynamic message
+  const name = () => {
+    return student.name.firstName + " " + student.name.lastName;
+  }
+
+  const numberOfFlagsRemaining = () => {
+    // Need to fetch how many flags associated with the active Exam Student to have dynamic message
+  }
 
   return (
     <div>
-      {flagAdded && (
+      {flagAdded && isAdmin && (
         <div className="admin-popup-notification">
           <div className="popup-content">
             <div className="warning-icon">
               <PendingActionsIcon fontSize="inherit"/>
             </div>
             <div className="notification-text">
-              <p>Jane Doe has been flagged for misconduct.</p>
-              <p>Would you like to Resolve or Terminate this flag?</p>
+              <p>
+                <span className="bold-underline">{name()}</span> has been flagged for academic misconduct.
+              </p>
+              <p>Would you like to Approve or Deny this flag?</p>
             </div>
             <div>
               <button onClick={resolveFlag} className="resolve-button"><DoneIcon style={{ verticalAlign: 'middle', marginRight: '5px' }}/>Resolve</button>
@@ -85,7 +116,7 @@ const FlagNotification = () => {
           </div>
         </div>
       )}
-      {flagUpdated && (
+      {flagUpdated && !isAdmin && (
         <div className="student-popup-notification">
           <div className="popup-content">
             <div className="warning-icon">
