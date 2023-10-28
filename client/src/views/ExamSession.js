@@ -87,9 +87,9 @@ function ExamSession() {
     axios.get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`).then((response) => {
       const {startTime, endTime } = response.data;
       setExamName(response.data.examName)
-      //const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000; 
+      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000; 
       //Uncomment below line out to set exam length to 10 seconds for testing
-      const examLengthInSeconds = 10
+      //const examLengthInSeconds = 10
       setExamLength(examLengthInSeconds);
       setCountdown(examLengthInSeconds); // Set countdown to the examLength
     })

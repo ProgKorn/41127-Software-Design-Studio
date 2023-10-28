@@ -82,7 +82,7 @@ const useVideoStore = () => {
 
       console.log("NEWVIDO - Navigated to exam done");
         setRecordedChunks([]);
-        //navigate("/examdone");
+        navigate("/examdone");
       })
       .catch((error) => {
         console.error("NEWVIDO - Upload failed: ", error);
