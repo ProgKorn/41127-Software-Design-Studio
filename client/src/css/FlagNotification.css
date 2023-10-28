@@ -1,5 +1,5 @@
 /* Styles for the popup notification container */
-.popup-notification {
+.student-popup-notification {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -10,6 +10,62 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a box shadow for depth */
     text-align: center;
     z-index: 999; /* Adjust z-index for stacking order */
+}
+
+.admin-popup-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: orange; /* Background color is orange */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a box shadow for depth */
+    text-align: center;
+    z-index: 999; /* Adjust z-index for stacking order */
+}
+
+.popup-box {
+    background-color: orange;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.popup-text {
+    color: white;
+}
+
+button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+}
+  
+.resolve-button {
+    background-color: green;
+    border-radius: 40px;
+    transition: background-color 0.3s; /* Add a smooth transition */
+  
+    /* Change background color on hover */
+    &:hover {
+      background-color: darkgreen; /* Adjust the color as needed */
+    }
+    
+  }
+  
+.terminate-button {
+    background-color: red;
+    border-radius: 40px;
+    transition: background-color 0.3s; /* Add a smooth transition */
+  
+    /* Change background color on hover */
+    &:hover {
+      background-color: darkred; /* Adjust the color as needed */
+    }
 }
   
 /* Styles for the content within the popup */
