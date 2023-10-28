@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import "../css/Exam.css";
 import axios from "axios";
 import ObjectRecognition from "./ObjectRecognition";
+import FlagNotification from "../components/FlagNotification";
 import AgoraRTC from "agora-rtc-sdk-ng";
 
 const secrets = {
@@ -133,7 +134,8 @@ function ExamSession() {
       </Box>
       {/* Camera preview goes here */}
       <Box className="preview">
-        <ObjectRecognition />
+        <ObjectRecognition/>
+        <FlagNotification/>
       </Box>
       {/* Countdown timer */}
       <Box className="countdown">
