@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import "../css/FlagNotification.css";
-import WarningIcon from '@mui/icons-material/Warning';
+import DoneIcon from '@mui/icons-material/Done';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 
-const FlagNotification = () => {
+const AdminFlagNotification = () => {
   const [flagAdded, setFlagAdded] = useState(false);
   const [flagUpdated, setFlagUpdated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [flagId, setFlagId] = useState("");
   const [student, setStudent] = useState('');
   const [studentId, setStudentId] = useState('');
+
+  const url = 'http://localhost:4000' + '/flag';
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,6 +30,7 @@ const FlagNotification = () => {
         const studentData = response.data; // Extract student data from the response
         setStudent(studentData);
         setStudentId(studentId); // Store the studentId
+        console.log(studentId);
       })
       .catch(studentError => {
         console.error(studentError);
@@ -46,32 +51,61 @@ const FlagNotification = () => {
     })
   }, []);
 
-  const closeNotification = () => { // Close Pop Up
-    setFlagUpdated(false);
-  };
+  const resolveFlag = () => { // Resolve a flag
+    const updateObject = { 
+      flagId: flagId,
+      status: "Resolved" 
+    };
+  
+    axios.post(url + '/updateFlag', updateObject)
+    .then((response) => {
+        console.log('Flag updated successfully: ', response.data);
+    })
+    .catch(error => {
+        console.error('Error adding flag: ', error);
+    });
+    setFlagAdded(false);
+    setFlagUpdated(true);
+  }
+
+  const terminateFlag = () => { // Terminate a flag
+    const updateObject = { 
+      flagId: flagId, 
+      status: "Terminated" 
+    };
+  
+    axios.post(url + '/updateFlag', updateObject)
+    .then((response) => {
+        console.log('Flag updated successfully: ', response.data);
+    })
+    .catch(error => {
+        console.error('Error adding flag: ', error);
+    });
+    setFlagAdded(false);
+  }
 
   const name = () => {
     return student.name.firstName + " " + student.name.lastName;
   }
 
-  const numberOfFlagsRemaining = () => {
-    // Need to fetch how many flags associated with the active Exam Student to have dynamic message
-  }
-
   return (
     <div>
-      {flagUpdated && (
-        <div className="student-popup-notification">
+      {flagAdded && (
+        <div className="admin-popup-notification">
           <div className="popup-content">
             <div className="warning-icon">
-              <WarningIcon fontSize="inherit"/>
+              <PendingActionsIcon fontSize="inherit"/>
             </div>
             <div className="notification-text">
               <p>
-                You have been flagged for academic misconduct. You have <span className="bold-underline">one</span> remaining flag before your exam session is ended.
+                <span className="bold-underline"></span> has been flagged for academic misconduct.
               </p>
+              <p>Would you like to Approve or Deny this flag?</p>
             </div>
-            <button onClick={closeNotification} className="ok-button">OK</button>
+            <div>
+              <button onClick={resolveFlag} className="resolve-button"><DoneIcon style={{ verticalAlign: 'middle', marginRight: '5px' }}/>Resolve</button>
+              <button onClick={terminateFlag} className="terminate-button"><CloseIcon style={{ verticalAlign: 'middle', marginRight: '5px' }}/>Terminate</button>
+            </div>
           </div>
         </div>
       )}
@@ -79,4 +113,4 @@ const FlagNotification = () => {
   );  
 };
 
-export default FlagNotification;
+export default AdminFlagNotification;

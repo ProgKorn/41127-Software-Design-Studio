@@ -5,6 +5,7 @@ import "../css/AdminDashboard.css";
 import jwt_decode from "jwt-decode";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import '../css/AdminExamSession.css';
+import AdminFlagNotification from "../components/AdminFlagNotification";
 
 const secrets = {
     appId: "e5709f8be2604869864acfa71a1f8b42",
@@ -98,6 +99,7 @@ function AdminExamSession() {
       <AdminHeader />
       <div className="adminDashboard">
         <h1>Live Exam Session</h1>
+        <AdminFlagNotification/>
         <div id="remoteContainer"></div>
       </div>
     </div>
