@@ -57,7 +57,7 @@ function StudentHomepage() {
             setStudentId(studentId); // Store the studentId
             //setLoading(false);
   
-            const examurl = "http://localhost:4000" + "/class/get-exam/" + studentId;
+            const examurl = process.env.REACT_APP_SERVER_URL + "/class/get-exam/" + studentId;
             axios.get(examurl)
               .then((examResponse) => {
                 getExam(examResponse.data);
