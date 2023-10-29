@@ -78,7 +78,7 @@ function Exam() {
   return (loading2 || loading1) ? <Loader loading={true} /> : (
     <div className="Exam">
       <AdminHeader/>
-      <h1>Exam Details</h1>
+      <h1 style={{ padding: 0 }}>Exam Details</h1>
       <Grid container spacing={2} columns={16} className='pageCardPadding' maxWidth={'100%'} maxHeight={'100%'} style={{ paddingTop: 0 }}>
         <Grid sx={{maxHeight: '80vh'}} item xs={8}>
           <Card title={"Examination Details"}>
@@ -115,7 +115,7 @@ function Exam() {
                     </TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.studentId}</TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.flags}</TableCell>
-                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.seatNumber}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.seatNo}</TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.status}</TableCell>
                   </TableRow>
                   ))}

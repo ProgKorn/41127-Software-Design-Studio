@@ -67,7 +67,10 @@ function ManageClasses() {
     fontWeight: 500,
     textTransform: 'Capitalize',
     color: 'white',
-    backgroundColor: "#292E64"
+    backgroundColor: "#292E64",
+    '&:hover': {
+      backgroundColor: '#a03421'
+    },
   }
 
   return loading ? <Loader loading={loading} /> : (
