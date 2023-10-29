@@ -63,6 +63,7 @@ function ExamSession() {
   const { examId } = useParams();
   const [examName, setExamName] = useState("");
   const [cameraPermission, setCameraPermission] = useState(false);
+  const [examInProgress, setExamInProgress] = useState(false);
 
   const createExamStudent = async () => {
     try {
@@ -115,6 +116,7 @@ function ExamSession() {
 
   useEffect(() => {
     if (examLength > 0 && cameraPermission) {
+      setExamInProgress(true);
       const timer = setInterval(() => {
         if (remainingTime > 0) { // Use remainingTime
           setRemainingTime(remainingTime - 1); // Update remaining time
@@ -123,6 +125,10 @@ function ExamSession() {
 
       if (remainingTime <= 0) {
         clearInterval(timer);
+        setExamInProgress(false);
+        // Update exam session status to "Completed"
+        axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
+        //navigate("/examdone");
         // Update exam session status to "Completed"
         axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
         navigate("/examdone");
@@ -147,6 +153,7 @@ function ExamSession() {
       <Box className="preview">
       {cameraPermission ? (
       <>
+        <ObjectRecognition examInProgress={examInProgress} />
         <ObjectRecognition />
         <FlagNotification />
       </>
