@@ -20,7 +20,7 @@ const app = express();
 const PORT = 4000;
 
  // Use multer for storing file
-const storage = multer.diskStorage({
+ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './videos/');
   },
@@ -63,7 +63,6 @@ app.use((req, res, next) => {
   });
 });
 
-app.use(cors());
 app.use(bodyParser.json());
 app.use('/flag', flagRoutes);
 app.use('/student', studentRoutes);
@@ -73,6 +72,13 @@ app.use('/auth', authRoutes);
 app.use('/exam', examRoutes);
 app.use('/examStudent', examStudentRoutes);
 
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://sentinel-frontend.vercel.app'],
+};
+
+app.use(cors(corsOptions));
+
+// Configure CORS to allow requests from http://localhost:3000 and https://sentinel-frotnend.vercel.app
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
 
@@ -97,6 +103,33 @@ app.post('/login', async(req, res) => {
     });
   } else {
     res.status(401).json({ success: false, message: 'Invalid credentials' });
+  }
+});
+
+app.post('/studentlogin', async(req, res) => {
+  const { username, keepSignedIn, facialData } = req.body;
+
+  const student = await dbOp('find', 'StudentDetails', { query: { email: username } });
+
+  if (!student || student.length === 0) {
+    res.status(401).json({ success: false, message: 'Student not found' });
+  } else if (facialData === true) {
+    const payload = {
+      userName: student[0].email,
+      isAdmin: false,
+    };
+  
+    const expiresIn = keepSignedIn ? 'never' : '4h';
+    const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn });
+  
+    res.json({
+      success: true,
+      message: 'Login successful',
+      isAdmin: false,
+      token
+    });
+  } else {
+    res.status(401).json({ success: false, message: 'Facial data does not match any existing users in the database' });
   }
 });
 
