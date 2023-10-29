@@ -27,7 +27,7 @@ function Exam() {
 
   const fetchExam = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/exam/getExamDetails/' + examId);
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/exam/getExamDetails/' + examId);
       setExam(response.data);
       setLoading1(false);
     } catch (error) {
@@ -37,7 +37,7 @@ function Exam() {
 
   const fetchExamStudents = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/student/getExamStudents/' + examId);
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/student/getExamStudents/' + examId);
       getExamStudents(response.data);
       setLoading2(false);
     } catch (error) {
@@ -114,7 +114,7 @@ function Exam() {
                     </TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.studentId}</TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.flags}</TableCell>
-                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.seatNumber}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.seatNo}</TableCell>
                     <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.status}</TableCell>
                   </TableRow>
                   ))}

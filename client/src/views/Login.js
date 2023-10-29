@@ -1,6 +1,6 @@
 import '../App.css';
 import '../css/Login.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from './ErrorMessage'; 
@@ -29,7 +29,7 @@ function Login() {
     setLoading(true);
     try {
       if (isAdmin || !username) {
-        const response = await axios.post('http://localhost:4000/login', {
+        const response = await axios.post(process.env.REACT_APP_SERVER_URL +'/login', {
           username,
           password,
           keepLoggedIn: document.getElementById('keepSignedIn').checked,
@@ -41,7 +41,7 @@ function Login() {
           navigate('/admin');
         } 
       } else {
-        const response = await axios.post('http://localhost:4000/studentlogin', {
+        const response = await axios.post(process.env.REACT_APP_SERVER_URL +'/studentlogin', {
           username,
           keepLoggedIn: document.getElementById('keepSignedIn').checked,
           facialData: handleDataFromChild()

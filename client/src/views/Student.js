@@ -16,7 +16,7 @@ function ExamSection(props) {
 
   const fetchStudentExams = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/student/getStudentExams/' + props.studentId);
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/student/getStudentExams/' + props.studentId);
       setStudentExams(response.data);
     } catch (error) {
       console.error(error);
@@ -29,7 +29,7 @@ function ExamSection(props) {
 
   return studentExams ? <CardTable 
     columns={studentExams.map((exam) => `${exam.examName}`)}
-    rows={studentExams.map((exam) => `Seat: ${exam.seatNumber}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
+    rows={studentExams.map((exam) => `Seat: ${exam.seatNo}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
   /> : <></>
 }
 
@@ -56,7 +56,7 @@ function FlagSection(props) {
 
   const fetchStudentFlags = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/flag/getStudentFlagDetails/' + props.studentId);
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/flag/getStudentFlagDetails/' + props.studentId);
       setStudentFlags(response.data);
     } catch (error) {
       console.error(error);
@@ -80,7 +80,7 @@ function Student() {
 
   const fetchStudent = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/student/getStudentDetails/' + studentId);
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/student/getStudentDetails/' + studentId);
       setStudent(response.data);
       setLoading(false);
     } catch (error) {

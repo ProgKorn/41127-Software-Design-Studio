@@ -4,7 +4,8 @@
   "description": "anti-cheat system",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "build": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -29,9 +30,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.9.0",
     "mongoose": "^7.4.3",
+    "socket.io": "^4.7.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@flydotio/dockerfile": "^0.4.10"
   }
 }
