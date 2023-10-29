@@ -16,6 +16,12 @@ const flagRoutes = require('./routes/flag');
 const app = express();
 const PORT = 4000;
 
+// Configure CORS to allow requests from http://localhost:3000 and https://sentinel-frotnend.vercel.app
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://sentinel-frontend.vercel.app'],
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use('/flag', flagRoutes);
 app.use('/student', studentRoutes);
@@ -25,13 +31,6 @@ app.use('/auth', authRoutes);
 app.use('/exam', examRoutes);
 app.use('/examStudent', examStudentRoutes);
 
-const corsOptions = {
-  origin: ['http://localhost:3000', 'https://sentinel-frontend.vercel.app'],
-};
-
-app.use(cors(corsOptions));
-
-// Configure CORS to allow requests from http://localhost:3000 and https://sentinel-frotnend.vercel.app
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
 
