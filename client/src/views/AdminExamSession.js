@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "../components/AdminHeader";
-import "../css/AdminDashboard.css";
 import jwt_decode from "jwt-decode";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import '../css/AdminExamSession.css';
+import FlagNotification from "../components/FlagNotification";
 
 const secrets = {
     appId: "e5709f8be2604869864acfa71a1f8b42",
@@ -45,9 +45,14 @@ const secrets = {
       if (mediaType === "video") {
         const remoteVideoTrack = user.videoTrack;
         const remoteContainer = document.getElementById("remoteContainer");
-  
+        let videoDiv = document.createElement("div"); 
+        videoDiv.id = user.uid;                      
+        videoDiv.style.transform = "rotateY(180deg)"; 
+        videoDiv.className = 'videoContainer'
+        remoteContainer.appendChild(videoDiv); 
+
         // Render remote video track
-        remoteVideoTrack.play(remoteContainer, { fit: "cover" });
+        remoteVideoTrack.play(String(user.uid))
       }
     });
   };
@@ -96,9 +101,10 @@ function AdminExamSession() {
   return (
     <div>
       <AdminHeader />
-      <div className="adminDashboard">
-        <h1>Live Exam Session</h1>
-        <div id="remoteContainer"></div>
+      <h1>Live Exam Session</h1>
+      <FlagNotification/>
+      <div className="adminExamSession" style={{ display: 'flex', alignItems: 'center', alignContent: 'center'}}>
+        <div id="remoteContainer" />
       </div>
     </div>
   );

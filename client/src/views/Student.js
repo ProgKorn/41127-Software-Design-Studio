@@ -29,7 +29,7 @@ function ExamSection(props) {
 
   return studentExams ? <CardTable 
     columns={studentExams.map((exam) => `${exam.examName}`)}
-    rows={studentExams.map((exam) => `Seat: ${exam.seatNumber}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
+    rows={studentExams.map((exam) => `Seat: ${exam.seatNo}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
   /> : <></>
 }
 

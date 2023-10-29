@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import HelpCentreHeader from '../components/HelpCentreHeader';
 import '../css/HelpCentre.css';
 import '../css/Login.css';
-import { InputAdornment, TextField, IconButton, Grid, Button } from '@mui/material';
+import { InputAdornment, TextField, IconButton, Grid, Button, Stack, ButtonGroup } from '@mui/material';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import FlagIcon from '@mui/icons-material/Flag';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import {UserManual, FaceAuthenticationTroubleshoot, Flagging, TermsAndConditions} from '../components/HelpCentrePages';
+import {UserManual, Flagging, TermsAndConditions} from '../components/HelpCentrePages';
 import SearchBar from '../components/SearchBar';
 import { Introduction, Overview, GettingStarted, UsingTheSoftware, Troubleshooting} from "../components/UserManual";
 import jwt_decode from 'jwt-decode';
@@ -20,6 +20,7 @@ function HelpCentre() {
   const [selectedSection, setSelectedSection] = useState(null);
   const [isAdmin, setIsAdmin] = useState(null);
   const [isStudent, setIsStudent] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSelectedSection = (section) => {
     setSelectedSection(section);
@@ -52,12 +53,16 @@ function HelpCentre() {
 
   const buttonStyles = {
     fontFamily: "Montserrat, sans-serif",
-    fontSize: "1rem",
+    fontSize: "1.1rem",
     fontWeight: 500,
     textTransform: 'Capitalize',
     color: 'white',
+    margin: 6,
     backgroundColor: "#292E64",
-    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)',
+    '&:hover': {
+      backgroundColor: '#a03421'
+    },
   }
 
   return (
@@ -66,53 +71,35 @@ function HelpCentre() {
         <HelpCentreHeader/>
       )}
       {!isStudent && isAdmin && (
-        <AdminHeader />
+        <AdminHeader hideHelpRoute={true}/>
       )}
       {isStudent && !isAdmin && (
-        <StudentHeader />
+        <StudentHeader hideHelpRoute={true}/>
       )}
       <header className="help-centre-header">
         <h1 className="text">Sentinel Help Centre</h1>
         <div>
-            <SearchBar onSelectSection={handleSelectedSection}/>
+            <SearchBar onSelectSection={handleSelectedSection} onSearch={setSearchTerm}/>
         </div>
       </header>
       {!selectedButton && !selectedSection && (
-        <div className='help-dashboard'>
-          <Grid container rowSpacing={8} columnSpacing={{ xs: 1 }}>
-						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('userManual')} sx={buttonStyles}>
-								<div className="helpDashboardIcons"><AssignmentIcon/></div>
-								User Manual
-							</Button>
-						</Grid>
-						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('faceAuthTroubleshoot')} sx={buttonStyles}>
-							<div className="helpDashboardIcons"><FaceRetouchingOffIcon/></div>
-								Face Auth Troubleshoot?
-							</Button>
-						</Grid>
-						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')} sx={buttonStyles}>
-								<div className="helpDashboardIcons"><FlagIcon/></div>
-								Flagging
-							</Button>
-						</Grid>
-						<Grid item xs={6}>
-							<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('termsAndConditions')} sx={buttonStyles}>
-								<div className="helpDashboardIcons"><AssignmentLateIcon/></div>
-								Terms and Conditions
-              </Button>
-						</Grid>
-					</Grid>
+        <div>
+					<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('userManual')} sx={buttonStyles}>
+						<div className="helpDashboardIcons"><AssignmentIcon/></div>
+						User Manual
+					</Button>
+					<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')} sx={buttonStyles}>							<div className="helpDashboardIcons"><FlagIcon/></div>
+						Flags
+					</Button>
+					<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('termsAndConditions')} sx={buttonStyles}>
+						<div className="helpDashboardIcons"><AssignmentLateIcon/></div>
+						Terms and Conditions
+          </Button>
         </div>
       )}
       
       {selectedButton === 'userManual' && (
       <UserManual onBackButtonClick={handleBackButtonClick} />
-      )}
-      {selectedButton === 'faceAuthTroubleshoot' && (
-      <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />
       )}
       {selectedButton === 'flagging' && (
       <Flagging onBackButtonClick={handleBackButtonClick} />
@@ -120,14 +107,13 @@ function HelpCentre() {
       {selectedButton === 'termsAndConditions' && (
       <TermsAndConditions onBackButtonClick={handleBackButtonClick} />
       )}
-      {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'userOverview' && <Overview onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'userGettingStarted' && <GettingStarted onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'userSoftware' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'userTroubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'faceAuth' && <FaceAuthenticationTroubleshoot onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'flags' && <Flagging onBackButtonClick={handleBackButtonClick} />}
-      {selectedSection === 'termsAndConds' && <TermsAndConditions onBackButtonClick={handleBackButtonClick} />}
+      {selectedSection === 'userIntroduction' && <Introduction onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'userOverview' && <Overview onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'userGettingStarted' && <GettingStarted onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'userSoftware' && <UsingTheSoftware onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'userTroubleshooting' && <Troubleshooting onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'flags' && <Flagging onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
+      {selectedSection === 'termsAndConds' && <TermsAndConditions onBackButtonClick={handleBackButtonClick} searchTerm={searchTerm}/>}
     </div>
   );
 }

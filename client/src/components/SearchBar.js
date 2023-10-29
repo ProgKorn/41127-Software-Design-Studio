@@ -3,7 +3,7 @@ import { InputAdornment, TextField, IconButton, List, ListItem, Button,} from "@
 import SearchIcon from "@mui/icons-material/Search";
 import data from "../components/helpCentreData.json";
 
-function SearchBar({ onSelectSection }) {
+function SearchBar({ onSelectSection, onSearch }) {
   const [inputText, setInputText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -30,6 +30,7 @@ function SearchBar({ onSelectSection }) {
     const searchText = e.target.value;
     setInputText(searchText);
     handleSearch(searchText);
+    onSearch(searchText);
   };
 
   const handleKeyPress = (e) => {

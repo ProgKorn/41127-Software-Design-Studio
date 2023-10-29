@@ -1,0 +1,110 @@
+/* Styles for the popup notification container */
+.student-popup-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(238, 73, 31); /* Background color is orange */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a box shadow for depth */
+    text-align: center;
+    z-index: 999; /* Adjust z-index for stacking order */
+}
+
+.admin-popup-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: orange; /* Background color is orange */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a box shadow for depth */
+    text-align: center;
+    z-index: 999; /* Adjust z-index for stacking order */
+}
+
+.popup-box {
+    background-color: orange;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.popup-text {
+    color: white;
+}
+
+button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+}
+  
+.resolve-button {
+    background-color: green;
+    border-radius: 40px;
+    transition: background-color 0.3s; /* Add a smooth transition */
+  
+    /* Change background color on hover */
+    &:hover {
+      background-color: darkgreen; /* Adjust the color as needed */
+    }
+    
+  }
+  
+.terminate-button {
+    background-color: red;
+    border-radius: 40px;
+    transition: background-color 0.3s; /* Add a smooth transition */
+  
+    /* Change background color on hover */
+    &:hover {
+      background-color: darkred; /* Adjust the color as needed */
+    }
+}
+  
+/* Styles for the content within the popup */
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+  
+/* Styles for the warning icon */
+.warning-icon {
+    color: white; /* Icon color */
+    font-size: 40px;
+}
+  
+/* Styles for the notification text */
+.notification-text {
+    color: white; /* Text color */
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+  
+/* Styles for the "Ok" button */
+.ok-button {
+    background-color: white; /* Button background color */
+    color: black; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+  
+.ok-button:hover {
+    background-color: #f0f0f0; /* Button background color on hover */
+}  
+
+.bold-underline {
+    font-weight: bold;
+    text-decoration: underline;
+}  

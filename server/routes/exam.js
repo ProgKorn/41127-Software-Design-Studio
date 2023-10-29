@@ -7,11 +7,10 @@ router.get('/', (req, res) => {
     res.json({ message: 'Exam' });
 });
 
-router.get('/getExamDetails/:examId', async (req, res) => {
+router.get('/getExamDetails/', async (req, res) => {
   try {
-    const examId = parseInt(req.params.examId);
-    const data = await databaseMaster.dbOp('find', 'ExamDetails', { query: {examId : examId} }).then(data => {
-      res.json(new Exam(data[0]));
+    databaseMaster.dbOp('find', 'ExamDetails', { query: {} }).then(data => {
+      res.json(data);
     });
 
   } catch (error) {
@@ -19,17 +18,11 @@ router.get('/getExamDetails/:examId', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
  });
- //     if (data) {
-//       console.log(data);
-//       res.json(data); // Send the exam details as a JSON response
-//     } else {
-//       res.status(404).json({ error: 'Exam not found' });
-//     }
 
 router.get('/getExamDetails/:examId', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
-    //returns the exam details associated with the examId parameter
+    // returns the exam details associated with the examId parameter
     const data = await databaseMaster.dbOp('find', 'ExamDetails', { query: {examId: examId} });
     console.log(data);
     res.json(data[0]);
@@ -46,7 +39,7 @@ router.post('/addExam', async (req, res) => { // Add a new exam and update the c
       // Randomly generate the examId
       const examId = (parseInt(Math.random() * 1000000));
 
-      //create instance of exam using the parameters in the request body
+      // create instance of exam using the parameters in the request body
       const exam = new Exam ({
           examId: examId, 
           examName: req.body.examName,
@@ -55,11 +48,11 @@ router.post('/addExam', async (req, res) => { // Add a new exam and update the c
           details: req.body.details,
       });
   
-      //create exam in the ExamDetails collection of mongodbDatabase
+      // create exam in the ExamDetails collection of mongodbDatabase
       const createdExam = await databaseMaster.dbOp('insert', 'ExamDetails', { docs: [exam] });
 
 
-      //update the exam Id of the selected class
+      // update the exam Id of the selected class
       console.log(req.body.className);
       const query = { className: req.body.className };
       const docs = { $set: { examId: examId } };

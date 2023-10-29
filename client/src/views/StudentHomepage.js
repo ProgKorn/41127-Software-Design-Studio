@@ -15,7 +15,7 @@ import StudentHeader from '../components/StudentHeader';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import Loader from '../components/Loader'
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 
 
 
@@ -40,6 +40,25 @@ function StudentHomepage() {
     const [loading, setLoading] = useState(true); // loading state that prevents access to undefined data, while waiting to get a response from api call
     const [exam, getExam] = useState([]);
     const navigate = useNavigate();
+
+    const buttonStyles = {
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "1rem",
+      fontWeight: 500,
+      textTransform: 'Capitalize',
+      color: 'white',
+      backgroundColor: "#292E64",
+      boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+    }
+
+    const rows = [
+      createData('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', '21/08/2023 5:00:00'),
+      createData('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', '21/08/2023 5:00:00'),
+    ]
+
+    function createData (examName,  examStart, details, seatNo, finishTime) {
+      return{examName, examStart, details, seatNo, finishTime};
+    }
     
     // send a get api request to the server to retrieve and store the student details using axios
     useEffect(() => {
@@ -88,13 +107,11 @@ function StudentHomepage() {
    return (
     <div>
         <StudentHeader/>
-        <header class = "student-header">
-          <div className="student-heading">Student Homepage</div>
-        </header>
+        <h1>Student Homepage</h1>
         <Grid container spacing = {1}  className = 'pageCardPadding'>
           <Grid className='grid'>
-          <Grid item xs={4}>
-              <TableContainer component={Paper} className="table-container">
+          <Grid item xs={4} marginTop={4}>
+              <TableContainer component={Paper} elevation={8} className="table-container">
                   <Table sx={{ minWidth: 100 }} aria-label="customized table" className='table'>
                       <TableHead>
                           <TableRow>
@@ -122,17 +139,17 @@ function StudentHomepage() {
                   </Table>
               </TableContainer>  
             </Grid>
-            <Grid item xs={7} style = {{marginLeft: '100px'}}>
-              <TableContainer component={Paper} className="table-container">
+            <Grid item xs={8} marginLeft={5} marginTop={4}>
+              <TableContainer component={Paper} elevation={8} className="table-container">
                   <Table sx={{ minWidth: 650 }} aria-label="customized table" className='table'>
                   <TableHead>
                       <TableRow>
-                          <StyledTableCell colSpan={1} align = 'left' style={{ height: '40px' }}>Upcoming Exams</StyledTableCell>
+                          <StyledTableCell colSpan={4} align = 'left' style={{ height: '40px' }}>Upcoming Exams</StyledTableCell>
                           <StyledTableCell colSpan={4}  align = 'right'>
                               <div className=".button-container-student">
-                              <Link to="/previousexams" className="student-button" style= {{ width:'250px', display:'inline-flex', textAlign:'center', fontSize: '19px', height:'35px'}}>
+                              {/* <Link to="/previousexams" className="student-button" style= {{ width:'250px', display:'inline-flex', textAlign:'center', fontSize: '19px', height:'35px'}}>
                                   View Previous Exams
-                              </Link>
+                              </Link> */}
                               </div>
                           </StyledTableCell>
                       </TableRow>
@@ -155,11 +172,14 @@ function StudentHomepage() {
                           </StyledTableCell>
                           <StyledTableCell align="center">{new Date(row.startTime).toLocaleString()}</StyledTableCell>
                           <StyledTableCell align="center">{row.details}</StyledTableCell>
-                          <StyledTableCell align="center">{row.seatNumber}</StyledTableCell>
+                          <StyledTableCell align="center">{row.seatNo}</StyledTableCell>
                           <StyledTableCell align="center">
-                              <Link to= {`/examstart/${student.studentId}/${row.examId}`} className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
+                              {/* <Link to= {`/examstart/${student.studentId}/${row.examId}`} className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
                                   Access Exam
-                              </Link>
+                              </Link> */}
+                              <Button component={Link} variant='contained' to="/examstart/${student.studentId}/${row.examId}" className='student-button' sx={buttonStyles}>
+                                Access Exam
+                              </Button>
                           </StyledTableCell>
                       </TableRow>
                       ))}
@@ -168,8 +188,11 @@ function StudentHomepage() {
               </TableContainer>
               </Grid>
             </Grid>
-            <Grid item xs={11.70} style = {{marginTop: '80px'}} className='grid'> 
-              <TableContainer component={Paper} className="table-container">
+            {/* <Button component={Link} to='/previousexams' variant="contained" className='student-button' sx={buttonStyles}>
+                                View Previous Exams
+                              </Button> */}
+            {/* <Grid item xs={11.70} style = {{marginTop: '80px'}} className='grid'> 
+              <TableContainer component={Paper} elevation={8} className="table-container">
                 <Table sx={{ width: '100%' }} aria-label="customized table">
                   <TableHead>
                       <TableRow>
@@ -192,6 +215,40 @@ function StudentHomepage() {
                   </TableBody>
                 </Table>
               </TableContainer>
+            </Grid> */}
+            <Grid xs={12} marginRight={4} marginTop={6}>
+            <TableContainer component={Paper} elevation={8}>
+                    <Table sx={{minWidth: 200}} aria-label="customised table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell colSpan={5}>Previous Exams</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        <TableRow>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="left">Exam Name</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Exam Start</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Details</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Seat No.</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Exam Finish Time</StyledTableCell>
+                            </TableRow>
+                            {rows.map((row) => (
+                            <TableRow 
+                                key={row.name}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <StyledTableCell component="th" scope="row">
+                                {row.examName}
+                                </StyledTableCell>
+                                <StyledTableCell align="center">{row.examStart}</StyledTableCell>
+                                <StyledTableCell align="center">{row.details}</StyledTableCell>
+                                <StyledTableCell align="center">{row.seatNo}</StyledTableCell>
+                                <StyledTableCell align="center">{row.finishTime}</StyledTableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Grid>
         </Grid>
     </div>
