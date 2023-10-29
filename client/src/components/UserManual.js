@@ -30,6 +30,9 @@ const buttonStyles = {
     '&.MuiButton-root:hover':{bgcolor: '#8d99ae'},
     marginBottom: '2%',
     marginTop: '2%',
+    '&:hover': {
+        backgroundColor: '#a03421'
+    },
 }
 
 const HighlightedText = ({ text, searchTerm }) => {

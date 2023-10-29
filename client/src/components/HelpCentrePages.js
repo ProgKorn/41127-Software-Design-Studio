@@ -12,7 +12,10 @@ const buttonStyles = {
     textTransform: 'Capitalize',
     color: 'white',
     backgroundColor: "#292E64",
-    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)',
+    '&:hover': {
+        backgroundColor: '#a03421'
+    },
 }
 
 const returnButtonStyles = {

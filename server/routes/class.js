@@ -38,10 +38,10 @@ router.get('/get-exam/:studentId', (req, res) => {
                 for (i = 0; i < examData.length; i++){
                 //find the class associated with the examID
                    const foundClass =  data.find(document => document.examId == examData[i].examId)
-                //find the seatNumber in the found class associated with the student id
+                //find the seatNo in the found class associated with the student id
                    const foundStudent = foundClass.students.find(student => student.studentId == studentId)
-                //add seatNumber to the exam
-                   examData[i]["seatNumber"] = foundStudent.seatNumber;
+                //add seatNo to the exam
+                   examData[i]["seatNo"] = foundStudent.seatNo;
                 }
                 res.json(examData)
                 })
