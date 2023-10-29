@@ -26,7 +26,6 @@ import PrivateRoute from './PrivateRoute';
 import Loader from '../components/Loader';
 import ExamDone from './ExamDone';
 import CreateClass from '../views/CreateClass';
-
 import ThirdPlayground from '../KatsAgoraPlayground/startCall';
 
 function App() {
@@ -74,9 +73,7 @@ function App() {
           <Route path="/examsession/:studentId/:examId" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examdone" element={<PrivateRoute element={<ExamDone />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
-
           <Route path="/startCall" element={<ThirdPlayground />} />
-
         </Routes>
       </div>
     </Router>

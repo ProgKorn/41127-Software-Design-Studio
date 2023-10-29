@@ -22,7 +22,7 @@
     display: flex;
     font-family: Montserrat, sans-serif;
     border-bottom: solid 1px rgb(223, 223, 223);
-    align-content: space-between;
+    align-items: center;
 }
 
 .listTitleText {
@@ -31,21 +31,23 @@
     color: rgb(85, 89, 130);
     padding: 20px;
     text-align: left;
-    padding-left: 60px;
+    padding-left: 50px;
 }
 
 .listDescriptionText {
-    padding: 20px;
+    padding: 10px;
     text-align: left;
 }
 
 .tableContainer {
     font-family: Montserrat, sans-serif;
     min-width: 650px;
+    height: 90%;
+    overflow: scroll;
 }
 
 .flagDetailSection {
-    height: 130px;
+    /* height: 130px; */
     padding: 20px;
 }
 
@@ -57,7 +59,7 @@
     margin: auto;
     padding: 0px;
     border-radius: 20px;
-    height: 130px;
+    /* height: 100%; */
 }
 
 .flagDetailTitle {
@@ -111,7 +113,7 @@
 
 .scheduleContainer {
     display: flex;
-    height: 660px;
+    height: 75vh;
 }
 
 .scheduleTitleSection {
@@ -129,7 +131,7 @@
     padding-left: 30px;
     font-family: Montserrat, sans-serif;
     text-align: left;
-    font-size: 1.2rem;            
+    font-size: 1.1rem;            
     border: solid 1px rgb(223, 223, 223);
     border-radius: 20px;
     margin: 20px;
@@ -143,19 +145,21 @@
 
 .scheduleLargeCard {
     width: 70%;
-    height: 660px;
+    height: '100%';
     border-bottom-right-radius: 10px;
     padding-left: 150px;
     padding-top: 80px;
     text-align: left;
     font-family: Montserrat, sans-serif;
     border-left: solid 1px rgb(223, 223, 223);
+    overflow: auto;
 }
 
 .scheduleButtonContainer {
     display: flex;
     padding-top: 80px;gap: 40px;
     overflow: auto;
+    padding-right: 20px;
 }
 
 .scheduleButtonText {
