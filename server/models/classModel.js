@@ -7,7 +7,7 @@ classSchema = new schema({
 className: {type: String, required: true},
 subjectId: {type: Number, required: true},
 //students: [Object],
-students: [{ studentId: Number, seatNumber: Number }],
+students: [{ studentId: Number, seatNo: Number }],
 examId: {type: Number, required: true},
   
 })

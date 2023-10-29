@@ -82,7 +82,7 @@ function CreateClass() {
         var count = 1
         for(var i = 0; i < selectedRows.length; i++)
         {
-          studentsArray.push({studentId: selectedRows[i].studentId, seatNumber: count})
+          studentsArray.push({studentId: selectedRows[i].studentId, seatNo: count})
           count++;
         }
         const requestBody = { 
