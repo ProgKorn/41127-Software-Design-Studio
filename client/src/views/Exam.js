@@ -78,22 +78,23 @@ function Exam() {
   return (loading2 || loading1) ? <Loader loading={true} /> : (
     <div className="Exam">
       <AdminHeader/>
-      <h1>Exam Details</h1>
-      <Grid container spacing={2} columns={16} className='pageCardPadding'>
-        <Grid item xs={8}>
+      <h1 style={{ padding: 0 }}>Exam Details</h1>
+      <Grid container spacing={2} columns={16} className='pageCardPadding' maxWidth={'100%'} maxHeight={'100%'} style={{ paddingTop: 0 }}>
+        <Grid sx={{maxHeight: '80vh'}} item xs={8}>
           <Card title={"Examination Details"}>
-            {exam && <CardTable 
+            {exam && <div style={{ overflow: 'auto' }}><CardTable 
               columns={["Exam ID", "Name", "Details", "Start Time", "End Time"]}
               rows={[exam.examId, exam.examName, exam.details, formatISODate(exam.startTime), formatISODate(exam.endTime)]}
-            />}
+            /></div>}
           </Card>
         </Grid>
-        <Grid item xs={8}>
+        <Grid sx={{maxHeight: '80vh'}}  item xs={8}>
           <Card title={"Examinees & Recordings"}>
-            <TableContainer className='tableContainer'>
+            <div style={{ width: '100%', height: '100%', overflow: 'auto'}}>
+            <TableContainer className='tableContainer' style={{overflow: 'auto', maxWidth: '100%'}} >
               <Table>
                 <TableHead>
-                  <TableRow >
+                  <TableRow>
                     {columns.map((col) => (
                       <TableCell  sx={tableTitleTextStyle} align='center' style={{fontFamily: 'Montserrat, sans-serif'}}>
                         {col}
@@ -121,6 +122,7 @@ function Exam() {
                 </TableBody>
               </Table>
               </TableContainer>
+              </div>
           </Card>
         </Grid>
       </Grid>
