@@ -102,7 +102,7 @@ router.post('/addFlag', async (req, res) => { // Add a new flag
             sessionName: req.body.sessionName,
         });
         const flag = await databaseMaster.dbOp('insert', 'FlaggedIncidents', { docs: [newFlag] });
-        io.to(connectedId).emit('add-flag', newFlagId);
+        io.emit('add-flag', newFlagId);
         console.log("I have raised this flag " + newFlag);
         res.json(flag);
     } catch (error) {
@@ -131,7 +131,7 @@ router.post('/updateFlag', async (req, res) => { // Update status from Pending -
         // Update the flag in the database by specifying the query criteria and update data
         await databaseMaster.dbOp('update', 'FlaggedIncidents', { query, docs });
         if (status == "Resolved") {
-            io.to(connectedId).emit('update-flag');
+            io.emit('update-flag');
         }
         res.json({ message: 'Flag updated successfully' });
     } catch (error) {
