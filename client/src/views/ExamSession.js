@@ -65,7 +65,6 @@ function ExamSession() {
 
   const createExamStudent = async () => {
     try {
-      console.log("Creating Exam Student");
       const response = await axios.post(process.env.REACT_APP_SERVER_URL + `/examStudent/createExamStudent/${studentId}/${examId}`);
       console.log("Exam Session Response:", response.data);
     } catch (error) {
@@ -86,7 +85,9 @@ function ExamSession() {
     axios.get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`).then((response) => {
       const { startTime, endTime } = response.data;
       setExamName(response.data.examName);
-      const examLengthInSeconds = 10; // For testing, replace with the actual exam length logic
+      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
+      // For testing, replace with the actual exam length logic
+      // const examLengthInSeconds = 10; 
       setExamLength(examLengthInSeconds);
       setRemainingTime(examLengthInSeconds); // Initialize remaining time
     }).catch((error) => {
@@ -113,7 +114,6 @@ function ExamSession() {
 
   useEffect(() => {
     if (examLength > 0 && cameraPermission) {
-      console.log("Setting up countdown timer");
       const timer = setInterval(() => {
         if (remainingTime > 0) { // Use remainingTime
           setRemainingTime(remainingTime - 1); // Update remaining time
@@ -129,7 +129,6 @@ function ExamSession() {
 
       return () => {
         clearInterval(timer);
-        console.log("Cleaning up timer");
       };
     }
   }, [remainingTime, cameraPermission, navigate, examId, studentId]);
