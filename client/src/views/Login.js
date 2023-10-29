@@ -1,6 +1,6 @@
 import '../App.css';
 import '../css/Login.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from './ErrorMessage'; 
@@ -80,8 +80,16 @@ function Login() {
     setErrorMessage("");
   };
 
+  let hasReceivedData = false;
+  let capturedData = false;
+  
   const handleDataFromChild = (data) => {
-    console.log(data);
+    if (!hasReceivedData && data !== undefined && typeof data === 'boolean') {
+      console.log('Received data from child:', data);
+      hasReceivedData = true; 
+      capturedData = data; 
+    }
+    return capturedData; 
   };
 
   return (
