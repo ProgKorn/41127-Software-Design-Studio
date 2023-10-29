@@ -5,11 +5,59 @@ import Paper from "@mui/material/Paper";
 import "../css/Exam.css";
 import axios from "axios";
 import ObjectRecognition from "./ObjectRecognition";
+import FlagNotification from "../components/FlagNotification";
+import AgoraRTC from "agora-rtc-sdk-ng";
+
+const secrets = {
+  appId: "e5709f8be2604869864acfa71a1f8b42",
+  channelName: "main",
+  token: process.env.REACT_APP_AGORA_TOKEN,
+};
+
+const rtc = {
+  client: null,
+  localVideoTrack: null,
+  localAudioTrack: null,
+};
+
+async function join() {
+  rtc.client = AgoraRTC.createClient({
+    mode: "rtc",
+    codec: "vp8",
+    App: secrets.appId,
+    token: secrets.token,
+  });
+  await rtc.client.join(secrets.appId, "main", secrets.token);
+}
+
+async function leaveCall() {
+  await stopVideo();
+  rtc.client.leave();
+}
+
+const startVideo = async () => {
+  rtc.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+  console.log("Connection State: ", rtc.client.connectionState);
+  if (rtc.client.connectionState === "CONNECTED") {
+    rtc.client.publish(rtc.localVideoTrack);
+  }
+};
+
+const stopVideo = async () => {
+  rtc.localVideoTrack.close();
+  rtc.localVideoTrack.stop();
+  rtc.client.unpublish(rtc.localVideoTrack);
+};
+
+async function startCall() {
+  await join();
+  startVideo();
+}
 
 function ExamSession() {
   const navigate = useNavigate();
   const [examSessionCreated, setExamSessionCreated] = useState(false);
-  const [countdown, setCountdown] = useState(10); 
+  const [countdown, setCountdown] = useState(10);
   const [examLength, setExamLength] = useState(0);
   const {studentId} = useParams();
   const {examId} = useParams();
@@ -26,6 +74,7 @@ function ExamSession() {
   };
 
   useEffect(() => {
+    startCall();
     if (!examSessionCreated) {
       console.log("Creating Exam Student")
       createExamStudent();
@@ -86,6 +135,7 @@ function ExamSession() {
       {/* Camera preview goes here */}
       <Box className="preview">
         <ObjectRecognition/>
+        <FlagNotification/>
       </Box>
       {/* Countdown timer */}
       <Box className="countdown">

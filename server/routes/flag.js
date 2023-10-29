@@ -5,6 +5,20 @@ const Flag = require('../models/flagModel');
 const databaseMaster = require('../DatabaseAccess/databaseMaster');
 const { v4: uuidv4 } = require('uuid');
 
+const PORT = 4001;
+var connectedId;
+
+const io = require('socket.io')(PORT, {
+    cors: {
+        origin: ['https://sentinel-frontend.vercel.app'] // Client URL -- http://localhost:3000 for testing
+    }
+});
+  
+io.on('connection', socket => { // function that runs everytime a client connects to our server, give a socket instance for each one
+    console.log(socket.id); // each person who connects to our server is assigned an ID
+    connectedId = socket.id;
+});
+
 /* 
 Example Implementation:
 
@@ -88,6 +102,7 @@ router.post('/addFlag', async (req, res) => { // Add a new flag
             sessionName: req.body.sessionName,
         });
         const flag = await databaseMaster.dbOp('insert', 'FlaggedIncidents', { docs: [newFlag] });
+        io.to(connectedId).emit('add-flag', newFlagId);
         console.log("I have raised this flag " + newFlag);
         res.json(flag);
     } catch (error) {
@@ -115,6 +130,9 @@ router.post('/updateFlag', async (req, res) => { // Update status from Pending -
 
         // Update the flag in the database by specifying the query criteria and update data
         await databaseMaster.dbOp('update', 'FlaggedIncidents', { query, docs });
+        if (status == "Resolved") {
+            io.to(connectedId).emit('update-flag');
+        }
         res.json({ message: 'Flag updated successfully' });
     } catch (error) {
         console.error(error);
