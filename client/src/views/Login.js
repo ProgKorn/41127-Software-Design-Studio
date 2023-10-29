@@ -8,6 +8,7 @@ import SignInHeader from '../components/SignInHeader'
 import { Checkbox } from '@mui/material';
 import Loader from '../components/Loader';
 import FacialLandmarkLogin from './FacialLandmarkLogin';
+import FaceLoader from '../components/FaceLoader';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -21,16 +22,16 @@ function Login() {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleLogin();
+      handleLogin(username.toLowerCase());
     }
   }
 
-  const handleLogin = async () => {
+  const handleLogin = async (lowerCaseUserName) => {
     setLoading(true);
     try {
       if (isAdmin || !username) {
         const response = await axios.post(process.env.REACT_APP_SERVER_URL +'/login', {
-          username,
+          username: lowerCaseUserName,
           password,
           keepLoggedIn: document.getElementById('keepSignedIn').checked,
         });
