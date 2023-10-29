@@ -68,10 +68,10 @@ function HelpCentre() {
         <HelpCentreHeader/>
       )}
       {!isStudent && isAdmin && (
-        <AdminHeader />
+        <AdminHeader hideHelpRoute={true}/>
       )}
       {isStudent && !isAdmin && (
-        <StudentHeader />
+        <StudentHeader hideHelpRoute={true}/>
       )}
       <header className="help-centre-header">
         <h1 className="text">Sentinel Help Centre</h1>

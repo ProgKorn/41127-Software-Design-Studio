@@ -221,7 +221,7 @@ function StudentHomepage() {
                     <Table sx={{minWidth: 200}} aria-label="customised table">
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell colspan={5}>View Previous Exams</StyledTableCell>
+                                <StyledTableCell colspan={5}>Previous Exams</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
