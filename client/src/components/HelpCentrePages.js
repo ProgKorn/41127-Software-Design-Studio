@@ -110,7 +110,7 @@ function Flagging( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="In the event a 'cheating' behavious is detected by the system, the admin overseeing the exam session is notified of the event, being provided a short recorded clip of the detecetd behaviour." searchTerm={searchTerm}/>                
                 <h3><HighlightedText text="Insert admin script flag pop up image" searchTerm={searchTerm}/></h3>
-                <h5 className='figure-heading'><HighlightedText text="Figure 1: Student misconduct requireing approval, admin perspective." searchTerm={searchTerm}/></h5>
+                <h5 className='figure-heading'><HighlightedText text="Figure 1: Student misconduct requiring approval, admin perspective." searchTerm={searchTerm}/></h5>
 
                 <HighlightedText text="If the admin verifies the flagged behaviour is a valid cheating instance, the student is notified and promptly warned of their misconduct." searchTerm={searchTerm}/>
                 <h3><HighlightedText text="Insert student flag pop up" searchTerm={searchTerm}/></h3>

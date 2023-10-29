@@ -18,15 +18,15 @@ function Login() {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleLogin();
+      handleLogin(username.toLowerCase());
     }
   }
 
-  const handleLogin = async () => {
+  const handleLogin = async (lowerCaseUserName) => {
     setLoading(true);
     try {
       const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/login', {
-        username,
+        username: lowerCaseUserName,
         password,
         keepLoggedIn: document.getElementById('keepSignedIn').checked,
       });

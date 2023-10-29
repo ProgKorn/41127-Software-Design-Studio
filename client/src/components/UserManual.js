@@ -214,7 +214,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
 
                 <h5 className="terms">Examiner Account</h5>
                 <HighlightedText text="These are the main functionalities provided to an admin account:" searchTerm={searchTerm}/>
-                <h5 className="account-subheading"><HighlightedText text="Login/Main Functions" searchTerm={searchTerm}/></h5>
+                <h5 className="account-subheading"><HighlightedText text="Login/Home Functions" searchTerm={searchTerm}/></h5>
                 <ul>
                     <li><HighlightedText text="Login - If the user has previously received login details from their IT department, they are able to easily log into the sentinel system by signing up with their username and password." searchTerm={searchTerm}/></li>
                     <li><HighlightedText text="Home - When the examiner is logged in, they can press the Home button on the menu bar above to navigate back to the homepage." searchTerm={searchTerm}/></li>
@@ -240,7 +240,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
 
                 <h5 className="terms">Student Account</h5>
                 <HighlightedText text="These are the main functionalities provided to a student account:" searchTerm={searchTerm}/>
-                <h5 className="account-subheading"><HighlightedText text="Main Functionality" searchTerm={searchTerm}/></h5>
+                <h5 className="account-subheading"><HighlightedText text="Login/Home Functions" searchTerm={searchTerm}/></h5>
                 <ul>
                     <li><HighlightedText text="Login - If the user has previously signed up for a Sentinel account through an external form lodged with the IT Department, they should be able to sign in simply by using their facial data." searchTerm={searchTerm}/></li>
                     <li><HighlightedText text="Home - When the Student is logged in, they can press the Home button on the menu bar above to navigate back to the Student Homepage." searchTerm={searchTerm}/></li>
