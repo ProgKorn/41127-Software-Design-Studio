@@ -9,9 +9,9 @@ router.get('/get', (req, res) => {
   });
 });
 
-router.get('/get/:email', (req, res) => {
+router.get('/get/:email', async (req, res) => {
   const email = req.params.email;
-  databaseMaster.dbOp('find', 'StudentDetails', { query: { email: email } }).then(data => {
+  await databaseMaster.dbOp('find', 'StudentDetails', { query: { email: email } }).then(data => {
     res.json(new User(data[0]));
   });
 });

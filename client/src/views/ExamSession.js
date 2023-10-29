@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import "../css/Exam.css";
 import axios from "axios";
 import ObjectRecognition from "./ObjectRecognition";
+import FlagNotification from "../components/FlagNotification";
 import AgoraRTC from "agora-rtc-sdk-ng";
 
 const secrets = {
@@ -144,11 +145,14 @@ function ExamSession() {
         <h1>{examName}</h1>
       </Box>
       <Box className="preview">
-        {cameraPermission ? (
-          <ObjectRecognition />
-        ) : (
-          <p>Please grant camera permission to start the exam timer.</p>
-        )}
+      {cameraPermission ? (
+      <>
+        <ObjectRecognition />
+        <FlagNotification />
+      </>
+      ) : (
+        <p>Please grant camera permission to start the exam timer.</p>
+      )}
       </Box>
       <Box className="countdown">
         <Paper elevation={3} className="countdown-box">

@@ -2,6 +2,7 @@ import React from 'react';
 import ResponsiveAppBar from './NavBar';
 import FlagRoundedIcon from '@mui/icons-material/FlagRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import HelpIcon from '@mui/icons-material/Help';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
 
 function AdminHeader() {
@@ -9,12 +10,14 @@ function AdminHeader() {
 	  Home: '/admin',
 	  Schedule: '/schedule',
 	  Activity: '/flaglog',
+    Help: '/helpcentre',
 	}
 
   const AdminIcons = {
 	  Home: <HomeRoundedIcon style={{width: 35, height: 30}} />,
 	  Schedule: <EventNoteRoundedIcon style={{width: 35, height: 30}} />,
 	  Activity: <FlagRoundedIcon style={{width: 35, height: 30}} />,
+    Help: <HelpIcon style={{width: 35, height: 30}} />,
 	}
 
   return (
