@@ -4,7 +4,6 @@ import FlagRoundedIcon from '@mui/icons-material/FlagRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import HelpIcon from '@mui/icons-material/Help';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
-import HelpIcon from '@mui/icons-material/Help';
 
 function AdminHeader({hideHelpRoute}) {
   let adminRoutes = {
