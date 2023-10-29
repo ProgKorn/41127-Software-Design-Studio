@@ -7,6 +7,7 @@ import axios from "axios";
 import ObjectRecognition from "./ObjectRecognition";
 import FlagNotification from "../components/FlagNotification";
 import AgoraRTC from "agora-rtc-sdk-ng";
+import { raiseUnfocusedFlag } from "./utilities";
 
 const secrets = {
   appId: "e5709f8be2604869864acfa71a1f8b42",
@@ -83,7 +84,27 @@ function ExamSession() {
   }, []);
 
   useEffect(() => {
-    console.log("Fetching Exam Length");
+    const handleBlur = () => {
+      const currentTime = new Date().toLocaleString();
+      console.log(`[${currentTime}] Window is not focused or minimized`);
+      raiseUnfocusedFlag();
+    };
+
+    const handleFocus = () => {
+      const currentTime = new Date().toLocaleString();
+      console.log(`[${currentTime}] Window is focused`);
+    };
+
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("focus", handleFocus);
+    };
+  }, []);
+
+  useEffect(() => {
     axios.get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`).then((response) => {
       const { startTime, endTime } = response.data;
       setExamName(response.data.examName);
