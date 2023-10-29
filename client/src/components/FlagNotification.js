@@ -105,7 +105,7 @@ const FlagNotification = () => {
             </div>
             <div className="notification-text">
               <p>
-                <span className="bold-underline">{name()}</span> has been flagged for academic misconduct.
+                <span className="bold-underline">Steve Musk</span> has been flagged for academic misconduct.
               </p>
               <p>Would you like to Approve or Deny this flag?</p>
             </div>
