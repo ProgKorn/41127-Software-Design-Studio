@@ -110,7 +110,7 @@ function StudentHomepage() {
         <h1>Student Homepage</h1>
         <Grid container spacing = {1}  className = 'pageCardPadding'>
           <Grid className='grid'>
-          <Grid item xs={4} marginTop={2}>
+          <Grid item xs={4} marginTop={4}>
               <TableContainer component={Paper} elevation={8} className="table-container">
                   <Table sx={{ minWidth: 100 }} aria-label="customized table" className='table'>
                       <TableHead>
@@ -139,7 +139,7 @@ function StudentHomepage() {
                   </Table>
               </TableContainer>  
             </Grid>
-            <Grid item xs={8} marginLeft={4} marginTop={2}>
+            <Grid item xs={8} marginLeft={5} marginTop={4}>
               <TableContainer component={Paper} elevation={8} className="table-container">
                   <Table sx={{ minWidth: 650 }} aria-label="customized table" className='table'>
                   <TableHead>
@@ -216,7 +216,7 @@ function StudentHomepage() {
                 </Table>
               </TableContainer>
             </Grid> */}
-            <Grid xs={12} marginTop={6}>
+            <Grid xs={12} marginRight={4} marginTop={6}>
             <TableContainer component={Paper} elevation={8}>
                     <Table sx={{minWidth: 200}} aria-label="customised table">
                         <TableHead>
