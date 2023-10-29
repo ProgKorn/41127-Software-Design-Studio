@@ -15,7 +15,7 @@ const AdminFlagNotification = () => {
   const [student, setStudent] = useState('');
   const [studentId, setStudentId] = useState('');
 
-  const url = 'http://localhost:4000' + '/flag';
+  const url = process.env.REACT_APP_SERVER_URL + '/flag';
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -37,7 +37,7 @@ const AdminFlagNotification = () => {
       });
     }
 
-    const socket = io('http://localhost' + ':4001'); // Change the URL to match the Socket.IO server URL
+    const socket = io(process.env.REACT_APP_SERVER_URL + ':4001'); // Change the URL to match the Socket.IO server URL
     socket.on('connect', () => {
       console.log(`You connected with id: ${socket.id}`);
       console.log("You are an admin " + isAdmin);
