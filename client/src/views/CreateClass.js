@@ -82,7 +82,7 @@ function CreateClass() {
         var count = 1
         for(var i = 0; i < selectedRows.length; i++)
         {
-          studentsArray.push({studentId: selectedRows[i].studentId, seatNumber: count})
+          studentsArray.push({studentId: selectedRows[i].studentId, seatNo: count})
           count++;
         }
         const requestBody = { 
@@ -91,7 +91,7 @@ function CreateClass() {
           students: studentsArray };
     
         try{
-          const response = await axios.post(process.env.REACT_APP_SERVER_URL +'/class/addClass', requestBody);
+          const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/class/addClass', requestBody);
           console.log('POST request response:', response.data);
           setOpen(false);
         }
@@ -109,11 +109,12 @@ function CreateClass() {
       };
 
       const handleClickSave = () => {
-        if (className == "") {
+        if ((!className.trim().length)) {
             setSnackbarMessage("Error: No Class Name Provided");
+          } else if ((!subjectId.trim().length)) {
             setSnackbarSeverity("error");
             setSnackbarState(true);
-        } else if (subjectId == "") {
+        } else if (subjectId === "") {
             setSnackbarMessage("Error: No Subject Id Provided");
             setSnackbarSeverity("error");
             setSnackbarState(true);

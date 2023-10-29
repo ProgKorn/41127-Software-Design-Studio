@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import "../css/Exam.css";
 import axios from "axios";
 import ObjectRecognition from "./ObjectRecognition";
-//import FlagNotification from "../components/FlagNotification";
+import FlagNotification from "../components/FlagNotification";
 import AgoraRTC from "agora-rtc-sdk-ng";
 
 const secrets = {
@@ -129,6 +129,9 @@ function ExamSession() {
         // Update exam session status to "Completed"
         axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
         //navigate("/examdone");
+        // Update exam session status to "Completed"
+        axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
+        navigate("/examdone");
       }
 
       return () => {
@@ -151,7 +154,8 @@ function ExamSession() {
       {cameraPermission ? (
       <>
         <ObjectRecognition examInProgress={examInProgress} />
-        {/* <FlagNotification /> */}
+        <ObjectRecognition />
+        <FlagNotification />
       </>
       ) : (
         <p>Please grant camera permission to start the exam timer.</p>

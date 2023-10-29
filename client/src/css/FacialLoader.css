@@ -1,0 +1,62 @@
+.wrapper {
+    width: 100px; /* Set the size of the progress bar */
+    height: 100px;
+    position: relative; /* Enable clipping */
+    clip: rect(0px, 100px, 100px, 50px); /* Hide half of the progress bar */
+  }
+  /* Set the sizes of the elements that make up the progress bar */
+  .circle {
+    width: 80px;
+    height: 80px;
+    border: 10px solid green;
+    border-radius: 50px;
+    position: absolute;
+    clip: rect(0px, 50px, 100px, 0px);
+  }
+  /* Using the data attributes for the animation selectors. */
+  /* Base settings for all animated elements */
+  div[data-anim~=base] {
+    animation-iteration-count: 1;  /* Only run once */
+    animation-fill-mode: forwards; /* Hold the last keyframe */
+    animation-timing-function:linear; /* Linear animation */
+  }
+  
+  .wrapper[data-anim~=wrapper] {
+    animation-duration: 0.01s; /* Complete keyframes asap */
+    animation-delay: 3s; /* Wait half of the animation */
+    animation-name: close-wrapper; /* Keyframes name */
+  }
+  
+  .circle[data-anim~=left] {
+    animation-duration: 6s; /* Full animation time */
+    animation-name: left-spin;
+  }
+  
+  .circle[data-anim~=right] {
+    animation-duration: 3s; /* Half animation time */
+    animation-name: right-spin;
+  }
+  /* Rotate the right side of the progress bar from 0 to 180 degrees */
+  @keyframes right-spin {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(180deg);
+    }
+  }
+  /* Rotate the left side of the progress bar from 0 to 360 degrees */
+  @keyframes left-spin {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  /* Set the wrapper clip to auto, effectively removing the clip */
+  @keyframes close-wrapper {
+    to {
+      clip: rect(auto, auto, auto, auto);
+    }
+  }
