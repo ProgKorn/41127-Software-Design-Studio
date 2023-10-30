@@ -22,6 +22,7 @@ function ExamStart() {
   const navigate = useNavigate();
   const {studentId} = useParams();
   const {examId} = useParams();
+  const {seatNo} = useParams();
   console.log("URL Parameters:", studentId, examId);
 
   const fetchExamDetails = async () => {
@@ -53,7 +54,7 @@ function ExamStart() {
   };
 
   const handleButtonClick = () => {
-    navigate(`/examsession/${studentId}/${examId}`);
+    navigate(`/examsession/${studentId}/${examId}/${seatNo}`);
   };
 
   if (loading)

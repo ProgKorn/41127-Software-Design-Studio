@@ -53,7 +53,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/helpcentre" element={<HelpCentre />} />
-          <Route path="/examstart/:studentId/:examId" element={<PrivateRoute element={<ExamStart />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examstart/:studentId/:examId/:seatNo" element={<PrivateRoute element={<ExamStart />} isLoggedIn={isLoggedIn} />} />
           <Route path="/faciallandmarkrecognition" element={<PrivateRoute element={<FacialLandmarkRecognition />} isLoggedIn={isLoggedIn} />} />
           <Route path="/objectrecognition" element={<PrivateRoute element={<ObjectRecognition />} isLoggedIn={isLoggedIn} />} />
           <Route path="/exam/:examId" element={<PrivateRoute element={<Exam />} isLoggedIn={isLoggedIn} />} />
@@ -70,7 +70,7 @@ function App() {
           <Route path="/createclass" element={<PrivateRoute element={<CreateClass />} isLoggedIn={isLoggedIn} />} />
           <Route path="/studenthomepage" element={<PrivateRoute element={<StudentHomepage />} isLoggedIn={isLoggedIn} />} />
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
-          <Route path="/examsession/:studentId/:examId" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examsession/:studentId/:examId/:seatNo" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examdone" element={<PrivateRoute element={<ExamDone />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
           <Route path="/startCall" element={<ThirdPlayground />} />

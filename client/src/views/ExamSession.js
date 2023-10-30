@@ -62,13 +62,14 @@ function ExamSession() {
   const [remainingTime, setRemainingTime] = useState(0);
   const { studentId } = useParams();
   const { examId } = useParams();
+  const {seatNo} = useParams();
   const [examName, setExamName] = useState("");
   const [cameraPermission, setCameraPermission] = useState(false);
   const [examInProgress, setExamInProgress] = useState(false);
 
   const createExamStudent = async () => {
     try {
-      const response = await axios.post(process.env.REACT_APP_SERVER_URL + `/examStudent/createExamStudent/${studentId}/${examId}`);
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + `/examStudent/createExamStudent/${studentId}/${examId}/${seatNo}`);
       console.log("Exam Session Response:", response.data);
     } catch (error) {
       console.error(error);
