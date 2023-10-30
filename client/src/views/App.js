@@ -73,7 +73,7 @@ function App() {
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examsession/:studentId/:examId/:seatNo" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examdone" element={<PrivateRoute element={<ExamDone />} isLoggedIn={isLoggedIn} />} />
-          <Route path="/examverify/:studentId/:examId" element={<PrivateRoute element={<Verify />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examverify/:studentId/:examId/:seatNo" element={<PrivateRoute element={<Verify />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
           <Route path="/startCall" element={<ThirdPlayground />} />
         </Routes>

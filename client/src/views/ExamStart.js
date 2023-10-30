@@ -54,7 +54,7 @@ function ExamStart() {
   };
 
   const handleButtonClick = () => {
-    navigate(`/examsession/${studentId}/${examId}/${seatNo}`);
+    navigate(`/examverify/${studentId}/${examId}/${seatNo}`);
   };
 
   if (loading)
