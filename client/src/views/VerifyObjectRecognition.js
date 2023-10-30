@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as cocossd from "@tensorflow-models/coco-ssd";
-import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
 import {
   cheatingObject,
@@ -19,7 +18,6 @@ function VerifyObjectRecognition({ setContinueFlag }) {
   );
 
   const runModels = async () => {
-    const net = await bodyPix.load();
     const cocoSsdNet = await cocossd.load();
 
     console.log("Models loaded");
