@@ -10,7 +10,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 import { raiseUnfocusedFlag } from "./utilities";
 
 const secrets = {
-  appId: "e5709f8be2604869864acfa71a1f8b42",
+  appId: "2f3c15606b654828ae9a2ba36a4e08a6",
   channelName: "main",
   token: process.env.REACT_APP_AGORA_TOKEN,
 };
@@ -76,6 +76,7 @@ function ExamSession() {
   }
 
   useEffect(() => {
+    startCall();
     if (!examSessionCreated) {
       console.log("Creating Exam Student");
       createExamStudent();
@@ -175,7 +176,6 @@ function ExamSession() {
       {cameraPermission ? (
       <>
         <ObjectRecognition examInProgress={examInProgress} />
-        <ObjectRecognition />
         <FlagNotification />
       </>
       ) : (
