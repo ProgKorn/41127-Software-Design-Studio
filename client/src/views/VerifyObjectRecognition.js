@@ -8,7 +8,7 @@ import {
   bannedObjects,
   notBannedObjects,
   pointDownObjects,
-} from "./utilities2";
+} from "./verifyUtilities";
 import "../css/Exam.css";
 
 function VerifyObjectRecognition({ setContinueFlag }) {
@@ -111,14 +111,6 @@ function VerifyObjectRecognition({ setContinueFlag }) {
     const { videoWidth: width, videoHeight: height } = video;
 
     try {
-      //   const blurCanvas = document.createElement("canvas");
-      //   blurCanvas.width = width;
-      //   blurCanvas.height = height;
-      //   const blurCtx = blurCanvas.getContext("2d");
-
-      //   blurCtx.filter = "blur(10px)";
-      //   blurCtx.drawImage(video, 0, 0, width, height);
-
       const maskCanvas = createMaskImage(bodySegmentation, width, height);
 
       // Draw only banned objects on the mask canvas

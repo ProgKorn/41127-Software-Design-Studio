@@ -39,8 +39,8 @@ function Verify() {
     setTimer(10);
   };
 
-
   return (
+    // max height of 100 vh
     <Box className="main">
       {/* Page Title goes here */}
       <Box className="subtitle">
@@ -77,7 +77,7 @@ function Verify() {
                 variant="determinate"
                 value={100 - timer * 10}
                 color="primary"
-                size={60}
+                size={39}
                 sx={{
                   position: "relative",
                   "& circle": {
@@ -95,14 +95,37 @@ function Verify() {
       </Box>
       {/* Additional logic to control exam continuation */}
       {continueFlag === "continue" ? (
-        // Display any additional content or instructions when continueFlag is "continue"
-        <Box className="additional-instructions">
-          <p>{continueFlag === "continue" && "No cheating objects detected. Please wait for the countdown to complete."}</p>
+        // Apply styling to the "continue" section
+        <Box
+          className="additional-instructions"
+          style={{
+            background: "#2b2d42",
+            padding: "16px",
+            borderRadius: "8px",
+            width: "650px",
+            alignSelf: "center",
+            marginBottom: "48px",
+          }}
+        >
+          <p style={{ color: "white", fontWeight: "bold" }}>
+            {continueFlag === "continue" &&
+              "No cheating objects detected. Please wait for the countdown to complete."}
+          </p>
         </Box>
       ) : (
         // Display a message when continueFlag is "block" or "pointdown"
-        <Box className="exam-instructions">
-          <p>
+        <Box
+          className="exam-instructions"
+          style={{
+            background: "#2b2d42",
+            padding: "16px",
+            borderRadius: "8px",
+            width: "650px",
+            alignSelf: "center",
+            marginBottom: "48px",
+          }}
+        >
+          <p style={{ color: "white", fontWeight: "bold" }}>
             {continueFlag === "pointdown"
               ? "Person detected. Please verify your workspace by pointing your camera down."
               : "Stop! Unauthorized objects detected. Please follow exam instructions."}
