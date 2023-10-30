@@ -174,10 +174,7 @@ function StudentHomepage() {
                           <StyledTableCell align="center">{row.details}</StyledTableCell>
                           <StyledTableCell align="center">{row.seatNo}</StyledTableCell>
                           <StyledTableCell align="center">
-                              {/* <Link to= {`/examstart/${student.studentId}/${row.examId}`} className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
-                                  Access Exam
-                              </Link> */}
-                              <Button component={Link} variant='contained' to="/examstart/${student.studentId}/${row.examId}" className='student-button' sx={buttonStyles}>
+                              <Button component={Link} variant='contained' to={`/examstart/${student.studentId}/${row.examId}`} className='student-button' sx={buttonStyles}>
                                 Access Exam
                               </Button>
                           </StyledTableCell>
