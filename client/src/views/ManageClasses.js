@@ -51,7 +51,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function ManageClasses() {
-	const [isAdmin, setIsAdmin] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(true);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -61,10 +61,11 @@ function ManageClasses() {
 		if (decodedToken.isAdmin === true) {
 			setIsAdmin(true);
 		} else {
+      setIsAdmin(false);
 			navigate('/noaccess'); 
 			}
 		}
-	}, [isAdmin, navigate]);
+	}, [navigate]);
 
   const [selectedRow, setSelectedRow] = React.useState(0);
   const [selectionString, setSelectionString] = React.useState('Select a Class to Begin');

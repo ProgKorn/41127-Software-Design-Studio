@@ -52,7 +52,7 @@ function CreateSession() {
   const offsetDate = new Date(tomorrow.getTime() - (offset*60*1000))
   const reformattedDate = offsetDate.toISOString().split('T')[0];
   
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const [classes, setClasses] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -65,6 +65,7 @@ function CreateSession() {
         setIsAdmin(true);
         fetchClasses();
       } else {
+        setIsAdmin(false);
         navigate("/noaccess");
       }
     }

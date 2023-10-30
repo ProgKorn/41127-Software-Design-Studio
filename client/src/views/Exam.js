@@ -17,7 +17,7 @@ import CardTable from './CardTable';
 import { formatISODate } from '../components/Clock';
 
 function Exam() {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const [exam, setExam] = useState(null);
   const [examStudents, getExamStudents] = useState(null);
   const [loading1, setLoading1] = useState(true);
@@ -52,12 +52,13 @@ function Exam() {
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+        setIsAdmin(false);
         navigate('/noaccess'); 
 	    }
 	  }
     fetchExam();
     fetchExamStudents();
-  }, [isAdmin, navigate]);
+  }, [navigate]);
 
   const columns = [
     'Examinee', 'Student Id', 'Flags', 'Seat Number', 'Status'

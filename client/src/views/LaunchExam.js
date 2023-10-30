@@ -4,7 +4,7 @@ import AdminHeader from '../components/AdminHeader';
 import jwt_decode from 'jwt-decode';
 
 function LaunchExam() {
-	const [isAdmin, setIsAdmin] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(true);
 	const navigate = useNavigate();
   
 	useEffect(() => {
@@ -14,10 +14,11 @@ function LaunchExam() {
 		if (decodedToken.isAdmin === true) {
 		  setIsAdmin(true);
 		} else {
+		  setIsAdmin(false);
 		  navigate('/noaccess'); 
 		  }
 		}
-	}, [isAdmin, navigate]);
+	}, [navigate]);
 	
 	return (
 		<div>

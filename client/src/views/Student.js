@@ -72,7 +72,7 @@ function FlagSection(props) {
 }
 
 function Student() {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const [student, setStudent] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -95,11 +95,12 @@ function Student() {
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+        setIsAdmin(false);
         navigate('/noaccess'); 
 	    }
 	  }
     fetchStudent();
-  }, [isAdmin, navigate]);
+  }, [navigate]);
 
   return loading ? <Loader loading={(loading)} /> 
     :(<div className="Flag">

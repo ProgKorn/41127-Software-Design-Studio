@@ -75,7 +75,7 @@ function FlagLog() {
 
 
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,10 +85,11 @@ function FlagLog() {
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+        setIsAdmin(false);
         navigate("/noaccess");
       }
     }
-  }, [isAdmin, navigate]);
+  }, [navigate]);
 
   return (
     <div>

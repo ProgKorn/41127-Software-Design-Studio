@@ -30,7 +30,7 @@ import CreateClass from '../views/CreateClass';
 import ThirdPlayground from '../KatsAgoraPlayground/startCall';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -38,8 +38,8 @@ function App() {
     const loadingTimeout = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-    if (storedToken) {
-      setIsLoggedIn(true);
+    if (!storedToken) {
+      setIsLoggedIn(false);
     }
     return () => clearTimeout(loadingTimeout);
   }, []);

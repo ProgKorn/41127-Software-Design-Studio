@@ -12,20 +12,21 @@ import jwt_decode from 'jwt-decode';
 import Clock from '../components/Clock';
 
 function AdminDashboard() {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken = jwt_decode(token);
-      if (decodedToken.isAdmin === true) {
+      if (decodedToken && decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+        setIsAdmin(false);
         navigate('/noaccess');
-	    }
-	  }
-  }, [isAdmin, navigate]);
+      }
+    } 
+  }, [navigate]);
 
   const buttonStyles = {
     fontFamily: "Montserrat, sans-serif",
