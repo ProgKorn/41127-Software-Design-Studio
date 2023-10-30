@@ -63,7 +63,15 @@ app.use((req, res, next) => {
   });
 });
 
+// COMMENTED = SERVER ONLY
+// const corsOptions = {
+//   origin: ['http://localhost:3000', 'https://sentinel-frontend.vercel.app'],
+// };
+
+// app.use(cors(corsOptions)); 
+
 app.use(cors());
+
 app.use(bodyParser.json());
 app.use('/flag', flagRoutes);
 app.use('/student', studentRoutes);
