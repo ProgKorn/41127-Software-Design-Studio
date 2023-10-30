@@ -7,7 +7,7 @@ import FaceLoader from '../components/FaceLoader';
 // working on having this be accessible from the db.
 import base64ImageData from '../components/Base64ImageData';
 
-function FacialLandmarkLogin({facialMatch, onLoaderHide}) {
+function FacialLandmarkLogin(facialMatch) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const modelRef = useRef(null);
@@ -147,8 +147,7 @@ function FacialLandmarkLogin({facialMatch, onLoaderHide}) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLoader(false);
-      onLoaderHide();
-    }, 5000);
+    }, 8000);
 
     return () => {
       clearTimeout(timer);

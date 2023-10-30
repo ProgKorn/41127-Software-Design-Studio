@@ -17,6 +17,7 @@ function Login() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const [loginCountdown, setLoginCountdown] = useState(false);
   
   const navigate = useNavigate();
 
@@ -88,15 +89,26 @@ function Login() {
     if (!hasReceivedData && data !== undefined && typeof data === 'boolean') {
       console.log('Received data from child:', data);
       hasReceivedData = true; 
-      capturedData = data; 
+      capturedData = data;
+      setLoginCountdown(true);
     }
     return capturedData; 
   };
+
+  useEffect(() => {
+    if (!loginCountdown) {
+      return; // If loginCountdown is false, return early and don't proceed with the rest of the code.
+    }
   
-  const handleLoaderHide = () => {
-    setShowLoader(false);
-    handleLogin(username.toLowerCase());
-  }
+    const timer = setTimeout(() => {
+      console.log("login");
+      handleLogin(username.toLowerCase());
+    }, 4500);
+  
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [loginCountdown, username]);
 
   return (
     <div className='App'>
@@ -132,7 +144,7 @@ function Login() {
           )}
           {isStudent && (
             <div>
-              <FacialLandmarkLogin sendDataToParent={ handleDataFromChild } onLoaderHide={handleLoaderHide}/>
+              <FacialLandmarkLogin sendDataToParent={ handleDataFromChild }/>
             </div>
           )}
       <div className="error-message-container">
