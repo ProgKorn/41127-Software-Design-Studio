@@ -22,17 +22,16 @@ function VerifyObjectRecognition({ setContinueFlag }) {
 
     console.log("Models loaded");
     setInterval(() => {
-      detect(net, cocoSsdNet);
+      detect(cocoSsdNet);
     }, 40);
   };
 
-  const detect = async (net, cocoSsdNet) => {
+  const detect = async (cocoSsdNet) => {
     if (
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
       const video = webcamRef.current.video;
-      const segmentation = await net.segmentPerson(video);
       const obj = await cocoSsdNet.detect(video);
   
       // Check for banned objects
