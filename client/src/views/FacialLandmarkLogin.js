@@ -126,21 +126,14 @@ function FacialLandmarkLogin(facialMatch) {
         }
     })}
   };
-  
-  let sentData = false;
-  let sentComparisonData = false;
 
   const sendDataToParent = (data) => {
-    if (data !== null && data !== undefined && !sentData) {
-      console.log("how");
-      sentData = true;
+    if (data !== null) {
       facialMatch.sendDataToParent(data);
     }
   };
 
-  if (functionLoading === true && comparisonData !== null && comparisonData !== undefined && !sentComparisonData) {
-    console.log("aiont");
-    sentComparisonData = true;
+  if (functionLoading === true && comparisonData !== null) {
     sendDataToParent(comparisonData);
   }
 
