@@ -17,7 +17,6 @@ function Login() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
   const [loginCountdown, setLoginCountdown] = useState(false);
-  const [cameraMount, setCameraMount] = useState(true);
   
   const navigate = useNavigate();
 
@@ -102,14 +101,14 @@ function Login() {
   
     const timer = setTimeout(() => {
       console.log("login");
-      setCameraMount(false);
       handleLogin(username.toLowerCase());
+      setLoginCountdown(false);
     }, 4500);
   
     return () => {
       clearTimeout(timer);
     };
-  }, [loginCountdown, username]);
+  }, [loginCountdown]);
 
   return (
     <div className='App'>
@@ -143,7 +142,7 @@ function Login() {
               />
             </div>
           )}
-          {isStudent && cameraMount && (
+          {isStudent && (
             <div>
               <FacialLandmarkLogin sendDataToParent={ handleDataFromChild }/>
             </div>

@@ -122,6 +122,7 @@ function FacialLandmarkLogin(facialMatch) {
           };
           setFunctionLoading(true);
         } catch (error) {
+          sendDataToParent(false);
           console.error('Error estimating faces:', error);
         }
     })}
@@ -150,7 +151,7 @@ function FacialLandmarkLogin(facialMatch) {
           });
         }
       }
-    }, 6500);
+    }, 6000);
   
     return () => {
       clearTimeout(timer);
