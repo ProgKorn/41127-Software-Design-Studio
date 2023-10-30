@@ -103,7 +103,7 @@ function StudentHomepage() {
         navigate("/login");
         setLoading(false);
       }
-    }, [isAdmin, navigate]); // End of useEffect
+    }, [navigate]); // End of useEffect
   
 
    //wait for all information to be retrieved before loading the student homepage

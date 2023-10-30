@@ -33,17 +33,20 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const loadingTimeout = setTimeout(() => {
+    const checkToken = () => {
+      const storedToken = localStorage.getItem('token');
+      setIsLoggedIn(!!storedToken); 
       setIsLoading(false);
-      if (!storedToken) {
-        setIsLoggedIn(false);
-      }
-    }, 3000);
-    return () => clearTimeout(loadingTimeout);
-  }, []);
+    };
 
-  return isLoading ? (
+    checkToken();
+
+    const tokenCheckInterval = setInterval(checkToken, 10); 
+
+    return () => clearInterval(tokenCheckInterval); 
+  }, [])
+
+  return isLoading && isLoggedIn ? (
     <div> <Loader loading={isLoading}/> </div>
   ) : (
     // Routing setup for individual pages
