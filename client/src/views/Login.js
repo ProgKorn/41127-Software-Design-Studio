@@ -8,7 +8,6 @@ import SignInHeader from '../components/SignInHeader'
 import { Checkbox } from '@mui/material';
 import Loader from '../components/Loader';
 import FacialLandmarkLogin from './FacialLandmarkLogin';
-import FaceLoader from '../components/FaceLoader';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -17,6 +16,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
   
   const navigate = useNavigate();
 
@@ -92,6 +92,11 @@ function Login() {
     }
     return capturedData; 
   };
+  
+  const handleLoaderHide = () => {
+    setShowLoader(false);
+    handleLogin(username.toLowerCase());
+  }
 
   return (
     <div className='App'>
@@ -127,7 +132,7 @@ function Login() {
           )}
           {isStudent && (
             <div>
-              <FacialLandmarkLogin sendDataToParent={ handleDataFromChild } />
+              <FacialLandmarkLogin sendDataToParent={ handleDataFromChild } onLoaderHide={handleLoaderHide}/>
             </div>
           )}
       <div className="error-message-container">

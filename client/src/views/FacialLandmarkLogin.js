@@ -2,11 +2,12 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as facemesh from '@tensorflow-models/face-landmarks-detection';
 import LoadingOverlay from '../components/Initialise';
 import '../css/FacialLoader.css';
+import FaceLoader from '../components/FaceLoader';
 // this is currently a hard coded image for the sake of demo. we can add different images to test different users. 
 // working on having this be accessible from the db.
-import base64ImageData from '../components/Base64ImageData'; 
+import base64ImageData from '../components/Base64ImageData';
 
-function FacialLandmarkLogin(facialMatch) {
+function FacialLandmarkLogin({facialMatch, onLoaderHide}) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const modelRef = useRef(null);
@@ -14,6 +15,7 @@ function FacialLandmarkLogin(facialMatch) {
   const [loading, setLoading] = useState(true);
   const [functionLoading, setFunctionLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     async function loadModel() {
@@ -125,13 +127,33 @@ function FacialLandmarkLogin(facialMatch) {
     })}
   };
   
+  let sentData = false;
+  let sentComparisonData = false;
+
   const sendDataToParent = (data) => {
-    facialMatch.sendDataToParent(data);
+    if (data !== null && data !== undefined && !sentData) {
+      console.log("how");
+      sentData = true;
+      facialMatch.sendDataToParent(data);
+    }
   };
 
-  if (functionLoading === true) {
+  if (functionLoading === true && comparisonData !== null && comparisonData !== undefined && !sentComparisonData) {
+    console.log("aiont");
+    sentComparisonData = true;
     sendDataToParent(comparisonData);
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLoader(false);
+      onLoaderHide();
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div style={{ position: 'relative', width: '640px', height: '480px', margin: 'auto', textAlign: 'center' }}>
@@ -143,26 +165,29 @@ function FacialLandmarkLogin(facialMatch) {
           style={{
             display: 'block',
             margin: '0 auto',
+            opacity: 0.4,
           }}
           ref={videoRef}
         />
-        {!loading && isPlaying && ( 
-          <div
-            className="wrapper"
-            data-anim="base wrapper"
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              zIndex: 3,
-            }}
-          >
-            <div className="circle" data-anim="base left"></div>
-            <div className="circle" data-anim="base right"></div>
-          </div>
+        {!loading && isPlaying && showLoader && ( 
+          // <div
+          //   className="wrapper"
+          //   data-anim="base wrapper"
+          //   style={{
+          //     position: 'absolute',
+          //     top: '50%',
+          //     left: '50%',
+          //     transform: 'translate(-50%, -50%)',
+          //     zIndex: 3,
+          //   }}
+          // >
+          //   <div className="circle" data-anim="base left"></div>
+          //   <div className="circle" data-anim="base right"></div>
+          // </div>
+          <FaceLoader loading={showLoader}/>
+          // <FaceLoader loading={!functionLoading}/>
         )}
-        <canvas
+        {/* <canvas
           ref={canvasRef}
           width="640"
           height="480"
@@ -170,7 +195,7 @@ function FacialLandmarkLogin(facialMatch) {
             position: 'absolute',
             transform: 'translate(-100%)',
           }}
-        />
+        /> */}
       </div>
       {loading && <LoadingOverlay />}
     </div>
