@@ -49,19 +49,18 @@ useEffect(() => {
     }
   }
   fetchFlag();
-}, [navigate]);
+}, [isAdmin, navigate]);
 
 return loading ? <Loader loading={(loading)} /> 
 :(<div className="Flag">
   <AdminHeader/>
-    <h1>Flag Details</h1>
+    <h1 style={{ padding: 0 }}>Flag Details</h1>
     <Grid container spacing={2} columns={16} className='pageCardPadding'>
-      <Grid item xs={8}>
+      <Grid item xs={8} style={{ height: '80vh' }}>
         <Card title={"Examinee"} half>
         <CardTable 
           columns={["Student ID", "Name", "Email"]}
           rows={[student.studentId, `${student.name.firstName} ${student.name.lastName}`, student.email]}
-          headerWidth={150}
         />
         {/*commented out the creepy face image url */}
         {/*   <div style={{ display: 'flex'}}>
@@ -80,13 +79,14 @@ return loading ? <Loader loading={(loading)} />
         </div>  */}
         </Card>
         <Card title={"Exam Details"} half>
-          <CardTable 
+          <div style={{ height: '30vh', width: '100%', overflow: 'auto'}}><CardTable 
             columns={["Exam ID", "Name", "Details", "Start Time", "End Time"]}
             rows={[exam.examId, exam.examName, exam.details, formatISODate(exam.startTime), formatISODate(exam.endTime)]}
             />
+          </div>
         </Card>
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={8} style={{ height: '80vh' }}>
         <Card title={"Flag Report"}>
           <div className='flagDetailSection'>
             <div className='flagDetailContainer'>
@@ -106,12 +106,12 @@ return loading ? <Loader loading={(loading)} />
               </div>
             </div>
           </div>
-          <div className='flagVideoSection'>
+          <div className='flagVideoSection' >
             <div className='flagVideoTitle'>
               Flagged Clip
             </div>
             {/* Placeholder for flagged */}
-            <div style={{ height: 400, 
+            <div style={{ height: '30vh', 
                 width: '90%', 
                 margin: 'auto', 
                 backgroundColor: 'aliceblue', 

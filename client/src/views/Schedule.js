@@ -24,8 +24,9 @@ function Schedule() {
   const fetchExamDetails = async () => {
     try {
       const response = await axios.get(process.env.REACT_APP_SERVER_URL + "/exam/getExamDetails");
-      setExams(response.data);
-      setSelectedExam(response.data[0]);
+      const orderedExams = response.data.sort((a,b)=>{return new Date(a.startTime) - new Date(b.startTime)})
+      setExams(orderedExams);
+      setSelectedExam(orderedExams[0]);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -45,7 +46,7 @@ function Schedule() {
 	    }
 	  }
     fetchExamDetails();
-  }, [navigate]);
+  }, [isAdmin, navigate]);
 
   const buttonStyles = {
     fontFamily: "Montserrat, sans-serif",
@@ -53,19 +54,20 @@ function Schedule() {
     fontWeight: 500,
     textTransform: 'Capitalize',
     color: 'white',
-    backgroundColor: "#292E64"
+    backgroundColor: "#292E64",
+    '&:hover': {
+      backgroundColor: '#a03421'
+    },
   }
 
   return loading ? <Loader loading={loading} /> : (
 		<div className="Schedule">
 			<AdminHeader/>
-			<h1>Exam Schedule</h1>
-			<div className='pageCardPadding'>
+			<div className='pageCardPadding' style={{paddingTop: 20}}>
 				<Card title={"Upcoming Examinations"}>
 					<div className='scheduleContainer'>
-						<div style={{ width: '30%'}}>
-              {exams && <div className='scheduleTitleSection'>
-                In {new Date(exams[0].startTime).toLocaleString('default', { month: 'long', year: 'numeric' })}
+						<div style={{ width: '30%', overflowY: 'auto'}}>
+              {exams && <div style={{ paddingTop: 20 }}>
               </div>}
               {exams && exams.map((exam) => (
               <div className='scheduleSmallCard' 
@@ -87,17 +89,17 @@ function Schedule() {
               </div>))}
 						</div>
 						{selectedExam && <div className='scheduleLargeCard'>
-              <div style={{ fontWeight: 'bold',  fontSize: '1.8rem'}}>
+              <div style={{ fontWeight: 'bold', fontSize: '1.7rem'}}>
                 {selectedExam.examName}
               </div>
-              <div style={{ paddingTop: 40, fontSize: '1.3rem' }}>
+              <div style={{ paddingTop: 40, fontSize: '1.2rem' }}>
                 {(formatISODate(new Date(selectedExam.startTime)))} - {formatISODate((new Date(selectedExam.endTime)))}
               </div>
-              <div style={{ paddingTop: 20, fontSize: '1.3rem' }}>
+              <div style={{ paddingTop: 20, fontSize: '1.2rem' }}>
                 Exam ID: {selectedExam.examId}
               </div>
               <div style={{ paddingTop: 20 }}>
-              <a href={`/exam/${selectedExam.examId}`} style={{ color: 'blue',  fontSize: '1.3rem' }}>
+              <a href={`/exam/${selectedExam.examId}`} style={{ color: 'blue',  fontSize: '1.2rem' }}>
                 Show Exam Details</a></div>
               <div className='scheduleButtonContainer'>
                 <Button component={Link} to="/launchExam" sx={buttonStyles} className="scheduleButton" variant="contained">

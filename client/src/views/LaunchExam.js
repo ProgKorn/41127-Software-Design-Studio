@@ -18,7 +18,7 @@ function LaunchExam() {
 		  navigate('/noaccess'); 
 		  }
 		}
-	}, [navigate]);
+	}, [isAdmin, navigate]);
 	
 	return (
 		<div>
