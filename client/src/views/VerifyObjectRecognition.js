@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as cocossd from "@tensorflow-models/coco-ssd";
+import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
 import {
   cheatingObject,
@@ -18,20 +19,22 @@ function VerifyObjectRecognition({ setContinueFlag }) {
   );
 
   const runModels = async () => {
+    const net = await bodyPix.load()
     const cocoSsdNet = await cocossd.load();
 
     console.log("Models loaded");
     setInterval(() => {
-      detect(cocoSsdNet);
+      detect(net, cocoSsdNet);
     }, 40);
   };
 
-  const detect = async (cocoSsdNet) => {
+  const detect = async (net, cocoSsdNet) => {
     if (
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
       const video = webcamRef.current.video;
+      const segmentation = await net.segmentPerson(video);
       const obj = await cocoSsdNet.detect(video);
   
       // Check for banned objects
