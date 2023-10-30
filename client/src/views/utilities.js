@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 const incidents = []; // Active Incidents
 export const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
 
-const url = 'http://localhost:4000/flag';
+const url = process.env.REACT_APP_SERVER_URL +'/flag';
 
 const token = localStorage.getItem('token');
 var decodedToken, studentId;
@@ -12,7 +12,7 @@ var decodedToken, studentId;
 if (token) {
   decodedToken = jwtDecode(token);
   // Do a lookup in the StudentDetails collection to get their studentId using their email
-  const studenturl = "http://localhost:4000/student/get/" + decodedToken.userName;
+  const studenturl = process.env.REACT_APP_SERVER_URL + "/student/get/" + decodedToken.userName;
   axios.get(studenturl).then((response) => {
     studentId = response.data.studentId; // Extract the studentId
   });
@@ -21,10 +21,15 @@ if (token) {
 // Get the examId from the studentId -- would need to look at ExamStudent (maybe filtering for whichever document has status: "Active")
 // Fetch examId from here, and then sessionName from that examId
 
-/* const examurl = "http://localhost:4000/%examstudent%" + studentId;
+/* const examurl = process.env.REACT_APP_SERVER_URL + "/%examstudent%" + studentId;
 axios.get(examurl).then((response) => {
   examId = response.data.examId;
 }); */
+
+export function raiseUnfocusedFlag() {
+  const timestamp = Date.now();
+  incidentCheck(timestamp, "Unfocused Window");
+}
 
 export const cheatingObject = (detections) => {
   var personCounter = 0; // Keep track of how many people are in the frame

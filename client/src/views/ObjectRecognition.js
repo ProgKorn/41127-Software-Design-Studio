@@ -4,16 +4,31 @@ import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
 import { cheatingObject, drawRect, bannedObjects } from "./utilities";
 import "../css/Exam.css";
+import useVideoStore from "./VideoStore";  // Video storage function
+import { useParams } from "react-router-dom";
 
-function ObjectRecognition() {
+function ObjectRecognition({ examInProgress }) {
   const webcamRef = useRef(null);
-  const canvasRef = useRef(null);
+  const { studentId, examId } = useParams();
+
+
+  const {
+    canvasRef,
+    recording,
+    recordedChunks,
+    videoSaved,
+    startRecording,
+    stopRecording} = useVideoStore(studentId, examId);
 
   const runModels = async () => {
     const net = await bodyPix.load();
     const cocoSsdNet = await cocossd.load();
 
     console.log('Models loaded');
+
+    // Start the recording here
+    startRecording(canvasRef);
+
     setInterval(() => {
       detect(net, cocoSsdNet);
     }, 40);
@@ -28,6 +43,7 @@ function ObjectRecognition() {
       const canvas = canvasRef.current;
       const segmentation = await net.segmentPerson(video);
       const obj = await cocoSsdNet.detect(video);
+
       drawBody(segmentation, obj);  // Pass detected objects here
 
       drawRect(obj, canvas.getContext("2d"));
@@ -116,7 +132,13 @@ function ObjectRecognition() {
     }
   };
 
-  useEffect(() => { runModels() }, []);
+  useEffect(() => {
+    runModels();
+    
+    if (!examInProgress) {
+      stopRecording();
+    }
+  }, [examInProgress]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>

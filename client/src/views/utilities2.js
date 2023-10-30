@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 
 const incidents = []; // Active Incidents
 export const bannedObjects = ["cell phone" ]; // Array of banned objects
-export const notBannedObjects = ["keyboard", "mouse"]
+export const notBannedObjects = ["keyboard", "mouse", "laptop"]
 export const pointDownObjects = ["person"]
 
 // const url = 'http://localhost:4000/flag';

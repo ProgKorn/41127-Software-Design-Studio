@@ -50,6 +50,20 @@ function ResponsiveAppBar({routes, type, icons}) {
     setAnchor(null);
   };
 
+  const handleSentinelClick = () => {
+    try {
+      const token = localStorage.getItem('token');
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        navigate('/admin');
+      } else {
+        navigate('/studenthomepage');
+      }
+    } catch (error) {
+      navigate('/');
+    }
+  }
+
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -97,7 +111,7 @@ function ResponsiveAppBar({routes, type, icons}) {
             <Box sx={{ flexGrow: 1 }}>
               <AppBar position="static" sx={{ backgroundColor: "#2b2d42"}}>
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Button component={Link} to='/'>
+                  <Button onClick={handleSentinelClick}>
                     <img src={logo} className="Mini-logo" alt="Logo" />
                     <div style={{ fontFamily: 'Montserrat, sans-serif', color: 'white', paddingLeft: 10 }}>Sentinel</div>
                   </Button>
@@ -124,7 +138,7 @@ function ResponsiveAppBar({routes, type, icons}) {
             <AppBar position="static" sx={{ backgroundColor: "#2b2d42"}}>
               <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                  <Button component={Link} to='/'>
+                  <Button onClick={handleSentinelClick}>
                     <img src={logo} className="Mini-logo" alt="Logo" />
                     <div style={{ fontFamily: 'Montserrat, sans-serif', color: 'white', paddingLeft: 10 }}>Sentinel</div>
                   </Button>

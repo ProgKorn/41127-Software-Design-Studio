@@ -1,0 +1,85 @@
+.adminExamSession {
+  width: 100%;
+}
+
+#remoteContainer {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  align-items: center;
+  justify-content: center;
+}
+
+#remoteContainer1 video {
+  height: auto;
+  position: relative !important;
+}
+
+.videoContainer {
+  padding: 5px;
+  max-width: 20%;
+  max-height: 26vh;
+}
+
+/* one item */
+.videoContainer:first-child:nth-last-child(1) {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* two items */
+.videoContainer:first-child:nth-last-child(2),
+.videoContainer:first-child:nth-last-child(2) ~ .videoContainer {
+  max-width: 50%;
+  max-height: 100%;
+}
+
+/* three items */
+div.videoContainer:first-child:nth-last-child(3),
+.videoContainer:first-child:nth-last-child(3) ~ .videoContainer {
+  max-width: 30%;
+  max-height: 20%;
+}
+
+/* four items */
+.videoContainer:first-child:nth-last-child(4),
+.videoContainer:first-child:nth-last-child(4) ~ .videoContainer {
+  max-width: 50%;
+  max-height: 40vh;
+}
+
+/* five items */
+.videoContainer:first-child:nth-last-child(5),
+.videoContainer:first-child:nth-last-child(5) ~ .videoContainer {
+  max-width: 30%;
+  max-height: 40vh;
+}
+
+/* six items */
+.videoContainer:first-child:nth-last-child(6),
+.videoContainer:first-child:nth-last-child(6) ~ .videoContainer {
+  max-width: 30%;
+  max-height: 40vh;
+}
+
+/* seven items */
+.videoContainer:first-child:nth-last-child(7),
+.videoContainer:first-child:nth-last-child(7) ~ .videoContainer {
+  max-width: 24%;
+  max-height: 40vh;
+}
+
+/* eight items */
+.videoContainer:first-child:nth-last-child(8),
+.videoContainer:first-child:nth-last-child(8) ~ .videoContainer {
+  max-width: 24%;
+  max-height: 40vh;
+}
+
+/* nine items */
+.videoContainer:first-child:nth-last-child(9),
+.videoContainer:first-child:nth-last-child(9) ~ .videoContainer {
+  max-width: 30%;
+  max-height: 26vh;
+}

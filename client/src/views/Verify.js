@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -13,6 +13,7 @@ function Verify() {
   const [timer, setTimer] = useState(10); // Timer for the continue button
 
   const navigate = useNavigate();
+  const { studentId, examId } = useParams(); // Get studentId and examId from URL parameters
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -29,7 +30,7 @@ function Verify() {
 
   const handleContinueClick = () => {
     if (continueFlag === "continue") {
-      navigate("/examsession");
+      navigate(`/examsession/${studentId}/${examId}`);
     }
   };
 
@@ -37,6 +38,7 @@ function Verify() {
     setShowContinueButton(false);
     setTimer(10);
   };
+
 
   return (
     <Box className="main">

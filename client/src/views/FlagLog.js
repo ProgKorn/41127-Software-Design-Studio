@@ -1,82 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "../components/AdminHeader";
-import { Button, Grid, Chip } from "@mui/material";
-import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
+import LinkIcon from '@mui/icons-material/Link';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import "../css/AdminTables.css";
 import StatusChip from "../components/StatusChip";
 import axios from "axios";
 import Card from "../components/Card";
 import jwt_decode from "jwt-decode";
-
-function createData(session, examinee, flag, status, flag_no, session_no) {
-  return { session, examinee, flag, status, flag_no, session_no };
-}
-
-const rows = [
-  createData("Student 1", 159, 6.0, "Resolved", 4.0, 1),
-  createData("Student 2", 237, 9.0, "Pending", 4.3, 1),
-  createData("Student 3", 262, 16.0, "Terminated", 6.0, 1),
-  createData("Student 4", 305, 3.7, "Resolved", 4.3, 1),
-  createData("Student 5", 356, 16.0, "Terminated", 3.9, 1),
-];
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.white,
-    color: theme.palette.common.black,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 1148,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+import Loader from "../components/Loader";
 
 function FlagLog() {
-  const [flagList, setFlags] = React.useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/flag/getAllFlags")
-      .then((flagList) => {
-        setFlags(flagList.data)
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:4000/flag/getAllFlags",{
-  //       method: "GET",
-  //     })
-  //     .then((res) => setFlags(res.json))
-  //     .then(data =>{
-  //       HTMLFormControlsCollection.log(data, "flagData");
-  //     });
-  // }, []);
-
-
-
+  const [flags, setFlags] = React.useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const fetchFlagDetails = async () => {
+    try {
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL + "/flag/getAllFlags");
+      const initialFlags = response.data
+      setFlags(initialFlags);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -88,46 +44,53 @@ function FlagLog() {
         navigate("/noaccess");
       }
     }
+    fetchFlagDetails();
   }, [isAdmin, navigate]);
 
-  return (
-    <div>
+  const columns = [
+    'Session', 'Examinee ID', 'Flag Type', 'Status', 'Exam ID', 'Link'
+  ]
+
+  const tableTitleTextStyle = {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 700, 
+    color: 'rgb(85, 89, 130)'
+  }
+
+  const StyledTableCell = styled(TableCell)(() => ({
+    fontFamily: 'Montserrat, sans-serif'
+  }));
+
+  return loading ? <Loader loading={true} /> : <div>
       <AdminHeader />
-      <div class="adminTable">
-        <Card title={"Flagged Incidents"}>
-          <TableContainer component={Paper}>
+      <div class="adminTable" style={{ height: '80vh'}}>
+        <Card title={"Flagged Incidents"} style={{ height: '100%'}}>
+          <TableContainer style={{overflow: 'auto', maxWidth: '100%', height: '90%'}}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">Session</StyledTableCell>
-                  <StyledTableCell align="center">Examinee</StyledTableCell>
-                  <StyledTableCell align="center">Flag</StyledTableCell>
-                  <StyledTableCell align="center">Status</StyledTableCell>
-                  <StyledTableCell align="center">Flag No.</StyledTableCell>
-                  <StyledTableCell align="center">Session No.</StyledTableCell>
+              <TableRow>
+                  {columns.map((col) => (
+                    <TableCell  sx={tableTitleTextStyle} align='center' style={{fontFamily: 'Montserrat, sans-serif'}}>
+                      {col}
+                    </TableCell>
+                  ))}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {flagList.map((flag) => (
+                {flags && flags.map((flag) => (
                   <TableRow>
-                    <TableCell align="center">{flag.sessionName}</TableCell>
-                    <TableCell align="center">{flag.studentId}</TableCell>
-                    <TableCell align="center">{flag.description}</TableCell>
-                    {/* <TableCell align="center" className={"label label-"+flag.status}>{flag.status}</TableCell> */}
-                    {/* <TableCell align="center">
-                      <Chip
-                        label={flag.status}
-                      />
-                    </TableCell> */}
-                    <TableCell align="center">
+                    <StyledTableCell align="center">{flag.sessionName}</StyledTableCell>
+                    <StyledTableCell align="center">{flag.studentId}</StyledTableCell>
+                    <StyledTableCell align="center">{flag.description}</StyledTableCell>
+                    <StyledTableCell align="center">
                       <StatusChip status={flag.status} />
-                    </TableCell>
-                    <TableCell align="center">{
-					<a href={`/flag/${flag.flagId}`} style={{ color: 'black' }}>
-                        {flag.flagId}
-                    </a>
-					}</TableCell>
-                    <TableCell align="center">{flag.examId}</TableCell>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">{flag.examId}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      <a href={`/flag/${flag.flagId}`} >
+                          <LinkIcon/>
+                      </a>
+					          </StyledTableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -135,8 +98,6 @@ function FlagLog() {
           </TableContainer>
         </Card>
       </div>
-    </div>
-  );
-}
+    </div>}
 
 export default FlagLog;
