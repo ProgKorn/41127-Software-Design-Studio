@@ -140,12 +140,23 @@ function FacialLandmarkLogin(facialMatch) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLoader(false);
-    }, 8000);
-
+      console.log("unmount");
+      if (videoRef.current) {
+        const stream = videoRef.current.srcObject;
+        if (stream) {
+          const tracks = stream.getTracks();
+          tracks.forEach((track) => {
+            track.stop();
+          });
+        }
+      }
+    }, 6500);
+  
     return () => {
       clearTimeout(timer);
     };
   }, []);
+  
 
   return (
     <div style={{ position: 'relative', width: '640px', height: '480px', margin: 'auto', textAlign: 'center' }}>
