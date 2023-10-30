@@ -27,6 +27,7 @@ import Loader from '../components/Loader';
 import ExamDone from './ExamDone';
 import CreateClass from '../views/CreateClass';
 import ThirdPlayground from '../KatsAgoraPlayground/startCall';
+import Verify from './Verify';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -72,6 +73,7 @@ function App() {
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examsession/:studentId/:examId/:seatNo" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examdone" element={<PrivateRoute element={<ExamDone />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/examverify/:studentId/:examId" element={<PrivateRoute element={<Verify />} isLoggedIn={isLoggedIn} />} />
           <Route path="/noaccess" element={<NoAccess />} />
           <Route path="/startCall" element={<ThirdPlayground />} />
         </Routes>
