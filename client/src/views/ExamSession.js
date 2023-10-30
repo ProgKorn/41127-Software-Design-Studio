@@ -175,7 +175,6 @@ function ExamSession() {
       {cameraPermission ? (
       <>
         <ObjectRecognition examInProgress={examInProgress} />
-        <ObjectRecognition />
         <FlagNotification />
       </>
       ) : (
