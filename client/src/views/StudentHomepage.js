@@ -147,9 +147,6 @@ function StudentHomepage() {
                           <StyledTableCell colSpan={4} align = 'left' style={{ height: '40px' }}>Upcoming Exams</StyledTableCell>
                           <StyledTableCell colSpan={4}  align = 'right'>
                               <div className=".button-container-student">
-                              {/* <Link to="/previousexams" className="student-button" style= {{ width:'250px', display:'inline-flex', textAlign:'center', fontSize: '19px', height:'35px'}}>
-                                  View Previous Exams
-                              </Link> */}
                               </div>
                           </StyledTableCell>
                       </TableRow>
@@ -185,34 +182,6 @@ function StudentHomepage() {
               </TableContainer>
               </Grid>
             </Grid>
-            {/* <Button component={Link} to='/previousexams' variant="contained" className='student-button' sx={buttonStyles}>
-                                View Previous Exams
-                              </Button> */}
-            {/* <Grid item xs={11.70} style = {{marginTop: '80px'}} className='grid'> 
-              <TableContainer component={Paper} elevation={8} className="table-container">
-                <Table sx={{ width: '100%' }} aria-label="customized table">
-                  <TableHead>
-                      <TableRow>
-                          <StyledTableCell align = 'left'>Test Your Equipment </StyledTableCell>
-                      </TableRow>
-                  </TableHead>
-                  <TableBody>
-                  <TableRow>
-                          <TableCell align="left" style = {{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif', fontSize: "1em"}} >It is highly advised that you check your computer system you are using beforehand to ensure a smooth online testing experience.</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell align= 'left'>
-                        <div className=".button-container-student">
-                              <Link to="/testequipment" className="student-button" style= {{ width:'200px', display:'inline-flex', textAlign:'center', fontSize: '19px'}}>
-                                  Run System Test
-                              </Link>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid> */}
             <Grid xs={12} marginRight={4} marginTop={6}>
             <TableContainer component={Paper} elevation={8}>
                     <Table sx={{minWidth: 200}} aria-label="customised table">
