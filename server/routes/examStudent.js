@@ -11,10 +11,10 @@ router.get('/', (req, res) => {
 //TODO: Get associated seat No and remove Hardcoding
 
 //Post request to create Exam-Students when an Exam Session starts
-router.post('/createExamStudent/:studentId/:examId', async (req, res) => {
+router.post('/createExamStudent/:studentId/:examId/:seatNo', async (req, res) => {
     try {
       const newExamStudent = new ExamStudent ({ 
-        seatNo: 21,
+        seatNo: req.params.seatNo,
         examId: req.params.examId, 
         studentId: req.params.studentId, 
         status: "Active"

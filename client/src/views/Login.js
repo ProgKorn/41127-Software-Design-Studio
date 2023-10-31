@@ -8,7 +8,6 @@ import SignInHeader from '../components/SignInHeader'
 import { Checkbox } from '@mui/material';
 import Loader from '../components/Loader';
 import FacialLandmarkLogin from './FacialLandmarkLogin';
-import FaceLoader from '../components/FaceLoader';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -17,6 +16,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
+  const [loginCountdown, setLoginCountdown] = useState(false);
   
   const navigate = useNavigate();
 
@@ -88,10 +88,27 @@ function Login() {
     if (!hasReceivedData && data !== undefined && typeof data === 'boolean') {
       console.log('Received data from child:', data);
       hasReceivedData = true; 
-      capturedData = data; 
+      capturedData = data;
+      setLoginCountdown(true);
     }
     return capturedData; 
   };
+
+  useEffect(() => {
+    if (!loginCountdown) {
+      return; // If loginCountdown is false, return early and don't proceed with the rest of the code.
+    }
+  
+    const timer = setTimeout(() => {
+      console.log("login");
+      handleLogin(username.toLowerCase());
+      setLoginCountdown(false);
+    }, 4500);
+  
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [loginCountdown]);
 
   return (
     <div className='App'>
@@ -127,7 +144,7 @@ function Login() {
           )}
           {isStudent && (
             <div>
-              <FacialLandmarkLogin sendDataToParent={ handleDataFromChild } />
+              <FacialLandmarkLogin sendDataToParent={ handleDataFromChild }/>
             </div>
           )}
       <div className="error-message-container">

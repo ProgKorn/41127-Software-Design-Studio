@@ -13,7 +13,7 @@ function Verify() {
   const [timer, setTimer] = useState(10); // Timer for the continue button
 
   const navigate = useNavigate();
-  const { studentId, examId } = useParams(); // Get studentId and examId from URL parameters
+  const { studentId, examId, seatNo } = useParams(); // Get studentId and examId from URL parameters
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -30,7 +30,7 @@ function Verify() {
 
   const handleContinueClick = () => {
     if (continueFlag === "continue") {
-      navigate(`/examsession/${studentId}/${examId}`);
+      navigate(`/examsession/${studentId}/${examId}/${seatNo}`);
     }
   };
 

@@ -10,7 +10,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 import { raiseUnfocusedFlag } from "./utilities";
 
 const secrets = {
-  appId: "e5709f8be2604869864acfa71a1f8b42",
+  appId: "2f3c15606b654828ae9a2ba36a4e08a6",
   channelName: "main",
   token: process.env.REACT_APP_AGORA_TOKEN,
 };
@@ -62,13 +62,14 @@ function ExamSession() {
   const [remainingTime, setRemainingTime] = useState(0);
   const { studentId } = useParams();
   const { examId } = useParams();
+  const {seatNo} = useParams();
   const [examName, setExamName] = useState("");
   const [cameraPermission, setCameraPermission] = useState(false);
   const [examInProgress, setExamInProgress] = useState(false);
 
   const createExamStudent = async () => {
     try {
-      const response = await axios.post(process.env.REACT_APP_SERVER_URL + `/examStudent/createExamStudent/${studentId}/${examId}`);
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + `/examStudent/createExamStudent/${studentId}/${examId}/${seatNo}`);
       console.log("Exam Session Response:", response.data);
     } catch (error) {
       console.error(error);
