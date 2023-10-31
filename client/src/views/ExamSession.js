@@ -10,7 +10,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 import { raiseUnfocusedFlag } from "./utilities";
 
 const secrets = {
-  appId: "2f3c15606b654828ae9a2ba36a4e08a6",
+  appId: process.env.REACT_APP_AGORA_APP_ID,
   channelName: "main",
   token: process.env.REACT_APP_AGORA_TOKEN,
 };
