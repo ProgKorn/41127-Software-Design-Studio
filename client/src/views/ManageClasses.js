@@ -18,7 +18,7 @@ function ManageClasses() {
   const [exam, setExam] = useState(null);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const navigate = useNavigate();
 
   const fetchDetails = async () => {
@@ -44,6 +44,7 @@ function ManageClasses() {
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+      setIsAdmin(false);
         navigate('/noaccess'); 
 	    }
 	  }

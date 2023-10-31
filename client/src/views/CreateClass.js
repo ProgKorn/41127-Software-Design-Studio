@@ -36,7 +36,7 @@ const tableTitleTextStyle = {
   }
 
 function CreateClass() {
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(true);
     const [className, setClassName] = useState(" ");
     const [subjectId, setSubjectId] = useState(" ");
     const [loading, setLoading] = useState(true);
@@ -59,11 +59,12 @@ function CreateClass() {
         if (decodedToken.isAdmin === true) {
           setIsAdmin(true);
         } else {
+          setIsAdmin(false);
           navigate("/noaccess");
         }
       }
       fetchStudents();
-    }, [isAdmin, navigate]);
+    }, [navigate]);
 
 
       const fetchStudents = async() => {

@@ -13,7 +13,7 @@ import { formatISODate } from '../components/Clock';
 
 //TODO: Add the Flagged Clip
 function Flag() {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const [flag, setFlag] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -44,6 +44,7 @@ useEffect(() => {
     if (decodedToken.isAdmin === true) {
       setIsAdmin(true);
     } else {
+      setIsAdmin(false);
       navigate('/noaccess'); 
     }
   }

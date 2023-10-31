@@ -18,7 +18,7 @@ function Schedule() {
   const [exams, setExams] = useState(null);
   const [selectedExam, setSelectedExam] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const navigate = useNavigate();
 
   const fetchExamDetails = async () => {
@@ -41,6 +41,7 @@ function Schedule() {
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+        setIsAdmin(false);
         navigate('/noaccess'); 
 	    }
 	  }

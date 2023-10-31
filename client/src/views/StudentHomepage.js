@@ -39,6 +39,7 @@ function StudentHomepage() {
     const [studentId, setStudentId] = useState(' ');
     const [loading, setLoading] = useState(true); // loading state that prevents access to undefined data, while waiting to get a response from api call
     const [exam, getExam] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(true);
     const navigate = useNavigate();
 
     const buttonStyles = {
@@ -67,6 +68,13 @@ function StudentHomepage() {
       if (token) {
         const decodedToken = jwt_decode(token);
         const studenturl = process.env.REACT_APP_SERVER_URL + "/student/get/" + decodedToken.userName;
+        
+        if (decodedToken && decodedToken.isAdmin === true) {
+          setIsAdmin(true);
+          navigate('/noaccess');
+        } else {
+          setIsAdmin(false);
+        }
   
         axios.get(studenturl)
           .then((response) => {
@@ -95,7 +103,7 @@ function StudentHomepage() {
         navigate("/login");
         setLoading(false);
       }
-    }, []); // End of useEffect
+    }, [navigate]); // End of useEffect
   
 
    //wait for all information to be retrieved before loading the student homepage

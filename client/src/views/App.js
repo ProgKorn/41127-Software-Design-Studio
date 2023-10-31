@@ -30,21 +30,24 @@ import ThirdPlayground from '../AgoraSDKResources/startCall';
 import Verify from './Verify';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const loadingTimeout = setTimeout(() => {
+    const checkToken = () => {
+      const storedToken = localStorage.getItem('token');
+      setIsLoggedIn(!!storedToken); 
       setIsLoading(false);
-    }, 2000);
-    if (storedToken) {
-      setIsLoggedIn(true);
-    }
-    return () => clearTimeout(loadingTimeout);
-  }, []);
+    };
 
-  return isLoading ? (
+    checkToken();
+
+    const tokenCheckInterval = setInterval(checkToken, 10); 
+
+    return () => clearInterval(tokenCheckInterval); 
+  }, [])
+
+  return isLoading && isLoggedIn ? (
     <div> <Loader loading={isLoading}/> </div>
   ) : (
     // Routing setup for individual pages

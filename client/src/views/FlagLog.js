@@ -41,11 +41,12 @@ function FlagLog() {
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+        setIsAdmin(false);
         navigate("/noaccess");
       }
     }
     fetchFlagDetails();
-  }, [isAdmin, navigate]);
+  }, [navigate]);
 
   const columns = [
     'Session', 'Examinee ID', 'Flag Type', 'Status', 'Exam ID', 'Link'
