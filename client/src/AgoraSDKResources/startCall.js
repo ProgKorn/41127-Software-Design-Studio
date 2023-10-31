@@ -3,7 +3,7 @@ import './startCall.css'
 import AgoraRTC from "agora-rtc-sdk-ng";
 
 const secrets = {
-  appId: "e5709f8be2604869864acfa71a1f8b42",
+  appId: "2f3c15606b654828ae9a2ba36a4e08a6",
   channelName: "newmain",
   token: process.env.REACT_APP_AGORA_TOKEN,
 };

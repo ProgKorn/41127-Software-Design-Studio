@@ -49,7 +49,7 @@ function AdminDashboard() {
         <div className="dashboardMenu">
           <Grid container rowSpacing={4} columnSpacing={{ xs: 1 }}>
             <Grid item xs={6}>
-              <Button component={Link} to="/launchExam" sx={buttonStyles}
+              <Button component={Link} to="/adminExamSession" sx={buttonStyles}
                 className="dashboardButton" variant="contained">
                 <div className="dashboardIcons">
                   <LaunchRoundedIcon />

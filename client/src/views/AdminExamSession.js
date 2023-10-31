@@ -7,7 +7,7 @@ import '../css/AdminExamSession.css';
 import FlagNotification from "../components/FlagNotification";
 
 const secrets = {
-    appId: "e5709f8be2604869864acfa71a1f8b42",
+    appId: process.env.REACT_APP_AGORA_APP_ID,
     channelName: "main",
     token: process.env.REACT_APP_AGORA_TOKEN,
   };
@@ -29,14 +29,6 @@ const secrets = {
   }
   
   const startVideo = async () => {
-    // rtc.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-    // console.log("Connection State: ", rtc.client.connectionState);
-    // if (rtc.client.connectionState === "CONNECTED") {
-    //   rtc.client.publish(rtc.localVideoTrack);
-    //   rtc.localVideoTrack.play("videoContainer", { fit: "cover" });
-    // }
-  
-    // Subscribe to remote users' video tracks
     rtc.client.on("user-published", async (user, mediaType) => {
       // Ensure the user has subscribed to the video
       await rtc.client.subscribe(user, mediaType);

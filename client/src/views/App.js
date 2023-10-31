@@ -26,7 +26,7 @@ import PrivateRoute from './PrivateRoute';
 import Loader from '../components/Loader';
 import ExamDone from './ExamDone';
 import CreateClass from '../views/CreateClass';
-import ThirdPlayground from '../KatsAgoraPlayground/startCall';
+import ThirdPlayground from '../AgoraSDKResources/startCall';
 import Verify from './Verify';
 
 function App() {
