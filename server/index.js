@@ -135,6 +135,17 @@ app.post('/studentlogin', async(req, res) => {
   }
 });
 
+app.post('/finduser', async (req, res) => {
+  const student = await dbOp('find', 'StudentDetails', { query: { email: username } });
+  const user = await dbOp('find', 'UserDetails', { query: { email: username } });
+
+  if ((student && student.length !== 0) || (user && user.length !==0)){
+    res.status(200).json({message: 'User exists'});
+  } else {
+    res.status(404).json({error: 'User does not exist'});
+  }
+});
+
 app.post('/saveVideo', async (req, res) => {
   const studentId = parseInt(req.body.studentId, 10);
   const examId = parseInt(req.body.examId, 10);
