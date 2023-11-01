@@ -150,7 +150,7 @@ function EditExam()
       return loading ? <Loader loading={(loading)} /> 
       :(<div className='App'>
           <AdminHeader />
-          <Card title={"Edit an Exam"} sx={{ p: 10 }}>
+          <Card title={"Edit Exam"} sx={{ p: 10 }}>
             <Box sx={{ pl: 10, pr: 10, pb: 2}}>
             <FormControl fullWidth sx={{ pt: 2, minWidth: 120 }}>
                 <FormLabel 

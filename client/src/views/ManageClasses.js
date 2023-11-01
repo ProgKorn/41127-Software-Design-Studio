@@ -127,7 +127,7 @@ function ManageClasses() {
                 <div>Ends at {formatISOTime(exam.endTime)}</div>
               </div>
               <div className='scheduleButtonContainer' style={{paddingTop: 20, paddingBottom: 20}}>
-              <Button component={Link} sx={buttonStyles} className="scheduleButton" variant="contained">
+              <Button component={Link} to={`/editclass/${selectedClass.subjectId}`} sx={buttonStyles} className="scheduleButton" variant="contained">
                   <div className="scheduleIcons">
                     <ModeEditOutlinedIcon />
                   </div>

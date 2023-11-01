@@ -27,6 +27,7 @@ import Loader from '../components/Loader';
 import ExamDone from './ExamDone';
 import CreateClass from '../views/CreateClass';
 import EditExam from './EditExam';
+import EditClass from './EditClass';
 import ThirdPlayground from '../AgoraSDKResources/startCall';
 import Verify from './Verify';
 
@@ -74,6 +75,7 @@ function App() {
           <Route path="/editexam/:examId" element={<PrivateRoute element={<EditExam />} isLoggedIn={isLoggedIn} />} />
           <Route path="/manageclasses" element={<PrivateRoute element={<ManageClasses />} isLoggedIn={isLoggedIn} />} />
           <Route path="/createclass" element={<PrivateRoute element={<CreateClass />} isLoggedIn={isLoggedIn} />} />
+          <Route path="/editclass/:subjectId" element={<PrivateRoute element={<EditClass />} isLoggedIn={isLoggedIn} />} />
           <Route path="/studenthomepage" element={<PrivateRoute element={<StudentHomepage />} isLoggedIn={isLoggedIn} />} />
           <Route path="/previousexams" element={<PrivateRoute element={<PreviousExams />} isLoggedIn={isLoggedIn} />} />
           <Route path="/examsession/:studentId/:examId/:seatNo" element={<PrivateRoute element={<ExamSession />} isLoggedIn={isLoggedIn} />} />

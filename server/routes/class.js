@@ -78,6 +78,33 @@ router.post('/addClass', async (req, res) => { // Add a new exam and update the 
     }
   });
   
+  router.get('/getClassDetails/:subjectId', async(req,res) => {
+    try{
+        const data =  await databaseMaster.dbOp('find', 'ClassDetails', {query: {subjectId:  parseInt(req.params.subjectId)}});
+        res.json(data[0]);
+    } catch (error){
+        console.error("error", error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+    
+
+});
+
+router.post('/editClassDetails/:subjectId', async (req,res) => {
+    try {
+        //the subjectId in the params is the old subjectId
+        // the subject id in the request body is the updated subjectId (could be the same as the params, if it is not updated)
+     const query = {subjectId : parseInt(req.params.subjectId)}
+     const docs = { $set: { subjectId: req.body.subjectId, className: req.body.className, students: req.body.students } };
+     const data = await databaseMaster.dbOp('update', 'ClassDetails', { query, docs});
+     res.json(data);
+  
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  })
 
 
 module.exports = router;
