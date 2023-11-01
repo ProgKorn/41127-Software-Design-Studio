@@ -126,6 +126,17 @@ function CreateSession() {
     setAmmendedExamDate(trimmedString);
   }, [examDate]);
 
+  function convertUTCDateToLocalDate(date) {
+    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+    var offset = date.getTimezoneOffset() / 60;
+    var hours = date.getHours();
+
+    newDate.setHours(hours - offset);
+
+    return newDate;   
+  }
+
   useEffect(() => {
     var trimmedString = startTime.toString();
     trimmedString = trimmedString.slice(17);
@@ -142,18 +153,7 @@ function CreateSession() {
       setSnackbarMessage("Warning: Exam end time occurs before start time. Please correct before proceeding.");
       setSnackbarState(true);
     }
-  }, [startTime]);
-
-  useEffect(() => {
-    var trimmedString = endTime.toString();
-    trimmedString = trimmedString.slice(17);
-
-    if (startTime > endTime){
-      setSnackbarSeverity("warning");
-      setSnackbarMessage("Warning: Exam end time occurs before start time. Please correct before proceeding.");
-      setSnackbarState(true);
-    }
-  }, [endTime]);
+  }, [startTime, endTime]);
 
   const handleClickSave = () => {
     if (examName == "") {
@@ -189,10 +189,23 @@ function CreateSession() {
   }
 
   const addExam = async() => {
+   // convert startTime and endTime to local times
+    var examDateVariable = new Date(examDate);
+    var localStartTime = convertUTCDateToLocalDate(new Date(startTime));
+    var localEndTime = convertUTCDateToLocalDate(new Date(endTime));
+
+    //change the date of the startTime and endTime specified by the endDate
+    localStartTime.setDate(examDateVariable.getDate());
+    localEndTime.setDate(examDateVariable.getDate());
+
+    //convert startTime and endTime back to UTC timezone (i know this solution is stupid)
+    var utcStartTime = new Date(localStartTime.getTime() + localStartTime.getTimezoneOffset() * 60000);
+    var utcEndTime = new Date(localEndTime.getTime() + localEndTime.getTimezoneOffset() * 60000);
+
     const requestBody = { 
       examName: examName,
-      startTime: startTime, 
-      endTime: endTime, 
+      startTime: utcStartTime.toISOString(), 
+      endTime: utcEndTime.toISOString(), 
       details: examDescription,
       className: classes[scheduledClass] };
 
