@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
-import { cheatingObject, drawRect, bannedObjects } from "./utilities";
+import { cheatingObject, drawRect, bannedObjects, objectConditions } from "./utilities";
 import "../css/Exam.css";
 import useVideoStore from "./VideoStore";  // Video storage function
 import { useParams } from "react-router-dom";
@@ -10,15 +10,19 @@ import { useParams } from "react-router-dom";
 function ObjectRecognition({ examInProgress }) {
   const webcamRef = useRef(null);
   const { studentId, examId } = useParams();
+  const [flag, setFlag] = useState(false);
+  const [timestamp, setTimestamp] = useState(null);
+
 
 
   const {
     canvasRef,
     recording,
     recordedChunks,
-    videoSaved,
     startRecording,
-    stopRecording} = useVideoStore(studentId, examId);
+    stopRecording,
+    saveCheatingClip
+  } = useVideoStore(studentId, examId);
 
   const runModels = async () => {
     const net = await bodyPix.load();
@@ -35,22 +39,31 @@ function ObjectRecognition({ examInProgress }) {
   };
 
   const detect = async (net, cocoSsdNet) => {
-    if (
-      webcamRef.current !== null &&
-      webcamRef.current.video.readyState === 4
-    ) {
-      const video = webcamRef.current.video;
-      const canvas = canvasRef.current;
-      const segmentation = await net.segmentPerson(video);
-      const obj = await cocoSsdNet.detect(video);
+    try {
+      if (
+        webcamRef.current !== null &&
+        webcamRef.current.video.readyState === 4
+        ) {
+          const video = webcamRef.current.video;
+          const canvas = canvasRef.current;
+          const segmentation = await net.segmentPerson(video);
+          const obj = await cocoSsdNet.detect(video);
 
-      drawBody(segmentation, obj);  // Pass detected objects here
-
-      drawRect(obj, canvas.getContext("2d"));
-      // Cheating Detections
-      cheatingObject(obj);
-    }
-  };
+          drawBody(segmentation, obj);  // Pass detected objects here
+          drawRect(obj, canvas.getContext("2d"));
+         
+          // Cheating Detections
+          const isCheatingDetected = cheatingObject(obj, bannedObjects);
+          if (isCheatingDetected) {
+            console.log("Cheating detected, recording triggered");
+            setFlag(true);
+            setTimestamp(Date.now());
+          }
+        }
+      } catch (error) {
+        console.error("An error occurred in the detect function:", error);
+      }
+    };
 
   const createMaskImage = (segmentation, width, height) => {
     const maskCanvas = document.createElement('canvas');
@@ -139,6 +152,18 @@ function ObjectRecognition({ examInProgress }) {
       stopRecording();
     }
   }, [examInProgress]);
+
+  useEffect(() => {
+    if (flag && timestamp) {
+      const now = Date.now();
+      if (now - timestamp >= 10000) {  // 10 seconds recording flag
+        stopRecording(true);  // Passing the flag as true
+        saveCheatingClip();   // Save the 5-second clip
+        setFlag(false); // Reset flag to false to prepare for another flag
+      }
+    }
+  }, [flag, timestamp]);
+  
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>

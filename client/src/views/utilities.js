@@ -54,7 +54,7 @@ export const cheatingObject = (detections) => {
   });
 }
 
-function objectConditions(object, bannedObjects, personCounter, timestamp) { // Return true if cheating is detected
+export function objectConditions(object, bannedObjects, personCounter, timestamp) { // Return true if cheating is detected
   const cheatingBehaviours = [
     {type: "Person Count", condition: personCounter > 1},
     {type: "Banned Object", condition: bannedObjects.includes(object)},

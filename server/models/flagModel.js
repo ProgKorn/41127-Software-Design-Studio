@@ -8,7 +8,10 @@ flagSchema = new schema({
     studentId: {type: Number, required: true},
     status: {type: String, required: true},
     description: {type: String, required: true},
-    sessionName: {type: String, required: true}
+    sessionName: {type: String, required: true},
+    timeStamp: {type: String, required: true},
+    // For storing flagged incident clip
+    clipUrl:{ type: Buffer, required: false, contentType: String}
 })
 
 /* 

@@ -87,6 +87,26 @@ router.get('/getAllFlags', async (req, res) => { // Find all flags in the collec
     }
 });
 
+router.get('/getLatestFlag/:examId', async (req, res) => { // Get latest flagged incidents for an exam
+    try {
+        const examId = req.params.examId;
+        await databaseMaster.dbOp('find', 'FlaggedIncidents', { 
+            query: { examId: examId },
+            options: { sort: { 'timestamp': -1 }, limit: 1 } // Sorts by time and returns only 1 entry
+        }).then(data => {
+            if (data.length > 0) {
+                const latestFlag = new Flag(data[0]); // The latest flag is the first element in the sorted array
+                res.json(latestFlag);
+            } else {
+                res.status(404).json({ message: 'No flags found for this exam.' });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 router.post('/addFlag', async (req, res) => { // Add a new flag
     try {
         // Create a new flag instance
@@ -100,6 +120,7 @@ router.post('/addFlag', async (req, res) => { // Add a new flag
             status: "Pending",
             description: req.body.flagType,
             sessionName: req.body.sessionName,
+            timeStamp: req.body.timeStamp,
         });
         const flag = await databaseMaster.dbOp('insert', 'FlaggedIncidents', { docs: [newFlag] });
         io.emit('add-flag', newFlagId);
