@@ -17,7 +17,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: orange; /* Background color is orange */
+    background-color: orange;
+    font-weight: bolder;
     border-radius: 10px; /* Rounded corners */
     padding: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a box shadow for depth */
@@ -43,11 +44,21 @@ button {
     border-radius: 10px;
     cursor: pointer;
     color: white;
+    font-family: Montserrat, sans-serif;
+}
+
+.pending-icon {
+    color: white; /* Icon color */
+    font-size: 40px;
 }
   
 .resolve-button {
     background-color: green;
     border-radius: 40px;
+    font-weight: bolder;
+    font-size: medium;
+    width: 190px;
+    max-height: 50px;
     transition: background-color 0.3s; /* Add a smooth transition */
   
     /* Change background color on hover */
@@ -60,6 +71,10 @@ button {
 .terminate-button {
     background-color: red;
     border-radius: 40px;
+    font-weight: bolder;
+    font-size: medium;
+    width: 190px;
+    max-height: 50px;
     transition: background-color 0.3s; /* Add a smooth transition */
   
     /* Change background color on hover */
@@ -74,6 +89,10 @@ button {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.popup-title {
+    color:white;
 }
   
 /* Styles for the warning icon */
@@ -98,6 +117,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
+    font-family: Montserrat, sans-serif;
 }
   
 .ok-button:hover {
