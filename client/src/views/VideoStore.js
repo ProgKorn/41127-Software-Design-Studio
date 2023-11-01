@@ -15,6 +15,8 @@ const useVideoStore = () => {
   const { examId } = useParams();
   const {seatNo} = useParams();
 
+  const [isUploading, setIsUploading] = useState(false);
+
   const [fiveSecondChunks, setFiveSecondChunks] = useState([]);
   const startRecording = (canvasRef) => {
     const stream = canvasRef.current.captureStream(30);
@@ -46,6 +48,7 @@ const useVideoStore = () => {
   };
   
   const uploadNextFiveSeconds = useCallback(() => {
+    
 
     axios.post(process.env.REACT_APP_SERVER_URL + '/genericDbOp', {
       operationType: 'find',
@@ -99,9 +102,12 @@ const useVideoStore = () => {
       .then(data => {
         if (data.secure_url) {
           console.log("NEWVIDOCHEAT - Upload successful: ", data.secure_url);
+          setIsUploading(false);
         }
+        setIsUploading(false);
       }).catch((error) => {
         console.error("NEWVIDOCHEAT - Upload failed: ", error);
+        setIsUploading(false);
       });
     };
   
@@ -119,7 +125,8 @@ const useVideoStore = () => {
 
   useEffect(() => {
     const interceptor = axios.interceptors.request.use(function (config) {
-      if (config.url === 'https://sentinel-backend.fly.dev/flag/addFlag' && config.method === 'post') {
+      if (!isUploading && config.url === 'https://sentinel-backend.fly.dev/flag/addFlag' && config.method === 'post') {
+        setIsUploading(true);
         console.log('Detected the network request you want to monitor');
         console.log("RECORD THE 5 SECONDS NOW");
         uploadNextFiveSeconds();
@@ -131,7 +138,7 @@ const useVideoStore = () => {
     return () => {
       axios.interceptors.request.eject(interceptor);
     };
-  }, []);
+  }, [isUploading, uploadNextFiveSeconds]);
 
 
   useEffect(() => {
