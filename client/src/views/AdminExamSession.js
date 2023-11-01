@@ -30,88 +30,88 @@ const secrets = {
   }
   
   const startVideo = async () => {
-    const net = await bodyPix.load();
-    console.log("BodyPix model loaded");
-  
-    rtc.client.on("user-published", async (user, mediaType) => {
-      // Ensure the user has subscribed to the video
-      await rtc.client.subscribe(user, mediaType);
-  
-      if (mediaType !== "video") return;
-  
-      const remoteVideoTrack = user.videoTrack;
-      const remoteContainer = document.getElementById("remoteContainer");
-      let videoDiv = document.createElement("div");
-      videoDiv.id = "user_" + user.uid;
-      videoDiv.style.transform = "rotateY(180deg)";
-      videoDiv.className = 'videoContainer';
-      remoteContainer.appendChild(videoDiv);
-  
-      // Render remote video track
-      remoteVideoTrack.play(videoDiv);
-  
-      const canvas = document.createElement("canvas");
-      canvas.width = 640; // Set appropriate dimensions
-      canvas.height = 480; // Set appropriate dimensions
-      videoDiv.appendChild(canvas);
-      const ctx = canvas.getContext("2d");
-  
-      const videoElement = document.querySelector(`#user_${user.uid} video`);
-      videoElement.addEventListener('loadeddata', async function () {
-        const drawRemoteBody = async () => {
-          const { videoWidth: width, videoHeight: height } = videoElement;
-          const segmentation = await net.segmentPerson(videoElement);
-  
-          const blurCanvas = document.createElement("canvas");
-          blurCanvas.width = width;
-          blurCanvas.height = height;
-          const blurCtx = blurCanvas.getContext("2d");
-          blurCtx.filter = "blur(10px)";
-          blurCtx.drawImage(videoElement, 0, 0, width, height);
-  
-          const maskCanvas = document.createElement("canvas");
-          maskCanvas.width = width;
-          maskCanvas.height = height;
-          const maskCtx = maskCanvas.getContext("2d");
-          const imageData = maskCtx.createImageData(width, height);
-          const data = imageData.data;
-  
-          for (let i = 0; i < segmentation.data.length; i++) {
-            const j = i * 4;
-            if (segmentation.data[i] === 1) {
-              data[j] = 255;
-              data[j + 1] = 255;
-              data[j + 2] = 255;
-              data[j + 3] = 255;
-            } else {
-              data[j] = 0;
-              data[j + 1] = 0;
-              data[j + 2] = 0;
-              data[j + 3] = 0;
-            }
+  const net = await bodyPix.load();
+  console.log("BodyPix model loaded");
+
+  rtc.client.on("user-published", async (user, mediaType) => {
+    // Ensure the user has subscribed to the video
+    await rtc.client.subscribe(user, mediaType);
+
+    if (mediaType !== "video") return;
+
+    const remoteVideoTrack = user.videoTrack;
+    const remoteContainer = document.getElementById("remoteContainer");
+    let videoDiv = document.createElement("div");
+    videoDiv.id = "user_" + user.uid;
+    videoDiv.style.transform = "rotateY(180deg)";
+    videoDiv.className = 'videoContainer';
+    remoteContainer.appendChild(videoDiv);
+
+    // Render remote video track
+    remoteVideoTrack.play(videoDiv);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 640; // Set appropriate dimensions
+    canvas.height = 480; // Set appropriate dimensions
+    videoDiv.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+
+    const videoElement = document.querySelector(`#user_${user.uid} video`);
+    videoElement.addEventListener('loadeddata', async function () {
+      const drawRemoteBody = async () => {
+        const { videoWidth: width, videoHeight: height } = videoElement;
+        const segmentation = await net.segmentPerson(videoElement);
+
+        const blurCanvas = document.createElement("canvas");
+        blurCanvas.width = width;
+        blurCanvas.height = height;
+        const blurCtx = blurCanvas.getContext("2d");
+        blurCtx.filter = "blur(10px)";
+        blurCtx.drawImage(videoElement, 0, 0, width, height);
+
+        const maskCanvas = document.createElement("canvas");
+        maskCanvas.width = width;
+        maskCanvas.height = height;
+        const maskCtx = maskCanvas.getContext("2d");
+        const imageData = maskCtx.createImageData(width, height);
+        const data = imageData.data;
+
+        for (let i = 0; i < segmentation.data.length; i++) {
+          const j = i * 4;
+          if (segmentation.data[i] === 1) {
+            data[j] = 255;
+            data[j + 1] = 255;
+            data[j + 2] = 255;
+            data[j + 3] = 255;
+          } else {
+            data[j] = 0;
+            data[j + 1] = 0;
+            data[j + 2] = 0;
+            data[j + 3] = 0;
           }
-          maskCtx.putImageData(imageData, 0, 0);
-  
-          const personCanvas = document.createElement("canvas");
-          personCanvas.width = width;
-          personCanvas.height = height;
-          const personCtx = personCanvas.getContext("2d");
-  
-          personCtx.drawImage(maskCanvas, 0, 0, width, height);
-          personCtx.globalCompositeOperation = "source-in";
-          personCtx.drawImage(videoElement, 0, 0, width, height);
-  
-          ctx.drawImage(blurCanvas, 0, 0, 640, 480);
-          ctx.globalCompositeOperation = "source-over";
-          ctx.drawImage(personCanvas, 0, 0, 640, 480);
-        };
-  
-        setInterval(() => {
-          drawRemoteBody();
-        }, 40);
-      });
+        }
+        maskCtx.putImageData(imageData, 0, 0);
+
+        const personCanvas = document.createElement("canvas");
+        personCanvas.width = width;
+        personCanvas.height = height;
+        const personCtx = personCanvas.getContext("2d");
+
+        personCtx.drawImage(maskCanvas, 0, 0, width, height);
+        personCtx.globalCompositeOperation = "source-in";
+        personCtx.drawImage(videoElement, 0, 0, width, height);
+
+        ctx.drawImage(blurCanvas, 0, 0, 640, 480);
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(personCanvas, 0, 0, 640, 480);
+      };
+
+      setInterval(() => {
+        drawRemoteBody();
+      }, 40);
     });
-  };
+  });
+};
         
           
 
