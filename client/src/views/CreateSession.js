@@ -52,7 +52,7 @@ function CreateSession() {
   const offsetDate = new Date(tomorrow.getTime() - (offset*60*1000))
   const reformattedDate = offsetDate.toISOString().split('T')[0];
   
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const [classes, setClasses] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -65,6 +65,7 @@ function CreateSession() {
         setIsAdmin(true);
         fetchClasses();
       } else {
+        setIsAdmin(false);
         navigate("/noaccess");
       }
     }
@@ -178,7 +179,7 @@ function CreateSession() {
 
   const fetchClasses = async() => {
     try{
-      const response = await axios.get('http://localhost:4000/class/get');
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/class/get');
       setClasses(response.data.map(doc => doc.className));
       setLoading(false);
     }
@@ -196,7 +197,7 @@ function CreateSession() {
       className: classes[scheduledClass] };
 
     try{
-      const response = await axios.post('http://localhost:4000/exam/addExam', requestBody);
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/exam/addExam', requestBody);
       console.log('POST request response:', response.data);
       setOpen(false);
     }

@@ -29,7 +29,7 @@ function ExamSection(props) {
 
   return studentExams ? <CardTable 
     columns={studentExams.map((exam) => `${exam.examName}`)}
-    rows={studentExams.map((exam) => `Seat: ${exam.seatNumber}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
+    rows={studentExams.map((exam) => `Seat: ${exam.seatNo}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
   /> : <></>
 }
 
@@ -72,7 +72,7 @@ function FlagSection(props) {
 }
 
 function Student() {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const [student, setStudent] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -95,6 +95,7 @@ function Student() {
       if (decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+        setIsAdmin(false);
         navigate('/noaccess'); 
 	    }
 	  }

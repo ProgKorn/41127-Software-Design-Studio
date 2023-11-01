@@ -26,7 +26,10 @@ axios.get(examurl).then((response) => {
   examId = response.data.examId;
 }); */
 
-/* OBJECT DETECTION */
+export function raiseUnfocusedFlag() {
+  const timestamp = Date.now();
+  incidentCheck(timestamp, "Unfocused Window");
+}
 
 export const cheatingObject = (detections) => {
   var personCounter = 0; // Keep track of how many people are in the frame

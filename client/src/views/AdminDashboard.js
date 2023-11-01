@@ -12,19 +12,20 @@ import jwt_decode from 'jwt-decode';
 import Clock from '../components/Clock';
 
 function AdminDashboard() {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken = jwt_decode(token);
-      if (decodedToken.isAdmin === true) {
+      if (decodedToken && decodedToken.isAdmin === true) {
         setIsAdmin(true);
       } else {
+        setIsAdmin(false);
         navigate('/noaccess');
-	    }
-	  }
+      }
+    } 
   }, [isAdmin, navigate]);
 
   const buttonStyles = {
@@ -34,7 +35,10 @@ function AdminDashboard() {
     textTransform: 'Capitalize',
     color: 'white',
     backgroundColor: "#292E64",
-    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+    boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)',
+    '&:hover': {
+      backgroundColor: '#a03421'
+    },
   }
 
   return (
@@ -46,7 +50,7 @@ function AdminDashboard() {
         <div className="dashboardMenu">
           <Grid container rowSpacing={4} columnSpacing={{ xs: 1 }}>
             <Grid item xs={6}>
-              <Button component={Link} to="/launchExam" sx={buttonStyles}
+              <Button component={Link} to="/adminExamSession" sx={buttonStyles}
                 className="dashboardButton" variant="contained">
                 <div className="dashboardIcons">
                   <LaunchRoundedIcon />
@@ -63,7 +67,7 @@ function AdminDashboard() {
                 <AddBoxOutlinedIcon />
               </div>
               <div>
-                Create Session
+                Create Exam
               </div>
               </Button>
             </Grid>

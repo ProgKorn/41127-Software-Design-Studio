@@ -7,12 +7,14 @@ router.get('/', (req, res) => {
     res.json({ message: 'Exam Student' });
 });
 
-//Post request to create Exam-Students when an Exam Session starts
 //SeatNo currently hardcoded - Need to update lines 15 and 50 to be same seat No
-router.post('/createExamStudent/:studentId/:examId', async (req, res) => {
+//TODO: Get associated seat No and remove Hardcoding
+
+//Post request to create Exam-Students when an Exam Session starts
+router.post('/createExamStudent/:studentId/:examId/:seatNo', async (req, res) => {
     try {
       const newExamStudent = new ExamStudent ({ 
-        seatNo: 10,
+        seatNo: req.params.seatNo,
         examId: req.params.examId, 
         studentId: req.params.studentId, 
         status: "Active"
@@ -50,7 +52,7 @@ router.get('/getActiveExamStudent/:studentId/:examId/', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
-    const query = {examId: examId, studentId: studentId, seatNo: 10}
+    const query = {examId: examId, studentId: studentId, seatNo: 21}
     const statusUpdate = { $set: { status: req.body.status } };
     const check = await databaseMaster.dbOp('find', 'Exam-Student', { query: query })
     console.log(check)
@@ -64,5 +66,26 @@ router.get('/getActiveExamStudent/:studentId/:examId/', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
  });
+
+  // Put request to add flagid to flags array of exam student
+  router.put('/addFlag/:studentId/:examId/:flagId', async (req, res) => {
+    try {
+      const examId = parseInt(req.params.examId);
+      const studentId = parseInt(req.params.studentId);
+      const flagId = parseInt(req.params.flagId);
+      const query = {examId: examId, studentId: studentId, seatNo: 21}
+
+      // Add the flag to the flags array
+      const flagUpdate = { $push: { flags: flagId } }; 
+
+      // Update the exam-student document with the new flag
+      const updateResult = await databaseMaster.dbOp('update', 'Exam-Student', { query, docs: flagUpdate }).then(data => {
+        res.json("Flag ID added successfully");
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+   });
 
 module.exports = router;
