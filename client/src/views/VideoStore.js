@@ -48,7 +48,7 @@ const useVideoStore = () => {
   };
   
   const uploadNextFiveSeconds = useCallback(() => {
-    
+    let latestEntry = null;
 
     axios.post(process.env.REACT_APP_SERVER_URL + '/genericDbOp', {
       operationType: 'find',
@@ -61,7 +61,7 @@ const useVideoStore = () => {
       if (response.data.success && Array.isArray(response.data.data) && response.data.data.length > 0) {
         // Sort by _id in descending order to get the latest entry
         const sortedData = response.data.data.sort((a, b) => b._id.localeCompare(a._id));
-        const latestEntry = sortedData[0];
+        latestEntry = sortedData[0];
         console.log('NEWVIDOCHEAT Latest Entry:', latestEntry);
       } else {
         console.log('NEWVIDOCHEAT No entries found in FlaggedIncidents collection.');
@@ -101,6 +101,22 @@ const useVideoStore = () => {
       .then(response => response.json())
       .then(data => {
         if (data.secure_url) {
+
+          axios.post(process.env.REACT_APP_SERVER_URL +'/genericDbOp', {
+            operationType: 'update',
+            collType: 'FlaggedIncidents',
+            entry: { 
+              query: { flagId: latestEntry.flagId }, 
+              docs: { $set: { fullRecording: data.secure_url } } 
+            }
+          }).then(response => {
+            console.log("NEWVIDOCHEAT - " + response.data);
+          })
+          .catch(error => {
+            console.error('NEWVIDOCHEAT - An error occurred:', error);
+          });
+            
+
           console.log("NEWVIDOCHEAT - Upload successful: ", data.secure_url);
           setIsUploading(false);
         }
