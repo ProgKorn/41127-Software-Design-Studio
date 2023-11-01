@@ -46,6 +46,28 @@ const useVideoStore = () => {
   };
   
   const uploadNextFiveSeconds = useCallback(() => {
+
+    axios.post(process.env.REACT_APP_SERVER_URL + '/genericDbOp', {
+      operationType: 'find',
+      collType: 'FlaggedIncidents',
+      entry: {
+        query: {}
+      }
+    })
+    .then(response => {
+      if (response.data.success && Array.isArray(response.data.data) && response.data.data.length > 0) {
+        // Sort by _id in descending order to get the latest entry
+        const sortedData = response.data.data.sort((a, b) => b._id.localeCompare(a._id));
+        const latestEntry = sortedData[0];
+        console.log('NEWVIDOCHEAT Latest Entry:', latestEntry);
+      } else {
+        console.log('NEWVIDOCHEAT No entries found in FlaggedIncidents collection.');
+      }
+    })
+    .catch(error => {
+      console.log('NEWVIDOCHEAT An error occurred while fetching FlaggedIncidents:', error);
+    });
+
     console.log("RECORDING NEXT 5 SECONDS");
   
     // Create a new MediaRecorder instance for the 5-second recording
