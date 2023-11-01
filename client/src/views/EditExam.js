@@ -9,7 +9,6 @@ import Button from '@mui/material/Button';
 import { FormControl, FormLabel, Box, Grid } from '@mui/material';
 import Card from '../components/Card';
 import axios from 'axios';
-import { alpha, styled } from '@mui/material/styles';
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
@@ -18,7 +17,6 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { formatISODate, formatISOTime } from '../components/Clock';
 import {Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions} from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -120,11 +118,11 @@ function EditExam()
       };
 
       const handleEditSession = () => {
-        updateClass();
+        updateExam();
         handleCloseDialogue();
       };
 
-      const updateClass = async() =>
+      const updateExam = async() =>
       {
         var examDateVariable = new Date(examDate);
         var startTimeDate = new Date(startTime);

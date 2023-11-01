@@ -47,6 +47,36 @@ router.post('/editExamDetails', async (req,res) => {
   }
 })
 
+router.post('/editExamDetails', async (req,res) => {
+  try {
+   const query = {examId : parseInt(req.body.examId)}
+    //console.log(req.body.examName);
+   const docs = { $set: { examName: req.body.examName, startTime: req.body.startTime, endTime: req.body.endTime, details: req.body.details  } };
+   const data = await databaseMaster.dbOp('update', 'ExamDetails', { query, docs});
+   res.json(data);
+
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+router.get('/deleteExamDetails/:examId', async (req,res) => {
+  try {
+    const query = { examId: parseInt(req.params.examId) };
+    const data = await  databaseMaster.dbOp('delete', 'ExamDetails', { query });
+
+    const docs = { $set: { examId: 0} };
+    const response = await databaseMaster.dbOp('update', 'ClassDetails', { query, docs});
+    res.json(response);
+
+    } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
 
 router.post('/addExam', async (req, res) => { // Add a new exam and update the chosen class with exam 
   try {

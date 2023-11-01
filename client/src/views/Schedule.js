@@ -13,12 +13,19 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Loader from '../components/Loader';
 import { formatISODate, formatISOTime } from '../components/Clock';
+import {Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions} from '@mui/material';
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function Schedule() {
   const [exams, setExams] = useState(null);
   const [selectedExam, setSelectedExam] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(true);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const fetchExamDetails = async () => {
@@ -60,6 +67,29 @@ function Schedule() {
     },
   }
 
+  const handleCloseDialogue = () => {
+    setOpen(false);
+  };
+
+  const handleDeleteSession = () => {
+    deleteExam();
+    handleCloseDialogue();
+  };
+
+  const handleClick = () => {
+    setOpen(true);
+  }
+  const deleteExam = async() =>
+  {
+    try {
+      const response = await axios.get("http://localhost:4000" + '/exam/deleteExamDetails/' + selectedExam.examId)
+      console.log("Delete Response received", response);
+      window.location.reload();
+
+    } catch (error) {
+      console.log("Error", error)
+    } 
+  }
   return loading ? <Loader loading={loading} /> : (
 		<div className="Schedule">
 			<AdminHeader/>
@@ -126,7 +156,7 @@ function Schedule() {
                     Edit
                   </div>
                 </Button>
-                <Button component={Link} sx={buttonStyles}className="scheduleButton" variant="contained">
+                <Button sx={buttonStyles}className="scheduleButton" variant="contained" onClick={handleClick}>
                   <div className="scheduleIcons">
                     <DeleteOutlineOutlinedIcon />
                   </div>
@@ -138,6 +168,33 @@ function Schedule() {
 						</div>}
 					</div>
 				</Card>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseDialogue}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle> Confirm Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              maxWidth={"lg"}
+            >
+              Are you sure you want to delete exam: {selectedExam.examName}?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialogue}>Cancel</Button>
+            <Button
+              color="error"
+              variant="contained"
+              onClick={handleDeleteSession}
+            >
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
 			</div>
 		</div>
   );
