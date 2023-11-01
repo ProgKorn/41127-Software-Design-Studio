@@ -30,7 +30,7 @@ router.post('/createExamStudent/:studentId/:examId/:seatNo', async (req, res) =>
 });
 
 // Get request for exam sessions 
-router.get('/getActiveExamStudent/:studentId/:examId/', async (req, res) => {
+router.get('/getActiveExamStudent/:studentId/:examId', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
@@ -87,5 +87,5 @@ router.get('/getActiveExamStudent/:studentId/:examId/', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
    });
-
+   
 module.exports = router;

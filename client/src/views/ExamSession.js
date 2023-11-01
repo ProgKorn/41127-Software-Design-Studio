@@ -66,6 +66,8 @@ function ExamSession() {
   const [examName, setExamName] = useState("");
   const [cameraPermission, setCameraPermission] = useState(false);
   const [examInProgress, setExamInProgress] = useState(false);
+  const [examTerminated, setExamTerimated] = useState(false);
+  var flagCount = 0;
 
   const createExamStudent = async () => {
     try {
@@ -73,6 +75,16 @@ function ExamSession() {
       console.log("Exam Session Response:", response.data);
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  const handleFlagAdded = async () => {
+    //Call and set flagCount to list in ExamStudent 
+    axios.get(process.env.REACT_APP_SERVER_URL + `/examStudent/getActiveExamStudent/${studentId}/${examId}`).then((response) => {
+      flagCount = response.data.flags.length;
+    });
+    if (flagCount >= 2) {
+      setExamTerimated(true);
     }
   }
 
@@ -90,6 +102,7 @@ function ExamSession() {
       const currentTime = new Date().toLocaleString();
       console.log(`[${currentTime}] Window is not focused or minimized`);
       raiseUnfocusedFlag();
+      handleFlagAdded();
     };
 
     const handleFocus = () => {
@@ -146,15 +159,12 @@ function ExamSession() {
         }
       }, 1000);
 
-      if (remainingTime <= 0) {
+      if (remainingTime <= 0 || examTerminated) {
         clearInterval(timer);
         setExamInProgress(false);
         // Update exam session status to "Completed"
         axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
-        //navigate("/examdone");
-        // Update exam session status to "Completed"
-        axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
-        navigate(`/examdone/${studentId}/${examId}/${seatNo}`);
+        navigate(`/examdone/${studentId}/${examId}/${seatNo}`, { examTerminated });
       }
 
       return () => {
@@ -176,7 +186,7 @@ function ExamSession() {
       <Box className="preview">
       {cameraPermission ? (
       <>
-        <ObjectRecognition examInProgress={examInProgress} />
+        <ObjectRecognition examInProgress={examInProgress} onFlagAdded={handleFlagAdded}/>
         <FlagNotification />
       </>
       ) : (

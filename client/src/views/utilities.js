@@ -5,7 +5,7 @@ const incidents = []; // Active Incidents
 export const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
 
 const url = process.env.REACT_APP_SERVER_URL +'/flag';
-
+const examStudentUrl = process.env.REACT_APP_SERVER_URL +'/examStudent';
 const token = localStorage.getItem('token');
 var decodedToken, studentId;
 
@@ -25,6 +25,7 @@ if (token) {
 axios.get(examurl).then((response) => {
   examId = response.data.examId;
 }); */
+
 
 export function raiseUnfocusedFlag() {
   const timestamp = Date.now();
@@ -92,13 +93,26 @@ function incidentCheck(timestamp, flagType) {
     console.log("Cheating Detected! " + flagType);
     
     // Raise a flag for this incident
+    var flagId;
     axios.post(url + '/addFlag', newIncident)
     .then((response) => {
         console.log('Flag added successfully: ', response.data);
+        flagId = response.data.flagId;
     })
     .catch(error => {
         console.error('Error adding flag: ', error);
     });
+    // After adding flag, also add to the array in exam-student (utilities.js). Replace hardcoded values.
+    axios.post(url + `/addFlag/42345678/1/${flagId}`, newIncident)
+    .then((response) => {
+        console.log('Flag ID added successfully: ', response.data);
+    })
+    .catch(error => {
+        console.error('Error adding flag: ', error);
+    });
+    //Have some way of knowing how many active flags are in the ExamSession (ExamSession.js ?)
+    //when this counter = 2, route them to /examdone (ExamSession.js)
+    //set examTerminated to either true or false based on this (idk if u can pass in a param when routing) --> ExamDone.js
   }
 }
 
