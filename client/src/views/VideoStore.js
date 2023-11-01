@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
@@ -15,7 +15,7 @@ const useVideoStore = () => {
   const { examId } = useParams();
   const {seatNo} = useParams();
 
-
+  const [fiveSecondChunks, setFiveSecondChunks] = useState([]);
   const startRecording = (canvasRef) => {
     const stream = canvasRef.current.captureStream(30);
     const mediaRecorder = new MediaRecorder(stream);
@@ -26,6 +26,7 @@ const useVideoStore = () => {
     mediaRecorder.ondataavailable = (e) => {
       if (e.data.size > 0) {
         chunks.push(e.data);
+        setFiveSecondChunks(prevState => [...prevState, e.data]); // update the fiveSecondChunks state
       }
     };
 
@@ -44,6 +45,73 @@ const useVideoStore = () => {
     }
   };
   
+  const uploadNextFiveSeconds = useCallback(() => {
+    console.log("RECORDING NEXT 5 SECONDS");
+  
+    // Create a new MediaRecorder instance for the 5-second recording
+    const stream = canvasRef.current.captureStream(30);
+    const fiveSecondMediaRecorder = new MediaRecorder(stream);
+    const chunks = [];
+  
+    fiveSecondMediaRecorder.ondataavailable = (e) => {
+      if (e.data.size > 0) {
+        chunks.push(e.data);
+      }
+    };
+  
+    fiveSecondMediaRecorder.onstop = () => {
+      // Create blob from the last 5 seconds of data
+      const blob = new Blob(chunks, { type: "video/webm; codecs=vp9" });
+  
+      console.log("NEWVIDOCHEAT THE BLOB: " + blob);
+  
+      const formData = new FormData();
+      formData.append('file', blob);
+      formData.append('upload_preset', 'ml_default');
+  
+      fetch(`https://api.cloudinary.com/v1_1/dljsodofn/video/upload`, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.secure_url) {
+          console.log("NEWVIDOCHEAT - Upload successful: ", data.secure_url);
+        }
+      }).catch((error) => {
+        console.error("NEWVIDOCHEAT - Upload failed: ", error);
+      });
+    };
+  
+    // Start recording
+    fiveSecondMediaRecorder.start();
+  
+    setTimeout(() => {
+      // Stop recording after 5 seconds
+      fiveSecondMediaRecorder.stop();
+    }, 6000);
+  
+  }, []);
+  
+
+
+  useEffect(() => {
+    const interceptor = axios.interceptors.request.use(function (config) {
+      if (config.url === 'https://sentinel-backend.fly.dev/flag/addFlag' && config.method === 'post') {
+        console.log('Detected the network request you want to monitor');
+        console.log("RECORD THE 5 SECONDS NOW");
+        uploadNextFiveSeconds();
+      }
+      return config;
+    }, function (error) {
+      return Promise.reject(error);
+    });
+    return () => {
+      axios.interceptors.request.eject(interceptor);
+    };
+  }, []);
+
+
   useEffect(() => {
     console.log("NEWVIDO - EXAM HAS ENDED");
     if (recordedChunks.length > 0 && !recording) {
