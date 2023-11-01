@@ -229,11 +229,12 @@ function CreateSession() {
 
               <Grid container columns={2} sx={{ pt: 7 }}>
                 <Grid item xs={1}>
-                  <Box sx={{ pl: 15, pr: 1, pt: 3 }}>
+                  <Box sx={{ pl: 8, pr: 1, pt: 3 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DateCalendar
                         disablePast={true}
                         disableHighlightToday={true}
+                        minWidth="350"
                         minDate={dayjs(reformattedDate)}
                         orientation="landscape"
                         value={examDate}
