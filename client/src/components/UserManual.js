@@ -15,6 +15,23 @@ import UM10 from '../helpCentreResources/UM10.png';
 import UM11 from '../helpCentreResources/UM11.png';
 import UM12 from '../helpCentreResources/UM12.png';
 import UM13 from '../helpCentreResources/UM13.png';
+import UM14 from '../helpCentreResources/UM14.png';
+import UM15 from '../helpCentreResources/UM15.png';
+import UM16 from '../helpCentreResources/UM16.png';
+import UM17 from '../helpCentreResources/UM17.png';
+import UM18 from '../helpCentreResources/UM18.png';
+import UM19 from '../helpCentreResources/UM19.png';
+import UM20 from '../helpCentreResources/UM20.png';
+import UM21 from '../helpCentreResources/UM21.png';
+import UM22 from '../helpCentreResources/UM22.png';
+import UM23 from '../helpCentreResources/UM23.png';
+import UM24 from '../helpCentreResources/UM24.png';
+import UM25 from '../helpCentreResources/UM25.png';
+import UM26 from '../helpCentreResources/UM26.png';
+import UM27 from '../helpCentreResources/UM27.png';
+import UM28 from '../helpCentreResources/UM28.png';
+import UM29 from '../helpCentreResources/UM29.png';
+import UM30 from '../helpCentreResources/UM30.png';
 import LightBulbIcon from '../helpCentreResources/UMLightBulb.png';
 import InfoIcon from '../helpCentreResources/UMInfo.jpg';
 import WarningIcon from '../helpCentreResources/UMWarning.jpg';
@@ -281,7 +298,25 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
             <header className='help-centre-header'>
                 <h2 className="text">Using The Software</h2>
             </header>
-            <HighlightedText text="Live Laugh Love" searchTerm={searchTerm}/>
+            <div className="info-dump">
+                <HighlightedText text="" searchTerm={searchTerm}></HighlightedText>
+                <HighlightedText text="The following subsections provide detailed, step-by-step instructions on how to use the various functions or features of the Sentinel AI Anti-Cheating Detection Software." searchTerm={searchTerm}></HighlightedText>
+            
+                <h5 className="terms">Student Functions</h5>
+                <h2 className="softwareSubHeading"><HighlightedText text="Login" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="Students using the Sentinel web application can log into their user account which provides access to all features of the system that have been assigned to them. The purpose of creating the FaceID login method is to ensure that the student can be properly authenticated and reinforce the anti-cheating purpose of our software. For more information on accessing the system, please refer to Section 3: Getting Started." searchTerm={searchTerm}></HighlightedText>
+            
+                <h2 className="softwareSubHeading"><HighlightedText text="Student Homepage" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="After logging into the system, the student will be brought to the student homepage where they can access functions such as viewing their student details and viewing upcoming  & previous exams." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM15} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 15: Student Homepage" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="View Student Details" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the user wants to view their current Student Details, they will be displayed on a table on the left-hand side of the screen. This table contains information such as the student’s first name, last name, student ID and email." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM16} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 16: Student Details Table" searchTerm={searchTerm}/></h5>
+
+            </div>
             <Button variant='contained' onClick={() => onBackButtonClick()} sx={buttonStyles}>
                 Back to User Manual
             </Button>
@@ -312,13 +347,21 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
                         </TableHead>
                         <TableBody>
                             <TableRow>
+                                <TableCell><HighlightedText text="“Internal Server Error”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Across the Site" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="This error usually indicates connectivity issues to the backend from either severed connections, latency and loading issues, or deployment misconfigurations." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Raise a ticket with Sentinel and the developers will investigate whether the server requires a restart or configuration change." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
                                 <TableCell><HighlightedText text="“Login failed: Invalid credentials”" searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="Admin and Student Login Forms" searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="There is a mismatch between username/email and password (or facial data). The username does exist." searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="Enter the correct password and ensure facial data is being used against the correct username/email. If the password has been forgotten, contact the university." searchTerm={searchTerm}/></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell><HighlightedText text="“Login failed: User does not exist”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="“Login failed: User not found”" searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="Admin and Student Login Forms" searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="The username/email does not exist in the database, and therefore, has not been registered to Sentinel by the university." searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="Contact the university to register the correct email address to the user." searchTerm={searchTerm}/></TableCell>
@@ -330,6 +373,110 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
                                 <TableCell><HighlightedText text="Raise a ticket with Sentinel and the developers will investigate whether the server requires a restart or permission change." searchTerm={searchTerm}/></TableCell>
                             </TableRow>
                         </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Login failed: Facial data does not match any existing users in the database”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Student Login Forms" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="The facial data from the webcam does not match the student ID photo of the corresponding user." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Log in using the correct email address or retry the camera in brighter lighting." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Document not found or not updated”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Student Exam" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="The details relating to the video of the cheating behaviour either do not fully align or is a duplicate of an existing database entry." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Ensure the student and cheating details are valid and are unique. If the issue persists, contact Sentinel." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error saving video”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Student Exam" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="The video could not be saved due to a connectivity or database issue." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Refresh the page and try again. Contact Sentinel administrators if the issue persists. " searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: An error occurred while searching for the student.”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Class Details Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="A student could either not be found or a database connection occurred." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Ensure a valid student ID is inputted, refresh the page, or contact Sentinel if the issue persists." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: No Class Name Provided”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Admin Create Class Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="A class name was not provided when creating a class." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Enter a class name into the form." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: No Subject Id Provided”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Admin Create Class Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="A subject ID has not been provided on the create class page." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Enter a subject ID into the form." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: Subject Id not a number”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Admin Create Class Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="The type of the subject ID is not valid." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Enter a numerical value as the subject ID." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error encountered while saving form”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="The form was unable to save due to network, validation, or loading issues." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Check for validation errors, refresh, and attempt to resubmit." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: Exam end time occurs before start time.”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: No Exam Name Provided”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: No Start Time Provided”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: No End Time Provided”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="An end time has not been provided in the create session page." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Add a valid end time." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“You do not have permission to access this page”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="No Access page" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="The user is either not logged on or does not have the correct permissions to view the page." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Log in with an account corresponding to the correct user role to view content." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
                     </Table>
                 </TableContainer>
 
@@ -339,7 +486,7 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
 
                 <h5 className="terms">Support</h5>
 
-                <HighlightedText text="Although Sentinel has made due diligence in troubleshooting major bugs, dynamic systems and unique user interactions may still enable errors to arise. Since the system is enabled by tertiary education institutions, support relating to password resets, examination queries, and flagging negotiations are directed to the relevant institution through the contact page linked in the ribbon. For the table below, the University of Technology Sydney (UTS) was taken as an example due to the initial beta rollout being for the university specifically. However, system related errors such as slow processing times, access requirements, and incorrect data can be directed to Sentinel through our incident management system." searchTerm={searchTerm}/>
+                <HighlightedText text="Although Sentinel has done due diligence in troubleshooting major bugs, dynamic systems and unique user interactions may still result in errors arising. Since the system is enabled by tertiary education institutions, support relating to password resets, examination queries, and flagging negotiations are directed to the relevant institution through the contact page linked in the top-right side of ribbon. For the table below, the University of Technology Sydney (UTS) was taken as an example due to the initial beta rollout being for staff and students at UTS. However, system related errors such as slow processing times, access requirements, and incorrect data can be directed to Sentinel through our incident management system or by directly contacting Sentinel support." searchTerm={searchTerm}/>
                 
                 <TableContainer component={Paper}>
                     <Table>
@@ -355,17 +502,17 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
                         <TableBody>
                             <TableRow>
                                 <TableCell><HighlightedText text="Tertiary Education Institute (UTS)" searchTerm={searchTerm}/></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
+                                <TableCell><HighlightedText text="+61 2 9514 2000" searchTerm={searchTerm}></HighlightedText></TableCell>
+                                <TableCell><HighlightedText text="Email varies depending on faculty." searchTerm={searchTerm}></HighlightedText></TableCell>
                                 <TableCell><HighlightedText text="Account and Exam Manager, Academic Integrity Support" searchTerm={searchTerm}/></TableCell>
-                                <TableCell></TableCell>
+                                <TableCell><HighlightedText text="Grant students access to the system by adding them to the database, manage exam details and classrooms, manage administrators/examiners." searchTerm={searchTerm}></HighlightedText></TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell><HighlightedText text="Sentinel Incident Management" searchTerm={searchTerm}/></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
+                                <TableCell><HighlightedText text="+61 2 9876 5432" searchTerm={searchTerm}></HighlightedText></TableCell>
+                                <TableCell><HighlightedText text="support@sentinel.com" searchTerm={searchTerm}></HighlightedText></TableCell>
                                 <TableCell><HighlightedText text="System Manager, Technical Support" searchTerm={searchTerm}/></TableCell>
-                                <TableCell></TableCell>
+                                <TableCell><HighlightedText text="Assist with site availability and troubleshooting, action user requests and feedback, fix defects, and answer questions about functionality." searchTerm={searchTerm}></HighlightedText></TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
