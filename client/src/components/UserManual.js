@@ -377,6 +377,57 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
                     <li><HighlightedText text="The Help Centre (see Figure 10)" searchTerm={searchTerm}></HighlightedText></li>
                 </ul>
 
+                <h2 className="softwareSubHeading"><HighlightedText text="Launch Exam" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the examiner selects the Launch Exam they will be directed to the active exam session. If there is no active exam session, this button is disabled. This allows for immediate access to a live exam session, which is particularly important for time-sensitive situations." searchTerm={searchTerm}></HighlightedText>
+                <img className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 26: Exam Session Screen for Admin" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Student Monitoring/Flagging" searchTerm={searchTerm}/></h2>
+                <img src={UM25} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 27: Flagged Incidents Screen" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Flag Logs" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="At the end of each examination, the examiner will be able to access the corresponding flagged incidents during the examination including the session name, examinee that was flagged, why the individual was flagged, the status of the flag, the flag number and the session number. The flag log automatically updates to show the complete list of flags have been registered to the system. The status column can show one of three status types as shown in Figure 27: Flagged Incidents Screen:" searchTerm={searchTerm}></HighlightedText>
+                <ul>
+                    <li><HighlightedText text="The ‘resolved’ status indicates that the flag’s validity has been confirmed by an administrator and that the student has been successfully notified of the flag. " searchTerm={searchTerm}></HighlightedText></li>
+                    <li><HighlightedText text="The ‘pending’ status indicates that the flag has been logged, but is yet to be confirmed by an administrator." searchTerm={searchTerm}></HighlightedText></li>
+                    <li><HighlightedText text="The ‘terminated’ status indicates that the flag has been dismissed by the administrator. This means that the student to whom the flag is addressed will receive no academic penalty. Flag dismissal can be awarded for one of two reasons:" searchTerm={searchTerm}></HighlightedText></li>
+                    <ul>
+                        <li><HighlightedText text="The automated flag-raising system has accidentally flagged behaviour that does not constitute academic misconduct." searchTerm={searchTerm}></HighlightedText></li>
+                        <li><HighlightedText text="The student has been awarded special provisions by the administrator." searchTerm={searchTerm}></HighlightedText></li>
+                    </ul>
+                </ul>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Flag Details" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="In the flagged incidents table, each flagged incident has a hyperlink attached to it that redirects the user to another page called Flag Details. This page is designed to provide more information about the flag including the examinee details, exam details, flag report and provides a clip of the flagged incident." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM26} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 28: Flag Details Screen" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Create Session" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the examiner selects the Create Exam button in the Admin Dashboard, they will be brought to the Create Session page where they can Schedule an Exam for the class. Information required to create a new exam session include specifying the date and duration, class name, exam name and description." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM27} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 29: Create Session Screen" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Manage Classes" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the examiner selects Manage Class, they will be directed to a page with a list of students allocated to their class. They are then able to add or remove the students in the class. Exams are scheduled to classes rather than to individual students; Administrators can use the ‘Manage Classes’ page  to configure the students expected to be in attendance of a particular exam by selecting which students they’d like to be in the exam." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM28} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 30: Manage Classes Screen" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="View Exam history" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the examiner clicks on the Exam History button in the Admin Dashboard, they will be brought to the Exam History page where they can view the previous exams that they have scheduled/held. Information that is displayed on the table in Exam History include the exam name, Term, examiner name, number of attendees, exam start time, exam end time, status and session number." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM29} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 31: View Exam History Screen" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="View Scehdule" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the examiner enters the View Schedule screen they will be able to see any upcoming examinations. The first exam on the screen will be the exam closest to the current date. The examiner will be able to view the exam name, exam time and date as well as Exam Id. " searchTerm={searchTerm}></HighlightedText>
+                <img src={UM30} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 32: View Schedule Screen" searchTerm={searchTerm}/></h5>
+                <HighlightedText text="Examiners may click the Show Exam Details link which will provide more details regarding the exam when clicked. Four buttons will also be visible, the Launch button, View Class button, Edit button and Delete button." searchTerm={searchTerm}></HighlightedText>
+                <HighlightedText text="When the examiner selects Launch they will be directed to the Exam Session and be able to view all the students partaking in the exam in real-time." searchTerm={searchTerm}></HighlightedText>
+                <HighlightedText text="When the examiner selects View Class, they will be able to see the list of students assigned to the exam." searchTerm={searchTerm}></HighlightedText>
+                <HighlightedText text="When the examiner selects Edit, they will be directed to a page where they will be able to edit any details of the exam, including the exam title and times." searchTerm={searchTerm}></HighlightedText>
+                <HighlightedText text="When the examiner selects Delete, the exam will be removed from the database and from student views." searchTerm={searchTerm}></HighlightedText>
+
             </div>
             <Button variant='contained' onClick={() => onBackButtonClick()} sx={buttonStyles}>
                 Back to User Manual
