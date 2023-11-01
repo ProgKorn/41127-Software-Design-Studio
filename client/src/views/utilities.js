@@ -80,7 +80,7 @@ function incidentCheck(timestamp, flagType) {
     // Create a new incident
     const newIncident = {
       flagType: flagType,
-      timestamp,
+      timeStamp: timestamp,
       flagged: true,
       studentId: studentId,
       examId: 2,  // This needs to be fetched dynamically from studentId (from token)

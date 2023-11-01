@@ -111,9 +111,9 @@ function ExamSession() {
     axios.get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`).then((response) => {
       const { startTime, endTime } = response.data;
       setExamName(response.data.examName);
-      //const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
+      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
       // For testing, replace with the actual exam length logic
-       const examLengthInSeconds = 10; 
+      // const examLengthInSeconds = 10; 
       setExamLength(examLengthInSeconds);
       setRemainingTime(examLengthInSeconds); // Initialize remaining time
     }).catch((error) => {
