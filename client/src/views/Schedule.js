@@ -118,7 +118,7 @@ function Schedule() {
                     View Class
                   </div>
               </Button>
-              <Button component={Link} sx={buttonStyles} className="scheduleButton" variant="contained">
+              <Button component={Link} to={`/editexam/${selectedExam.examId}`} sx={buttonStyles} className="scheduleButton" variant="contained">
                   <div className="scheduleIcons">
                     <ModeEditOutlinedIcon />
                   </div>
