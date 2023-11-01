@@ -32,6 +32,7 @@ import UM27 from '../helpCentreResources/UM27.png';
 import UM28 from '../helpCentreResources/UM28.png';
 import UM29 from '../helpCentreResources/UM29.png';
 import UM30 from '../helpCentreResources/UM30.png';
+import UM31 from '../helpCentreResources/UM31.png';
 import LightBulbIcon from '../helpCentreResources/UMLightBulb.png';
 import InfoIcon from '../helpCentreResources/UMInfo.jpg';
 import WarningIcon from '../helpCentreResources/UMWarning.jpg';
@@ -209,9 +210,6 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                 <ul>
                     <li><HighlightedText text="Please enable pop-up blockers prior to attempting access to Sentinel." searchTerm={searchTerm}/></li>
                     <li><HighlightedText text="Enable the camera and microphone access on Chrome before accessing Sentinel by clicking on the lock button on the upper left hand corner of the navigation bar." searchTerm={searchTerm}/></li>
-                    <ul>
-                        <li><HighlightedText text="Please use the button “Run System Test” on the Sentinel system to ensure that your device is working." searchTerm={searchTerm}/></li>
-                    </ul>
                 </ul>
                 <img src={UM9} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 9: Allowing Access to the Camera and Microphone" searchTerm={searchTerm}/></h5>
@@ -222,7 +220,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
 
                 <h5 className="terms">Accessing the Software</h5>
 
-                <HighlightedText text="To access the Sentinel software, there are two types of sign-in modes depending on the user type. The examiner login utilises an email and password login while the student login utilises facial recognition software to log in. If the examiner logging in does not have valid login details or if they have forgotten their login details, they must contact the institution’s information technology department to solve this issue and receive their login details. In the case of the student login, they must lodge an external form that will upload their facial data and landmarks into the system, enabling them to log in. Common issues relating to Facial Authentication for students will be in the Help Centre '>' Face Auth Troubleshoot. For privacy purposes, the users will not be allowed to change their login details directly on the Sentinel application. To easily contact the IT department, go to the Help Centre '>' Contact Us." searchTerm={searchTerm}/>
+                <HighlightedText text="To access the Sentinel software, there are two types of sign-in modes depending on the user type. The examiner login utilises an email and password login while the student login utilises facial recognition software to log in. If the examiner logging in does not have valid login details or if they have forgotten their login details, they must contact the institution’s information technology department to solve this issue and receive their login details. In the case of the student login, they must lodge an external form that will upload their facial data and landmarks into the system, enabling them to log in. For privacy purposes, the users will not be allowed to change their login details directly on the Sentinel application. To easily contact the IT department, go to the Help Centre > Contact Us." searchTerm={searchTerm}/>
                 <img src={UM10} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 10: Sample of Sentinel Help Centre" searchTerm={searchTerm}/></h5>
 
@@ -233,8 +231,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                 <h5 className="figure-heading"><HighlightedText text="Figure 11: Sentinel Home Page" searchTerm={searchTerm}/></h5>
 
                 <h5 className="terms">Examiner Account</h5>
-                <HighlightedText text="These are the main functionalities provided to an admin account:" searchTerm={searchTerm}/>
-                <h5 className="account-subheading"><HighlightedText text="Login/Home Functions" searchTerm={searchTerm}/></h5>
+                <h5 className="account-subheading"><HighlightedText text="Login/Main Functions" searchTerm={searchTerm}/></h5>
                 <ul>
                     <li><HighlightedText text="Login - If the user has previously received login details from their IT department, they are able to easily log into the sentinel system by signing up with their username and password." searchTerm={searchTerm}/></li>
                     <li><HighlightedText text="Home - When the examiner is logged in, they can press the Home button on the menu bar above to navigate back to the homepage." searchTerm={searchTerm}/></li>
@@ -259,8 +256,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                 </ul>
 
                 <h5 className="terms">Student Account</h5>
-                <HighlightedText text="These are the main functionalities provided to a student account:" searchTerm={searchTerm}/>
-                <h5 className="account-subheading"><HighlightedText text="Login/Home Functions" searchTerm={searchTerm}/></h5>
+                <h5 className="account-subheading"><HighlightedText text="Main Functionality" searchTerm={searchTerm}/></h5>
                 <ul>
                     <li><HighlightedText text="Login - If the user has previously signed up for a Sentinel account through an external form lodged with the IT Department, they should be able to sign in simply by using their facial data." searchTerm={searchTerm}/></li>
                     <li><HighlightedText text="Home - When the Student is logged in, they can press the Home button on the menu bar above to navigate back to the Student Homepage." searchTerm={searchTerm}/></li>
@@ -273,17 +269,13 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                     <li><HighlightedText text="Access Exam - Select the Access Exam button of the exam that you want to access." searchTerm={searchTerm}/></li>
                 </ul>
 
-                <h5 className="account-subheading"><HighlightedText text="System Test" searchTerm={searchTerm}/></h5>
-                <ul>
-                    <li><HighlightedText text="Login - The student must be logged into their account to perform the functions below." searchTerm={searchTerm}/></li>
-                    <li><HighlightedText text="Test Your Equipment - Select the Test Your Equipment at the bottom of the page to ensure that your camera and microphone are working as intended." searchTerm={searchTerm}/></li>
-                </ul>
-
                 <h5 className="terms">Exiting the Software</h5>
 
                 <HighlightedText text="To exit the Sentinel web application, the user must click on their profile on the upper-right hand corner of the menu bar followed by “Sign Out”. Once the user has successfully signed out, they will be redirected back to the main Sentinel page. The user can choose to exit the page upon being redirected to the main page." searchTerm={searchTerm}/>
                 <img src={UM13} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 13: Admin Signout" searchTerm={searchTerm}/></h5>
+                <img src={UM14} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 14: Student Signout" searchTerm={searchTerm}/></h5>
 
             </div>
             <Button variant='contained' onClick={() => onBackButtonClick()} sx={buttonStyles}>
@@ -302,92 +294,90 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="The following subsections provide detailed, step-by-step instructions on how to use the various functions or features of the Sentinel AI Anti-Cheating Detection Software." searchTerm={searchTerm}></HighlightedText>
             
-                <h5 className="terms">Student Functions</h5>
+                <h1 className="text">Student Functions</h1>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Login" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Login</h5>
                 <HighlightedText text="Students using the Sentinel web application can log into their user account which provides access to all features of the system that have been assigned to them. The purpose of creating the FaceID login method is to ensure that the student can be properly authenticated and reinforce the anti-cheating purpose of our software. For more information on accessing the system, please refer to Section 3: Getting Started." searchTerm={searchTerm}></HighlightedText>
             
-                <h2 className="softwareSubHeading"><HighlightedText text="Student Homepage" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Student Homepage</h5>
                 <HighlightedText text="After logging into the system, the student will be brought to the student homepage where they can access functions such as viewing their student details and viewing upcoming  & previous exams." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM15} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 15: Student Homepage" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="View Student Details" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">View Student Details</h5>
                 <HighlightedText text="When the user wants to view their current Student Details, they will be displayed on a table on the left-hand side of the screen. This table contains information such as the student’s first name, last name, student ID and email." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM16} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 16: Student Details Table" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="View Previous Exams" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">View Previous Exams</h5>
                 <HighlightedText text="When the user wants to view the previous exams that they have taken/joined, they can navigate to the table on the bottom of the screen which contains information such as the upcoming exams table above it." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM17} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 17: Previous Exams Table" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="View Upcoming Exams" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">View Upcoming Exams</h5>
                 <HighlightedText text="When the user wants to view their upcoming exams, they can navigate to the right-hand table of the screen which showcases the upcoming exams including the exam name, exam start, details and seat number." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM18} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 18: Upcoming Exams Table" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Access Exam" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Access Exam</h5>
                 <HighlightedText text="When the student wants to join an exam session that they are scheduled for, they can click the “Access Exam” button on the Upcoming Exams table for the specific exam they want to join. This will redirect them into a waiting room before they begin the exam (exam session)." searchTerm={searchTerm}></HighlightedText>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Exam Session" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Exam Session</h5>
                 <HighlightedText text="After the student selects the Access Exam button from the student homepage, they will be redirected first from the Exam Waiting Room (otherwise known as the Exam Start page) then to the actual proctored Exam Session." searchTerm={searchTerm}></HighlightedText>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Exam Waiting Room (Exam Start Page)" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Exam Waiting Room (Exam Start Page)</h5>
                 <HighlightedText text="When inside the Exam Waiting Room, the student can view the details of the exam in the top table, they can then view the terms and conditions below. A scroll bar is available to view the content of the terms and conditions. Before being able to proceed they must agree to the terms and conditions by checking the box." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM19} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 19: Exam Start Page" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Pre-Exam Verification" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Pre-Exam Verification</h5>
                 <HighlightedText text="Before beginning the actual exam session, the student is required to scan their table for banned objects. This ensures that the student does not have any tools they can use for cheating that may not be detected during the exam. After the area has been scanned, the student can press the Continue button which will allow them to enter the exam session." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM20} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 20: Pre-Exam Verification Screen" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Exam Session" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Exam Session</h5>
                 <HighlightedText text="When the exam begins, the student is automatically moved from the waiting room to the exam session. During this session, object recognition and facial landmark detection runs to ensure that a student is not cheating during the examination." searchTerm={searchTerm}></HighlightedText>
-                <img className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 21: Exam Session Screen" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Exam Flags" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Exam Flags</h5>
                 <HighlightedText text="As previously mentioned, once the exam begins, the anti-cheating software also begins. When a student commits any activities that are considered misconduct (as listed in Appendix G.7: Assumptions), they will be flagged by the system. An example of a flagging warning has been shown below." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM21} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 22: Sample of an Exam Flag" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 21: Sample of an Exam Flag" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Exam Terminated" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Exam Terminated</h5>
                 <HighlightedText text="When the student has received two flagging warnings, their exam session can be terminated (based on the manual approval of the examiner). If the exam session was terminated, the student will be redirected to this page below. From this page, they can go back to the student homepage." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM22} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 23: Exam Terminated Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 22: Exam Terminated Screen" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Exam Complete" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Exam Complete</h5>
                 <HighlightedText text="After the exam has completed, the student will be redirected to an Exam Complete page where they will be redirected back to the student home page." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM23} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 24: Exam Complete Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 23: Exam Complete Screen" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Student Functions</h5>
+                <h1 className="text">Admin Functions</h1>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="View the Admin Dashboard" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">View the Admin Dashboard</h5>
                 <HighlightedText text="Examiners using the Sentinel Web Application can log into their user account which provides access to all of the admin functions which will be outlined below. For more information on accessing the system, please refer to Section 3: Getting Started." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM24} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 25: Admin Dashboard Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 24: Admin Dashboard Screen" searchTerm={searchTerm}/></h5>
                 <HighlightedText text="The admin navigation bar, featured at the top of the dashboard (in addition to all administrative pages) features shortcuts to:" searchTerm={searchTerm}></HighlightedText>
                 <ul>
-                    <li><HighlightedText text="The Home Page (see Figure 25)" searchTerm={searchTerm}></HighlightedText></li>
-                    <li><HighlightedText text="The Exam Schedule (see Figure 32)" searchTerm={searchTerm}></HighlightedText></li>
-                    <li><HighlightedText text="The Flag Log (see Figure 27)" searchTerm={searchTerm}></HighlightedText></li>
+                    <li><HighlightedText text="The Home Page (see Figure 24)" searchTerm={searchTerm}></HighlightedText></li>
+                    <li><HighlightedText text="The Exam Schedule (see Figure 31)" searchTerm={searchTerm}></HighlightedText></li>
+                    <li><HighlightedText text="The Flag Log (see Figure 26)" searchTerm={searchTerm}></HighlightedText></li>
                     <li><HighlightedText text="The Help Centre (see Figure 10)" searchTerm={searchTerm}></HighlightedText></li>
                 </ul>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Launch Exam" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Launch Exam</h5>
                 <HighlightedText text="When the examiner selects the Launch Exam they will be directed to the active exam session. If there is no active exam session, this button is disabled. This allows for immediate access to a live exam session, which is particularly important for time-sensitive situations." searchTerm={searchTerm}></HighlightedText>
-                <img className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 26: Exam Session Screen for Admin" searchTerm={searchTerm}/></h5>
+                <img src={UM31} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 25: Exam Session Screen for Admin" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Student Monitoring/Flagging" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Student Monitoring/Flagging</h5>
                 <img src={UM25} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 27: Flagged Incidents Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 26: Flagged Incidents Screen" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Flag Logs" searchTerm={searchTerm}/></h2>
-                <HighlightedText text="At the end of each examination, the examiner will be able to access the corresponding flagged incidents during the examination including the session name, examinee that was flagged, why the individual was flagged, the status of the flag, the flag number and the session number. The flag log automatically updates to show the complete list of flags have been registered to the system. The status column can show one of three status types as shown in Figure 27: Flagged Incidents Screen:" searchTerm={searchTerm}></HighlightedText>
+                <h5 className="terms">Flag Logs</h5>
+                <HighlightedText text="At the end of each examination, the examiner will be able to access the corresponding flagged incidents during the examination including the session name, examinee that was flagged, why the individual was flagged, the status of the flag, the flag number and the session number. The flag log automatically updates to show the complete list of flags have been registered to the system. The status column can show one of three status types as shown in Figure 26: Flagged Incidents Screen:" searchTerm={searchTerm}></HighlightedText>
                 <ul>
                     <li><HighlightedText text="The ‘resolved’ status indicates that the flag’s validity has been confirmed by an administrator and that the student has been successfully notified of the flag. " searchTerm={searchTerm}></HighlightedText></li>
                     <li><HighlightedText text="The ‘pending’ status indicates that the flag has been logged, but is yet to be confirmed by an administrator." searchTerm={searchTerm}></HighlightedText></li>
@@ -398,30 +388,30 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
                     </ul>
                 </ul>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Flag Details" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Flag Details</h5>
                 <HighlightedText text="In the flagged incidents table, each flagged incident has a hyperlink attached to it that redirects the user to another page called Flag Details. This page is designed to provide more information about the flag including the examinee details, exam details, flag report and provides a clip of the flagged incident." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM26} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 28: Flag Details Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 27: Flag Details Screen" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Create Session" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Create Session</h5>
                 <HighlightedText text="When the examiner selects the Create Exam button in the Admin Dashboard, they will be brought to the Create Session page where they can Schedule an Exam for the class. Information required to create a new exam session include specifying the date and duration, class name, exam name and description." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM27} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 29: Create Session Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 28: Create Session Screen" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="Manage Classes" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">Manage Classes</h5>
                 <HighlightedText text="When the examiner selects Manage Class, they will be directed to a page with a list of students allocated to their class. They are then able to add or remove the students in the class. Exams are scheduled to classes rather than to individual students; Administrators can use the ‘Manage Classes’ page  to configure the students expected to be in attendance of a particular exam by selecting which students they’d like to be in the exam." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM28} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 30: Manage Classes Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 29: Manage Classes Screen" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="View Exam history" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">View Exam history</h5>
                 <HighlightedText text="When the examiner clicks on the Exam History button in the Admin Dashboard, they will be brought to the Exam History page where they can view the previous exams that they have scheduled/held. Information that is displayed on the table in Exam History include the exam name, Term, examiner name, number of attendees, exam start time, exam end time, status and session number." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM29} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 31: View Exam History Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 30: View Exam History Screen" searchTerm={searchTerm}/></h5>
 
-                <h2 className="softwareSubHeading"><HighlightedText text="View Scehdule" searchTerm={searchTerm}/></h2>
+                <h5 className="terms">View Schedule</h5>
                 <HighlightedText text="When the examiner enters the View Schedule screen they will be able to see any upcoming examinations. The first exam on the screen will be the exam closest to the current date. The examiner will be able to view the exam name, exam time and date as well as Exam Id. " searchTerm={searchTerm}></HighlightedText>
                 <img src={UM30} className="image"></img>
-                <h5 className="figure-heading"><HighlightedText text="Figure 32: View Schedule Screen" searchTerm={searchTerm}/></h5>
+                <h5 className="figure-heading"><HighlightedText text="Figure 31: View Schedule Screen" searchTerm={searchTerm}/></h5>
                 <HighlightedText text="Examiners may click the Show Exam Details link which will provide more details regarding the exam when clicked. Four buttons will also be visible, the Launch button, View Class button, Edit button and Delete button." searchTerm={searchTerm}></HighlightedText>
                 <HighlightedText text="When the examiner selects Launch they will be directed to the Exam Session and be able to view all the students partaking in the exam in real-time." searchTerm={searchTerm}></HighlightedText>
                 <HighlightedText text="When the examiner selects View Class, they will be able to see the list of students assigned to the exam." searchTerm={searchTerm}></HighlightedText>
@@ -553,24 +543,24 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
                             <TableRow>
                                 <TableCell><HighlightedText text="“Error: Exam end time occurs before start time.”" searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
-                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
-                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="The exam end time is invalid and is before the given start time." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Ensure the end time is valid by checking if it happens on or before the start time." searchTerm={searchTerm}/></TableCell>
                             </TableRow>
                         </TableBody>
                         <TableBody>
                             <TableRow>
                                 <TableCell><HighlightedText text="“Error: No Exam Name Provided”" searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
-                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
-                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="An invalid exam name or no exam name was provided." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Add a valid exam name to the form field before submission." searchTerm={searchTerm}/></TableCell>
                             </TableRow>
                         </TableBody>
                         <TableBody>
                             <TableRow>
                                 <TableCell><HighlightedText text="“Error: No Start Time Provided”" searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
-                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
-                                <TableCell><HighlightedText text="" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="An invalid start time or no start time was provided." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Add a valid start time." searchTerm={searchTerm}/></TableCell>
                             </TableRow>
                         </TableBody>
                         <TableBody>
@@ -579,6 +569,14 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
                                 <TableCell><HighlightedText text="Admin Create Session Page" searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="An end time has not been provided in the create session page." searchTerm={searchTerm}/></TableCell>
                                 <TableCell><HighlightedText text="Add a valid end time." searchTerm={searchTerm}/></TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><HighlightedText text="“Error: No Description Provided”" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Create Session" searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="A session description has not been provided." searchTerm={searchTerm}/></TableCell>
+                                <TableCell><HighlightedText text="Add a session description." searchTerm={searchTerm}/></TableCell>
                             </TableRow>
                         </TableBody>
                         <TableBody>
@@ -594,7 +592,8 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
 
                 <h5 className="terms">Special Considerations</h5>
 
-                <HighlightedText text="Certain special considerations have been made, particularly as the system is in early stages of development and user acceptance testing is in progress. On rare occasions, a user will be presented with a “No Access” screen despite logging in successfully under an account with correct privileges. This is due to the request processing quickly that the token cannot be read before the component is loaded. A simple page refresh will remediate this." searchTerm={searchTerm}/>
+                <HighlightedText text="Sentinel deploys on a weekly basis and the system may experience downtime whilst this is processing. The deployment only takes an average time of 2 minutes, but a contingency period of 20 minutes has been outlined to account for rollbacks and user acceptance testing. The deployment times are set to late at night in AEST and do not affect a vast majority of users." searchTerm={searchTerm}/>
+                <HighlightedText text="Also of note, although due diligence has been made to enable manual checks and model accuracy for cheating detections, there is always a possibility of a cheating behaviour being incorrectly flagged. Additionally, some behaviours associated with accessibility considerations such as breaks, support people, and a usage of an additional device may be flagged as cheating by the system unless a special consideration request has been made to the university. If any doubts arise, please contact the university." searchTerm={searchTerm}/>
 
                 <h5 className="terms">Support</h5>
 
