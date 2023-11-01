@@ -13,6 +13,7 @@ const FlagNotification = () => {
   const [flagUpdated, setFlagUpdated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [flagId, setFlagId] = useState("");
+  const [cheatingType, setCheatingType] = useState("");
   const [studentId, setStudentId] = useState('');
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -33,9 +34,10 @@ const FlagNotification = () => {
       console.log(`You connected with id: ${socket.id}`);
     });
 
-    socket.on('add-flag', (newFlagId, cheatingStudentId) => { // When a flag is added
+    socket.on('add-flag', (newFlagId, cheatingStudentId, cheatingType) => { // When a flag is added
       setFlagId(newFlagId);
       setStudentId(cheatingStudentId);
+      setCheatingType(cheatingType);
       setFlagAdded(true);
       socket.emit('register-student', parseInt(cheatingStudentId)); // Register the student that has cheated
     });
@@ -98,6 +100,19 @@ const FlagNotification = () => {
     return firstName + " " + lastName + " " + `(${studentId})`;
   }
 
+  const misconductType = (cheatingType) => {
+    switch (cheatingType) {
+      case "Banned Object":
+        return "Banned Object spotted in frame.";
+      case "Person Count":
+        return "More than one person in the frame.";
+      case "Unfocused Window":
+        return "Navigated out of exam session window.";
+      default:
+        return "";
+    }
+  }
+
   const numberOfFlagsRemaining = () => {
     // Need to fetch how many flags associated with the active Exam Student to have dynamic message
     return "one";
@@ -116,9 +131,10 @@ const FlagNotification = () => {
             <h1 className="popup-title">PENDING FLAG</h1>
             <div className="notification-text">
               <p>
-                <span className="bold-underline">{name()}</span> has been flagged for academic misconduct.
+                <span className="bold-underline">{name()}</span> has been flagged.
               </p>
-              <p>Would you like to Resolve or Terminate this flag?</p>
+              <p>{misconductType(cheatingType)}</p>
+              {/* <p>Would you like to Resolve or Terminate this flag?</p> */}
             </div>
             <div style={{display: "flex", gap: "10px"}}>
               <button onClick={resolveFlag} className="resolve-button"><DoneIcon style={{ verticalAlign: 'middle', marginRight: '10px' }}/>RESOLVE</button>

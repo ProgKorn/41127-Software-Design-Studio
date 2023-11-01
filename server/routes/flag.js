@@ -106,7 +106,7 @@ router.post('/addFlag', async (req, res) => { // Add a new flag
             sessionName: req.body.sessionName,
         });
         const flag = await databaseMaster.dbOp('insert', 'FlaggedIncidents', { docs: [newFlag] });
-        io.emit('add-flag', newFlagId, req.body.studentId);
+        io.emit('add-flag', newFlagId, req.body.studentId, req.body.flagType);
         console.log("I have raised this flag " + newFlag);
         res.json(flag);
     } catch (error) {
@@ -138,6 +138,7 @@ router.post('/updateFlag', async (req, res) => { // Update status from Pending -
             // Send the 'update-flag' event only to the specific student's socket
             const studentSocket = socketConnections.get(studentId);
             console.log("This is the ID i'm sending it to " + studentId);
+            console.log("This is the socket ID " + studentSocket);
             console.log("Flag ID " + flagId);
             if (studentSocket) {
                 console.log("Updated Flag");
