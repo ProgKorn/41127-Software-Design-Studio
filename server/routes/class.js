@@ -106,5 +106,16 @@ router.post('/editClassDetails/:subjectId', async (req,res) => {
     }
   })
 
+  router.get('/deleteClassDetails/:subjectId', async (req,res) => {
+    try {
+      const query = { subjectId: parseInt(req.params.subjectId) };
+      const data = await  databaseMaster.dbOp('delete', 'ClassDetails', { query });
+      res.json(data);
+  
+      } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  })
 
 module.exports = router;
