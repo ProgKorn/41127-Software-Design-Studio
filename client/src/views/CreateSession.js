@@ -26,6 +26,7 @@ import MuiAlert from "@mui/material/Alert";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Loader from '../components/Loader';
+import {formatISOTime, formatISODate} from "../components/Clock";
 
 //TO-DO:
 //Cannot assign multiple exams to a class --> ctrl+r "classValidation" for more info
@@ -121,30 +122,17 @@ function CreateSession() {
   };
 
   useEffect(() => {
-    var trimmedString = examDate.toString();
-    trimmedString = trimmedString.slice(0, 13);
+    var trimmedString = formatISODate(examDate).toString();
+    trimmedString = trimmedString.slice(0, 15);
     setAmmendedExamDate(trimmedString);
   }, [examDate]);
 
-  function convertUTCDateToLocalDate(date) {
-    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
-
-    var offset = date.getTimezoneOffset() / 60;
-    var hours = date.getHours();
-
-    newDate.setHours(hours - offset);
-
-    return newDate;   
-  }
-
   useEffect(() => {
-    var trimmedString = startTime.toString();
-    trimmedString = trimmedString.slice(17);
+    var trimmedString = formatISOTime(startTime).toString();
     setAmmendedStartTime(trimmedString);
     console.log("start time is " + startTime + "or " + trimmedString)
 
-    var trimmedString = endTime.toString();
-    trimmedString = trimmedString.slice(17);
+    var trimmedString = formatISOTime(endTime).toString();
     setAmmendedEndTime(trimmedString);
     console.log("end time is " + endTime + "or " + trimmedString)
 
@@ -189,23 +177,16 @@ function CreateSession() {
   }
 
   const addExam = async() => {
-   // convert startTime and endTime to local times
     var examDateVariable = new Date(examDate);
-    var localStartTime = convertUTCDateToLocalDate(new Date(startTime));
-    var localEndTime = convertUTCDateToLocalDate(new Date(endTime));
-
-    //change the date of the startTime and endTime specified by the endDate
-    localStartTime.setDate(examDateVariable.getDate());
-    localEndTime.setDate(examDateVariable.getDate());
-
-    //convert startTime and endTime back to UTC timezone (i know this solution is stupid)
-    var utcStartTime = new Date(localStartTime.getTime() + localStartTime.getTimezoneOffset() * 60000);
-    var utcEndTime = new Date(localEndTime.getTime() + localEndTime.getTimezoneOffset() * 60000);
+    var startTimeDate = new Date(startTime);
+    var endTimeDate = new Date(endTime);
+    var utcStartDate = new Date( examDateVariable.getFullYear(),examDateVariable.getMonth(), examDateVariable.getDate(), startTimeDate.getHours(), startTimeDate.getMinutes())
+    var utcEndDate = new Date( examDateVariable.getFullYear(),examDateVariable.getMonth(), examDateVariable.getDate(), endTimeDate.getHours(), endTimeDate.getMinutes())
 
     const requestBody = { 
       examName: examName,
-      startTime: utcStartTime.toISOString(), 
-      endTime: utcEndTime.toISOString(), 
+      startTime: utcStartDate.toISOString(), 
+      endTime: utcEndDate.toISOString(), 
       details: examDescription,
       className: classes[scheduledClass] };
 
