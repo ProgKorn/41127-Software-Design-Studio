@@ -152,7 +152,8 @@ function ExamSession() {
         setExamInProgress(false);
         // Update exam session status to "Completed"
         axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
-        //navigate("/examdone");
+        // Leave the call after exam ends
+        leaveCall();
         // Update exam session status to "Completed"
         axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
 
