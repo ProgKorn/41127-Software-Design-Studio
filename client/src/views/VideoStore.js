@@ -11,6 +11,10 @@ const useVideoStore = () => {
   const canvasRef = useRef(null);
   const {studentIdExtract} = useParams();
   const {examIdExtract} = useParams();
+  const { studentId } = useParams();
+  const { examId } = useParams();
+  const {seatNo} = useParams();
+
 
   const startRecording = (canvasRef) => {
     const stream = canvasRef.current.captureStream(30);
@@ -82,7 +86,11 @@ const useVideoStore = () => {
 
       console.log("NEWVIDO - Navigated to exam done");
         setRecordedChunks([]);
-        navigate("/examdone");
+
+      navigate(`/examdone/${studentId}/${examId}/${seatNo}`);
+
+
+
       })
       .catch((error) => {
         console.error("NEWVIDO - Upload failed: ", error);
