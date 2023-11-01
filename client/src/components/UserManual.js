@@ -299,10 +299,11 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
                 <h2 className="text">Using The Software</h2>
             </header>
             <div className="info-dump">
-                <HighlightedText text="" searchTerm={searchTerm}></HighlightedText>
+
                 <HighlightedText text="The following subsections provide detailed, step-by-step instructions on how to use the various functions or features of the Sentinel AI Anti-Cheating Detection Software." searchTerm={searchTerm}></HighlightedText>
             
                 <h5 className="terms">Student Functions</h5>
+
                 <h2 className="softwareSubHeading"><HighlightedText text="Login" searchTerm={searchTerm}/></h2>
                 <HighlightedText text="Students using the Sentinel web application can log into their user account which provides access to all features of the system that have been assigned to them. The purpose of creating the FaceID login method is to ensure that the student can be properly authenticated and reinforce the anti-cheating purpose of our software. For more information on accessing the system, please refer to Section 3: Getting Started." searchTerm={searchTerm}></HighlightedText>
             
@@ -315,6 +316,66 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
                 <HighlightedText text="When the user wants to view their current Student Details, they will be displayed on a table on the left-hand side of the screen. This table contains information such as the student’s first name, last name, student ID and email." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM16} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 16: Student Details Table" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="View Previous Exams" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the user wants to view the previous exams that they have taken/joined, they can navigate to the table on the bottom of the screen which contains information such as the upcoming exams table above it." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM17} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 17: Previous Exams Table" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="View Upcoming Exams" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the user wants to view their upcoming exams, they can navigate to the right-hand table of the screen which showcases the upcoming exams including the exam name, exam start, details and seat number." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM18} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 18: Upcoming Exams Table" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Access Exam" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the student wants to join an exam session that they are scheduled for, they can click the “Access Exam” button on the Upcoming Exams table for the specific exam they want to join. This will redirect them into a waiting room before they begin the exam (exam session)." searchTerm={searchTerm}></HighlightedText>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Exam Session" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="After the student selects the Access Exam button from the student homepage, they will be redirected first from the Exam Waiting Room (otherwise known as the Exam Start page) then to the actual proctored Exam Session." searchTerm={searchTerm}></HighlightedText>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Exam Waiting Room (Exam Start Page)" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When inside the Exam Waiting Room, the student can view the details of the exam in the top table, they can then view the terms and conditions below. A scroll bar is available to view the content of the terms and conditions. Before being able to proceed they must agree to the terms and conditions by checking the box." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM19} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 19: Exam Start Page" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Pre-Exam Verification" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="Before beginning the actual exam session, the student is required to scan their table for banned objects. This ensures that the student does not have any tools they can use for cheating that may not be detected during the exam. After the area has been scanned, the student can press the Continue button which will allow them to enter the exam session." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM20} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 20: Pre-Exam Verification Screen" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Exam Session" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the exam begins, the student is automatically moved from the waiting room to the exam session. During this session, object recognition and facial landmark detection runs to ensure that a student is not cheating during the examination." searchTerm={searchTerm}></HighlightedText>
+                <img className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 21: Exam Session Screen" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Exam Flags" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="As previously mentioned, once the exam begins, the anti-cheating software also begins. When a student commits any activities that are considered misconduct (as listed in Appendix G.7: Assumptions), they will be flagged by the system. An example of a flagging warning has been shown below." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM21} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 22: Sample of an Exam Flag" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Exam Terminated" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="When the student has received two flagging warnings, their exam session can be terminated (based on the manual approval of the examiner). If the exam session was terminated, the student will be redirected to this page below. From this page, they can go back to the student homepage." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM22} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 23: Exam Terminated Screen" searchTerm={searchTerm}/></h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="Exam Complete" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="After the exam has completed, the student will be redirected to an Exam Complete page where they will be redirected back to the student home page." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM23} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 24: Exam Complete Screen" searchTerm={searchTerm}/></h5>
+
+                <h5 className="terms">Student Functions</h5>
+
+                <h2 className="softwareSubHeading"><HighlightedText text="View the Admin Dashboard" searchTerm={searchTerm}/></h2>
+                <HighlightedText text="Examiners using the Sentinel Web Application can log into their user account which provides access to all of the admin functions which will be outlined below. For more information on accessing the system, please refer to Section 3: Getting Started." searchTerm={searchTerm}></HighlightedText>
+                <img src={UM24} className="image"></img>
+                <h5 className="figure-heading"><HighlightedText text="Figure 25: Admin Dashboard Screen" searchTerm={searchTerm}/></h5>
+                <HighlightedText text="The admin navigation bar, featured at the top of the dashboard (in addition to all administrative pages) features shortcuts to:" searchTerm={searchTerm}></HighlightedText>
+                <ul>
+                    <li><HighlightedText text="The Home Page (see Figure 25)" searchTerm={searchTerm}></HighlightedText></li>
+                    <li><HighlightedText text="The Exam Schedule (see Figure 32)" searchTerm={searchTerm}></HighlightedText></li>
+                    <li><HighlightedText text="The Flag Log (see Figure 27)" searchTerm={searchTerm}></HighlightedText></li>
+                    <li><HighlightedText text="The Help Centre (see Figure 10)" searchTerm={searchTerm}></HighlightedText></li>
+                </ul>
 
             </div>
             <Button variant='contained' onClick={() => onBackButtonClick()} sx={buttonStyles}>
