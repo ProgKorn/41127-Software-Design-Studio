@@ -11,14 +11,21 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Loader from '../components/Loader';
 import { formatISOTime } from '../components/Clock';
+import {Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions} from '@mui/material';
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function ManageClasses() {
   const [classes, setClasses] = useState(null);
-  const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedClass, setSelectedClass] = useState("");
   const [exam, setExam] = useState(null);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(true);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const fetchDetails = async () => {
@@ -74,6 +81,32 @@ function ManageClasses() {
     },
   }
 
+  const handleCloseDialogue = () => {
+    setOpen(false);
+  };
+
+  const handleDeleteClass = () => {
+    deleteClass();
+    handleCloseDialogue();
+  };
+
+  const handleClick = () => {
+    setOpen(true);
+  }
+  const deleteClass = async() =>
+  {
+    
+    try {
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/class/deleteClassDetails/' + selectedClass.subjectId)
+      console.log("Delete Response received", response);
+      window.location.reload();
+
+    } catch (error) {
+      console.log("Error", error)
+    } 
+    
+  }
+
   return loading ? <Loader loading={loading} /> : (
 		<div className="Schedule">
 			<AdminHeader/>
@@ -127,7 +160,7 @@ function ManageClasses() {
                 <div>Ends at {formatISOTime(exam.endTime)}</div>
               </div>
               <div className='scheduleButtonContainer' style={{paddingTop: 20, paddingBottom: 20}}>
-              <Button component={Link} sx={buttonStyles} className="scheduleButton" variant="contained">
+              <Button component={Link} to={`/editclass/${selectedClass.subjectId}`} sx={buttonStyles} className="scheduleButton" variant="contained">
                   <div className="scheduleIcons">
                     <ModeEditOutlinedIcon />
                   </div>
@@ -135,7 +168,7 @@ function ManageClasses() {
                     Edit
                   </div>
                 </Button>
-                <Button component={Link} sx={buttonStyles}className="scheduleButton" variant="contained">
+                <Button component={Link} sx={buttonStyles}className="scheduleButton" variant="contained" onClick={handleClick}>
                   <div className="scheduleIcons">
                     <DeleteOutlineOutlinedIcon />
                   </div>
@@ -148,6 +181,33 @@ function ManageClasses() {
 					</div>
 				</Card>
 			</div>
+      <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseDialogue}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle> Confirm Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              maxWidth={"lg"}
+            >
+              Are you sure you want to delete class: {selectedClass.className}?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialogue}>Cancel</Button>
+            <Button
+              color="error"
+              variant="contained"
+              onClick={handleDeleteClass}
+            >
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
 		</div>
   );
 }

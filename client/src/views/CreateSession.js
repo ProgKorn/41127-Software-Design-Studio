@@ -25,7 +25,8 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import Loader from "../components/Loader";
+import Loader from '../components/Loader';
+import {formatISOTime, formatISODate} from "../components/Clock";
 
 //TO-DO:
 //Cannot assign multiple exams to a class --> ctrl+r "classValidation" for more info
@@ -120,23 +121,17 @@ function CreateSession() {
   };
 
   useEffect(() => {
-    var trimmedString = examDate.toString();
-    trimmedString = trimmedString.slice(0, 13);
+    var trimmedString = formatISODate(examDate).toString();
+    trimmedString = trimmedString.slice(0, 15);
     setAmmendedExamDate(trimmedString);
   }, [examDate]);
-
+  
   useEffect(() => {
-    var trimmedString = startTime.toString();
-    trimmedString = trimmedString.slice(17);
+    var trimmedString = formatISOTime(startTime).toString();
     setAmmendedStartTime(trimmedString);
-    console.log("start time is " + startTime + "or " + trimmedString);
+    console.log("start time is " + startTime + "or " + trimmedString)
 
-    var trimmedString = endTime.toString();
-    trimmedString = trimmedString.slice(17);
-    setAmmendedEndTime(trimmedString);
-    console.log("end time is " + endTime + " or " + trimmedString);
-
-    if (startTime > endTime && endTime !== "") {
+    if (startTime > endTime && startTime !== "") {
       setSnackbarSeverity("warning");
       setSnackbarMessage(
         "Warning: Exam end time occurs before start time. Please correct before proceeding."
@@ -146,10 +141,11 @@ function CreateSession() {
   }, [startTime]);
 
   useEffect(() => {
-    var trimmedString = endTime.toString();
-    trimmedString = trimmedString.slice(17);
+    var trimmedString = formatISOTime(endTime).toString();
+    setAmmendedEndTime(trimmedString);
+    console.log("end time is " + endTime + "or " + trimmedString)
 
-    if (startTime > endTime && startTime !== "") {
+    if (startTime > endTime && endTime !== "") {
       setSnackbarSeverity("warning");
       setSnackbarMessage(
         "Warning: Exam end time occurs before start time. Please correct before proceeding."
@@ -192,11 +188,17 @@ function CreateSession() {
     }
   };
 
-  const addExam = async () => {
-    const requestBody = {
+  const addExam = async() => {
+    var examDateVariable = new Date(examDate);
+    var startTimeDate = new Date(startTime);
+    var endTimeDate = new Date(endTime);
+    var utcStartDate = new Date( examDateVariable.getFullYear(),examDateVariable.getMonth(), examDateVariable.getDate(), startTimeDate.getHours(), startTimeDate.getMinutes())
+    var utcEndDate = new Date( examDateVariable.getFullYear(),examDateVariable.getMonth(), examDateVariable.getDate(), endTimeDate.getHours(), endTimeDate.getMinutes())
+
+    const requestBody = { 
       examName: examName,
-      startTime: startTime,
-      endTime: endTime,
+      startTime: utcStartDate.toISOString(), 
+      endTime: utcEndDate.toISOString(), 
       details: examDescription,
       className: classes[scheduledClass],
     };

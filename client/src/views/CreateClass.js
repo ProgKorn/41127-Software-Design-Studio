@@ -112,6 +112,8 @@ function CreateClass() {
       const handleClickSave = () => {
         if ((!className.trim().length)) {
             setSnackbarMessage("Error: No Class Name Provided");
+            setSnackbarSeverity("error");
+            setSnackbarState(true);
           } else if ((!subjectId.trim().length)) {
             setSnackbarSeverity("error");
             setSnackbarState(true);
