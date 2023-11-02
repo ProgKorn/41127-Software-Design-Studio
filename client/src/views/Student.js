@@ -28,25 +28,25 @@ function ExamSection(props) {
   }, []);
 
   return studentExams ? <CardTable 
-    columns={studentExams.map((exam) => `${exam.examName}`)}
-    rows={studentExams.map((exam) => `Seat: ${exam.seatNo}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
+    columns={studentExams.slice(0, 3).map((exam) => `${exam.examName}`)}
+    rows={studentExams.slice(0, 3).map((exam) => `Seat: ${exam.seatNo}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
   /> : <></>
 }
 
 function StudentSection(props) {
   const student = props.student;
 
-  return student ? <div style={{ display: 'flex'}}>
+  return student ? <div style={{ display: 'flex', overflow: 'auto'}}>
     <div style={{ width: '70%'}}>
       <CardTable 
         columns={["Student ID", "Name", "Email"]}
         rows={[student.studentId, `${student.name.firstName} ${student.name.lastName}`, student.email]}
       />
     </div>
-    {student.faceImageUrl && <img style={{ height: 250,
-      width: '30%',
-      margin: 20,
-      borderRadius: 10}} src={student.faceImageUrl} alt="student profile">
+    {student.faceImageUrl && 
+    <img style={{ width: '30%', margin: 20, borderRadius: 10}} 
+      src={student.faceImageUrl} 
+      alt="student profile">
     </img>}
   </div> : <></>
 }
@@ -68,7 +68,9 @@ function FlagSection(props) {
   }, []);
 
   // Gets the latest five flags. TODO: add overflow scrolling
-  return studentFlags ? studentFlags.slice(0, 5).map(flag => (<div>{`Exam #${flag.examId} ${flag.sessionName}: ${flag.description}`}</div>)) : <></>
+  return studentFlags ? studentFlags.slice(0, 6).map(flag => (
+    <div>{`Exam #${flag.examId} ${flag.sessionName}, ${flag.description}`}</div>
+  )) : <>No flags</>
 }
 
 function Student() {
@@ -115,8 +117,8 @@ function Student() {
            {student && <ExamSection studentId={student.studentId}/>}
           </Card>
         </Grid>
-        <Grid item xs={8}>
-          <Card title={"Flag History"}>
+        <Grid item xs={8} style={{ height: '80vh' }}>
+        <Card title={"Flag History"}  style={{ height: '80vh' }}>
             <div className='flagDetailSection'>
               <div className='flagDetailContainer'>
                 <div className='flagDetailTitle'>
@@ -137,16 +139,28 @@ function Student() {
               </div>
             </div>
             <div className='flagVideoSection'>
-              <div className='flagVideoTitle'>
-                Flagged Clip
+              <div className='flagStudentVideoTitle'>
+                Most Recent Flagged Clip
               </div>
               {/* Placeholder for flagged */}
-              <div style={{ height: 400, 
+              <div style={{
                   width: '90%', 
+                  height: '35vh',
+                  display: 'flex',
                   margin: 'auto', 
+                  alignContent: 'center',
+                  justifyContent: 'center',
                   backgroundColor: 'aliceblue', 
                   borderRadius: 10, 
-                  marginTop: 30 }}>  
+                  overflow: 'auto',
+                  marginTop: 20 }}> 
+                  <video 
+                    src={"https://res.cloudinary.com/dljsodofn/video/upload/v1698925953/blob_hwo8th.mkv"}
+                    autoplay
+                    muted
+                    controls>
+                  </video>
+                {/* {recentFlag ? <></> : <div style={{ paddingTop: '11vh', fontFamily: 'Montserrat, sans-serif' }}>No Flags</div>} */}
               </div>
             </div>
           </Card>

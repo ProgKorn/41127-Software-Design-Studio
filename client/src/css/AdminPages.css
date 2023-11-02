@@ -30,6 +30,7 @@
     background-color: rgb(245, 247, 253);
     color: rgb(85, 89, 130);
     padding: 20px;
+    height: 100%;
     text-align: left;
     padding-left: 50px;
 }
@@ -47,7 +48,7 @@
 }
 
 .flagDetailSection {
-    /* height: 130px; */
+    height: '100%';
     padding: 20px;
 }
 
@@ -59,6 +60,7 @@
     margin: auto;
     padding: 0px;
     border-radius: 20px;
+    height: 20vh;
     /* height: 100%; */
 }
 
@@ -83,10 +85,13 @@
     font-family: Montserrat, sans-serif;
     padding: 25px;
     text-align: left;
+    /* height: '100%'; */
+    overflow: auto;
 }
 
 .flagVideoSection {
     padding: 20px;
+    overflow: auto;
 }
 
 .flagVideoTitle {
@@ -96,6 +101,17 @@
     width: 90%;
     margin: auto;
     padding: 10px;
+}
+
+
+.flagStudentVideoTitle {
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    text-align: left;
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    padding-top: 0px;
 }
 
 .scheduleButton {
@@ -170,4 +186,30 @@
 .scheduleIcons {
     transform: scale(2.2);
     padding-top: 10px;
+}
+
+.admin-video-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2b2d42;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 999; /* Adjust z-index for stacking order */
+}
+
+.notification-video {
+    color: white;
+    padding-bottom: 20px;
+}
+
+.linkIcon {
+    color: blue;
+}
+
+.linkIcon:hover {
+    cursor: pointer
 }
