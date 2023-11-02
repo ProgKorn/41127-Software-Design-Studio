@@ -20,6 +20,13 @@ export function raiseUnfocusedFlag() {
   incidentCheck(timestamp, "Unfocused Window");
 }
 
+const getSessionName = async (examId) => {
+  const examurl = process.env.REACT_APP_SERVER_URL + '/exam/getExamDetails/' + examId;
+  await axios.get(examurl).then((response) => {
+    sessionName = response.data.examName;
+  });
+}
+
 export const cheatingBehaviours = (objectDetections, faceDetections, studentIdParam, examIdParam) => {
   var personCounter = 0; // Keep track of how many people are in the frame
   studentId = studentIdParam;
@@ -36,8 +43,11 @@ export const cheatingBehaviours = (objectDetections, faceDetections, studentIdPa
     }
 
     objectConditions(object, bannedObjects, personCounter, timestamp);
+    cheatingFace(faceDetections);
   });
+}
 
+export const cheatingFace = (faceDetections) => {
   if (faceDetections) {
     const keyPoints = faceDetections.keypoints;
     if (keyPoints) {
@@ -98,25 +108,23 @@ function incidentCheck(timestamp, flagType) {
   });
 
   if (!existingIncident) {
-    //const examurl = process.env.REACT_APP_SERVER_URL + '/exam/getExamDetails/' + examId;
-    //axios.get(examurl).then((response) => {
-      // Create a new incident
-      const newIncident = {
-        flagType: flagType,
-        timestamp,
-        flagged: true,
-        studentId: studentId,
-        examId: examId, 
-        //sessionName: response.data.examName,
-        sessionName: "test",
-      };
+    getSessionName(examId);
+    // Create a new incident
+    const newIncident = {
+      flagType: flagType,
+      timestamp,
+      flagged: true,
+      studentId: studentId,
+      examId: examId, 
+      sessionName: sessionName,
+    };
 
-      // Add it to the incidents list
-      incidents.push(newIncident);
-      //console.log("New incident " + JSON.stringify(newIncident));
-      console.log("Cheating Detected! " + flagType);
+    // Add it to the incidents list
+    incidents.push(newIncident);
+    console.log("New incident " + JSON.stringify(newIncident));
+    console.log("Cheating Detected! " + flagType);
 
-      // Raise a flag for this incident
+    // Raise a flag for this incident
     axios.post(url + '/addFlag', newIncident)
     .then((response) => {
         console.log('Flag added successfully: ', response.data);
@@ -124,7 +132,6 @@ function incidentCheck(timestamp, flagType) {
     .catch(error => {
         console.error('Error adding flag: ', error);
     });
-    console.log("I WOULD HAVE BEEN RAISING DA FLAG HEHE " + flagType);
     // Set a timer to reset the incident after a duration
     setTimeout(() => {
       const index = incidents.findIndex((incident) => incident === newIncident);
@@ -133,8 +140,7 @@ function incidentCheck(timestamp, flagType) {
         console.log('Incident reset.');
       }
     }, MIN_INCIDENT_DURATION);
-    }//);
-  //}
+  }
 }
 
 /* function checkAndResetIncidents(flagType, hasBannedObject) {

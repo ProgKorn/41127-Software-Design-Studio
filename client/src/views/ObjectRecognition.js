@@ -3,7 +3,7 @@ import * as cocossd from "@tensorflow-models/coco-ssd";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
-import { cheatingObject, drawRect, bannedObjects, drawMesh, cheatingBehaviours } from "./utilities";
+import { drawRect, bannedObjects, cheatingBehaviours } from "./utilities";
 import "../css/Exam.css";
 import useVideoStore from "./VideoStore";  // Video storage function
 import { useParams } from "react-router-dom";
@@ -57,11 +57,7 @@ function ObjectRecognition({ examInProgress }) {
       drawRect(obj, canvas.getContext("2d"));
       
       // Cheating Detections
-      //cheatingObject(obj, studentId, examId);
-      //cheatingBehaviours(obj, face[0], studentId, examId);
-
-      // const ctx = canvasRef.current.getContext("2d");
-      requestAnimationFrame(()=>{cheatingBehaviours(obj, face[0], studentId, examId)});
+      cheatingBehaviours(obj, face[0], studentId, examId);
     }
   };
 

@@ -80,11 +80,12 @@ function FacialLandmarkRecognition() {
 
       const face = await net.estimateFaces(video);
 
-      console.log(face);
+      //console.log(face);
 
       // Get canvas context
       const ctx = canvasRef.current.getContext("2d");
       requestAnimationFrame(()=>{drawMesh(face[0], ctx)});
+      //requestAnimationFrame(()=>{cheatingFace(face[0], ctx)});
     }
   };
 
