@@ -6,7 +6,7 @@ const databaseMaster = require('../DatabaseAccess/databaseMaster');
 const { v4: uuidv4 } = require('uuid');
 
 const PORT = 4001;
-const socketConnections = new Map(); // Create a map to store student socket connections
+//const socketConnections = new Map(); // Create a map to store student socket connections
 
 const io = require('socket.io')(PORT, {
     cors: {
@@ -16,11 +16,11 @@ const io = require('socket.io')(PORT, {
   
 io.on('connection', socket => { // function that runs everytime a client connects to our server, give a socket instance for each one
     console.log(socket.id); // each person who connects to our server is assigned an ID
-    socket.on('register-student', (studentId) => {
-        // Store the socket connection for the student with the associated studentId
-        socketConnections.set(studentId, socket.id);
-        console.log(socketConnections);
-    });
+    // socket.on('register-student', (studentId) => {
+    //     // Store the socket connection for the student with the associated studentId
+    //     socketConnections.set(studentId, socket.id);
+    //     console.log(socketConnections);
+    // });
 });
 
 /* 
@@ -104,6 +104,7 @@ router.post('/addFlag', async (req, res) => { // Add a new flag
             status: "Pending",
             description: req.body.flagType,
             sessionName: req.body.sessionName,
+            timeStamp: req.body.timeStamp,
         });
         const flag = await databaseMaster.dbOp('insert', 'FlaggedIncidents', { docs: [newFlag] });
         io.emit('add-flag', newFlagId, req.body.studentId, req.body.flagType);
@@ -136,14 +137,15 @@ router.post('/updateFlag', async (req, res) => { // Update status from Pending -
         await databaseMaster.dbOp('update', 'FlaggedIncidents', { query, docs });
         if (status == "Resolved") {
             // Send the 'update-flag' event only to the specific student's socket
-            const studentSocket = socketConnections.get(studentId);
+            // const studentSocket = socketConnections.get(studentId);
             console.log("This is the ID i'm sending it to " + studentId);
-            console.log("This is the socket ID " + studentSocket);
+            //console.log("This is the socket ID " + studentSocket);
             console.log("Flag ID " + flagId);
-            if (studentSocket) {
-                console.log("Updated Flag");
-                io.to(studentSocket).emit('update-flag');
-            }
+            //if (studentSocket) {
+                //console.log("Updated Flag");
+                //io.to(studentSocket).emit('update-flag');
+            //}
+            io.emit('update-flag');
         }
         res.json({ message: 'Flag updated successfully' });
     } catch (error) {
