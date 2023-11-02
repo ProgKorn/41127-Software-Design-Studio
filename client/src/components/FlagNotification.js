@@ -17,8 +17,10 @@ const FlagNotification = () => {
   const [studentId, setStudentId] = useState('');
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [examId, setExamId] = useState("");
 
   const url = process.env.REACT_APP_SERVER_URL + '/flag';
+  const examStudentUrl = process.env.REACT_APP_SERVER_URL + '/examStudent'
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -34,12 +36,13 @@ const FlagNotification = () => {
       console.log(`You connected with id: ${socket.id}`);
     });
 
-    socket.on('add-flag', (newFlagId, cheatingStudentId, cheatingType) => { // When a flag is added
+    socket.on('add-flag', (newFlagId, cheatingStudentId, cheatingType, examId) => { // When a flag is added
       setFlagId(newFlagId);
       setStudentId(cheatingStudentId);
       setCheatingType(cheatingType);
       setFlagAdded(true);
-      //socket.emit('register-student', parseInt(cheatingStudentId)); // Register the student that has cheated
+      setExamId(examId);
+      socket.emit('register-student', parseInt(cheatingStudentId)); // Register the student that has cheated
     });
 
     socket.on('update-flag', () => { // When a flag is updated
@@ -58,7 +61,8 @@ const FlagNotification = () => {
       status: "Resolved",
       studentId: parseInt(studentId), 
     };
-  
+    // UPDATE FLAG COUNT HERE 
+
     axios.post(url + '/updateFlag', updateObject)
     .then((response) => {
         console.log('Flag updated successfully: ', response.data);
@@ -66,8 +70,18 @@ const FlagNotification = () => {
     .catch(error => {
         console.error('Error adding flag: ', error);
     });
+    axios.put(examStudentUrl + `/addFlag/${studentId}/${examId}/${flagId}`)
+    .then((response) => {
+        console.log('Flag ID added successfully: ', response.data);
+    })
+    .catch(error => {
+        console.error('Error adding flag: ', error);
+    });
     setFlagAdded(false);
     setFlagUpdated(true);
+    // console.log("Props in FlagNotification:", examId, onFlagAdded);
+    // onFlagAdded();
+
   }
 
   const terminateFlag = () => { // Terminate a flag
