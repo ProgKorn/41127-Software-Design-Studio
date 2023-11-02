@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import '../css/NavBar.css';
 import logo from '../SentinelV1White.svg';
 import { Menu, MenuItem } from '@mui/material';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Logout from '@mui/icons-material/Logout';
 
 function ResponsiveAppBar({routes, type, icons}) {
   const pages = Object.keys(routes);
@@ -156,14 +158,44 @@ function ResponsiveAppBar({routes, type, icons}) {
                       ))}
                   </Box>
                   <Box sx={{ flexGrow: 0 }}>
-                    <Tooltip title="Open account settings">
                     <IconButton onClick={handleClick} sx={{ p: 0 }}>
                       {/* Add the user's name under 'alt' to change letter profile image */}
-                      <Avatar alt="Anonymous" src="/static/images/avatar/2.jpg" />
+                      <Avatar/>
                     </IconButton>
-                    </Tooltip>
-                    <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={handleClose}>
-                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={handleClose} PaperProps={{
+                      elevation: 4,
+                      sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 1.5,
+                        '& .MuiAvatar-root': {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        '&:before': {
+                          content: '""',
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: 'background.paper',
+                          transform: 'translateY(-50%) rotate(45deg)',
+                          zIndex: 0,
+                        },
+                      },
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
+                      <MenuItem onClick={handleLogout}>
+                        <ListItemIcon>
+                          <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                      </MenuItem>
                     </Menu>
                   </Box>
                 </Toolbar>
