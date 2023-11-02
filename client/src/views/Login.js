@@ -30,6 +30,11 @@ function Login() {
     }
   }
 
+  //fixes undefined data reading bug when selecting login button with empty fields
+  const handleButtonSignIn = () => {
+    handleLogin(username.toLowerCase());
+  }
+
   const handleLogin = async (lowerCaseUserName) => {
     setLoading(true);
     try {
@@ -81,7 +86,6 @@ function Login() {
     setIsValidEmail(false);
     setShowCross(false);
 
-    // Checks on every keystroke after '@' lmao
     if (enteredEmail.includes('.com')) {
       const url = process.env.REACT_APP_SERVER_URL + '/checkUser/' + String(enteredEmail);
       console.log("Verifying email");
@@ -89,12 +93,18 @@ function Login() {
           if (response.data.isAdmin) {
             setIsAdmin(true);
             setIsValidEmail(true);
+            setErrorMessage("");
+            setShowCross(false);
           } else if (response.data.email != undefined) {
             setIsStudent(true);
             setIsValidEmail(true);
+            setErrorMessage("");
+            setShowCross(false);
           } else {
             setIsValidEmail(false);
             setShowCross(true);
+            setIsAdmin(false);
+            setIsStudent(false);
             setErrorMessage("Please provide a valid email");
           }
         }).catch(error => {
@@ -176,7 +186,7 @@ function Login() {
           </div>
           <div>
             {!isStudent && (
-              <button onClick={handleLogin} className='button-grey-out'>Login</button>
+              <button onClick={handleButtonSignIn} className='button-grey-out'>Login</button>
             )}
           </div>
           <div>
