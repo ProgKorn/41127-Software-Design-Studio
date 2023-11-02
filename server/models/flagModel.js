@@ -8,7 +8,9 @@ flagSchema = new schema({
     studentId: {type: Number, required: true},
     status: {type: String, required: true},
     description: {type: String, required: true},
-    sessionName: {type: String, required: true}
+    sessionName: {type: String, required: true},
+    timeStamp: {type: Date, required: true},
+    clipUrl: { type: Buffer, required: false, contentType: String}, //
 })
 
 /* 

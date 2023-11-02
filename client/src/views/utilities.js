@@ -1,4 +1,6 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
+import useVideoStore from "./VideoStore";
 
 const MIN_INCIDENT_DURATION = 10000; // Minimum duration for an incident to be considered unique (in milliseconds)
 const incidents = []; // Active Incidents
@@ -112,7 +114,7 @@ function incidentCheck(timestamp, flagType) {
     // Create a new incident
     const newIncident = {
       flagType: flagType,
-      timestamp,
+      timeStamp: timestamp,
       flagged: true,
       studentId: studentId,
       examId: examId, 

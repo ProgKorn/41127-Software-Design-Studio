@@ -104,6 +104,7 @@ router.post('/addFlag', async (req, res) => { // Add a new flag
             status: "Pending",
             description: req.body.flagType,
             sessionName: req.body.sessionName,
+            timeStamp: req.body.timeStamp,
         });
         const flag = await databaseMaster.dbOp('insert', 'FlaggedIncidents', { docs: [newFlag] });
         io.emit('add-flag', newFlagId, req.body.studentId, req.body.flagType);

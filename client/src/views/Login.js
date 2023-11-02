@@ -8,6 +8,8 @@ import SignInHeader from '../components/SignInHeader'
 import { Checkbox } from '@mui/material';
 import Loader from '../components/Loader';
 import FacialLandmarkLogin from './FacialLandmarkLogin';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -17,6 +19,8 @@ function Login() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
   const [loginCountdown, setLoginCountdown] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [showCross, setShowCross] = useState(false);
   
   const navigate = useNavigate();
 
@@ -63,8 +67,10 @@ function Login() {
       setUsername("");
       setIsAdmin(false);
       setIsStudent(false);
+      setIsValidEmail(false);
+      setShowCross(false);
     }
-  };
+  };  
 
   const handleUsernameChange = (e) => {
     const enteredEmail = e.target.value;
@@ -72,24 +78,29 @@ function Login() {
     setIsAdmin(false);
     setIsStudent(false);
     setErrorMessage("");
+    setIsValidEmail(false);
+    setShowCross(false);
 
-    // Check if the enteredEmail contains '.com'
-    const url = process.env.REACT_APP_SERVER_URL + '/checkUser/' + String(enteredEmail);
-    console.log(url);
+    // Checks on every keystroke after '@' lmao
     if (enteredEmail.includes('.com')) {
-      console.log("im about to get some deets");
-          axios.get(url).then((response) => {
-            console.log(response.data);
-            console.log(response.data.isAdmin);
-            if (response.data.isAdmin) {
-              setIsAdmin(true);
-            } else {
-              setIsStudent(true);
-            }
-          }).catch(error => {
-            console.log(error);
-          });
-      }
+      const url = process.env.REACT_APP_SERVER_URL + '/checkUser/' + String(enteredEmail);
+      console.log("Verifying email");
+        axios.get(url).then((response) => {
+          if (response.data.isAdmin) {
+            setIsAdmin(true);
+            setIsValidEmail(true);
+          } else if (response.data.email != undefined) {
+            setIsStudent(true);
+            setIsValidEmail(true);
+          } else {
+            setIsValidEmail(false);
+            setShowCross(true);
+            setErrorMessage("Please provide a valid email");
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+    }
   };
 
   let hasReceivedData = false;
@@ -122,7 +133,7 @@ function Login() {
   }, [loginCountdown]);
 
   return (
-    <div className='App'>
+    <div>
       <SignInHeader />
       <header className='sign-in-header'>
         <h1 className="text">Welcome</h1>
@@ -131,15 +142,17 @@ function Login() {
         <Loader loading={loading}/>
       ) : (
         <div>
-          <div>
+          <div className='input-wrapper'>
               <input
-                className="form"
+                className={`form ${isValidEmail ? 'green-border' : showCross ? 'red-border' : ''}`}
                 type="text"
                 placeholder="Email"
                 value={username}
-                onChange={handleUsernameChange}
+                onInput={handleUsernameChange}
                 onKeyPress={handleKeyPress}
               />
+              {isValidEmail && <DoneIcon className='done-icon'/>}
+              {showCross && <CloseIcon className='fail-icon'/>}
           </div>
           {isAdmin && (
             <div>
@@ -162,7 +175,9 @@ function Login() {
             {errorMessage && <ErrorMessage message={errorMessage}/>}
           </div>
           <div>
-            <button onClick={handleLogin} className='button-grey-out'>Login</button>
+            {!isStudent && (
+              <button onClick={handleLogin} className='button-grey-out'>Login</button>
+            )}
           </div>
           <div>
                 <Checkbox id="keepSignedIn" defaultChecked size='medium' color='default' />

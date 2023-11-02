@@ -10,7 +10,7 @@ loginSchema = new schema({
   password: {type: String, required: true},
   isAdmin: {type: Boolean, required: true},
   email: {type: String, required: true}
-  
+
 })
 
 module.exports = model("Login", loginSchema)
