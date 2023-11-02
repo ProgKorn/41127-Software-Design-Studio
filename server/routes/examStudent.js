@@ -7,7 +7,6 @@ router.get('/', (req, res) => {
     res.json({ message: 'Exam Student' });
 });
 
-//SeatNo currently hardcoded - Need to update lines 15 and 50 to be same seat No
 //TODO: Get associated seat No and remove Hardcoding
 
 //Post request to create Exam-Students when an Exam Session starts
@@ -30,7 +29,7 @@ router.post('/createExamStudent/:studentId/:examId/:seatNo', async (req, res) =>
 });
 
 // Get request for exam sessions 
-router.get('/getActiveExamStudent/:studentId/:examId/', async (req, res) => {
+router.get('/getActiveExamStudent/:studentId/:examId', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
@@ -48,11 +47,12 @@ router.get('/getActiveExamStudent/:studentId/:examId/', async (req, res) => {
 });
 
  // Put request to update status of exam sessions
- router.put('/updateExamStudentStatus/:studentId/:examId', async (req, res) => {
+ router.put('/updateExamStudentStatus/:studentId/:examId/:seatNo', async (req, res) => {
   try {
     const examId = parseInt(req.params.examId);
     const studentId = parseInt(req.params.studentId);
-    const query = {examId: examId, studentId: studentId, seatNo: 21}
+    const seatNo = parseInt(req.params.seatNo);
+    const query = {examId: examId, studentId: studentId, seatNo: seatNo}
     const statusUpdate = { $set: { status: req.body.status } };
     const check = await databaseMaster.dbOp('find', 'Exam-Student', { query: query })
     console.log(check)

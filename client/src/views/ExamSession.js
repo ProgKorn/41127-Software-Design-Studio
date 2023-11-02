@@ -62,20 +62,83 @@ function ExamSession() {
   const [remainingTime, setRemainingTime] = useState(0);
   const { studentId } = useParams();
   const { examId } = useParams();
-  const {seatNo} = useParams();
+  const { seatNo } = useParams();
   const [examName, setExamName] = useState("");
   const [cameraPermission, setCameraPermission] = useState(false);
   const [examInProgress, setExamInProgress] = useState(false);
   const [videoUploadStarted, setVideoUploadStarted] = useState(false);
-
+  const [examTerminated, setExamTerminated] = useState(false);
+  // var flagCount = 0;
+  const [flagCount, setFlagCount] = useState(0);
   const createExamStudent = async () => {
     try {
-      const response = await axios.post(process.env.REACT_APP_SERVER_URL + `/examStudent/createExamStudent/${studentId}/${examId}/${seatNo}`);
+      const response = await axios.post(
+        process.env.REACT_APP_SERVER_URL +
+          `/examStudent/createExamStudent/${studentId}/${examId}/${seatNo}`
+      );
       console.log("Exam Session Response:", response.data);
     } catch (error) {
       console.error(error);
     }
   }
+
+  // const handleFlagAdded = async () => {
+  //   // Call and set flagCount to array in ExamStudent
+  //   axios
+  //     .get(
+  //       process.env.REACT_APP_SERVER_URL +
+  //         `/examStudent/getActiveExamStudent/${studentId}/${examId}`
+  //     )
+  //     .then((response) => {
+  //       flagCount = response.data.flags.length;
+  //       console.log("Number of Flags:", flagCount);
+  //     });
+  //   if (flagCount >= 2) {
+  //     setExamTerminated(true);
+  //   }
+  // }
+  // console.log('PROPS ARE HERE ' + examId, studentId);
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "b") {
+        // Redirect to the /examdone page with parameters and examTerminated set to true
+        navigate(`/examdone/${studentId}/${examId}/${seatNo}`, { examTerminated: true });
+      }
+    };
+
+    // Attach the event listener
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [navigate, studentId, examId, seatNo]);
+  
+  useEffect(() => {
+    const handleFlagAdded = async () => {
+      try {
+        const response = await axios.get(
+          process.env.REACT_APP_SERVER_URL +
+            `/examStudent/getActiveExamStudent/${studentId}/${examId}`
+        );
+        setFlagCount(response.data.flags.length);
+        console.log("Number of Flags:", response.data.flags.length);
+        if (flagCount >= 2) {
+              setExamTerminated(true);
+            }
+      } catch (error) {
+        console.error("Error fetching flag count:", error);
+      }
+    };
+
+    const interval = setInterval(() => {
+      handleFlagAdded();
+    }, 5000); // Fetch data every 5 seconds
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(interval);
+  }, [studentId, examId]);
 
   useEffect(() => {
     startCall();
@@ -91,6 +154,7 @@ function ExamSession() {
       const currentTime = new Date().toLocaleString();
       console.log(`[${currentTime}] Window is not focused or minimized`);
       raiseUnfocusedFlag();
+      // handleFlagAdded();
     };
 
     const handleFocus = () => {
@@ -105,20 +169,22 @@ function ExamSession() {
       window.removeEventListener("blur", handleBlur);
       window.removeEventListener("focus", handleFocus);
     };
-  }, []);
+  }, [examId, studentId]);
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`).then((response) => {
-      const { startTime, endTime } = response.data;
-      setExamName(response.data.examName);
-      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
-      // For testing, replace with the actual exam length logic
-      // const examLengthInSeconds = 10; 
-      setExamLength(examLengthInSeconds);
-      setRemainingTime(examLengthInSeconds); // Initialize remaining time
-    }).catch((error) => {
-      console.error(error);
-    });
+    axios
+      .get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`)
+      .then((response) => {
+        const { startTime, endTime } = response.data;
+        setExamName(response.data.examName);
+        const examLengthInSeconds =
+          (new Date(endTime) - new Date(startTime)) / 1000;
+        setExamLength(examLengthInSeconds);
+        setRemainingTime(examLengthInSeconds); 
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
     return () => {
       console.log("Finished Fetching Details");
@@ -126,14 +192,11 @@ function ExamSession() {
   }, [examId]);
 
   useEffect(() => {
-    // Check camera permission
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(() => {
-        // User granted camera permission
         setCameraPermission(true);
       })
       .catch(() => {
-        // User denied camera permission
         setCameraPermission(false);
       });
   }, []);
@@ -142,33 +205,32 @@ function ExamSession() {
     if (examLength > 0 && cameraPermission) {
       setExamInProgress(true);
       const timer = setInterval(() => {
-        if (remainingTime > 0) { // Use remainingTime
-          setRemainingTime(remainingTime - 1); // Update remaining time
+        if (remainingTime > 0) {
+          setRemainingTime(remainingTime - 1);
         }
       }, 1000);
 
-      if (remainingTime <= 0) {
+      if (remainingTime <= 0 || examTerminated) {
         clearInterval(timer);
         setExamInProgress(false);
-        // Update exam session status to "Completed"
-        axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
+        axios.put(
+          process.env.REACT_APP_SERVER_URL +
+            `/examStudent/updateExamStudentStatus/${studentId}/${examId}`,
+          { status: "Completed" }
+        );
+        navigate(`/examdone/${studentId}/${examId}/${seatNo}`, { examTerminated });
+
         // Leave the call after exam ends
         leaveCall();
-        // Update exam session status to "Completed"
-        axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
-
-
-        //navigate(`/examdone/${studentId}/${examId}/${seatNo}`); NAVIGATION HAS BEEN MOVED TO VIDEO STORE. This is because we need to WAIT for the video to upload before we navigate to exam complete.
         setVideoUploadStarted(true); //This signifies that the video is uploading, show the new screen informing user not to close the page while video is uploaded
         //Here I want to display a thing over the entire page, a popup or something, maybe it overrides the page and it says, "Video upload in progress, Do not close the window"
-      
       }
 
       return () => {
         clearInterval(timer);
       };
     }
-  }, [remainingTime, cameraPermission, navigate, examId, studentId]);
+  }, [remainingTime, cameraPermission, navigate, examId, studentId, examTerminated]);
 
   const hours = Math.floor(remainingTime / 3600);
   const minutes = Math.floor((remainingTime % 3600) / 60);
@@ -212,14 +274,14 @@ function ExamSession() {
         <h1>{examName}</h1>
       </Box>
       <Box className="preview">
-      {cameraPermission ? (
-      <>
-        <ObjectRecognition examInProgress={examInProgress} />
-        <FlagNotification />
-      </>
-      ) : (
-        <p>Please grant camera permission to start the exam timer.</p>
-      )}
+        {cameraPermission ? (
+          <>
+            <ObjectRecognition examInProgress={examInProgress}/>
+            <FlagNotification/>
+          </>
+        ) : (
+          <p>Please grant camera permission to start the exam timer.</p>
+        )}
       </Box>
       <Box className="countdown">
         <Paper elevation={3} className="countdown-box">
