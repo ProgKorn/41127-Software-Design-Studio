@@ -3,7 +3,7 @@
 
 .form {
     width: 35rem;
-    max-width: 50%;
+    max-width: 50vw;
     margin: 12px 10px;
     height: 4rem;
     border-radius: 20px;
@@ -15,6 +15,41 @@
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: left;
+    padding-left: 1%;
+}
+
+.green-border {
+    width: 35rem;
+    max-width: 50vw;
+    height: 4rem;
+    border-radius: 20px;
+    font-size: 25px;
+    background-color: rgb(165, 245, 165);
+    color: black;
+    padding: 1%;
+    font-family: Montserrat, sans-serif;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+    outline: none;
+    padding-left: 1%;
+}
+
+.red-border {
+    width: 35rem;
+    max-width: 50vw;
+    height: 4rem;
+    border-radius: 20px;
+    font-size: 25px;
+    background-color: rgb(253, 151, 151);
+    color: black;
+    padding: 1%;
+    font-family: Montserrat, sans-serif;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+    outline: none;
+    padding-left: 1%;
 }
 
 .button-grey-out {
@@ -56,4 +91,27 @@
     color: rgb(0, 0, 0);
     padding: 2px;
     font-family: Montserrat, sans-serif;
+}
+
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+  
+.done-icon {
+    position: absolute; /* Adjust the right value as needed */
+    top: 35%;
+    transform: translateY(-50%);
+    color: green; /* Change the color of the icon */
+    transform: scale(2);
+    right: -5%;
+}
+
+.fail-icon {
+    position: absolute; /* Adjust the right value as needed */
+    top: 35%;
+    transform: translateY(-50%);
+    color: red; /* Change the color of the icon */
+    transform: scale(2);
+    right: -5%;
 }

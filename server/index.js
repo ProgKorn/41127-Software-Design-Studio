@@ -104,8 +104,6 @@ app.post('/login', async(req, res) => {
 
 app.get('/checkUser/:email', async(req, res) => {
   const username = String(req.params.email);
-  console.log("This is username");
-  console.log(username);
 
   try {
     await dbOp('find', 'UserDetails', { query: { email: username } }).then(data => {
