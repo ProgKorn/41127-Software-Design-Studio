@@ -39,7 +39,7 @@ const FlagNotification = () => {
       setStudentId(cheatingStudentId);
       setCheatingType(cheatingType);
       setFlagAdded(true);
-      socket.emit('register-student', parseInt(cheatingStudentId)); // Register the student that has cheated
+      //socket.emit('register-student', parseInt(cheatingStudentId)); // Register the student that has cheated
     });
 
     socket.on('update-flag', () => { // When a flag is updated
@@ -147,7 +147,7 @@ const FlagNotification = () => {
           </div>
         </div>
       )}
-      {flagUpdated && !isAdmin && (
+      {flagUpdated && !isAdmin && (parseInt(studentId) === 42345678) && (
         <div className="student-popup-notification">
           <div className="popup-content">
             <div className="warning-icon">
