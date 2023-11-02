@@ -15,7 +15,7 @@ const PORT = 4001;
 // });
 const io = require('socket.io')(PORT, {
     cors: {
-        origin: ['http://localhost:3000'] // Client URL -- http://localhost:3000 for testing
+        origin: ['https://sentinel-frontend.vercel.app'] // Client URL -- http://localhost:3000 for testing
     }
 });
   
