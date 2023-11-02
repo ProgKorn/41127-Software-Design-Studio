@@ -11,6 +11,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import FormGroup from "@mui/material/FormGroup";
 import StudentHeader from "../components/StudentHeader";
+import Loader from '../components/Loader';
 import { Checkbox, Button, FormControlLabel } from "@mui/material";
 import axios from "axios";
 
@@ -36,8 +37,8 @@ function ExamStart() {
         "End Time": new Date(response.data.endTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
         Details: response.data.details,
       };
-      setExamDetails(examData)
-      console.log("Exam Details:", examDetails)
+      setExamDetails(examData);
+      console.log("Exam Details:", examDetails);
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error(error);
@@ -59,7 +60,7 @@ function ExamStart() {
 
   if (loading)
    {
-      return <div> Retrieving Data </div>
+      return <Loader loading={loading} />
    }
 
   return (
@@ -95,12 +96,15 @@ function ExamStart() {
                         backgroundColor: "#2b2d42",
                         color: "white",
                         fontWeight: "bold",
+                        fontFamily: "Montserrat, sans-serif",
                       }}
                       width="250px"
                     >
                       {name}
                     </TableCell>
-                    <TableCell align="right" width="250px">
+                    <TableCell align="center" width="250px" sx={{
+                        fontFamily: "Montserrat, sans-serif"
+                      }}>
                       {value}
                     </TableCell>
                   </TableRow>
@@ -194,7 +198,9 @@ function ExamStart() {
                   onChange={handleCheckboxChange}
                 />
               }
-              label={<strong>I agree to the terms and conditions</strong>}
+              label={<strong style={{
+                fontFamily: "Montserrat, sans-serif"
+              }}>I agree to the terms and conditions</strong>}
             />
           </FormGroup>
         </Box>
@@ -206,6 +212,7 @@ function ExamStart() {
             className="continueButton"
             style={{
               backgroundColor: isChecked ? "#2b2d42" : "grey",
+              fontFamily: "Montserrat, sans-serif"
             }}
           >
             <strong>Continue</strong>

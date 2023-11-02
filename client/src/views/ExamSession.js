@@ -154,7 +154,7 @@ function ExamSession() {
         //navigate("/examdone");
         // Update exam session status to "Completed"
         axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
-        navigate("/examdone");
+        navigate(`/examdone/${studentId}/${examId}/${seatNo}`);
       }
 
       return () => {
