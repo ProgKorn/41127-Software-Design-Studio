@@ -7,7 +7,6 @@ router.get('/', (req, res) => {
     res.json({ message: 'Exam Student' });
 });
 
-//SeatNo currently hardcoded - Need to update lines 15 and 50 to be same seat No
 //TODO: Get associated seat No and remove Hardcoding
 
 //Post request to create Exam-Students when an Exam Session starts
@@ -87,5 +86,5 @@ router.get('/getActiveExamStudent/:studentId/:examId', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
    });
-   
+
 module.exports = router;

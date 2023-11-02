@@ -8,9 +8,14 @@ const { v4: uuidv4 } = require('uuid');
 const PORT = 4001;
 const socketConnections = new Map(); // Create a map to store student socket connections
 
+// const io = require('socket.io')(PORT, {
+//     cors: {
+//         origin: ['https://sentinel-frontend.vercel.app'] // Client URL -- http://localhost:3000 for testing
+//     }
+// });
 const io = require('socket.io')(PORT, {
     cors: {
-        origin: ['https://sentinel-frontend.vercel.app'] // Client URL -- http://localhost:3000 for testing
+        origin: ['http://localhost:3000'] // Client URL -- http://localhost:3000 for testing
     }
 });
   

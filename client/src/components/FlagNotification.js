@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 
-const FlagNotification = () => {
+const FlagNotification = ({ examId, onFlagAdded }) => {
   const [flagAdded, setFlagAdded] = useState(false);
   const [flagUpdated, setFlagUpdated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -19,6 +19,7 @@ const FlagNotification = () => {
   const [lastName, setLastName] = useState("");
 
   const url = process.env.REACT_APP_SERVER_URL + '/flag';
+  const examStudentUrl = process.env.REACT_APP_SERVER_URL + '/examStudent'
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -29,7 +30,11 @@ const FlagNotification = () => {
       }
     }
 
-    const socket = io(process.env.REACT_APP_SERVER_URL + ':4001'); // Change the URL to match the Socket.IO server URL
+    // const socket = io(process.env.REACT_APP_SERVER_URL + ':4001'); // Change the URL to match the Socket.IO server URL
+    // socket.on('connect', () => {
+    //   console.log(`You connected with id: ${socket.id}`);
+    // });
+    const socket = io('http://localhost' + ':4001'); // Change the URL to match the Socket.IO server URL
     socket.on('connect', () => {
       console.log(`You connected with id: ${socket.id}`);
     });
@@ -66,8 +71,17 @@ const FlagNotification = () => {
     .catch(error => {
         console.error('Error adding flag: ', error);
     });
+    axios.put(examStudentUrl + `/addFlag/${studentId}/${examId}/${flagId}`)
+    .then((response) => {
+        console.log('Flag ID added successfully: ', response.data);
+    })
+    .catch(error => {
+        console.error('Error adding flag: ', error);
+    });
     setFlagAdded(false);
     setFlagUpdated(true);
+    console.log("Props in FlagNotification:", examId, onFlagAdded);
+    onFlagAdded();
   }
 
   const terminateFlag = () => { // Terminate a flag

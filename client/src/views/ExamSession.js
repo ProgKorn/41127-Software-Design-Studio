@@ -79,7 +79,7 @@ function ExamSession() {
   }
 
   const handleFlagAdded = async () => {
-    //Call and set flagCount to list in ExamStudent 
+    //Call and set flagCount to array in ExamStudent 
     axios.get(process.env.REACT_APP_SERVER_URL + `/examStudent/getActiveExamStudent/${studentId}/${examId}`).then((response) => {
       flagCount = response.data.flags.length;
     });
@@ -171,7 +171,7 @@ function ExamSession() {
         clearInterval(timer);
       };
     }
-  }, [remainingTime, cameraPermission, navigate, examId, studentId]);
+  }, [remainingTime, cameraPermission, navigate, examId, studentId, examTerminated]);
 
   const hours = Math.floor(remainingTime / 3600);
   const minutes = Math.floor((remainingTime % 3600) / 60);
@@ -186,8 +186,8 @@ function ExamSession() {
       <Box className="preview">
       {cameraPermission ? (
       <>
-        <ObjectRecognition examInProgress={examInProgress} onFlagAdded={handleFlagAdded}/>
-        <FlagNotification />
+        <ObjectRecognition examInProgress={examInProgress}/>
+        <FlagNotification examId={examId} onFlagAdded={handleFlagAdded}/>
       </>
       ) : (
         <p>Please grant camera permission to start the exam timer.</p>
