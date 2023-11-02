@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 
-const FlagNotification = ({ onFlagAdded, setFlags, flags }) => {
+const FlagNotification = () => {
   const [flagAdded, setFlagAdded] = useState(false);
   const [flagUpdated, setFlagUpdated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
