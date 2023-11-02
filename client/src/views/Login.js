@@ -64,21 +64,32 @@ function Login() {
       setIsAdmin(false);
       setIsStudent(false);
     }
-  };  
-
-  const isEmailAdmin = (email) => {
-    return email.endsWith("apple@gmail.com");
   };
 
-  const isEmailStudent = (email) => {
-    return email.endsWith("steve@musk.com");
-  }
-
   const handleUsernameChange = (e) => {
+    const enteredEmail = e.target.value;
     setUsername(e.target.value);
-    setIsAdmin(isEmailAdmin(e.target.value));
-    setIsStudent(isEmailStudent(e.target.value));
+    setIsAdmin(false);
+    setIsStudent(false);
     setErrorMessage("");
+
+    // Check if the enteredEmail contains '.com'
+    const url = process.env.REACT_APP_SERVER_URL + '/checkUser/' + String(enteredEmail);
+    console.log(url);
+    if (enteredEmail.includes('.com')) {
+      console.log("im about to get some deets");
+          axios.get(url).then((response) => {
+            console.log(response.data);
+            console.log(response.data.isAdmin);
+            if (response.data.isAdmin) {
+              setIsAdmin(true);
+            } else {
+              setIsStudent(true);
+            }
+          }).catch(error => {
+            console.log(error);
+          });
+      }
   };
 
   let hasReceivedData = false;

@@ -4,6 +4,7 @@ const cors = require('cors');
 const multer = require('multer');
 const { Readable } = require('stream');
 const { GridFSBucket } = require('mongodb');
+const Login = require('./models/loginModel.js');
 const { dbOp, getDb } = require('./DatabaseAccess/databaseMaster');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -105,6 +106,23 @@ app.post('/login', async(req, res) => {
     });
   } else {
     res.status(401).json({ success: false, message: 'Invalid credentials' });
+  }
+});
+
+app.get('/checkUser/:email', async(req, res) => {
+  const username = String(req.params.email);
+  console.log("This is username");
+  console.log(username);
+
+  try {
+    await dbOp('find', 'UserDetails', { query: { email: username } }).then(data => {
+      res.json(new Login(data[0]));
+      console.log("I AM HERE");
+      console.log(data);
+    });
+  } catch (error) {
+    console.error("Error catching type:", error);
+    res.status(500).json({ error: 'Error checking user type '});
   }
 });
 
