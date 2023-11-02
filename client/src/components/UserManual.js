@@ -113,7 +113,7 @@ function Overview( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="To use the system, the users will be authenticated based on the student/staff email address and password provided by the university." searchTerm={searchTerm}/>
 
-                <h5 className="terms">Conventions</h5>
+                <h5 className="helpTerms">Conventions</h5>
 
                 <img src={UM1} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 1: Introduction to Sentinel" searchTerm={searchTerm}/></h5>
@@ -145,7 +145,7 @@ function Overview( {onBackButtonClick, searchTerm} ) {
                     </ul>
                 </ul>
 
-                <h5 className="terms">Cautions & Warnings</h5>
+                <h5 className="helpTerms">Cautions & Warnings</h5>
 
                 <div className="image-text-container">
                     <img src={WarningIcon} className="icon-image"></img><HighlightedText text="Security: The Sentinel system uses authentication measures, parses middleware and also has data secured in a secured database to ensure that all sensitive information is kept secure. Although password complexity is not enforced during login, users are encouraged to utilise complex passwords for additional account security." searchTerm={searchTerm}/>
@@ -198,7 +198,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
 
                 <HighlightedText text="The users will be brought to their respective homepages after successful login." searchTerm={searchTerm}/>
 
-                <h5 className="terms">Set-up Considerations</h5>
+                <h5 className="helpTerms">Set-up Considerations</h5>
 
                 <div className="image-text-container">
                     <img src={InfoIcon} className="icon-image"></img> <HighlightedText text="The Sentinel system requires constant internet connection to continue using the system and to detect cheating instances accurately. To ensure that the internet is connected on an Apple MacBook, navigate to the wifi symbol located on the menu bar on your screen and connect to your desired internet network." searchTerm={searchTerm}/>
@@ -214,23 +214,23 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                 <img src={UM9} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 9: Allowing Access to the Camera and Microphone" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">User Access Considerations</h5>
+                <h5 className="helpTerms">User Access Considerations</h5>
 
                 <HighlightedText text="For the Sentinel software, there are two types of users that log into their specific homepage based on the corresponding user types: student and examiner. The two users have different home pages after login and have different functionality in each user type. Both accounts have the ability to view upcoming exams and previous exams (but are formatted differently). Examiners have the ability to schedule new exams, view suspicious clips of a student, view a flag log after an examination and terminate a student’s exams after two subsequent flags have been raised. Additionally, they are also able to view all students currently sitting the exam. The student access on the other hand is limited to exam access and does not have any of the examiner functionality except viewing exams." searchTerm={searchTerm}/>
 
-                <h5 className="terms">Accessing the Software</h5>
+                <h5 className="helpTerms">Accessing the Software</h5>
 
                 <HighlightedText text="To access the Sentinel software, there are two types of sign-in modes depending on the user type. The examiner login utilises an email and password login while the student login utilises facial recognition software to log in. If the examiner logging in does not have valid login details or if they have forgotten their login details, they must contact the institution’s information technology department to solve this issue and receive their login details. In the case of the student login, they must lodge an external form that will upload their facial data and landmarks into the system, enabling them to log in. For privacy purposes, the users will not be allowed to change their login details directly on the Sentinel application. To easily contact the IT department, go to the Help Centre > Contact Us." searchTerm={searchTerm}/>
                 <img src={UM10} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 10: Sample of Sentinel Help Centre" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Software Organisation and Navigation</h5>
+                <h5 className="helpTerms">Software Organisation and Navigation</h5>
 
                 <HighlightedText text="For different types of users, there are different menu options or ways to navigate through the Sentinel system. When the user inputs the URL into their browser, they will be brought to the main page where they can choose to Sign In or view the Help Centre." searchTerm={searchTerm}/>
                 <img src={UM11} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 11: Sentinel Home Page" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Examiner Account</h5>
+                <h5 className="helpTerms">Examiner Account</h5>
                 <h5 className="account-subheading"><HighlightedText text="Login/Main Functions" searchTerm={searchTerm}/></h5>
                 <ul>
                     <li><HighlightedText text="Login - If the user has previously received login details from their IT department, they are able to easily log into the sentinel system by signing up with their username and password." searchTerm={searchTerm}/></li>
@@ -255,7 +255,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                     <li><HighlightedText text="Manage Classes - Select the Manage Classes Icon on the tiled menu displayed on the screen." searchTerm={searchTerm}/></li>
                 </ul>
 
-                <h5 className="terms">Student Account</h5>
+                <h5 className="helpTerms">Student Account</h5>
                 <h5 className="account-subheading"><HighlightedText text="Main Functionality" searchTerm={searchTerm}/></h5>
                 <ul>
                     <li><HighlightedText text="Login - If the user has previously signed up for a Sentinel account through an external form lodged with the IT Department, they should be able to sign in simply by using their facial data." searchTerm={searchTerm}/></li>
@@ -269,7 +269,7 @@ function GettingStarted( {onBackButtonClick, searchTerm} ) {
                     <li><HighlightedText text="Access Exam - Select the Access Exam button of the exam that you want to access." searchTerm={searchTerm}/></li>
                 </ul>
 
-                <h5 className="terms">Exiting the Software</h5>
+                <h5 className="helpTerms">Exiting the Software</h5>
 
                 <HighlightedText text="To exit the Sentinel web application, the user must click on their profile on the upper-right hand corner of the menu bar followed by “Sign Out”. Once the user has successfully signed out, they will be redirected back to the main Sentinel page. The user can choose to exit the page upon being redirected to the main page." searchTerm={searchTerm}/>
                 <img src={UM13} className="image"></img>
@@ -296,66 +296,66 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
             
                 <h1 className="text">Student Functions</h1>
 
-                <h5 className="terms">Login</h5>
+                <h5 className="helpTerms">Login</h5>
                 <HighlightedText text="Students using the Sentinel web application can log into their user account which provides access to all features of the system that have been assigned to them. The purpose of creating the FaceID login method is to ensure that the student can be properly authenticated and reinforce the anti-cheating purpose of our software. For more information on accessing the system, please refer to Section 3: Getting Started." searchTerm={searchTerm}></HighlightedText>
             
-                <h5 className="terms">Student Homepage</h5>
+                <h5 className="helpTerms">Student Homepage</h5>
                 <HighlightedText text="After logging into the system, the student will be brought to the student homepage where they can access functions such as viewing their student details and viewing upcoming  & previous exams." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM15} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 15: Student Homepage" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">View Student Details</h5>
+                <h5 className="helpTerms">View Student Details</h5>
                 <HighlightedText text="When the user wants to view their current Student Details, they will be displayed on a table on the left-hand side of the screen. This table contains information such as the student’s first name, last name, student ID and email." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM16} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 16: Student Details Table" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">View Previous Exams</h5>
+                <h5 className="helpTerms">View Previous Exams</h5>
                 <HighlightedText text="When the user wants to view the previous exams that they have taken/joined, they can navigate to the table on the bottom of the screen which contains information such as the upcoming exams table above it." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM17} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 17: Previous Exams Table" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">View Upcoming Exams</h5>
+                <h5 className="helpTerms">View Upcoming Exams</h5>
                 <HighlightedText text="When the user wants to view their upcoming exams, they can navigate to the right-hand table of the screen which showcases the upcoming exams including the exam name, exam start, details and seat number." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM18} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 18: Upcoming Exams Table" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Access Exam</h5>
+                <h5 className="helpTerms">Access Exam</h5>
                 <HighlightedText text="When the student wants to join an exam session that they are scheduled for, they can click the “Access Exam” button on the Upcoming Exams table for the specific exam they want to join. This will redirect them into a waiting room before they begin the exam (exam session)." searchTerm={searchTerm}></HighlightedText>
 
-                <h5 className="terms">Exam Session</h5>
+                <h5 className="helpTerms">Exam Session</h5>
                 <HighlightedText text="After the student selects the Access Exam button from the student homepage, they will be redirected first from the Exam Waiting Room (otherwise known as the Exam Start page) then to the actual proctored Exam Session." searchTerm={searchTerm}></HighlightedText>
 
-                <h5 className="terms">Exam Waiting Room (Exam Start Page)</h5>
+                <h5 className="helpTerms">Exam Waiting Room (Exam Start Page)</h5>
                 <HighlightedText text="When inside the Exam Waiting Room, the student can view the details of the exam in the top table, they can then view the terms and conditions below. A scroll bar is available to view the content of the terms and conditions. Before being able to proceed they must agree to the terms and conditions by checking the box." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM19} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 19: Exam Start Page" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Pre-Exam Verification</h5>
+                <h5 className="helpTerms">Pre-Exam Verification</h5>
                 <HighlightedText text="Before beginning the actual exam session, the student is required to scan their table for banned objects. This ensures that the student does not have any tools they can use for cheating that may not be detected during the exam. After the area has been scanned, the student can press the Continue button which will allow them to enter the exam session." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM20} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 20: Pre-Exam Verification Screen" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Exam Session</h5>
+                <h5 className="helpTerms">Exam Session</h5>
                 <HighlightedText text="When the exam begins, the student is automatically moved from the waiting room to the exam session. During this session, object recognition and facial landmark detection runs to ensure that a student is not cheating during the examination." searchTerm={searchTerm}></HighlightedText>
 
-                <h5 className="terms">Exam Flags</h5>
+                <h5 className="helpTerms">Exam Flags</h5>
                 <HighlightedText text="As previously mentioned, once the exam begins, the anti-cheating software also begins. When a student commits any activities that are considered misconduct (as listed in Appendix G.7: Assumptions), they will be flagged by the system. An example of a flagging warning has been shown below." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM21} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 21: Sample of an Exam Flag" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Exam Terminated</h5>
+                <h5 className="helpTerms">Exam Terminated</h5>
                 <HighlightedText text="When the student has received two flagging warnings, their exam session can be terminated (based on the manual approval of the examiner). If the exam session was terminated, the student will be redirected to this page below. From this page, they can go back to the student homepage." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM22} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 22: Exam Terminated Screen" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Exam Complete</h5>
+                <h5 className="helpTerms">Exam Complete</h5>
                 <HighlightedText text="After the exam has completed, the student will be redirected to an Exam Complete page where they will be redirected back to the student home page." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM23} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 23: Exam Complete Screen" searchTerm={searchTerm}/></h5>
 
                 <h1 className="text">Admin Functions</h1>
 
-                <h5 className="terms">View the Admin Dashboard</h5>
+                <h5 className="helpTerms">View the Admin Dashboard</h5>
                 <HighlightedText text="Examiners using the Sentinel Web Application can log into their user account which provides access to all of the admin functions which will be outlined below. For more information on accessing the system, please refer to Section 3: Getting Started." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM24} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 24: Admin Dashboard Screen" searchTerm={searchTerm}/></h5>
@@ -367,16 +367,16 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
                     <li><HighlightedText text="The Help Centre (see Figure 10)" searchTerm={searchTerm}></HighlightedText></li>
                 </ul>
 
-                <h5 className="terms">Launch Exam</h5>
+                <h5 className="helpTerms">Launch Exam</h5>
                 <HighlightedText text="When the examiner selects the Launch Exam they will be directed to the active exam session. If there is no active exam session, this button is disabled. This allows for immediate access to a live exam session, which is particularly important for time-sensitive situations." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM31} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 25: Exam Session Screen for Admin" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Student Monitoring/Flagging</h5>
+                <h5 className="helpTerms">Student Monitoring/Flagging</h5>
                 <img src={UM25} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 26: Flagged Incidents Screen" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Flag Logs</h5>
+                <h5 className="helpTerms">Flag Logs</h5>
                 <HighlightedText text="At the end of each examination, the examiner will be able to access the corresponding flagged incidents during the examination including the session name, examinee that was flagged, why the individual was flagged, the status of the flag, the flag number and the session number. The flag log automatically updates to show the complete list of flags have been registered to the system. The status column can show one of three status types as shown in Figure 26: Flagged Incidents Screen:" searchTerm={searchTerm}></HighlightedText>
                 <ul>
                     <li><HighlightedText text="The ‘resolved’ status indicates that the flag’s validity has been confirmed by an administrator and that the student has been successfully notified of the flag. " searchTerm={searchTerm}></HighlightedText></li>
@@ -388,27 +388,27 @@ function UsingTheSoftware( {onBackButtonClick, searchTerm} ) {
                     </ul>
                 </ul>
 
-                <h5 className="terms">Flag Details</h5>
+                <h5 className="helpTerms">Flag Details</h5>
                 <HighlightedText text="In the flagged incidents table, each flagged incident has a hyperlink attached to it that redirects the user to another page called Flag Details. This page is designed to provide more information about the flag including the examinee details, exam details, flag report and provides a clip of the flagged incident." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM26} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 27: Flag Details Screen" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Create Session</h5>
+                <h5 className="helpTerms">Create Session</h5>
                 <HighlightedText text="When the examiner selects the Create Exam button in the Admin Dashboard, they will be brought to the Create Session page where they can Schedule an Exam for the class. Information required to create a new exam session include specifying the date and duration, class name, exam name and description." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM27} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 28: Create Session Screen" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">Manage Classes</h5>
+                <h5 className="helpTerms">Manage Classes</h5>
                 <HighlightedText text="When the examiner selects Manage Class, they will be directed to a page with a list of students allocated to their class. They are then able to add or remove the students in the class. Exams are scheduled to classes rather than to individual students; Administrators can use the ‘Manage Classes’ page  to configure the students expected to be in attendance of a particular exam by selecting which students they’d like to be in the exam." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM28} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 29: Manage Classes Screen" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">View Exam history</h5>
+                <h5 className="helpTerms">View Exam history</h5>
                 <HighlightedText text="When the examiner clicks on the Exam History button in the Admin Dashboard, they will be brought to the Exam History page where they can view the previous exams that they have scheduled/held. Information that is displayed on the table in Exam History include the exam name, Term, examiner name, number of attendees, exam start time, exam end time, status and session number." searchTerm={searchTerm}></HighlightedText>
                 <img src={UM29} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 30: View Exam History Screen" searchTerm={searchTerm}/></h5>
 
-                <h5 className="terms">View Schedule</h5>
+                <h5 className="helpTerms">View Schedule</h5>
                 <HighlightedText text="When the examiner enters the View Schedule screen they will be able to see any upcoming examinations. The first exam on the screen will be the exam closest to the current date. The examiner will be able to view the exam name, exam time and date as well as Exam Id. " searchTerm={searchTerm}></HighlightedText>
                 <img src={UM30} className="image"></img>
                 <h5 className="figure-heading"><HighlightedText text="Figure 31: View Schedule Screen" searchTerm={searchTerm}/></h5>
@@ -435,7 +435,7 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
             <div className="info-dump">
             <HighlightedText text="There are several error messages and remediation actions embedded into Sentinel to enable a smooth and easy user experience across the site. These messages have been detailed with the process, description, and where necessary, the remediation strategy. Sentinel is currently in beta testing and open to bug fix and error handling suggestions." searchTerm={searchTerm}/>
             
-                <h5 className="terms">Error Messages</h5>
+                <h5 className="helpTerms">Error Messages</h5>
                 
                 <TableContainer component={Paper}>
                     <Table>
@@ -590,12 +590,12 @@ function Troubleshooting( {onBackButtonClick, searchTerm} ) {
                     </Table>
                 </TableContainer>
 
-                <h5 className="terms">Special Considerations</h5>
+                <h5 className="helpTerms">Special Considerations</h5>
 
                 <HighlightedText text="Sentinel deploys on a weekly basis and the system may experience downtime whilst this is processing. The deployment only takes an average time of 2 minutes, but a contingency period of 20 minutes has been outlined to account for rollbacks and user acceptance testing. The deployment times are set to late at night in AEST and do not affect a vast majority of users." searchTerm={searchTerm}/>
                 <HighlightedText text="Also of note, although due diligence has been made to enable manual checks and model accuracy for cheating detections, there is always a possibility of a cheating behaviour being incorrectly flagged. Additionally, some behaviours associated with accessibility considerations such as breaks, support people, and a usage of an additional device may be flagged as cheating by the system unless a special consideration request has been made to the university. If any doubts arise, please contact the university." searchTerm={searchTerm}/>
 
-                <h5 className="terms">Support</h5>
+                <h5 className="helpTerms">Support</h5>
 
                 <HighlightedText text="Although Sentinel has done due diligence in troubleshooting major bugs, dynamic systems and unique user interactions may still result in errors arising. Since the system is enabled by tertiary education institutions, support relating to password resets, examination queries, and flagging negotiations are directed to the relevant institution through the contact page linked in the top-right side of ribbon. For the table below, the University of Technology Sydney (UTS) was taken as an example due to the initial beta rollout being for staff and students at UTS. However, system related errors such as slow processing times, access requirements, and incorrect data can be directed to Sentinel through our incident management system or by directly contacting Sentinel support." searchTerm={searchTerm}/>
                 
