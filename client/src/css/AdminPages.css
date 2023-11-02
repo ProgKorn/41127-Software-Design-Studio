@@ -59,6 +59,7 @@
     margin: auto;
     padding: 0px;
     border-radius: 20px;
+    height: 16vh;
     /* height: 100%; */
 }
 
@@ -83,10 +84,13 @@
     font-family: Montserrat, sans-serif;
     padding: 25px;
     text-align: left;
+    height: 8vh;
+    overflow: auto;
 }
 
 .flagVideoSection {
     padding: 20px;
+    overflow: auto;
 }
 
 .flagVideoTitle {
@@ -170,4 +174,30 @@
 .scheduleIcons {
     transform: scale(2.2);
     padding-top: 10px;
+}
+
+.admin-video-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2b2d42;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 999; /* Adjust z-index for stacking order */
+}
+
+.notification-video {
+    color: white;
+    padding-bottom: 20px;
+}
+
+.linkIcon {
+    color: blue;
+}
+
+.linkIcon:hover {
+    cursor: pointer
 }

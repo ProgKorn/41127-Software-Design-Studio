@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import axios from 'axios';
 import CardTable from './CardTable';
 import { formatISODate } from '../components/Clock';
+import StatusChip from '../components/StatusChip';
 
 //TODO: Add the Flagged Clip
 function Flag() {
@@ -62,21 +63,6 @@ return loading ? <Loader loading={(loading)} />
           columns={["Student ID", "Name", "Email"]}
           rows={[student.studentId, `${student.name.firstName} ${student.name.lastName}`, student.email]}
         />
-        {/*commented out the creepy face image url */}
-        {/*   <div style={{ display: 'flex'}}>
-          <div style={{ width: '70%'}}>
-            <CardTable 
-              columns={["Student ID", "Name", "Email"]}
-              rows={[student.studentId, `${student.name.firstName} ${student.name.lastName}`, student.email]}
-              headerWidth={150}
-            />
-          </div>
-          <img style={{ height: 250,
-            width: '30%',
-            margin: 20,
-            borderRadius: 10}}src={student.faceImageUrl} alt="student profile">
-          </img>
-        </div>  */}
         </Card>
         <Card title={"Exam Details"} half>
           <div style={{ height: '30vh', width: '100%', overflow: 'auto'}}><CardTable 
@@ -100,8 +86,9 @@ return loading ? <Loader loading={(loading)} />
               </div>
               <div style={{ width: '80%' }}>
                 <div className='flagDetailDescriptionText'>
-                  <div style={{ paddingBottom: 20 }}>{flag.sessionName}</div>
-                  <div>The current status is '{flag.status}'.</div>
+                  <div style={{ paddingBottom: 20 }}>Session: {flag.sessionName}</div>
+                  <div style={{ paddingBottom: 20 }}>Flagged for '{flag.description}'.</div>
+                  <StatusChip status={flag.status} />
                 </div>
               </div>
             </div>
@@ -116,7 +103,15 @@ return loading ? <Loader loading={(loading)} />
                 margin: 'auto', 
                 backgroundColor: 'aliceblue', 
                 borderRadius: 10, 
-                marginTop: 30 }}>  
+                marginTop: 30,
+                overflow: 'auto'}}>  
+                <video 
+                  style={{height: '30vh'}}
+                  src={"https://res.cloudinary.com/dljsodofn/video/upload/v1698877498/blob_bnyuda.webm"}
+                  autoplay
+                  muted
+                  controls>
+                </video>
             </div>
           </div>
         </Card>

@@ -36,17 +36,17 @@ function ExamSection(props) {
 function StudentSection(props) {
   const student = props.student;
 
-  return student ? <div style={{ display: 'flex'}}>
+  return student ? <div style={{ display: 'flex', overflow: 'auto'}}>
     <div style={{ width: '70%'}}>
       <CardTable 
         columns={["Student ID", "Name", "Email"]}
         rows={[student.studentId, `${student.name.firstName} ${student.name.lastName}`, student.email]}
       />
     </div>
-    {student.faceImageUrl && <img style={{ height: 250,
-      width: '30%',
-      margin: 20,
-      borderRadius: 10}} src={student.faceImageUrl} alt="student profile">
+    {student.faceImageUrl && 
+    <img style={{ width: '30%', margin: 20, borderRadius: 10}} 
+      src={student.faceImageUrl} 
+      alt="student profile">
     </img>}
   </div> : <></>
 }
@@ -68,7 +68,9 @@ function FlagSection(props) {
   }, []);
 
   // Gets the latest five flags. TODO: add overflow scrolling
-  return studentFlags ? studentFlags.slice(0, 5).map(flag => (<div>{`Exam #${flag.examId} ${flag.sessionName}: ${flag.description}`}</div>)) : <></>
+  return studentFlags ? studentFlags.map(flag => (
+    <div>{`Exam #${flag.examId} ${flag.sessionName}, ${flag.description}`}</div>
+  )) : <></>
 }
 
 function Student() {
@@ -115,8 +117,8 @@ function Student() {
            {student && <ExamSection studentId={student.studentId}/>}
           </Card>
         </Grid>
-        <Grid item xs={8}>
-          <Card title={"Flag History"}>
+        <Grid item xs={8} style={{ height: '80vh' }}>
+        <Card title={"Flag History"}>
             <div className='flagDetailSection'>
               <div className='flagDetailContainer'>
                 <div className='flagDetailTitle'>
@@ -138,15 +140,27 @@ function Student() {
             </div>
             <div className='flagVideoSection'>
               <div className='flagVideoTitle'>
-                Flagged Clip
+                Most Recent Flagged Clip
               </div>
               {/* Placeholder for flagged */}
-              <div style={{ height: 400, 
+              <div style={{
                   width: '90%', 
+                  height: '35vh',
+                  display: 'flex',
                   margin: 'auto', 
+                  alignContent: 'center',
+                  justifyContent: 'center',
                   backgroundColor: 'aliceblue', 
                   borderRadius: 10, 
+                  overflow: 'auto',
                   marginTop: 30 }}>  
+                <video 
+                  src={"https://res.cloudinary.com/dljsodofn/video/upload/v1698877498/blob_bnyuda.webm"}
+                  autoplay
+                  muted
+                  controls>
+                </video>
+                {/* {recentFlag ? <></> : <div style={{ paddingTop: '11vh', fontFamily: 'Montserrat, sans-serif' }}>No Flags</div>} */}
               </div>
             </div>
           </Card>

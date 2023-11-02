@@ -15,11 +15,13 @@ import Loader from '../components/Loader';
 import axios from 'axios';
 import CardTable from './CardTable';
 import { formatISODate } from '../components/Clock';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 function Exam() {
   const [isAdmin, setIsAdmin] = useState(true);
   const [exam, setExam] = useState(null);
   const [examStudents, getExamStudents] = useState(null);
+  const [studentVideo, setStudentVideo] = useState(false);
   const [loading1, setLoading1] = useState(true);
   const [loading2, setLoading2] = useState(true);
   const navigate = useNavigate();
@@ -61,7 +63,7 @@ function Exam() {
   }, [isAdmin, navigate]);
 
   const columns = [
-    'Examinee', 'Student Id', 'Flags', 'Seat Number', 'Status'
+    'Examinee', 'Student Id', 'Flags', 'Seat Number', 'Status', ''
   ]
 
   const tableTitleTextStyle = {
@@ -104,20 +106,34 @@ function Exam() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {examStudents && examStudents.map((row) => (
+                  {examStudents && examStudents.map((examStudent) => (
                   <TableRow 
-                    key={row.examId}
+                    key={examStudent.examId}
                     sx={tableRowStyle}
                   >
                     <TableCell component="th" scope="row" style={{fontFamily: 'Montserrat, sans-serif'}} align="center">
-                      <a href={`/student/${row.studentId}`} style={{ color: 'blue' }}>
-                        {row.name}
+                      <a href={`/student/${examStudent.studentId}`} style={{ color: 'blue' }}>
+                        {examStudent.name}
                       </a>
                     </TableCell>
-                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.studentId}</TableCell>
-                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.flags}</TableCell>
-                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.seatNo}</TableCell>
-                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{row.status}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{examStudent.studentId}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{examStudent.flags}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{examStudent.seatNo}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{examStudent.status}</TableCell>
+                    <TableCell align="center">
+                      <div onClick={() => setStudentVideo(examStudent)} style={{ color: 'blue', '&:hover': { cursor: 'pointer' }}}>
+                          <PlayCircleOutlineIcon />
+                      </div> 
+                    </TableCell>
+                    {studentVideo ? <div className="admin-video-popup">
+                      <div className="popup-content">
+                        <div className="notification-video">
+                          <p>{studentVideo.name} ({studentVideo.studentId}) in Exam ID: {studentVideo.examId} </p>
+                          <video src={studentVideo.fullRecording} autoplay muted controls></video>
+                        </div>
+                        <button onClick={() => setStudentVideo(null)} className="ok-button">OK</button>
+                      </div>
+                    </div> : <></>}
                   </TableRow>
                   ))}
                 </TableBody>
