@@ -6,6 +6,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 import '../css/AdminExamSession.css';
 import FlagNotification from "../components/FlagNotification";
 
+
 const secrets = {
     appId: process.env.REACT_APP_AGORA_APP_ID,
     channelName: "main",
@@ -48,7 +49,7 @@ const secrets = {
       }
     });
   };
-  
+
   const stopVideo = async () => {
     rtc.localVideoTrack.close();
     rtc.localVideoTrack.stop();
