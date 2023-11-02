@@ -1,20 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .error-message-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 2vw;
-    margin-bottom: 2vw;
+    /* margin-top: 2vw;
+    margin-bottom: 2vw; */
 }
   
 .error-message {
-    background-color: #ff7777; 
-    width: 30%;
-    border: 1px solid rgb(0, 0, 0);
+    background-color: #fdc7c7; 
+    width: 35rem;
+    max-width: 50%;
+    /* border: 1px solid #fc1313; */
     border-radius: 1rem;
-    color: #111827;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: 1rem;
+    color: rgb(74, 72, 72);
+    font-family: Montserrat, sans-serif;
+    font-size: 20px;
     font-weight: 600;
     line-height: 3rem;
+    margin: 10px 12px;
+    justify-content: center;
 }

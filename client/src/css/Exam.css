@@ -11,25 +11,124 @@
 }
 
 .detailsTable {
-    max-width: 700px;
+    width: 60%;
     align-self: center;
     border-collapse: separate;
     text-align-last: center;
+    font-family: Montserrat, sans-serif;
 }
 
 .terms {
-    background-color: #109cfc;
+    background-color: #2b2d42;
+    border-radius: 6px;
+    color: white;
+    padding: 10px 30px;
+    max-height: 350px; 
+    overflow-y: auto; 
+    font-size: small;
+    font-family: Montserrat, sans-serif;
+}
+
+.terms::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .terms::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+  }
+  
+  .terms::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+
+.preview {
+    height: 550px;
+    background-color: #2b2d42;
     border-radius: 6px;
     color: white;
     padding: 20px;
 }
 
-.preview {
+.complete-box {
     height: 550px;
-    background-color: #109cfc;
+    background-color: #dfdfe4;
     border-radius: 6px;
     color: white;
+    padding: 10px;
+}
+
+/* Tick Icon */
+.complete-box .MuiSvgIcon-root {
+    color: slategray;
+    font-size: 100px;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+.terminated-box {
+    background-color: #8d99ae; /* Light Gray */
+    color: #edf2f4; /* Light Gray Text */
+    text-align: center;
     padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 100%;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Error Icon */
+.terminated-box .MuiSvgIcon-root {
+    color: #ef233c; /* Red */
+    font-size: 100px;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+/* Title */
+.terminated-title {
+    font-size: 72px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: capitalize;
+    margin: 10px 0;
+}
+
+/* Description */
+.description {
+    font-size: 20px;
+    /* margin: 20px 0; */
+    font-family: 'Montserrat', sans-serif;
+    margin: 5vh;
+  }
+
+/* Button */
+.terminated-box button {
+    background-color: #2b2d42; /* Dark Blue */
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: capitalize;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.terminated-box button:hover {
+    background-color: #d90429; /* Dark Red (Accent) */
+}
+
+.icon {
+    font-size: 72px;
+    vertical-align: middle; /* Align the icon vertically with the text */
+    margin-left: 5px; /* Adjust the spacing between the text and the icon */
 }
 
 .formBox {
@@ -38,10 +137,12 @@
 
 .checkBoxStyle {
     color: white !important;
+    font-family: Montserrat, sans-serif;
 }
 
 .subtitle {
     padding: 10px;
+    font-family: Montserrat, sans-serif;
 }
 
 .continueButtonBox {
@@ -54,6 +155,7 @@
     color: "white";
     margin-top: "20px";
     margin-bottom: "20px";
+    font-family: Montserrat, sans-serif;
 }
 
 .countdown {
@@ -74,9 +176,34 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.verify-box {
+    width: 122px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .unmirror {
     transform: scaleX(-1);
 }  
+
+.complete-title {
+    font-size: 72px;
+    /* margin-top: 20vh; */
+}
+
+.exam-terminated {
+    font-size: 72px;
+}
+
+.complete-description {
+    color: slategray;
+    margin: 5vh;
+}
 
 h1 {
     color: slategray;

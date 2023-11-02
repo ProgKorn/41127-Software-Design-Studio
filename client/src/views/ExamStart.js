@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/Exam.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,27 +11,34 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import FormGroup from "@mui/material/FormGroup";
 import StudentHeader from "../components/StudentHeader";
+import Loader from '../components/Loader';
 import { Checkbox, Button, FormControlLabel } from "@mui/material";
 import axios from "axios";
-
-function createData(name, value) {
-  return { name, value };
-}
-
-
 
 function ExamStart() {
   const [isChecked, setIsChecked] = useState(false);
   const [examDetails, setExamDetails] = useState(null);
+  // const [transformedDetails, setTransformedDetails] = useState(null);
   const [loading, setLoading] = useState(true); // Initialize as true
   const navigate = useNavigate();
-  const examId = "64e5f5e6775cbbddcd2afab2";
+  const {studentId} = useParams();
+  const {examId} = useParams();
+  const {seatNo} = useParams();
+  console.log("URL Parameters:", studentId, examId);
 
   const fetchExamDetails = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/exam/getExamDetails");
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +`/exam/getExamDetails/${examId}`);
       console.log("Exam Details Response:", response.data); // Log the response
-      setExamDetails(response.data);
+      const examData = {
+        "Exam Name": response.data.examName,
+        "Exam Date": new Date(response.data.startTime).toLocaleDateString("en-GB"),
+        "Start Time": new Date(response.data.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        "End Time": new Date(response.data.endTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        Details: response.data.details,
+      };
+      setExamDetails(examData);
+      console.log("Exam Details:", examDetails);
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error(error);
@@ -43,24 +50,21 @@ function ExamStart() {
     fetchExamDetails();
   }, []);
 
-  // Handle exam details table contents, using fetched data
-  const rows = [
-    createData("Exam Name", examDetails ? examDetails[0].examName : "Loading..."),
-    createData("Exam Details", examDetails ? examDetails[0].details : "Loading..."),
-    createData("Start Time", examDetails ? examDetails[0].startTime : "Loading..."),
-    createData("End Time", examDetails ? examDetails[0].endTime : "Loading..."),
-  ];
-
-
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
   const handleButtonClick = () => {
-    navigate("/examsession");
+    navigate(`/examverify/${studentId}/${examId}/${seatNo}`);
   };
 
+  if (loading)
+   {
+      return <Loader loading={loading} />
+   }
+
   return (
+
     <Box>
       <StudentHeader />
       <Box className="main">
@@ -79,25 +83,29 @@ function ExamStart() {
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
               <TableBody>
-                {rows.map((row) => (
+                {/* {examDetails.map((examDetail) => ( */}
+                {Object.entries(examDetails).map(([name, value]) => (
                   <TableRow
-                    key={row.name}
+                    key={name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell
                       component="th"
                       scope="row"
                       sx={{
-                        backgroundColor: "#109cfc",
+                        backgroundColor: "#2b2d42",
                         color: "white",
                         fontWeight: "bold",
+                        fontFamily: "Montserrat, sans-serif",
                       }}
                       width="250px"
                     >
-                      {row.name}
+                      {name}
                     </TableCell>
-                    <TableCell align="right" width="250px">
-                      {row.value}
+                    <TableCell align="center" width="250px" sx={{
+                        fontFamily: "Montserrat, sans-serif"
+                      }}>
+                      {value}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -112,16 +120,72 @@ function ExamStart() {
         {/* Terms and conditions box and checkbox go here */}
         <Box className="terms">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tempor nec feugiat nisl pretium fusce id velit. Turpis egestas integer eget aliquet nibh praesent tristique magna. Ligula ullamcorper malesuada proin libero. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Viverra vitae congue eu consequat ac felis. Id ornare arcu odio ut sem nulla pharetra diam sit. Volutpat diam ut venenatis tellus in metus vulputate eu. In aliquam sem fringilla ut morbi tincidunt augue. Lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi. Consequat semper viverra nam libero justo laoreet sit amet. Malesuada fames ac turpis egestas. Vitae et leo duis ut diam quam nulla. Dignissim cras tincidunt lobortis feugiat. Orci nulla pellentesque dignissim enim sit amet.
+            These terms and conditions (the "Agreement") govern the use of an AI Online Exam Proctoring Tool (the "Service") provided by Sentinel (the "Company") to the user (the "User"). By using this service, the user agrees to abide by the terms and conditions outlined below:
           </p>
-          <p>
-            Tincidunt ornare massa eget egestas. Neque sodales ut etiam sit amet nisl purus. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Amet cursus sit amet dictum sit amet. Tincidunt dui ut ornare lectus sit amet. Neque convallis a cras semper auctor neque vitae tempus. Est lorem ipsum dolor sit amet consectetur adipiscing. Elit sed vulputate mi sit. Adipiscing elit ut aliquam purus sit amet. Quis commodo odio aenean sed. Eu lobortis elementum nibh tellus. Et netus et malesuada fames ac turpis egestas. Cras ornare arcu dui vivamus arcu felis. Quam vulputate dignissim suspendisse in est. Quam id leo in vitae turpis massa sed. Nulla at volutpat diam ut venenatis tellus in metus. Est pellentesque elit ullamcorper dignissim. Ultrices neque ornare aenean euismod elementum nisi quis eleifend. Nisl rhoncus mattis rhoncus urna. Praesent tristique magna sit amet purus gravida.
+          <br />
+          <p align="left" style={{fontWeight: 'bold'}}>
+            1. Acceptance of Terms
           </p>
-          <p>
-            Fringilla phasellus faucibus scelerisque eleifend donec pretium. In mollis nunc sed id semper risus in hendrerit gravida. Arcu cursus euismod quis viverra. Ornare lectus sit amet est placerat in. Augue ut lectus arcu bibendum at varius vel pharetra vel. In pellentesque massa placerat duis ultricies lacus sed turpis tincidunt. Vitae tortor condimentum lacinia quis vel eros donec. Vel facilisis volutpat est velit egestas. Et tortor consequat id porta nibh. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Nisl purus in mollis nunc.
+          <p align="left">
+            By using this service, the User acknowledges and agrees to these Terms and Conditions. If the User does not agree to these terms, they should refrain from using the Service.
           </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            2. User Eligibility
+          </p>
+          <p align="left">
+            This Service is intended for use by educational institutions, examiners and students. To use the service, users must be at least 18 years of age or have the consent of a parent or guardian to use the Service.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}} >
+            3. Registration and Account Security
+          </p>
+          <p align="left">
+            The User is responsible for maintaining the confidentiality of their login credentials and account information. The User is also responsible for any activities conducted through their account. If the User suspects any unauthorised access to their account, they must notify their provider immediately.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            4. Privacy and Data Usage
+          </p>
+          <p align="left">
+            The Provider may collect, use and process personal data and information provided by the User in accordance with the Privacy Policy, which can be found on the provider's website.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            5. Proctoring and Monitoring
+          </p>
+          <p align="left">
+            The Service uses AI and other technologies to proctor and monitor online exams. This includes but is not limited to webcam, microphone and screen mirroring. The User's actions, such as eye movements and background noise, may be recorded during an examination.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            6. Code of Conduct
+          </p>
+          <p align="left">
+            The User agrees to adhere to the following code of conduct while using the Service:
+            <br />
+            a. The User will not attempt to cheat or engage in any form of academic dishonesty.<br />
+            b. The User will not impersonate or provide false information. <br />
+            c. The User will not disrupt or interfere with the operation of the Service. <br />
+            d. The User will not attempt to reverse engineer, hack, or modify the Service. <br />
+            e. The User will not share or distribute exam content without permission.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            7. Exam Results and Reporting
+          </p>
+          <p align="left">
+              The Provider will share the results of proctored examinations and corresponding flag logs with authorised  individuals or organizations, such as instructors, educational institutions, or third-party exam providers, as specified by the User or required by law.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            8. Termination
+          </p>
+          <p align="left">
+            The Provider reserves the right to suspend or terminate a User's access to the Service at any time, for any reason, without notice. In case of termination, the User will not be entitled to a refund of any fees paid.
+          </p>
+          <p align="left" style={{fontWeight:'bold'}}>
+            9. Contact Information
+          </p>
+          <p align="left">
+            For any questions or concerns regarding these Terms and Conditions or the Service, the User may contact the Provider at service@Sentinel.com.
+          </p>
+          <br /> 
           <p>
-            Mattis aliquam faucibus purus in massa tempor. Convallis posuere morbi leo urna molestie. In fermentum posuere urna nec tincidunt praesent semper. Et sollicitudin ac orci phasellus egestas tellus rutrum. Elit duis tristique sollicitudin nibh sit amet. Ut porttitor leo a diam sollicitudin tempor id eu nisl. Eget arcu dictum varius duis at consectetur lorem donec. Elementum curabitur vitae nunc sed velit dignissim sodales ut eu. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Sem et tortor consequat id porta nibh. Sapien eget mi proin sed libero enim. Tortor condimentum lacinia quis vel eros donec ac. Id diam maecenas ultricies mi eget mauris.
+            By using the AI Online Exam Proctoring Tool, the User acknowledges and accepts these Terms and Conditions.
           </p>
           {/* Checkbox form that activates the continue button */}
           <FormGroup className="formBox">
@@ -134,7 +198,9 @@ function ExamStart() {
                   onChange={handleCheckboxChange}
                 />
               }
-              label={<strong>I agree to the terms and conditions</strong>}
+              label={<strong style={{
+                fontFamily: "Montserrat, sans-serif"
+              }}>I agree to the terms and conditions</strong>}
             />
           </FormGroup>
         </Box>
@@ -145,7 +211,8 @@ function ExamStart() {
             variant="contained"
             className="continueButton"
             style={{
-              backgroundColor: isChecked ? "#109cfc" : "grey",
+              backgroundColor: isChecked ? "#2b2d42" : "grey",
+              fontFamily: "Montserrat, sans-serif"
             }}
           >
             <strong>Continue</strong>

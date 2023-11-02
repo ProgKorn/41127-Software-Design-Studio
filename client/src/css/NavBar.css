@@ -13,3 +13,7 @@
     margin: auto;
     flex-direction: column;
 }
+
+.text {
+    font-family: Montserrat, sans-serif;
+}

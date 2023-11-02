@@ -1,0 +1,52 @@
+.info-dump {
+    font-family: Montserrat, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  
+ul {
+    width: 50%;
+    margin: auto;
+    font-weight: bold;
+    text-align: left;
+}
+
+.figure-heading {
+  text-align: center;
+  font-family: Montserrat, sans-serif;
+}
+
+.account-heading {
+  font-family: Montserrat, sans-serif;
+  font-size: 32px;
+}
+
+.account-subheading {
+  font-family: Montserrat, sans-serif;
+  font-size: 24px;
+  text-align: left;
+  margin-left: 25%;
+}
+
+.image {
+  width: 60%;
+}
+
+.icon-image {
+  display: inline;
+  vertical-align: middle;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.image-text-container {
+  display: flex;
+  align-items: center;
+}
+
+.paper-container {
+  width: 70%;
+  margin: auto;
+  margin-bottom: 3%;
+}

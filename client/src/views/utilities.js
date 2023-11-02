@@ -1,12 +1,69 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
+import useVideoStore from "./VideoStore";
 
+const MIN_INCIDENT_DURATION = 10000; // Minimum duration for an incident to be considered unique (in milliseconds)
 const incidents = []; // Active Incidents
-const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
+export const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
 
-const url = 'http://localhost:4000/flag';
+// Define the indices of the nose, left eye, and right eye landmarks in the keypoints array
+const NOSE_INDEX = 168;
+const LEFT_EYE_INDEX = 159;
+const RIGHT_EYE_INDEX = 386;
 
-export const cheatingObject = (detections) => {
+const TURNED_FACE_THRESHOLD = 0.7; // Define a threshold to determine if the face is turned
+const LOOKING_AWAY_THRESHOLD_ANGLE = 20;
+
+const url = process.env.REACT_APP_SERVER_URL +'/flag';
+var studentId, examId;
+var sessionName = "48450  Real-time Operating Systems - Finals";
+
+export function raiseUnfocusedFlag() {
+  const timestamp = Date.now();
+  incidentCheck(timestamp, "Unfocused Window");
+}
+
+const getSessionName = async (examId) => {
+  const examurl = process.env.REACT_APP_SERVER_URL + '/exam/getExamDetails/' + examId;
+  await axios.get(examurl).then((response) => {
+    sessionName = response.data.examName;
+  });
+}
+
+export const cheatingBehaviours = (objectDetections, studentIdParam, examIdParam) => {
   var personCounter = 0; // Keep track of how many people are in the frame
+  studentId = studentIdParam;
+  examId = examIdParam;
+
+  // Loop through each prediction
+  objectDetections.forEach(prediction => {
+    // Extract classes for each frame
+    const object = prediction['class'];
+    const timestamp = Date.now();
+
+    if (object === "person") { // Is this prediction a person?
+      personCounter++; // Add to the person counter for the room
+    }
+
+    objectConditions(object, bannedObjects, personCounter, timestamp);
+    //cheatingFace(faceDetections);
+  });
+}
+
+export const cheatingFace = (faceDetections) => {
+  if (faceDetections) {
+    const keyPoints = faceDetections.keypoints;
+    if (keyPoints) {
+      const timestamp = Date.now();
+      facialLandmarkConditions(keyPoints, timestamp);
+    }
+  }
+}
+
+/* export const cheatingObject = (detections, studentIdParam, examIdParam) => {
+  var personCounter = 0; // Keep track of how many people are in the frame
+  studentId = studentIdParam;
+  examId = examIdParam;
 
   const hasBannedObject = detections.some((detection) => bannedObjects.includes(detection.class)); // if theres ONE detection that includes a banned object
   const personCount = detections.filter((detection) => detection.class === "person").length;
@@ -26,13 +83,12 @@ export const cheatingObject = (detections) => {
 
     objectConditions(object, bannedObjects, personCounter, timestamp);
   });
-}
+} */
 
 function objectConditions(object, bannedObjects, personCounter, timestamp) { // Return true if cheating is detected
   const cheatingBehaviours = [
     {type: "Person Count", condition: personCounter > 1},
     {type: "Banned Object", condition: bannedObjects.includes(object)},
-    // Insert more here
   ]
 
   // Check each cheating behavior
@@ -43,6 +99,11 @@ function objectConditions(object, bannedObjects, personCounter, timestamp) { // 
   });
 }
 
+/*  
+    Check if an incident with this flag type already exists, IF NOT:
+    1. Create a new one and add it to incidents[] 
+    2. /addFlag (FlaggedIncidents) and /addFlag/:studentId/:examId/:flagId (Exam-Student)
+*/
 function incidentCheck(timestamp, flagType) {
   // Check if an incident with this flag type already exists
   const existingIncident = incidents.find((incident) => {
@@ -50,18 +111,22 @@ function incidentCheck(timestamp, flagType) {
   });
 
   if (!existingIncident) {
+    getSessionName(examId);
     // Create a new incident
     const newIncident = {
       flagType: flagType,
-      timestamp,
+      timeStamp: timestamp,
       flagged: true,
+      studentId: studentId,
+      examId: examId, 
+      sessionName: sessionName,
     };
 
     // Add it to the incidents list
     incidents.push(newIncident);
     console.log("New incident " + JSON.stringify(newIncident));
     console.log("Cheating Detected! " + flagType);
-    
+
     // Raise a flag for this incident
     axios.post(url + '/addFlag', newIncident)
     .then((response) => {
@@ -70,10 +135,18 @@ function incidentCheck(timestamp, flagType) {
     .catch(error => {
         console.error('Error adding flag: ', error);
     });
+    // Set a timer to reset the incident after a duration
+    setTimeout(() => {
+      const index = incidents.findIndex((incident) => incident === newIncident);
+      if (index !== -1) { // if found
+        incidents.splice(index, 1);
+        console.log('Incident reset.');
+      }
+    }, MIN_INCIDENT_DURATION);
   }
 }
 
-function checkAndResetIncidents(flagType, hasBannedObject) {
+/* function checkAndResetIncidents(flagType, hasBannedObject) {
   for (let i = incidents.length - 1; i >= 0; i--) {
     const incident = incidents[i];
     if (!hasBannedObject && incident.flagType === flagType) { // if the parsed behaviour matches the behaviour of this incident AND if it's no longer active
@@ -81,7 +154,7 @@ function checkAndResetIncidents(flagType, hasBannedObject) {
       console.log("Incident reset for " + flagType);
     }
   }
-}
+} */
 
 export const drawRect = (detections, ctx) => {
   // Loop through each prediction
@@ -104,6 +177,91 @@ export const drawRect = (detections, ctx) => {
     ctx.stroke();
   });
 }
+
+function facialLandmarkConditions(keypoints, timestamp) { // Return true if cheating is detected -- cheating behaviours are: Iris keypoints detection (are they looking at notes, etc) + Detection for rotated faces (looking away from the screen, posters on the wall etc)
+  const cheatingBehaviours = [
+    { type: "Face rotated to the left", condition: isFaceTurnedLeft(keypoints) },
+    { type: "Face rotated to the right", condition: isFaceTurnedRight(keypoints) },
+    //{ type: "Gaze directed away from the screen", condition: isLookingAway(keypoints) },
+  ];
+
+  // Check each cheating behavior
+  cheatingBehaviours.forEach((behavior) => {
+    if (behavior.condition) {
+      incidentCheck(timestamp, behavior.type);
+    }
+  });
+}
+
+const distanceBetween = (point1, point2) => {
+  const dx = point1.x - point2.x;
+  const dy = point1.y - point2.y;
+  return Math.sqrt(dx * dx + dy * dy);
+};
+
+// Function to determine if the face is turned to the right
+const isFaceTurnedRight = (keypoints) => {
+  const nose = keypoints[NOSE_INDEX];
+  const leftEye = keypoints[LEFT_EYE_INDEX];
+
+  // Calculate the horizontal distance between the nose and left eye
+  const distance = nose.x - leftEye.x;
+
+  // Calculate the face scale (e.g., distance between the eyes)
+  const eyeDistance = distanceBetween(keypoints[LEFT_EYE_INDEX], keypoints[RIGHT_EYE_INDEX]);
+
+  // Normalize the distance by dividing it by the face scale
+  const normalizedDistance = distance / eyeDistance;
+
+  // Check if the distance is greater than the threshold
+  return normalizedDistance > TURNED_FACE_THRESHOLD;
+};
+
+// Function to determine if the face is turned to the left
+const isFaceTurnedLeft = (keypoints) => {
+  const nose = keypoints[NOSE_INDEX];
+  const rightEye = keypoints[RIGHT_EYE_INDEX];
+
+  // Calculate the horizontal distance between the nose and right eye
+  const distance = rightEye.x - nose.x;
+
+  // Calculate the face scale (e.g., distance between the eyes)
+  const eyeDistance = distanceBetween(keypoints[LEFT_EYE_INDEX], keypoints[RIGHT_EYE_INDEX]);
+
+  // Normalize the distance by dividing it by the face scale
+  const normalizedDistance = distance / eyeDistance;
+
+  // Check if the distance is greater than the threshold
+  return normalizedDistance > TURNED_FACE_THRESHOLD;
+};
+
+// Function to calculate the angle between two vectors
+const calculateAngle = (vector1, vector2) => {
+  const dotProduct = vector1[0] * vector2[0] + vector1[1] * vector2[1];
+  const magnitude1 = Math.sqrt(vector1[0] ** 2 + vector1[1] ** 2);
+  const magnitude2 = Math.sqrt(vector2[0] ** 2 + vector2[1] ** 2);
+
+  const cosTheta = dotProduct / (magnitude1 * magnitude2);
+  return Math.acos(cosTheta) * (180 / Math.PI);
+};
+
+// Function to determine if the person is looking away
+const isLookingAway = (keypoints) => {
+  const leftEye = keypoints[LEFT_EYE_INDEX];
+  const rightEye = keypoints[RIGHT_EYE_INDEX];
+
+  // Calculate the direction vector from left eye to right eye
+  const eyeDirectionVector = [rightEye[0] - leftEye[0], rightEye[1] - leftEye[1]];
+
+  // Define a reference vector (e.g., pointing straight ahead)
+  const referenceVector = [1, 0];
+
+  // Calculate the angle between the eye direction vector and the reference vector
+  const angle = calculateAngle(eyeDirectionVector, referenceVector);
+
+  // Check if the angle is greater than the threshold
+  return angle > LOOKING_AWAY_THRESHOLD_ANGLE;
+};
 
 //  Triangulation sets of three
 export const TRIANGULATION = [
@@ -2748,51 +2906,38 @@ export const TRIANGULATION = [
     448,
     255,
   ];
-  
+
   // Triangle drawing method
   const drawPath = (ctx, points, closePath) => {
     const region = new Path2D();
-    region.moveTo(points[0][0], points[0][1]);
+    region.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) {
       const point = points[i];
-      region.lineTo(point[0], point[1]);
+      region.lineTo(point.x, point.y);
     }
-  
-    if (closePath) {
-      region.closePath();
-    }
-    ctx.strokeStyle = "grey";
+    if (closePath) region.closePath();
+    ctx.stokeStyle = "grey";
     ctx.stroke(region);
   };
   
   // Drawing Mesh
-  export const drawMesh = (predictions, ctx) => {
-    if (predictions.length > 0) {
-      predictions.forEach((prediction) => {
-        const keypoints = prediction.scaledMesh;
-  
-        //  Draw Triangles
-        for (let i = 0; i < TRIANGULATION.length / 3; i++) {
-          // Get sets of three keypoints for the triangle
-          const points = [
-            TRIANGULATION[i * 3],
-            TRIANGULATION[i * 3 + 1],
-            TRIANGULATION[i * 3 + 2],
-          ].map((index) => keypoints[index]);
-          //  Draw triangle
-          drawPath(ctx, points, true);
-        }
-  
-        // Draw Dots
-        for (let i = 0; i < keypoints.length; i++) {
-          const x = keypoints[i][0];
-          const y = keypoints[i][1];
-  
-          ctx.beginPath();
-          ctx.arc(x, y, 1 /* radius */, 0, 3 * Math.PI);
-          ctx.fillStyle = "aqua";
-          ctx.fill();
-        }
-      });
+  export const drawMesh = (prediction, ctx) => {
+    if (!prediction) return;
+    const keyPoints = prediction.keypoints;
+    if (!keyPoints) return;
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    for (let i = 0; i < TRIANGULATION.length / 3; i++) {
+      const points = [
+        TRIANGULATION[i * 3],
+        TRIANGULATION[i * 3 + 1],
+        TRIANGULATION[i * 3 + 2],
+      ].map((index) => keyPoints[index]);
+      drawPath(ctx, points, true);
+    }
+    for (let keyPoint of keyPoints) {
+      ctx.beginPath();
+      ctx.arc(keyPoint.x, keyPoint.y, 1, 0, 3 * Math.PI);
+      ctx.fillStyle = "aqua";
+      ctx.fill();
     }
   };

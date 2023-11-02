@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import AdminHeader from '../components/AdminHeader';
 import Card from '../components/Card';
@@ -9,22 +10,60 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import '../css/AdminPages.css';
+import jwt_decode from 'jwt-decode';
+import Loader from '../components/Loader';
+import axios from 'axios';
+import CardTable from './CardTable';
+import { formatISODate } from '../components/Clock';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 function Exam() {
-  function createData(name, stat1, stat2, stat3, stat4) {
-    return { name, stat1, stat2, stat3, stat4 };
-  }
+  const [isAdmin, setIsAdmin] = useState(true);
+  const [exam, setExam] = useState(null);
+  const [examStudents, getExamStudents] = useState(null);
+  const [studentVideo, setStudentVideo] = useState(false);
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
+  const navigate = useNavigate();
+  const {examId} = useParams();
 
-  const rows = [
-    createData('Student1', 159, 6.0, 24, 4.0),
-    createData('Student2', 237, 9.0, 37, 4.3),
-    createData('Student3', 262, 16.0, 24, 6.0),
-    createData('Student4', 305, 3.7, 67, 4.3),
-    createData('Student5', 356, 16.0, 49, 3.9),
-  ];
+  const fetchExam = async () => {
+    try {
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/exam/getExamDetails/' + examId);
+      setExam(response.data);
+      setLoading1(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchExamStudents = async () => {
+    try {
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL +'/student/getExamStudents/' + examId);
+      getExamStudents(response.data);
+      setLoading2(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.isAdmin === true) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+        navigate('/noaccess'); 
+	    }
+	  }
+    fetchExam();
+    fetchExamStudents();
+  }, [isAdmin, navigate]);
 
   const columns = [
-    'Examinee', 'Student Id', 'Flags', 'Duration', 'Status'
+    'Examinee', 'Student Id', 'Flags', 'Seat Number', 'Status', ''
   ]
 
   const tableTitleTextStyle = {
@@ -37,62 +76,70 @@ function Exam() {
     '&:last-child td, &:last-child th': { border: 0 },
     fontFamily: 'Montserrat, sans-serif'
   }
-  
-  return (
+
+  // Wait for all information to be retrieved before loading the student homepage
+  return (loading2 || loading1) ? <Loader loading={true} /> : (
     <div className="Exam">
       <AdminHeader/>
-      <h1>Exam Details</h1>
-      <Grid container spacing={2} columns={16} className='pageCardPadding'>
-        <Grid item xs={8}>
+      <h1 style={{ padding: 0 }}>Exam Details</h1>
+      <Grid container spacing={2} columns={16} className='pageCardPadding' maxWidth={'100%'} maxHeight={'100%'} style={{ paddingTop: 0 }}>
+        <Grid sx={{maxHeight: '80vh'}} item xs={8}>
           <Card title={"Examination Details"}>
-            <div className='listRowContainer'>
-              <div className='listTitleText' style={{ width: '30%' }}>
-                Type
-              </div>
-              <div className='listDescriptionText' style={{ width: '70%' }}>
-                Description
-              </div>
-            </div>
+            {exam && <div style={{ overflow: 'auto' }}><CardTable 
+              columns={["Exam ID", "Name", "Details", "Start Time", "End Time"]}
+              rows={[exam.examId, exam.examName, exam.details, formatISODate(exam.startTime), formatISODate(exam.endTime)]}
+            /></div>}
           </Card>
         </Grid>
-        <Grid item xs={8}>
+        <Grid sx={{maxHeight: '80vh'}}  item xs={8}>
           <Card title={"Examinees & Recordings"}>
-          <TableContainer className='tableContainer'>
+            <div style={{ width: '100%', height: '100%', overflow: 'auto'}}>
+            <TableContainer className='tableContainer' style={{overflow: 'auto', maxWidth: '100%'}} >
               <Table>
                 <TableHead>
-                  <TableRow >
+                  <TableRow>
                     {columns.map((col) => (
-                      <TableCell  align='center' sx={tableTitleTextStyle}>
+                      <TableCell  sx={tableTitleTextStyle} align='center' style={{fontFamily: 'Montserrat, sans-serif'}}>
                         {col}
                       </TableCell>
                     ))}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={tableRowStyle}>
-                      <TableCell component="th" scope="row" style={{fontFamily: 'Montserrat, sans-serif' }}>
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                        {row.stat1}
-                      </TableCell>
-                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                        {row.stat2}
-                      </TableCell>
-                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                        {row.stat3}
-                      </TableCell>
-                      <TableCell align="center" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                        {row.stat4}
-                      </TableCell>
-                    </TableRow>
+                  {examStudents && examStudents.map((examStudent) => (
+                  <TableRow 
+                    key={examStudent.examId}
+                    sx={tableRowStyle}
+                  >
+                    <TableCell component="th" scope="row" style={{fontFamily: 'Montserrat, sans-serif'}} align="center">
+                      <a href={`/student/${examStudent.studentId}`} style={{ color: 'blue' }}>
+                        {examStudent.name}
+                      </a>
+                    </TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{examStudent.studentId}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{examStudent.flags}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{examStudent.seatNo}</TableCell>
+                    <TableCell style={{fontFamily: 'Montserrat, sans-serif'}} align="center">{examStudent.status}</TableCell>
+                    <TableCell align="center">
+                      <div onClick={() => setStudentVideo(examStudent)} style={{ color: 'blue', '&:hover': { cursor: 'pointer' }}}>
+                          <PlayCircleOutlineIcon />
+                      </div> 
+                    </TableCell>
+                    {studentVideo ? <div className="admin-video-popup">
+                      <div className="popup-content">
+                        <div className="notification-video">
+                          <p>{studentVideo.name} ({studentVideo.studentId}) in Exam ID: {studentVideo.examId} </p>
+                          <video src={studentVideo.fullRecording} autoplay muted controls></video>
+                        </div>
+                        <button onClick={() => setStudentVideo(null)} className="ok-button">OK</button>
+                      </div>
+                    </div> : <></>}
+                  </TableRow>
                   ))}
                 </TableBody>
               </Table>
-            </TableContainer>
+              </TableContainer>
+              </div>
           </Card>
         </Grid>
       </Grid>

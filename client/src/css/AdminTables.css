@@ -1,0 +1,32 @@
+.adminTable {
+    padding: 5%;
+    padding-top: 20px;
+}
+
+.label {
+    border-radius: 6px;
+    color: white;
+}
+
+.label-active {
+    background-color: green;
+    padding: 2%;
+}
+
+.label-pending {
+background-color: orange;
+}
+
+.label-inactive {
+    background-color: red;
+}
+
+.manageClassTableContainer {
+    width: 50%;
+}
+
+.resultComponent{
+    width: 50%;
+    align-self: right;
+    float: right;
+}

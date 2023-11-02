@@ -1,26 +1,12 @@
 /*CSS classes for student view related things */
-  .parent {
-    /*border: 1px solid black;
-    margin: 1rem;
-    padding: 2rem 2rem; */
-    text-align: center;
-  }
-  .child {
-    display: inline-block;
-    padding: 1rem 1rem;
-    vertical-align: middle;
-    
-  }
-
   .student-button {
-    background-color: #EF233C;
-    width: 30%;
+    background-color: rgb(85, 89, 130);
+    width:max-content;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 1rem;
     box-sizing: border-box;
     color: #FFFFFF;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: 1rem;
+    font-family: Montserrat, sans-serif;
     font-weight: 600;
     line-height: 3rem;
     text-align: center;
@@ -37,6 +23,11 @@
     justify-content: center;
   }
 
+  .student-button:hover {
+    background-color: #f44336;
+    color: white;
+  }
+
   .button-container-student {
     display: flex;
     flex-direction: column;
@@ -44,3 +35,45 @@
     justify-content: center;
     margin-top: 2vw;
   }
+
+  .pageCardPadding {
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.student-heading {
+  font-family: Montserrat, sans-serif;
+  font-size: 35px;
+  text-align: center;
+  color: rgb(104, 99, 124);
+  font-weight: 600;
+}
+
+.student-header
+{
+  margin-bottom: 1.5vw;
+  background-color: #dfdfe4;
+  height: 5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-container {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: nowrap;
+  
+}

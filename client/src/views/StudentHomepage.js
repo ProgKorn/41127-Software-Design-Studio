@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -12,186 +13,218 @@ import '../css/StudentView.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentHeader from '../components/StudentHeader';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import Loader from '../components/Loader'
+import { Button, Grid } from '@mui/material';
 
-function createData(name, value) {
-  return { name, value };
-}
 
-function createData2(examName, examStart, details, seatNo, accessExam) {
-  return { examName, examStart, details, seatNo, accessExam };
-}
-
-const rows = [
-  createData('Full Name:', 'John Doe'),
-  createData('Student ID:', '123456789'),
-  createData('Email:', 'test@gmail.com'),
-  createData('Institution:', 'UTS'),
-  createData('Time Zone:', 'Sydney')
-];
-
-const rows2 = [
-  createData2('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', 'ACCESS'),
-  createData2('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', 'ACCESS'),
-];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#8D99AE',
-    color: 'black',
-    fontSize: '1.50em',
-    marginTop: '0.83em',
-    marginBottom: '0.83em',
-    marginLeft: 0,
-    marginRight: 0,
+    backgroundColor: '#2b2d42',
+    color: 'white',
+    fontSize: '20px',
     fontWeight: 'bold',
+    fontFamily: 'Montserrat, sans-serif',
+    textTransform: "capitalize",
   },
+  [`&.${tableCellClasses.body}`]: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontSize: '15px'
+  }
 }));
 
 function StudentHomepage() {
-  const [student, getStudent] = useState(null); 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); 
+    const [student, getStudent] = useState(''); // retrieve data returned by the api response
+    const [studentId, setStudentId] = useState(' ');
+    const [loading, setLoading] = useState(true); // loading state that prevents access to undefined data, while waiting to get a response from api call
+    const [exam, getExam] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(true);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get('http://localhost:4000/student/get')
-      .then((response) => {
-        getStudent(response.data);
+    const buttonStyles = {
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "1rem",
+      fontWeight: 500,
+      textTransform: 'Capitalize',
+      color: 'white',
+      backgroundColor: "#292E64",
+      boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+    }
+
+    const rows = [
+      createData('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', '21/08/2023 5:00:00'),
+      createData('SDS 31274 Finals', '21/08/2023 3:00:00', 'Language: English', '13', '21/08/2023 5:00:00'),
+    ]
+
+    function createData (examName,  examStart, details, seatNo, finishTime) {
+      return{examName, examStart, details, seatNo, finishTime};
+    }
+    
+    // send a get api request to the server to retrieve and store the student details using axios
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      
+      if (token) {
+        const decodedToken = jwt_decode(token);
+        const studenturl = process.env.REACT_APP_SERVER_URL + "/student/get/" + decodedToken.userName;
+        
+        if (decodedToken && decodedToken.isAdmin === true) {
+          setIsAdmin(true);
+          navigate('/noaccess');
+        } else {
+          setIsAdmin(false);
+        }
+  
+        axios.get(studenturl)
+          .then((response) => {
+            const studentData = response.data; // Extract student data from the response
+            const studentId = studentData.studentId; // Extract the studentId
+            getStudent(studentData);
+            setStudentId(studentId); // Store the studentId
+            //setLoading(false);
+  
+            const examurl = process.env.REACT_APP_SERVER_URL + "/class/get-exam/" + studentId;
+            axios.get(examurl)
+              .then((examResponse) => {
+                getExam(examResponse.data);
+                setLoading(false);
+              })
+              .catch(examError => {
+                console.error(examError);
+                setLoading(false);
+              });
+          })
+          .catch(studentError => {
+            console.error(studentError);
+            setLoading(false);
+          });
+      } else {
+        navigate("/login");
         setLoading(false);
-      })
-      .catch(error => {
-        console.error(error);
-        setError(error); 
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return <div> Retrieving Data </div>;
-  }
-
-  if (error) {
-    return <div> An error occurred: {error.message} </div>; 
-  }
-
-  const firstName = student && student.name ? student.name.firstName : 'N/A';
-  const lastName = student && student.name ? student.name.lastName : 'N/A';
+      }
+    }, [navigate]); // End of useEffect
   
 
-  return (
+   //wait for all information to be retrieved before loading the student homepage
+   if (loading)
+   {
+      return  <Loader loading={loading} />
+   }
+        const name = student.name;
+   return (
     <div>
         <StudentHeader/>
-        <div className="main">
-            <h1>Student Homepage</h1>
-        </div>
-        <div class = 'parent' style = {{display: 'flex'}}>
-            <div class = 'child'>
-                <div style={{ width: '120%'}}>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 100 }} aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell>Student Details</StyledTableCell>
-                                    <StyledTableCell  align = 'right'>
-                                <div className=".button-container-student">
-                                <Link to="/editdetails" className="student-button" style= {{ width:'200px', display:'inline-flex', textAlign:'center'}}>
-                                    Edit Details
-                                </Link>
-                                </div>
-                            </StyledTableCell>
-                                </TableRow> 
-                            </TableHead>
-                            <TableBody>
-                            <TableRow >
-                            <StyledTableCell>First Name: </StyledTableCell>  
-                            <StyledTableCell>{firstName}</StyledTableCell>
-                            </TableRow >
-                            <TableRow >
-                            <StyledTableCell>Last Name: </StyledTableCell>  
-                            <StyledTableCell>{lastName}</StyledTableCell>
+        <h1>Student Homepage</h1>
+        <Grid container spacing = {1}  className = 'pageCardPadding'>
+          <Grid className='grid'>
+          <Grid item xs={4} marginTop={4}>
+              <TableContainer component={Paper} elevation={8} className="table-container">
+                  <Table sx={{ minWidth: 100 }} aria-label="customized table" className='table'>
+                      <TableHead>
+                          <TableRow>
+                              <StyledTableCell colSpan = {2} style={{ height: '40px' }}>Student Details</StyledTableCell>
+                          </TableRow> 
+                      </TableHead>
+                      <TableBody >
+                      <TableRow >
+                      <StyledTableCell style = {{ fontWeight:'bold', fontSize: '16.5px'}}  >First Name:  </StyledTableCell>  
+                      <StyledTableCell style = {{fontSize: '16px'}}>  {name.firstName} </StyledTableCell>
+                      </TableRow >
+                      <TableRow >
+                      <StyledTableCell style = {{ fontWeight:'bold', fontSize: '16.5px'}}> Last Name: </StyledTableCell> 
+                      <StyledTableCell style = {{fontSize: '16px'}}>{name.lastName}</StyledTableCell>
+                      </TableRow>
+                      <TableRow >
+                      <StyledTableCell style = {{ fontWeight:'bold', fontSize: '16.5px'}}>Student ID: </StyledTableCell>  
+                      <StyledTableCell style = {{fontSize: '16px'}}>{student.studentId}</StyledTableCell>
+                      </TableRow>
+                      <TableRow >
+                      <StyledTableCell style = {{ fontWeight:'bold', fontSize: '16.5px'}}>Email: </StyledTableCell>  
+                      <StyledTableCell style = {{fontSize: '16px'}}>{student.email}</StyledTableCell>
+                      </TableRow>
+                      </TableBody>
+                  </Table>
+              </TableContainer>  
+            </Grid>
+            <Grid item xs={8} marginLeft={5} marginTop={4}>
+              <TableContainer component={Paper} elevation={8} className="table-container">
+                  <Table sx={{ minWidth: 650 }} aria-label="customized table" className='table'>
+                  <TableHead>
+                      <TableRow>
+                          <StyledTableCell colSpan={4} align = 'left' style={{ height: '40px' }}>Upcoming Exams</StyledTableCell>
+                          <StyledTableCell colSpan={4}  align = 'right'>
+                              <div className=".button-container-student">
+                              </div>
+                          </StyledTableCell>
+                      </TableRow>
+                      <TableRow>
+                          <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="left" >Exam Name</TableCell>
+                          <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Exam Start</TableCell>
+                          <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Details</TableCell>
+                          <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Seat No.</TableCell>
+                          <TableCell style={{ fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }} align="center">Access Exam</TableCell>
+                      </TableRow>
+                  </TableHead>
+                  <TableBody>
+                      {exam.map((row) => (
+                      <TableRow 
+                          key={row.examId}
+                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      >
+                          <StyledTableCell component="th" scope="row">
+                          {row.examName}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">{new Date(row.startTime).toLocaleString()}</StyledTableCell>
+                          <StyledTableCell align="center">{row.details}</StyledTableCell>
+                          <StyledTableCell align="center">{row.seatNo}</StyledTableCell>
+                          <StyledTableCell align="center">
+                              <Button component={Link} variant='contained' to={`/examstart/${student.studentId}/${row.examId}/${row.seatNo}`} className='student-button' sx={buttonStyles}>
+                                Access Exam
+                              </Button>
+                          </StyledTableCell>
+                      </TableRow>
+                      ))}
+                  </TableBody>
+                  </Table>
+              </TableContainer>
+              </Grid>
+            </Grid>
+            <Grid xs={12} marginRight={4} marginTop={6}>
+            <TableContainer component={Paper} elevation={8}>
+                    <Table sx={{minWidth: 200}} aria-label="customised table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell colSpan={5}>Previous Exams</StyledTableCell>
                             </TableRow>
-                            <TableRow >
-                            <StyledTableCell>Student ID: </StyledTableCell>  
-                            <StyledTableCell>{student.studentId}</StyledTableCell>
-                            </TableRow>
-                            <TableRow >
-                            <StyledTableCell>Seat Number: </StyledTableCell>  
-                            <StyledTableCell>{student.seatNumber}</StyledTableCell>
-                            </TableRow>
-
-                            </TableBody>
-                        </Table>
-                    </TableContainer>  
-                </div>
-            </div>
-            <div class = 'child' style = {{marginLeft: '10%'}} >
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="customized table">
-                    <TableHead>
+                        </TableHead>
+                        <TableBody>
                         <TableRow>
-                            <StyledTableCell colSpan={2} align = 'left'>Upcoming Exams</StyledTableCell>
-                            <StyledTableCell colSpan={3}  align = 'right'>
-                                <div className=".button-container-student">
-                                <Link to="/previousexams" className="student-button" style= {{ width:'200px', display:'inline-flex', textAlign:'center'}}>
-                                    View Previous Exams
-                                </Link>
-                                </div>
-                            </StyledTableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Exam Name</TableCell>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Exam Start</TableCell>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Details</TableCell>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Seat No.</TableCell>
-                            <TableCell style={{ fontWeight: 'bold' }} align="center">Access Exam</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows2.map((row) => (
-                        <TableRow 
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                            {row.examName}
-                            </TableCell>
-                            <TableCell align="center">{row.examStart}</TableCell>
-                            <TableCell align="center">{row.details}</TableCell>
-                            <TableCell align="center">{row.seatNo}</TableCell>
-                            <TableCell align="center">
-                                <Link to="/examStart" className="student-button" style={{ width:'115px', display:'inline-flex', textAlign:'center'}}>
-                                    Access Exam
-                                </Link>
-                            </TableCell>
-                        </TableRow>
-                        ))}
-                    </TableBody>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="left">Exam Name</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Exam Start</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Details</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Seat No.</StyledTableCell>
+                                <StyledTableCell style={{ fontWeight: 'bold' }} align="center">Exam Finish Time</StyledTableCell>
+                            </TableRow>
+                            {rows.map((row) => (
+                            <TableRow 
+                                key={row.name}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <StyledTableCell component="th" scope="row">
+                                {row.examName}
+                                </StyledTableCell>
+                                <StyledTableCell align="center">{row.examStart}</StyledTableCell>
+                                <StyledTableCell align="center">{row.details}</StyledTableCell>
+                                <StyledTableCell align="center">{row.seatNo}</StyledTableCell>
+                                <StyledTableCell align="center">{row.finishTime}</StyledTableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
                     </Table>
                 </TableContainer>
-            </div>
-        </div>
-        <TableContainer component={Paper} style = {{width: '80%', marginLeft: '2%' , marginTop: '50px'}}>
-          <Table sx={{ minWidth: 500 }} aria-label="customized table">
-            <TableHead>
-                <TableRow>
-                    <StyledTableCell align = 'left'>Test Your Equipment </StyledTableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell align="left">It is highly advised that you check your computer system you are using beforehand to ensure a smooth online testing experience.</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                <TableRow>
-                  <TableCell align= 'left'>
-                   <div className=".button-container-student">
-                        <Link to="/previousexams" className="student-button" style= {{ width:'200px', display:'inline-flex', textAlign:'center'}}>
-                            Run System Test
-                        </Link>
-                    </div>
-                  </TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
+            </Grid>
+        </Grid>
     </div>
   );
 }

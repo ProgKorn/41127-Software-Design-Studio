@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 var schema = Schema
 
 examSchema = new schema({
-  examID: { type: Number, required: true },
+  examId: { type: Number, required: true },
   examName: { type: String, required: true },
   startTime: { type: String, required: true},
   endTime: { type: String, required: true },
