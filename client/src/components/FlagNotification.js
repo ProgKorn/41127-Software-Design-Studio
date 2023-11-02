@@ -107,7 +107,11 @@ const FlagNotification = () => {
       case "Person Count":
         return "More than one person in the frame.";
       case "Unfocused Window":
-        return "Navigated out of exam session window.";
+        return "Navigated out of Exam Session window.";
+      case "Face rotated to the left":
+        return "Face rotated to the left.";
+      case "Face rotated to the right":
+        return "Face rotated to the right.";
       default:
         return "";
     }

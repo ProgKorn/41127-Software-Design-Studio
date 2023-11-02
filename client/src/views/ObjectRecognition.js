@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import * as bodyPix from "@tensorflow-models/body-pix";
+import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
-import { cheatingObject, drawRect, bannedObjects } from "./utilities";
+import { drawRect, bannedObjects, cheatingBehaviours } from "./utilities";
 import "../css/Exam.css";
 import useVideoStore from "./VideoStore";  // Video storage function
 import { useParams } from "react-router-dom";
@@ -23,6 +24,12 @@ function ObjectRecognition({ examInProgress }) {
   const runModels = async () => {
     const net = await bodyPix.load();
     const cocoSsdNet = await cocossd.load();
+    const model = facemesh.SupportedModels.MediaPipeFaceMesh;
+    const detectorConfig = {
+      runtime: 'mediapipe',
+      solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh',
+    };
+    const facialLandmarks = await facemesh.createDetector(model, detectorConfig);
 
     console.log('Models loaded');
 
@@ -30,11 +37,11 @@ function ObjectRecognition({ examInProgress }) {
     startRecording(canvasRef);
 
     setInterval(() => {
-      detect(net, cocoSsdNet);
+      detect(net, cocoSsdNet, facialLandmarks);
     }, 40);
   };
 
-  const detect = async (net, cocoSsdNet) => {
+  const detect = async (net, cocoSsdNet, facialLandmarks) => {
     if (
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
@@ -43,12 +50,14 @@ function ObjectRecognition({ examInProgress }) {
       const canvas = canvasRef.current;
       const segmentation = await net.segmentPerson(video);
       const obj = await cocoSsdNet.detect(video);
+      const face = await facialLandmarks.estimateFaces(video);
 
       drawBody(segmentation, obj);  // Pass detected objects here
 
       drawRect(obj, canvas.getContext("2d"));
+      
       // Cheating Detections
-      cheatingObject(obj);
+      cheatingBehaviours(obj, face[0], studentId, examId);
     }
   };
 

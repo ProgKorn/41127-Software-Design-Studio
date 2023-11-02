@@ -4,6 +4,8 @@ import { Button, Paper } from '@mui/material';
 import {Introduction, Overview, GettingStarted, UsingTheSoftware, Troubleshooting} from '../components/UserManual';
 import GazeTracking from '../helpCentreResources/GazeTracking.png';
 import MobileDetection from '../helpCentreResources/MobileDetection.png';
+import UM21 from '../helpCentreResources/UM21.png';
+import UM31 from '../helpCentreResources/UM31.png';
 
 const buttonStyles = {
     fontFamily: "Montserrat, sans-serif",
@@ -112,11 +114,11 @@ function Flagging( {onBackButtonClick, searchTerm} ) {
                 <HighlightedText text="The Sentinel application utilises a Machine Learning Model to detect certain patterns and behaviours as 'cheating'. This involves running a script that analyses frames from the real-time video provided by the webcam each interval; for this system, is every ~5ms." searchTerm={searchTerm}/>
 
                 <HighlightedText text="In the event a 'cheating' behavious is detected by the system, the admin overseeing the exam session is notified of the event, being provided a short recorded clip of the detecetd behaviour." searchTerm={searchTerm}/>                
-                <h3><HighlightedText text="Insert admin script flag pop up image" searchTerm={searchTerm}/></h3>
+                <img src={UM31} className='image'></img>
                 <h5 className='figure-heading'><HighlightedText text="Figure 1: Student misconduct requiring approval, admin perspective." searchTerm={searchTerm}/></h5>
 
                 <HighlightedText text="If the admin verifies the flagged behaviour is a valid cheating instance, the student is notified and promptly warned of their misconduct." searchTerm={searchTerm}/>
-                <h3><HighlightedText text="Insert student flag pop up" searchTerm={searchTerm}/></h3>
+                <img src={UM21} className='image'></img>
                 <h5 className='figure-heading'><HighlightedText text="Figure 2: Student misconduct flag, student perspective." searchTerm={searchTerm}/></h5>
 
                 <HighlightedText text="The Machine Learning model analyses frames from the webcam to detect cheating through two methodologies, objection recognition analysis and facial landmark analysis." searchTerm={searchTerm}/>

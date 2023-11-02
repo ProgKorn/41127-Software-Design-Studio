@@ -88,7 +88,8 @@ function HelpCentre() {
 						<div className="helpDashboardIcons"><AssignmentIcon/></div>
 						User Manual
 					</Button>
-					<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')} sx={buttonStyles}>							<div className="helpDashboardIcons"><FlagIcon/></div>
+					<Button className="helpDashboardButton" variant="contained"onClick={() => handleButtonClick('flagging')} sx={buttonStyles}>
+            <div className="helpDashboardIcons"><FlagIcon/></div>
 						Flags
 					</Button>
 					<Button className="helpDashboardButton" variant="contained" onClick={() => handleButtonClick('termsAndConditions')} sx={buttonStyles}>

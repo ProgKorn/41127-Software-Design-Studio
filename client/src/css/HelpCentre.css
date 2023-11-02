@@ -111,7 +111,13 @@
     text-align: left;
   }
 
-  .highlighted {
+.highlighted {
     background-color: yellow;
     font-weight: bold;
+}
+
+.softwareSubHeading {
+    text-align: left;
+    padding-left: 1%;
+    font-family: Montserrat, sans-serif;
 }
