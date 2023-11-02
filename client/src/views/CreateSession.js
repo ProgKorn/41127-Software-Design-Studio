@@ -26,6 +26,7 @@ import MuiAlert from "@mui/material/Alert";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Loader from '../components/Loader';
+import {formatISOTime, formatISODate} from "../components/Clock";
 
 //TO-DO:
 //Cannot assign multiple exams to a class --> ctrl+r "classValidation" for more info
@@ -44,14 +45,14 @@ const height = 300;
 const labelOffset = -6;
 
 function CreateSession() {
-  const today = new Date(); 
+  const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
-  
-  const offset = tomorrow.getTimezoneOffset()
-  const offsetDate = new Date(tomorrow.getTime() - (offset*60*1000))
-  const reformattedDate = offsetDate.toISOString().split('T')[0];
-  
+
+  const offset = tomorrow.getTimezoneOffset();
+  const offsetDate = new Date(tomorrow.getTime() - offset * 60 * 1000);
+  const reformattedDate = offsetDate.toISOString().split("T")[0];
+
   const [isAdmin, setIsAdmin] = useState(true);
   const [classes, setClasses] = useState(null);
   const [isLoading, setLoading] = useState(true);
@@ -69,14 +70,13 @@ function CreateSession() {
         navigate("/noaccess");
       }
     }
-    
   }, [isAdmin, navigate]);
 
   const [examDate, setExamDate] = React.useState(dayjs(tomorrow));
   const [ammendedExamDate, setAmmendedExamDate] = React.useState("");
 
-  const [startTime, setStartTime] = React.useState(0);
-  const [endTime, setEndTime] = React.useState(0);
+  const [startTime, setStartTime] = React.useState("");
+  const [endTime, setEndTime] = React.useState("");
   const [ammendedStartTime, setAmmendedStartTime] = React.useState(0);
   const [ammendedEndTime, setAmmendedEndTime] = React.useState(0);
 
@@ -121,36 +121,35 @@ function CreateSession() {
   };
 
   useEffect(() => {
-    var trimmedString = examDate.toString();
-    trimmedString = trimmedString.slice(0, 13);
+    var trimmedString = formatISODate(examDate).toString();
+    trimmedString = trimmedString.slice(0, 15);
     setAmmendedExamDate(trimmedString);
   }, [examDate]);
-
+  
   useEffect(() => {
-    var trimmedString = startTime.toString();
-    trimmedString = trimmedString.slice(17);
+    var trimmedString = formatISOTime(startTime).toString();
     setAmmendedStartTime(trimmedString);
     console.log("start time is " + startTime + "or " + trimmedString)
 
-    var trimmedString = endTime.toString();
-    trimmedString = trimmedString.slice(17);
-    setAmmendedEndTime(trimmedString);
-    console.log("end time is " + endTime + "or " + trimmedString)
-
-    if(startTime > endTime){
+    if (startTime > endTime && startTime !== "") {
       setSnackbarSeverity("warning");
-      setSnackbarMessage("Warning: Exam end time occurs before start time. Please correct before proceeding.");
+      setSnackbarMessage(
+        "Warning: Exam end time occurs before start time. Please correct before proceeding."
+      );
       setSnackbarState(true);
     }
   }, [startTime]);
 
   useEffect(() => {
-    var trimmedString = endTime.toString();
-    trimmedString = trimmedString.slice(17);
+    var trimmedString = formatISOTime(endTime).toString();
+    setAmmendedEndTime(trimmedString);
+    console.log("end time is " + endTime + "or " + trimmedString)
 
-    if (startTime > endTime){
+    if (startTime > endTime && endTime !== "") {
       setSnackbarSeverity("warning");
-      setSnackbarMessage("Warning: Exam end time occurs before start time. Please correct before proceeding.");
+      setSnackbarMessage(
+        "Warning: Exam end time occurs before start time. Please correct before proceeding."
+      );
       setSnackbarState(true);
     }
   }, [endTime]);
@@ -168,45 +167,58 @@ function CreateSession() {
       setSnackbarMessage("Error: No End Time Provided");
       setSnackbarSeverity("error");
       setSnackbarState(true);
-    } else if (startTime > endTime){
+    } else if (startTime > endTime) {
       setSnackbarSeverity("error");
       setSnackbarMessage("Error: Exam end time occurs before start time.");
       setSnackbarState(true);
-    }else {
+    } else {
       setOpen("true");
     }
   };
 
-  const fetchClasses = async() => {
-    try{
-      const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/class/get');
-      setClasses(response.data.map(doc => doc.className));
+  const fetchClasses = async () => {
+    try {
+      const response = await axios.get(
+        process.env.REACT_APP_SERVER_URL + "/class/get"
+      );
+      setClasses(response.data.map((doc) => doc.className));
       setLoading(false);
-    }
-    catch (error) {
+    } catch (error) {
       console.log("The error" + error);
     }
-  }
+  };
 
   const addExam = async() => {
+    var examDateVariable = new Date(examDate);
+    var startTimeDate = new Date(startTime);
+    var endTimeDate = new Date(endTime);
+    var utcStartDate = new Date( examDateVariable.getFullYear(),examDateVariable.getMonth(), examDateVariable.getDate(), startTimeDate.getHours(), startTimeDate.getMinutes())
+    var utcEndDate = new Date( examDateVariable.getFullYear(),examDateVariable.getMonth(), examDateVariable.getDate(), endTimeDate.getHours(), endTimeDate.getMinutes())
+
     const requestBody = { 
       examName: examName,
-      startTime: startTime, 
-      endTime: endTime, 
+      startTime: utcStartDate.toISOString(), 
+      endTime: utcEndDate.toISOString(), 
       details: examDescription,
-      className: classes[scheduledClass] };
+      className: classes[scheduledClass],
+    };
 
-    try{
-      const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/exam/addExam', requestBody);
-      console.log('POST request response:', response.data);
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_SERVER_URL + "/exam/addExam",
+        requestBody
+      );
+      console.log("POST request response:", response.data);
       setOpen(false);
-    }
-    catch (error) {
+      navigate("/admin");
+    } catch (error) {
       console.log("The error" + error);
     }
-  }
+  };
 
-  return (isLoading) ? <Loader loading={true} /> : (
+  return isLoading ? (
+    <Loader loading={true} />
+  ) : (
     <div>
       <AdminHeader />
       <div className="createSession">
@@ -219,11 +231,12 @@ function CreateSession() {
 
               <Grid container columns={2} sx={{ pt: 7 }}>
                 <Grid item xs={1}>
-                  <Box sx={{ pl: 15, pr: 1, pt: 3 }}>
+                  <Box sx={{ pl: 8, pr: 1, pt: 3 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DateCalendar
                         disablePast={true}
                         disableHighlightToday={true}
+                        minWidth="350"
                         minDate={dayjs(reformattedDate)}
                         orientation="landscape"
                         value={examDate}
@@ -256,7 +269,6 @@ function CreateSession() {
             </Grid>
 
             <Grid item xs={2} sx={{ p: 3 }}>
-              <Box sx={{ pl: 10, pr: 10 }}>
                 <h1>Exam Details</h1>
                 <FormControl fullWidth sx={{ minWidth: 120 }}>
                   <InputLabel required>Class</InputLabel>
@@ -268,9 +280,7 @@ function CreateSession() {
                     onChange={handleChangeClass}
                   >
                     {classes.map((className, index) => {
-                      return (
-                      <MenuItem value={index}>{className}</MenuItem>
-                    )
+                      return <MenuItem value={index}>{className}</MenuItem>;
                     })}
                   </Select>
                 </FormControl>
@@ -317,7 +327,6 @@ function CreateSession() {
                     Schedule Exam
                   </Button>
                 </FormControl>
-              </Box>
             </Grid>
           </Grid>
         </Card>
@@ -353,7 +362,7 @@ function CreateSession() {
             </Button>
           </DialogActions>
         </Dialog>
-        <Snackbar open={snackbarState}>
+        <Snackbar open={snackbarState} autoHideDuration={3000}>
           <Alert severity={snackbarSeverity} onClose={handleCloseSnackbar}>
             {snackbarMessage}
           </Alert>
