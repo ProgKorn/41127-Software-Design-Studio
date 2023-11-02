@@ -4,7 +4,11 @@ import AdminHeader from "../components/AdminHeader";
 import jwt_decode from "jwt-decode";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import '../css/AdminExamSession.css';
+import axios from "axios";
 import FlagNotification from "../components/FlagNotification";
+
+// on student exam session - check flag in database in useffect - if greater than 2, terminate exam
+// run the API to update flag HERE (admin exam session side)
 
 const secrets = {
     appId: process.env.REACT_APP_AGORA_APP_ID,
@@ -48,7 +52,7 @@ const secrets = {
       }
     });
   };
-  
+
   const stopVideo = async () => {
     rtc.localVideoTrack.close();
     rtc.localVideoTrack.stop();
