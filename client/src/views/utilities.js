@@ -15,7 +15,8 @@ const TURNED_FACE_THRESHOLD = 0.7; // Define a threshold to determine if the fac
 const LOOKING_AWAY_THRESHOLD_ANGLE = 20;
 
 const url = process.env.REACT_APP_SERVER_URL +'/flag';
-var studentId, examId, sessionName;
+var studentId, examId;
+var sessionName = "48450  Real-time Operating Systems - Finals";
 
 export function raiseUnfocusedFlag() {
   const timestamp = Date.now();
@@ -29,7 +30,7 @@ const getSessionName = async (examId) => {
   });
 }
 
-export const cheatingBehaviours = (objectDetections, faceDetections, studentIdParam, examIdParam) => {
+export const cheatingBehaviours = (objectDetections, studentIdParam, examIdParam) => {
   var personCounter = 0; // Keep track of how many people are in the frame
   studentId = studentIdParam;
   examId = examIdParam;
@@ -45,7 +46,7 @@ export const cheatingBehaviours = (objectDetections, faceDetections, studentIdPa
     }
 
     objectConditions(object, bannedObjects, personCounter, timestamp);
-    cheatingFace(faceDetections);
+    //cheatingFace(faceDetections);
   });
 }
 
