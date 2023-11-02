@@ -66,6 +66,7 @@ function ExamSession() {
   const [examName, setExamName] = useState("");
   const [cameraPermission, setCameraPermission] = useState(false);
   const [examInProgress, setExamInProgress] = useState(false);
+  const [videoUploadStarted, setVideoUploadStarted] = useState(false);
 
   const createExamStudent = async () => {
     try {
@@ -110,9 +111,9 @@ function ExamSession() {
     axios.get(process.env.REACT_APP_SERVER_URL + `/exam/getExamDetails/${examId}`).then((response) => {
       const { startTime, endTime } = response.data;
       setExamName(response.data.examName);
-      const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
+      //const examLengthInSeconds = (new Date(endTime) - new Date(startTime)) / 1000;
       // For testing, replace with the actual exam length logic
-      // const examLengthInSeconds = 10; 
+       const examLengthInSeconds = 10; 
       setExamLength(examLengthInSeconds);
       setRemainingTime(examLengthInSeconds); // Initialize remaining time
     }).catch((error) => {
@@ -151,10 +152,16 @@ function ExamSession() {
         setExamInProgress(false);
         // Update exam session status to "Completed"
         axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
-        //navigate("/examdone");
+        // Leave the call after exam ends
+        leaveCall();
         // Update exam session status to "Completed"
         axios.put(process.env.REACT_APP_SERVER_URL + `/examStudent/updateExamStudentStatus/${studentId}/${examId}`, { status: "Completed" });
-        navigate(`/examdone/${studentId}/${examId}/${seatNo}`);
+
+
+        //navigate(`/examdone/${studentId}/${examId}/${seatNo}`); NAVIGATION HAS BEEN MOVED TO VIDEO STORE. This is because we need to WAIT for the video to upload before we navigate to exam complete.
+        setVideoUploadStarted(true); //This signifies that the video is uploading, show the new screen informing user not to close the page while video is uploaded
+        //Here I want to display a thing over the entire page, a popup or something, maybe it overrides the page and it says, "Video upload in progress, Do not close the window"
+      
       }
 
       return () => {
@@ -169,6 +176,37 @@ function ExamSession() {
   const formattedCountdown = `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
   return (
+
+    <>
+      <style>
+        {`
+          .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+          }
+
+          .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+          }
+
+          .modal-text {
+            font-size: 20px;
+            font-weight: bold;
+          }
+        `}
+      </style>
+
     <Box className="main">
       <Box className="subtitle">
         <h1>{examName}</h1>
@@ -188,8 +226,17 @@ function ExamSession() {
           <h1>{formattedCountdown}</h1>
         </Paper>
       </Box>
+      {videoUploadStarted && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="modal-text">Exam video uploading, do not close browser</span>
+          </div>
+        </div>
+      )}
     </Box>
+    </>
   );
+  
 }
 
 export default ExamSession;
