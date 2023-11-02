@@ -66,19 +66,25 @@ function Login() {
     }
   };  
 
-  const isEmailAdmin = (email) => {
-    return email.endsWith("apple@gmail.com");
-  };
-
-  const isEmailStudent = (email) => {
-    return email.endsWith("steve@musk.com");
-  }
-
   const handleUsernameChange = (e) => {
+    const enteredEmail = e.target.value;
     setUsername(e.target.value);
-    setIsAdmin(isEmailAdmin(e.target.value));
-    setIsStudent(isEmailStudent(e.target.value));
+    setIsAdmin(false);
+    setIsStudent(false);
     setErrorMessage("");
+
+    // Checks on every keystroke lmao
+    const url = process.env.REACT_APP_SERVER_URL + '/checkUser/' + String(enteredEmail);
+      console.log("Verifying email");
+        axios.get(url).then((response) => {
+          if (response.data.isAdmin) {
+            setIsAdmin(true);
+          } else if (response.data.email != undefined) {
+            setIsStudent(true);
+          }
+        }).catch(error => {
+          console.log(error);
+        });
   };
 
   let hasReceivedData = false;
