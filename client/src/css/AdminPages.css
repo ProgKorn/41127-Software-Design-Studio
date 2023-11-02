@@ -30,6 +30,7 @@
     background-color: rgb(245, 247, 253);
     color: rgb(85, 89, 130);
     padding: 20px;
+    height: 100%;
     text-align: left;
     padding-left: 50px;
 }
@@ -47,7 +48,7 @@
 }
 
 .flagDetailSection {
-    /* height: 130px; */
+    height: '100%';
     padding: 20px;
 }
 
@@ -59,7 +60,7 @@
     margin: auto;
     padding: 0px;
     border-radius: 20px;
-    height: 16vh;
+    height: 20vh;
     /* height: 100%; */
 }
 
@@ -84,7 +85,7 @@
     font-family: Montserrat, sans-serif;
     padding: 25px;
     text-align: left;
-    height: 8vh;
+    /* height: '100%'; */
     overflow: auto;
 }
 
@@ -100,6 +101,17 @@
     width: 90%;
     margin: auto;
     padding: 10px;
+}
+
+
+.flagStudentVideoTitle {
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    text-align: left;
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    padding-top: 0px;
 }
 
 .scheduleButton {

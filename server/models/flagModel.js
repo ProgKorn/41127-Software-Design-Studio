@@ -10,7 +10,7 @@ flagSchema = new schema({
     description: {type: String, required: true},
     sessionName: {type: String, required: true},
     timeStamp: {type: Date, required: true},
-    clipUrl: { type: Buffer, required: false, contentType: String}, //
+    fullRecording: { type: String, required: true},
 })
 
 /* 

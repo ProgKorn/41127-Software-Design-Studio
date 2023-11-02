@@ -28,8 +28,8 @@ function ExamSection(props) {
   }, []);
 
   return studentExams ? <CardTable 
-    columns={studentExams.map((exam) => `${exam.examName}`)}
-    rows={studentExams.map((exam) => `Seat: ${exam.seatNo}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
+    columns={studentExams.slice(0, 3).map((exam) => `${exam.examName}`)}
+    rows={studentExams.slice(0, 3).map((exam) => `Seat: ${exam.seatNo}. Status: ${exam.status}. ${formatISODate(exam.startTime)}.`)}
   /> : <></>
 }
 
@@ -68,9 +68,9 @@ function FlagSection(props) {
   }, []);
 
   // Gets the latest five flags. TODO: add overflow scrolling
-  return studentFlags ? studentFlags.map(flag => (
+  return studentFlags ? studentFlags.slice(0, 6).map(flag => (
     <div>{`Exam #${flag.examId} ${flag.sessionName}, ${flag.description}`}</div>
-  )) : <></>
+  )) : <>No flags</>
 }
 
 function Student() {
@@ -118,7 +118,7 @@ function Student() {
           </Card>
         </Grid>
         <Grid item xs={8} style={{ height: '80vh' }}>
-        <Card title={"Flag History"}>
+        <Card title={"Flag History"}  style={{ height: '80vh' }}>
             <div className='flagDetailSection'>
               <div className='flagDetailContainer'>
                 <div className='flagDetailTitle'>
@@ -139,7 +139,7 @@ function Student() {
               </div>
             </div>
             <div className='flagVideoSection'>
-              <div className='flagVideoTitle'>
+              <div className='flagStudentVideoTitle'>
                 Most Recent Flagged Clip
               </div>
               {/* Placeholder for flagged */}
@@ -153,13 +153,13 @@ function Student() {
                   backgroundColor: 'aliceblue', 
                   borderRadius: 10, 
                   overflow: 'auto',
-                  marginTop: 30 }}>  
-                <video 
-                  src={"https://res.cloudinary.com/dljsodofn/video/upload/v1698877498/blob_bnyuda.webm"}
-                  autoplay
-                  muted
-                  controls>
-                </video>
+                  marginTop: 20 }}> 
+                  <video 
+                    src={"https://res.cloudinary.com/dljsodofn/video/upload/v1698925953/blob_hwo8th.mkv"}
+                    autoplay
+                    muted
+                    controls>
+                  </video>
                 {/* {recentFlag ? <></> : <div style={{ paddingTop: '11vh', fontFamily: 'Montserrat, sans-serif' }}>No Flags</div>} */}
               </div>
             </div>
