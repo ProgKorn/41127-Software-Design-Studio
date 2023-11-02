@@ -73,7 +73,7 @@ function Login() {
   };  
 
   const handleUsernameChange = (e) => {
-    const enteredEmail = e.target.value;
+    const enteredEmail = e.target.value.toLowerCase();
     setUsername(e.target.value);
     setIsAdmin(false);
     setIsStudent(false);

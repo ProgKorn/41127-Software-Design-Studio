@@ -103,7 +103,7 @@ app.post('/login', async(req, res) => {
 });
 
 app.get('/checkUser/:email', async(req, res) => {
-  const username = String(req.params.email);
+  const username = String(req.params.email.toLowerCase());
 
   try {
     await dbOp('find', 'UserDetails', { query: { email: username } }).then(data => {
@@ -118,7 +118,7 @@ app.get('/checkUser/:email', async(req, res) => {
 app.post('/studentlogin', async(req, res) => {
   const { username, keepSignedIn, facialData } = req.body;
 
-  const student = await dbOp('find', 'StudentDetails', { query: { email: username } });
+  const student = await dbOp('find', 'StudentDetails', { query: { email: username.toLowerCase() } });
 
   if (!student || student.length === 0) {
     res.status(401).json({ success: false, message: 'Student not found' });
