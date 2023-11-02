@@ -151,7 +151,7 @@ function FacialLandmarkLogin(facialMatch) {
           });
         }
       }
-    }, 6000);
+    }, 5500);
   
     return () => {
       clearTimeout(timer);
@@ -162,17 +162,19 @@ function FacialLandmarkLogin(facialMatch) {
   return (
     <div style={{ position: 'relative', width: '640px', height: '480px', margin: 'auto', textAlign: 'center' }}>
       <div style={{ position: 'relative', width: '640px', height: '480px', display: 'inline-block' }}>
-        <video
-          width="640"
-          height="480"
-          autoPlay
-          style={{
-            display: 'block',
-            margin: '0 auto',
-            opacity: 0.4,
-          }}
-          ref={videoRef}
-        />
+        {showLoader && (
+                  <video
+                  width="640"
+                  height="480"
+                  autoPlay
+                  style={{
+                    display: 'block',
+                    margin: '0 auto',
+                    opacity: 0.4,
+                  }}
+                  ref={videoRef}
+                />
+        )}
         {!loading && isPlaying && showLoader && ( 
           // <div
           //   className="wrapper"
