@@ -4,6 +4,7 @@ const cors = require('cors');
 const multer = require('multer');
 const { Readable } = require('stream');
 const { GridFSBucket } = require('mongodb');
+const Login = require('./models/loginModel.js');
 const { dbOp, getDb } = require('./DatabaseAccess/databaseMaster');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -63,15 +64,7 @@ app.use((req, res, next) => {
   });
 });
 
-// COMMENTED = SERVER ONLY
-// const corsOptions = {
-//   origin: ['http://localhost:3000', 'https://sentinel-frontend.vercel.app'],
-// };
-
-// app.use(cors(corsOptions)); 
-
 app.use(cors());
-
 app.use(bodyParser.json());
 app.use('/flag', flagRoutes);
 app.use('/student', studentRoutes);
@@ -81,6 +74,7 @@ app.use('/auth', authRoutes);
 app.use('/exam', examRoutes);
 app.use('/examStudent', examStudentRoutes);
 
+// Configure CORS to allow requests from http://localhost:3000 and https://sentinel-frotnend.vercel.app
 app.post('/login', async(req, res) => {
   const { username, password, keepSignedIn } = req.body;
 
@@ -108,10 +102,23 @@ app.post('/login', async(req, res) => {
   }
 });
 
+app.get('/checkUser/:email', async(req, res) => {
+  const username = String(req.params.email.toLowerCase());
+
+  try {
+    await dbOp('find', 'UserDetails', { query: { email: username } }).then(data => {
+      res.json(new Login(data[0]));
+    });
+  } catch (error) {
+    console.error("Error catching type:", error);
+    res.status(500).json({ error: 'Error checking user type '});
+  }
+});
+
 app.post('/studentlogin', async(req, res) => {
   const { username, keepSignedIn, facialData } = req.body;
 
-  const student = await dbOp('find', 'StudentDetails', { query: { email: username } });
+  const student = await dbOp('find', 'StudentDetails', { query: { email: username.toLowerCase() } });
 
   if (!student || student.length === 0) {
     res.status(401).json({ success: false, message: 'Student not found' });
