@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import useVideoStore from "./VideoStore";
 
 const incidents = []; // Active Incidents
 export const bannedObjects = ["cell phone", "laptop", "keyboard", "mouse"]; // Array of banned objects
@@ -79,7 +80,7 @@ function incidentCheck(timestamp, flagType) {
     // Create a new incident
     const newIncident = {
       flagType: flagType,
-      timestamp,
+      timeStamp: timestamp,
       flagged: true,
       studentId: studentId,
       examId: 2,  // This needs to be fetched dynamically from studentId (from token)
