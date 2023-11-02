@@ -132,7 +132,7 @@ function Schedule() {
               <a href={`/exam/${selectedExam.examId}`} style={{ color: 'blue',  fontSize: '1.2rem' }}>
                 Show Exam Details</a></div>
               <div className='scheduleButtonContainer'>
-                <Button component={Link} to="/launchExam" sx={buttonStyles} className="scheduleButton" variant="contained">
+                <Button component={Link} to="/adminExamSession" sx={buttonStyles} className="scheduleButton" variant="contained">
                   <div className="scheduleIcons">
                     <LaunchRoundedIcon />
                   </div>

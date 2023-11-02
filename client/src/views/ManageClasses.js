@@ -59,7 +59,6 @@ function ManageClasses() {
   }, [isAdmin, navigate]);
 
   async function onCardSelect(props) {
-    console.log({props})
     setSelectedClass(props);
     try {
       await axios.get(process.env.REACT_APP_SERVER_URL +'/exam/getExamDetails/' + props.examId)
