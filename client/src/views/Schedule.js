@@ -82,7 +82,7 @@ function Schedule() {
   const deleteExam = async() =>
   {
     try {
-      const response = await axios.get("http://localhost:4000" + '/exam/deleteExamDetails/' + selectedExam.examId)
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/exam/deleteExamDetails/' + selectedExam.examId)
       console.log("Delete Response received", response);
       window.location.reload();
 

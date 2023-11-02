@@ -74,7 +74,7 @@ function EditClass()
             const studentResponse = await axios.get(process.env.REACT_APP_SERVER_URL + '/student/get');
             setStudents(studentResponse.data);
 
-             const response = await axios.get("http://localhost:4000" + '/class/getClassDetails/' + subjectId)
+             const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/class/getClassDetails/' + subjectId)
              setClassName(response.data.className);
              setSubjectId(subjectId);
              const studentsArray = response.data.students;
@@ -155,7 +155,7 @@ function EditClass()
         }
         try {
 
-          const response = await axios.post("http://localhost:4000" + '/class/editClassDetails/' + subjectId, data)
+          const response = await axios.post(process.env.REACT_APP_SERVER_URL+ '/class/editClassDetails/' + subjectId, data)
           console.log("POST Response received", response);
           setOpen(false);
           
@@ -254,12 +254,13 @@ function EditClass()
           onClose={handleCloseDialogue}
           aria-describedby="alert-dialog-slide-description"
         >
+          <DialogTitle> Do you want to save your changes? </DialogTitle>
           <DialogContent>
             <DialogContentText
               id="alert-dialog-slide-description"
               maxWidth={"lg"}
             >
-              Confirm Changes to Class
+               Your changes will be lost if you don't save them
             </DialogContentText>
           </DialogContent>
           <DialogActions>

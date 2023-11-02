@@ -139,7 +139,7 @@ function EditExam()
             "details" : examDetails
         }
         try {
-          const response = await axios.post("http://localhost:4000" + '/exam/editExamDetails', data)
+          const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/exam/editExamDetails', data)
           console.log("POST Response received", response);
 
         } catch (error) {
@@ -233,12 +233,13 @@ function EditExam()
           onClose={handleCloseDialogue}
           aria-describedby="alert-dialog-slide-description"
         >
+          <DialogTitle> Do you want to save your changes? </DialogTitle>
           <DialogContent>
             <DialogContentText
               id="alert-dialog-slide-description"
               maxWidth={"lg"}
             >
-              Confirm Changes to Exam
+              Your changes will be lost if you don't save them
             </DialogContentText>
           </DialogContent>
           <DialogActions>

@@ -97,7 +97,7 @@ function ManageClasses() {
   {
     
     try {
-      const response = await axios.get("http://localhost:4000" + '/class/deleteClassDetails/' + selectedClass.subjectId)
+      const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/class/deleteClassDetails/' + selectedClass.subjectId)
       console.log("Delete Response received", response);
       window.location.reload();
 
