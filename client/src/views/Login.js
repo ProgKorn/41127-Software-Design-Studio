@@ -95,6 +95,7 @@ function Login() {
           } else {
             setIsValidEmail(false);
             setShowCross(true);
+            setErrorMessage("Invalid Username");
           }
         }).catch(error => {
           console.log(error);
