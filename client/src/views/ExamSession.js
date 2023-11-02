@@ -67,8 +67,8 @@ function ExamSession() {
   const [cameraPermission, setCameraPermission] = useState(false);
   const [examInProgress, setExamInProgress] = useState(false);
   const [examTerminated, setExamTerminated] = useState(false);
-  var flagCount = 0;
-
+  // var flagCount = 0;
+  const [flagCount, setFlagCount] = useState(0);
   const createExamStudent = async () => {
     try {
       const response = await axios.post(
@@ -81,22 +81,63 @@ function ExamSession() {
     }
   }
 
-  const handleFlagAdded = async () => {
-    // Call and set flagCount to array in ExamStudent
-    axios
-      .get(
-        process.env.REACT_APP_SERVER_URL +
-          `/examStudent/getActiveExamStudent/${studentId}/${examId}`
-      )
-      .then((response) => {
-        flagCount = response.data.flags.length;
-        console.log("Number of Flags:", flagCount);
-      });
-    if (flagCount >= 2) {
-      setExamTerminated(true);
-    }
-  }
-  console.log('PROPS ARE HERE ' + examId, studentId);
+  // const handleFlagAdded = async () => {
+  //   // Call and set flagCount to array in ExamStudent
+  //   axios
+  //     .get(
+  //       process.env.REACT_APP_SERVER_URL +
+  //         `/examStudent/getActiveExamStudent/${studentId}/${examId}`
+  //     )
+  //     .then((response) => {
+  //       flagCount = response.data.flags.length;
+  //       console.log("Number of Flags:", flagCount);
+  //     });
+  //   if (flagCount >= 2) {
+  //     setExamTerminated(true);
+  //   }
+  // }
+  // console.log('PROPS ARE HERE ' + examId, studentId);
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "b") {
+        // Redirect to the /examdone page with parameters and examTerminated set to true
+        navigate(`/examdone/${studentId}/${examId}/${seatNo}`, { examTerminated: true });
+      }
+    };
+
+    // Attach the event listener
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [navigate, studentId, examId, seatNo]);
+  
+  useEffect(() => {
+    const handleFlagAdded = async () => {
+      try {
+        const response = await axios.get(
+          process.env.REACT_APP_SERVER_URL +
+            `/examStudent/getActiveExamStudent/${studentId}/${examId}`
+        );
+        setFlagCount(response.data.flags.length);
+        console.log("Number of Flags:", response.data.flags.length);
+        if (flagCount >= 2) {
+              setExamTerminated(true);
+            }
+      } catch (error) {
+        console.error("Error fetching flag count:", error);
+      }
+    };
+
+    const interval = setInterval(() => {
+      handleFlagAdded();
+    }, 5000); // Fetch data every 5 seconds
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(interval);
+  }, [studentId, examId]);
 
   useEffect(() => {
     startCall();
@@ -112,7 +153,7 @@ function ExamSession() {
       const currentTime = new Date().toLocaleString();
       console.log(`[${currentTime}] Window is not focused or minimized`);
       raiseUnfocusedFlag();
-      handleFlagAdded();
+      // handleFlagAdded();
     };
 
     const handleFocus = () => {
@@ -199,7 +240,7 @@ function ExamSession() {
         {cameraPermission ? (
           <>
             <ObjectRecognition examInProgress={examInProgress}/>
-            <FlagNotification examId={examId}/>
+            <FlagNotification/>
           </>
         ) : (
           <p>Please grant camera permission to start the exam timer.</p>
