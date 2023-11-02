@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import axios from 'axios';
 import CardTable from './CardTable';
 import { formatISODate } from '../components/Clock';
+import StatusChip from '../components/StatusChip';
 
 function ExamSection(props) {
   const [studentExams, setStudentExams] = useState(null);
@@ -68,8 +69,11 @@ function FlagSection(props) {
   }, []);
 
   // Gets the latest five flags. TODO: add overflow scrolling
-  return studentFlags ? studentFlags.slice(0, 6).map(flag => (
-    <div>{`Exam #${flag.examId} ${flag.sessionName}, ${flag.description}`}</div>
+  return studentFlags ? studentFlags.map(flag => (
+    <div style={{ display: 'flex' }}>
+      <div><StatusChip status={flag.status} /></div>
+      <div style={{paddingLeft: '4px'}}>{`Exam ${flag.examId}, ${flag.description}, ${flag.sessionName}`}</div>
+    </div>
   )) : <>No flags</>
 }
 
@@ -129,11 +133,9 @@ function Student() {
                       </div>
                     </div>
                 </div>
-                <div style={{ width: '80%' }}>
-                  <div className='flagDetailDescriptionText'>
-                    <FlagSection studentId={student.studentId}/>
-                    {/* <div style={{ paddingBottom: 20 }}>{flag.sessionName}</div>
-                    <div>The current status is '{flag.status}'.</div> */}
+                <div style={{ width: '80%', height: '100%', overflow: 'auto' }}>
+                  <div className='flagDetailDescriptionText' style={{height: '100%'}}>
+                    <FlagSection studentId={student.studentId}/>                    
                   </div>
                 </div>
               </div>
@@ -145,7 +147,7 @@ function Student() {
               {/* Placeholder for flagged */}
               <div style={{
                   width: '90%', 
-                  height: '35vh',
+                  height: '32vh',
                   display: 'flex',
                   margin: 'auto', 
                   alignContent: 'center',

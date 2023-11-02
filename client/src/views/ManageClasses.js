@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminHeader from '../components/AdminHeader';
-import { Button } from '@mui/material';
+import { Button, TableCell, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
@@ -13,6 +13,7 @@ import Loader from '../components/Loader';
 import { formatISOTime } from '../components/Clock';
 import {Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions} from '@mui/material';
 import Slide from "@mui/material/Slide";
+import styled from '@emotion/styled';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -81,6 +82,11 @@ function ManageClasses() {
     },
   }
 
+  const StyledTableCell = styled(TableCell)(() => ({
+    fontFamily: 'Montserrat, sans-serif',
+    padding: 7
+  }));
+
   const handleCloseDialogue = () => {
     setOpen(false);
   };
@@ -140,24 +146,26 @@ function ManageClasses() {
               </div>
               <div style={{ paddingTop: 40, fontSize: '1.2rem' }}>
                 <div style={{ paddingBottom: 10, fontSize: '1.3rem', fontWeight: 'bold' }}>
-                  There are {selectedClass.students.length > 1 ? selectedClass.students.length + ' students ': ' 1 student '}in this class.
+                  Students
                 </div>
                 {(students.filter(s => (selectedClass.students.map(stu => stu.studentId)).includes(s.studentId)))
                   .map((student, i) => {
-                    return <div>{i+1}. {student.name.firstName} {student.name.lastName} (
-                    <a href={`/student/${student.studentId}`} style={{ color: 'blue' }}>
+                    return <TableRow>
+                       <StyledTableCell>{i+1}</StyledTableCell> 
+                       <StyledTableCell>{student.name.firstName}</StyledTableCell>
+                       <StyledTableCell>{student.name.lastName}</StyledTableCell>
+                       <StyledTableCell>(<a href={`/student/${student.studentId}`} style={{ color: 'blue' }}>
                       {student.studentId}
-                    </a>),
-                      seat {(selectedClass.students.find(x => x.studentId === student.studentId)).seatNo}</div>})}
+                    </a>)</StyledTableCell>
+                    <StyledTableCell>seat {(selectedClass.students.find(x => x.studentId === student.studentId)).seatNo}</StyledTableCell>
+                    </TableRow>})}
               </div>
               <div style={{ paddingTop: 20, fontSize: '1.2rem' }}>
                 <div style={{ paddingBottom: 10, fontSize: '1.3rem', fontWeight: 'bold' }}>
                   Exam #{selectedClass.examId}
                 </div>
                 {exam.examName}
-                <div>{(new Date(exam.startTime).toDateString())}</div>
-                <div>Starts at {formatISOTime(exam.startTime)}</div>
-                <div>Ends at {formatISOTime(exam.endTime)}</div>
+                <div>{(new Date(exam.startTime).toDateString())}, Starts at {formatISOTime(exam.startTime)}, Ends at {formatISOTime(exam.endTime)}</div>
               </div>
               <div className='scheduleButtonContainer' style={{paddingTop: 20, paddingBottom: 20}}>
               <Button component={Link} to={`/editclass/${selectedClass.subjectId}`} sx={buttonStyles} className="scheduleButton" variant="contained">

@@ -85,7 +85,7 @@ function Flag() {
                       </div>
                   </div>
                   <div style={{ width: '80%', height: '80vh' }}>
-                    <div className='flagDetailDescriptionText'>
+                    <div className='flagDetailDescriptionText' style={{ height: '100%', overflow: 'auto'}}>
                       <div style={{ paddingBottom: 20 }}>Session: {flag.sessionName}</div>
                       <div style={{ paddingBottom: 20 }}>Flagged for '{flag.description}'.</div>
                       <StatusChip status={flag.status} />
